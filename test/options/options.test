@@ -1,0 +1,72 @@
+#1. --help
+dist/build/agda2atp/agda2atp --help
+<<<
+>>>
+Usage: agda2atp [OPTIONS] FILE
+
+          --atp=NAME                      set the ATP (e, equinox, ileancop, metis, spass, vampire)
+                                          (default: e, equinox, and vampire)
+          --help                          show this help
+  -i DIR  --include-path=DIR              look for imports in DIR
+          --not-check                     no check the syntax of the generated TPTP files
+                                          using the tptp4X program from the TPTP library
+          --only-files                    do not call the ATPs, only to create the TPTP files
+          --output-dir=DIR                directory in which TPTP files are placed (default: /tmp)
+          --snapshot-dir=DIR              directory where is the snapshot of the TPTP files
+                                          (default: snapshot)
+          --snapshot-no-error             a difference in the snapshot-test does not generate an error
+                                          (implies --snapshot-test)
+          --snapshot-test                 compare the generated TPTP files against a snapshot of them
+          --time=NUM                      set timeout for the ATPs in seconds (default: 300)
+          --unproven-conjecture-no-error  an unproven TPTP conjecture does not generate an error
+          --vampire-exec=COMMAND          set the vampire executable (default: vampire_lin64)
+  -v N    --verbose=N                     set verbosity level to N
+          --version                       show version number
+
+>>>2
+>>>= 0
+
+#2. --only-files
+dist/build/agda2atp/agda2atp -itest/options --only-files test/options/TrivialTheorem.agda
+<<<
+>>>
+Created /tmp/TrivialTheorem/18-foo.tptp
+>>>2
+>>>= 0
+
+#3. --verbose
+dist/build/agda2atp/agda2atp -itest/options -v1 --only-files test/options/TrivialTheorem.agda
+<<<
+>>>
+Created /tmp/TrivialTheorem/18-foo.tptp
+>>>2
+>>>= 0
+
+#4. --version
+dist/build/agda2atp/agda2atp --version
+<<<
+>>>
+agda2atp version 0.9.1
+>>>2
+>>>= 0
+
+#5. --unproven-conjecture-no-error
+dist/build/agda2atp/agda2atp -itest/options --atp=e --unproven-conjecture-no-error test/options/NoTheorem.agda
+<<<
+>>>
+Proving the conjecture in /tmp/NoTheorem/15-foo.tptp ...
+E 1.6 Tiger Hill *did not* prove the conjecture
+The ATP(s) did not prove the conjecture in /tmp/NoTheorem/15-foo.tptp
+>>>2
+>>>= 0
+
+#6. --snapshot-no-error
+dist/build/agda2atp/agda2atp -itest/options --only-files --output-dir=/tmp/snapshot test/options/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/18-foo.tptp && dist/build/agda2atp/agda2atp -itest/options --snapshot-no-error --snapshot-dir=/tmp/snapshot test/options/TrivialTheorem.agda
+<<<
+>>>
+Created /tmp/snapshot/TrivialTheorem/18-foo.tptp
+The files are different:
+/tmp/TrivialTheorem/18-foo.tptp
+/tmp/snapshot/TrivialTheorem/18-foo.tptp
+>>>2
+>>>= 0

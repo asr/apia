@@ -1,0 +1,31 @@
+------------------------------------------------------------------------------
+-- Testing the translation of definitions
+------------------------------------------------------------------------------
+
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
+-- Test with agda2atp on 25 January 2013.
+
+module Issue4 where
+
+postulate
+  D    : Set
+  _≡_  : D → D → Set
+  refl : ∀ {a} → a ≡ a
+  P   : D → Set
+
+-- We test the translation of a definition where we need to erase proof terms.
+foo : ∀ {a} → P a → ∀ {b} → P b → a ≡ a
+foo {a} Pa {b} Pb = bar
+  where
+  c : D
+  c = a
+  {-# ATP definition c #-}
+
+  postulate bar : c ≡ a
+  {-# ATP prove bar #-}
+
+-- $ agda2atp Issue4.agda
+-- An internal error has occurred. Please report this as a bug.
+-- Location of the error: src/AgdaInternal/DeBruijn.hs:84

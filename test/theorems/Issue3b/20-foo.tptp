@@ -1,0 +1,28 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by agda2atp version 0.9.1.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The general axiom(s).
+
+% The original Agda term was:
+% Name:	Issue3b.A.p
+% Role:	axiom
+% Line:	12
+fof(n6_185084262, axiom, ( a = b )).
+
+% End general axiom(s).
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name:	Issue3b.foo
+% Role:	prove
+% Line:	20
+fof(n8_185084262, conjecture, ( a = b )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

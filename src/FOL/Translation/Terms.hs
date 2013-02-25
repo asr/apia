@@ -101,8 +101,8 @@ import Monad.Reports ( reportSLn )
 
 universalQuantificationMsg ∷ String → String
 universalQuantificationMsg p =
-  "Use Agda option " ++ "`" ++ p ++ "'" ++ " for the translation of "
-  ++ "first-order logic universal quantified "
+  "Use the Agda option " ++ "`" ++ p ++ "'" ++ " in your Agda file "
+  ++ "for the translation of first-order logic universal quantified "
   ++ entities
   where
     entities ∷ String

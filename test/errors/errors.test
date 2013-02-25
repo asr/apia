@@ -20,7 +20,7 @@ dist/build/agda2atp/agda2atp -itest/errors test/errors/PragmaRequired1.agda
 <<<
 >>>
 >>>2
-agda2atp: Use Agda option `--universal-quantified-formulae' for the translation of first-order logic universal quantified formulae
+agda2atp: Use the Agda option `--universal-quantified-formulae' in your Agda file for the translation of first-order logic universal quantified formulae
 >>>= 1
 
 #4. Terms.hs: Required pragma --universal-quantified-propositional-functions
@@ -28,7 +28,7 @@ dist/build/agda2atp/agda2atp -itest/errors test/errors/PragmaRequired2.agda
 <<<
 >>>
 >>>2
-agda2atp: Use Agda option `--universal-quantified-propositional-functions' for the translation of first-order logic universal quantified propositional functions
+agda2atp: Use the Agda option `--universal-quantified-propositional-functions' in your Agda file for the translation of first-order logic universal quantified propositional functions
 >>>= 1
 
 #5. Terms.hs: Required pragma --universal-quantified-functions
@@ -36,7 +36,7 @@ dist/build/agda2atp/agda2atp -itest/errors test/errors/PragmaRequired3.agda
 <<<
 >>>
 >>>2
-agda2atp: Use Agda option `--universal-quantified-functions' for the translation of first-order logic universal quantified functions
+agda2atp: Use the Agda option `--universal-quantified-functions' in your Agda file for the translation of first-order logic universal quantified functions
 >>>= 1
 
 #6. RemoveProofTerms.hs: Underscore variables

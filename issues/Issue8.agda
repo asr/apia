@@ -3,7 +3,11 @@
 
 module Issue8 where
 
-open import Common.FOL.FOL
+postulate D : Set
+
+-- The existential quantifier type on D.
+data ∃ (A : D → Set) : Set where
+  _,_ : (t : D) → A t → ∃ A
 
 postulate foo : (A : D → Set) → (∃ λ x → A x) → (∃ λ x → A x)
 {-# ATP prove foo #-}

@@ -170,6 +170,7 @@ instance RemoveVar Args where
   removeVar [] _ = return []
 
   removeVar (Arg info term@(Var n []) : args) x = do
+    when (n < 0) (__IMPOSSIBLE__)
     vars ← getTVars
 
     when (x == "_") $

@@ -427,8 +427,8 @@ termToFormula (Pi domTy (Abs x tyAbs)) = do
 termToFormula term@(Var n args) = do
   reportSLn "t2f" 10 $ "termToFormula Var: " ++ show term
 
+  when (n < 0) (__IMPOSSIBLE__)
   vars ← getTVars
-
   when (length vars <= n) (__IMPOSSIBLE__)
 
   case args of
@@ -536,8 +536,8 @@ termToFOLTerm term@(Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ termLam)) =
 termToFOLTerm term@(Var n args) = do
   reportSLn "t2t" 10 $ "termToFOLTerm Var:\n" ++ show term
 
+  when (n < 0) (__IMPOSSIBLE__)
   vars ← getTVars
-
   when (length vars <= n) (__IMPOSSIBLE__)
 
   case args of

@@ -28,4 +28,4 @@ foo {a} Pa {b} Pb = bar
 
 -- $ agda2atp Issue4.agda
 -- An internal error has occurred. Please report this as a bug.
--- Location of the error: src/AgdaInternal/DeBruijn.hs:84
+-- Location of the error: src/AgdaInternal/DeBruijn.hs:87

@@ -131,7 +131,8 @@ instance EtaExpandible Term where
   -- case of @Pi _ (NoAbs _ _)@.
   etaExpand (Pi tyArg (Abs x tyAbs)) = Pi tyArg . Abs x <$> etaExpand tyAbs
 
-  etaExpand (Var n args) = Var n <$> mapM etaExpand args
+  etaExpand (Var n args) | n >= 0    = Var n <$> mapM etaExpand args
+                         | otherwise = __IMPOSSIBLE__
 
   etaExpand _ = __IMPOSSIBLE__
 

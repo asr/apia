@@ -342,9 +342,10 @@ instance QNamesIn Term where
   qNamesIn (Def qName args) = qName : qNamesIn args
   qNamesIn (Lam _ absTerm)  = qNamesIn absTerm
   qNamesIn (Pi domTy absTy) = qNamesIn domTy ++ qNamesIn absTy
-  qNamesIn (Sort _)         = []
-  qNamesIn (Var _ args)     = qNamesIn args
-  qNamesIn  _               = __IMPOSSIBLE__
+  qNamesIn (Sort _) = []
+  qNamesIn (Var n args) | n >= 0    = qNamesIn args
+                        | otherwise = __IMPOSSIBLE__
+  qNamesIn  _ = __IMPOSSIBLE__
 
 instance QNamesIn Type where
   qNamesIn (El _ term) = qNamesIn term

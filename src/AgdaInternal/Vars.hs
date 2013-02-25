@@ -58,7 +58,8 @@ instance BoundedVars Term where
   boundedVars (Def _ args) = boundedVars args
   boundedVars (Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ absTerm)) =
     1 + boundedVars absTerm
-  boundedVars (Var _ _) = 0
+  boundedVars (Var n _) | n >= 0    = 0
+                        | otherwise = __IMPOSSIBLE__
   boundedVars _ = __IMPOSSIBLE__
 
 -- Requires TypeSynonymInstances and FlexibleInstances.
@@ -100,7 +101,9 @@ instance BoundedVarsType Term where
 
   boundedVarsType (Con _ _) = []
   boundedVarsType (Lam _ _) = []
-  boundedVarsType (Var _ _) = []
+
+  boundedVarsType (Var n _) | n >= 0    = []
+                            | otherwise = __IMPOSSIBLE__
 
   boundedVarsType _ = __IMPOSSIBLE__
 

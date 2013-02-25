@@ -68,9 +68,10 @@ class IncIndex a where
   incIndex ∷ a → a
 
 instance IncIndex Term where
-  incIndex (Var n [])  = var (n + 1)
-  incIndex (Var _ _)   = __IMPOSSIBLE__
-  incIndex _           = __IMPOSSIBLE__
+  incIndex (Var n []) | n >= 0    = var (n + 1)
+                      | otherwise = __IMPOSSIBLE__
+  incIndex (Var _ _) = __IMPOSSIBLE__
+  incIndex _         = __IMPOSSIBLE__
 
 instance IncIndex a ⇒ IncIndex (I.Arg a) where
   incIndex (Arg info e) = Arg info $ incIndex e
@@ -83,10 +84,11 @@ class DecIndex a where
 
 instance DecIndex Term where
   decIndex (Def qname args) = Def qname $ decIndex args
-  decIndex (Var 0 [])       = __IMPOSSIBLE__
-  decIndex (Var n [])       = var (n - 1)
-  decIndex (Var _ _)        = __IMPOSSIBLE__
-  decIndex _                = __IMPOSSIBLE__
+  decIndex (Var 0 []) = __IMPOSSIBLE__
+  decIndex (Var n []) | n > 0     = var (n - 1)
+                      | otherwise = __IMPOSSIBLE__
+  decIndex (Var _ _) = __IMPOSSIBLE__
+  decIndex _ = __IMPOSSIBLE__
 
 instance DecIndex a ⇒ DecIndex [a] where
   decIndex = map decIndex
@@ -128,7 +130,8 @@ instance VarNames Term where
 
   varNames (Lam _ (Abs x term)) = varNames term ++ [x]
 
-  varNames (Var _ []) = []
+  varNames (Var n []) | n >= 0    = []
+                      | otherwise = __IMPOSSIBLE__
   -- 31 May 2012. We don't have an example of this case.
   --
   -- varNames (Var _ args) = varNames args
@@ -178,6 +181,7 @@ instance ChangeIndex Term where
   -- When the variable is part of an argument, it was processed in the
   -- Args instance.
   changeIndex (Var n []) index
+    | n < 0 = __IMPOSSIBLE__
     -- The variable was after than the quantified variable, we need
     -- "unbound" the quantified variable.
     | n > index = var (n - 1)

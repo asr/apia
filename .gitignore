@@ -1,3 +1,4 @@
 *.agdai
-dist
+model
+dist/
 TAGS

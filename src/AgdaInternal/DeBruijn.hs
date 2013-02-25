@@ -84,7 +84,7 @@ class DecIndex a where
 
 instance DecIndex Term where
   decIndex (Def qname args) = Def qname $ decIndex args
-  decIndex (Var 0 []) = __IMPOSSIBLE__
+  decIndex term@(Var 0 []) = term
   decIndex (Var n []) | n > 0     = var (n - 1)
                       | otherwise = __IMPOSSIBLE__
   decIndex (Var _ _) = __IMPOSSIBLE__
@@ -108,10 +108,7 @@ instance DecIndex a ⇒ DecIndex (Abs a) where
   decIndex (NoAbs _ _)     = __IMPOSSIBLE__
 
 instance DecIndex a ⇒ DecIndex (Tele a) where
-  -- 31 May 2012. We don't have an example of this case.
-  --
-  -- decIndex EmptyTel          = EmptyTel
-  decIndex EmptyTel          = __IMPOSSIBLE__
+  decIndex EmptyTel          = EmptyTel
   decIndex (ExtendTel a tel) = ExtendTel (decIndex a) (decIndex tel)
 
 ------------------------------------------------------------------------------

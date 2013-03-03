@@ -123,13 +123,13 @@ instance EtaExpandible Term where
 
   etaExpand (Lam h (Abs x termAbs)) = Lam h . Abs x <$> etaExpand termAbs
 
-  etaExpand (Pi tyArg (NoAbs x tyAbs)) = do
-     tArg ← etaExpand tyArg
-     tAbs ← etaExpand tyAbs
-     return $ Pi tArg (NoAbs x tAbs)
-  -- It seems it is not necessary to eta-expand the @tyArg@ like in the
+  etaExpand (Pi domTy (NoAbs x absTy)) = do
+     tDom ← etaExpand domTy
+     tAbs ← etaExpand absTy
+     return $ Pi tDom (NoAbs x tAbs)
+  -- It seems it is not necessary to eta-expand the @domTy@ like in the
   -- case of @Pi _ (NoAbs _ _)@.
-  etaExpand (Pi tyArg (Abs x tyAbs)) = Pi tyArg . Abs x <$> etaExpand tyAbs
+  etaExpand (Pi domTy (Abs x absTy)) = Pi domTy . Abs x <$> etaExpand absTy
 
   etaExpand (Var n args) | n >= 0    = Var n <$> mapM etaExpand args
                          | otherwise = __IMPOSSIBLE__

@@ -46,16 +46,6 @@ import Monad.Reports              ( reportSLn )
 #include "../../undefined.h"
 
 ------------------------------------------------------------------------------
--- A ClauseBody is defined by (Agda.Syntax.Internal)
--- data ClauseBody = Body Term
--- 		| Bind (Abs ClauseBody)
--- 		| NoBind ClauseBody
--- 		| NoBody    -- for absurd clauses
-
--- telescopeToFormula ∷ Telescope → T FOLFormula
--- telescopeToFormula EmptyTel             = __IMPOSSIBLE__
--- telescopeToFormula (ExtendTel tyArg _) = typeToFormula $ unArg tyArg
-
 -- | Translate an Agda internal 'ClauseBody' to a first-order logic
 -- formula 'FOLFormula'.
 cBodyToFormula ∷ ClauseBody → T FOLFormula

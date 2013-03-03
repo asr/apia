@@ -261,12 +261,12 @@ termToFormula term@(Lam _ (Abs _ termLam)) = do
 
   return f
 
-termToFormula (Pi domTy (NoAbs x tyAbs)) = do
+termToFormula (Pi domTy (NoAbs x absTy)) = do
   reportSLn "t2f" 10 $
     "termToFormula Pi _ (NoAbs _ _):\n"
     ++ "domTy: " ++ show domTy ++ "\n"
-    ++ "absTy: " ++ show (NoAbs x tyAbs)
-  f2 ← typeToFormula tyAbs
+    ++ "absTy: " ++ show (NoAbs x absTy)
+  f2 ← typeToFormula absTy
 
   if x /= "_"
     then
@@ -292,24 +292,24 @@ termToFormula (Pi domTy (NoAbs x tyAbs)) = do
       f1 ← domTypeToFormula domTy
       return $ Implies f1 f2
 
-termToFormula (Pi domTy (Abs x tyAbs)) = do
+termToFormula (Pi domTy (Abs x absTy)) = do
   reportSLn "t2f" 10 $
     "termToFormula Pi _ (Abs _ _):\n"
     ++ "domTy: " ++ show domTy ++ "\n"
-    ++ "absTy: " ++ show (Abs x tyAbs)
+    ++ "absTy: " ++ show (Abs x absTy)
 
   freshVar ← pushTNewVar
 
   reportSLn "t2f" 20 $
     "Starting processing in local environment with fresh variable "
-    ++ show freshVar ++ " and type:\n" ++ show tyAbs
+    ++ show freshVar ++ " and type:\n" ++ show absTy
 
-  f ← typeToFormula tyAbs
+  f ← typeToFormula absTy
   popTVar
 
   reportSLn "t2f" 20 $
     "Finalized processing in local environment with fresh variable "
-    ++ show freshVar ++ " and type:\n" ++ show tyAbs
+    ++ show freshVar ++ " and type:\n" ++ show absTy
 
   reportSLn "t2f" 20 $ "The formula f is: " ++ show f
 
@@ -445,7 +445,7 @@ termToFormula term@(Var n args) = do
     --
     -- we are quantifying on this variable/function
     --
-    -- (see @termToFormula (Pi domTy (Abs _ tyAbs))@),
+    -- (see @termToFormula (Pi domTy (Abs _ absTy))@),
     --
     -- therefore we need to apply this variable/predicate to the
     -- others variables. See an example in
@@ -553,7 +553,7 @@ termToFOLTerm term@(Var n args) = do
     --
     -- we are quantifying on this variable/function
     --
-    -- (see @termToFormula (Pi domTy (Abs _ tyAbs))@),
+    -- (see @termToFormula (Pi domTy (Abs _ absTy))@),
     --
     -- therefore we need to apply this variable/function to the others
     -- variables. See an example in

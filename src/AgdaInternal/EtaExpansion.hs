@@ -49,6 +49,8 @@ import Agda.Syntax.Internal as I
   , var
   )
 
+import Agda.TypeChecking.Substitute ( Apply(apply) )
+
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( whenM )
 
@@ -115,7 +117,7 @@ instance EtaExpandible Term where
         freshVar ← newTVar
 
         return $ Lam defaultArgInfo
-                     (Abs freshVar (Def qName (incVarsEtaExpanded ++ [newVar])))
+                     (Abs freshVar (Def qName incVarsEtaExpanded `apply` [newVar]))
 
   -- We don't know an example of eta-contraction with @Con@, therefore
   -- we don't do anything.

@@ -27,8 +27,9 @@ import Control.Monad.Trans  ( MonadIO(liftIO) )
 import Data.Char ( chr, isAsciiUpper, isAsciiLower, isDigit, ord )
 import Data.List ( sort )
 
-import System.Directory ( createDirectoryIfMissing )
-import System.FilePath  ( (</>), addExtension )
+import System.Directory   ( createDirectoryIfMissing )
+import System.Environment ( getProgName )
+import System.FilePath    ( (</>), addExtension )
 
 ------------------------------------------------------------------------------
 -- Agda library imports
@@ -75,7 +76,6 @@ import TPTP.Types
 import Utils.List    ( duplicate )
 import Utils.Show    ( showLn )
 import Utils.String  ( removeString )
-import Utils.Version ( progNameVersion )
 
 #include "../undefined.h"
 
@@ -108,7 +108,7 @@ commentLineLn = commentLine ++ "\n"
 
 conjectureHeader ∷ IO String
 conjectureHeader = do
-  prg ← progNameVersion
+  prg ← getProgName
   return $
     commentLine
     ++ "% This file was generated automatically by "

@@ -417,7 +417,8 @@ termToFormula (Pi domTy (Abs x absTy)) = do
     --   ∨-comm₂ : {P₂ Q₂ : D → D → Set}{x y : D} →
     --             P₂ x y ∨ Q₂ x y → Q₂ x y ∨ P₂ x y
 
-    El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) →
+    El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → do
+      reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
       return $ ForAll freshVar $ const f
 
     someType → do
@@ -432,7 +433,7 @@ termToFormula term@(Var n args) = do
   when (length vars <= n) (__IMPOSSIBLE__)
 
   case args of
-    -- N.B. In this case we *don't* use the Koen's approach.
+    -- N.B. In this case we *don't* use Koen's approach.
     [] → return $ Predicate (vars !! n) []
 
     -- Non-FOL translation: First-order logic universal quantified

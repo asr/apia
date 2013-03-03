@@ -10,6 +10,5 @@ module NonFOL.AgdaInternalTerms.VarEmptyArgumentsTerm where
 
 postulate D : Set
 
--- TODO: 2012-04-29. Are we using Koen's approach in the translation?
 postulate id : (P : D → Set)(x : D) → P x → P x
 {-# ATP prove id #-}

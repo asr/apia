@@ -29,7 +29,7 @@ import Data.Functor  ( (<$>) )
 -- Agda library imports
 
 import Agda.Syntax.Common
-  ( Arg(Arg)
+  ( Arg(Arg, unArg)
   , Dom(Dom)
   , defaultArgInfo
   , Nat
@@ -43,7 +43,7 @@ import Agda.Syntax.Internal as I
   , Dom
   , Level(Max)
   , PlusLevel(ClosedLevel)
-  , Term(Con, Def, Lam, Pi, Var)
+  , Term(Con, Def, Lam, Pi, Sort, Var)
   , Sort(Type)
   , Type(El)
   , var
@@ -85,24 +85,50 @@ instance EtaExpandible Term where
   etaExpand (Def qName args) = do
     whenM (isProjection qName) (__IMPOSSIBLE__)
 
-    qNameArity ∷ Nat ← arity <$> qNameType qName
+    defTy ∷ Type ← qNameType qName
+
+    let qNameArity ∷ Nat
+        qNameArity = arity defTy
 
     argsEtaExpanded ← mapM etaExpand args
 
-    -- The eta-contraction *only* reduces by 1 the number of arguments
-    -- of a term, for example:
-
-    -- Given @P : D → Set@,
-    -- @λ x → P x@ eta-contracts to @P@ or
-
-    -- Given @_≡_ : D → D → Set@,
-    -- @(x : D) → (λ y → x ≡ y)@ eta-contracts to @(x : D) → _≡_ x@
-
-    -- therefore we only applied the eta-expansion in this case.
-
+    -- Although a term has the right number of arguments, it can be
+    -- η-contracted. For example, given
+    --
+    -- @∃ : (A : D → Set) → Set@, the term @∃ A@ is η-contracted, so
+    -- we should η-expand it to @∃ (λ x → A x)@.
     if qNameArity == length args
-      then return $ Def qName argsEtaExpanded
+      then case defTy of
+        El (Type (Max [ClosedLevel 1]))
+           (Pi (Dom _ (El (Type (Max [ClosedLevel 1]))
+                           (Pi (Dom _ (El (Type (Max [])) _))
+                               (NoAbs _ (El (Type (Max [ClosedLevel 1]))
+                                        (Sort (Type (Max [])))))))) _)  →
+           case map unArg args of
+             (Var 0 [] : []) → do
+               freshVar ← newTVar
+
+               let newArg ∷ I.Arg Term
+                   newArg = Arg defaultArgInfo
+                                (Lam defaultArgInfo
+                                (Abs freshVar (Var 1 [Arg defaultArgInfo (var 0)])))
+
+               return $ Def qName [newArg]
+
+             _  → return $ Def qName argsEtaExpanded
+
+        _ → return $ Def qName argsEtaExpanded
+
       else do
+        -- The η-contraction can *only* reduces by 1 the number of
+        -- arguments of a term, for example:
+
+        -- Given @P : D → Set@, @λ x → P x@ η-contracts to @P@ or
+        --
+        -- given @_≡_ : D → D → Set@, @(x : D) → (λ y → x ≡ y)@
+        -- η-contracts to @(x : D) → _≡_ x@.
+
+        -- We applied the η-expansion in this case.
         when (qNameArity - 1 /= length args) (__IMPOSSIBLE__)
 
         -- Because we are going to add a new abstraction, we need

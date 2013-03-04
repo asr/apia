@@ -41,11 +41,10 @@ AGDA2ATP = dist/build/agda2atp/agda2atp
 ##############################################################################
 # Auxiliary functions
 
-path_subst = $(patsubst %.agda,%.$(1), \
-	     	$(shell find $(2) \( ! -path '*/Consistency/*' \) -name '*.agda' \
-			| xargs grep -L 'The ATPs could not prove the theorem' \
-			| xargs grep -l 'ATP prove' \
-		  	| sort))
+my_pathsubst = $(patsubst %.agda,%.$(1), \
+                 $(shell find $(2) -name '*.agda' \
+                         | xargs grep -l 'ATP prove' \
+                         | sort))
 
 ##############################################################################
 # Files
@@ -53,18 +52,18 @@ path_subst = $(patsubst %.agda,%.$(1), \
 # Tests
 
 generated_theorems_files = \
-  $(call path_subst,generated_theorems,$(theorems_path))
+  $(call my_pathsubst,generated_theorems,$(theorems_path))
 
 generated_non_theorems_files = \
-  $(call path_subst,generated_non_theorems,$(non_theorems_path))
+  $(call my_pathsubst,generated_non_theorems,$(non_theorems_path))
 
-prove_theorems_files = $(call path_subst,prove_theorems,$(theorems_path))
+prove_theorems_files = $(call my_pathsubst,prove_theorems,$(theorems_path))
 
-refute_theorems_files = $(call path_subst,refute_theorems,$(non_theorems_path))
+refute_theorems_files = $(call my_pathsubst,refute_theorems,$(non_theorems_path))
 
-errors_files = $(call path_subst,errors,$(errors_path))
+errors_files = $(call my_pathsubst,errors,$(errors_path))
 
-options_files = $(call path_subst,options,$(options_path))
+options_files = $(call my_pathsubst,options,$(options_path))
 
 ##############################################################################
 # Test suite: Generated conjectures

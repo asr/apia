@@ -279,12 +279,14 @@ termToFormula (Pi domTy (NoAbs x absTy)) = do
           return $ ForAll freshVar $ const f2
 
         -- The variable @x@ is a proof term, therefore we erase the
-        -- quantication on it.
+        -- quantification on it.
         El (Type (Max [])) (Def _ _) → do
           f1 ← domTypeToFormula domTy
           return $ Implies f1 f2
 
-        _ → __IMPOSSIBLE__
+        undom → do
+          reportSLn "t2f" 20 $ "undom :" ++ show undom
+          __IMPOSSIBLE__
 
     -- The variable @x@ is a proof term, therefore we erase the
     -- quantication on it.

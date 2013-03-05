@@ -60,6 +60,7 @@ import Agda.Utils.Monad      ( whenM )
 import AgdaInternal.DeBruijn  ( IncIndex(incIndex) )
 import AgdaInternal.Interface ( isProjection, qNameType )
 import Monad.Base             ( newTVar, T )
+import Monad.Reports          ( reportSLn )
 
 #include "../undefined.h"
 
@@ -72,6 +73,10 @@ import Monad.Base             ( newTVar, T )
 -- | Eta-expandible entities.
 class EtaExpandible a where
   etaExpand ∷ a → T a
+
+instance EtaExpandible Sort where
+  etaExpand sort@(Type (Max _)) = return sort
+  etaExpand _                   = __IMPOSSIBLE__
 
 instance EtaExpandible Type where
   etaExpand (El (Type (Max [])) term) =  El (Type (Max [])) <$> etaExpand term
@@ -105,6 +110,10 @@ instance EtaExpandible Term where
                                (NoAbs _ (El (Type (Max [ClosedLevel 1]))
                                         (Sort (Type (Max [])))))))) _)  →
            case map unArg args of
+             (Def _ _ : []) → return $ Def qName argsEtaExpanded
+
+             (Lam _ _ : []) → return $ Def qName argsEtaExpanded
+
              (Var 0 [] : []) → do
                freshVar ← newTVar
 
@@ -115,7 +124,9 @@ instance EtaExpandible Term where
 
                return $ Def qName [newArg]
 
-             _  → return $ Def qName argsEtaExpanded
+             unArgs → do
+               reportSLn "etaExpansion" 20 $ "unArgs: " ++ show unArgs
+               __IMPOSSIBLE__
 
         _ → return $ Def qName argsEtaExpanded
 
@@ -159,10 +170,14 @@ instance EtaExpandible Term where
   -- case of @Pi _ (NoAbs _ _)@.
   etaExpand (Pi domTy (Abs x absTy)) = Pi domTy . Abs x <$> etaExpand absTy
 
+  etaExpand (Sort sort) = Sort <$> etaExpand sort
+
   etaExpand (Var n args) | n >= 0    = Var n <$> mapM etaExpand args
                          | otherwise = __IMPOSSIBLE__
 
-  etaExpand _ = __IMPOSSIBLE__
+  etaExpand term = do
+   reportSLn "etaExpansion" 20 $ "term: " ++ show term
+   __IMPOSSIBLE__
 
 -- Requires TypeSynonymInstances and FlexibleInstances.
 instance EtaExpandible a ⇒ EtaExpandible (I.Arg a) where

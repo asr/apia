@@ -161,7 +161,7 @@ doc :
 
 agda_changed : clean
 	make agda2atp_changed
-	cd $(dump-agdai_path) && cabal clean && cabal configure && cabal build
+	cd $(dump-agdai_path) && cabal clean && cabal install
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -169,20 +169,21 @@ agda_changed : clean
 
 agda2atp_changed : clean
 	cabal clean && cabal configure && cabal build
-	@make generated_conjectures
-	@make errors
-	@make options
+	make generated_conjectures
+	make errors
+	make options
+	cabal install
 	@echo "$@ succeeded!"
 
 ##############################################################################
 # Test used when there is a new ATP or a new version of an ATP
 
 atp_changed :
-	@make generated_conjectures
-	@make prove_theorems
-	@make refute_theorems
-	@make errors
-	@make options
+	make generated_conjectures
+	make prove_theorems
+	make refute_theorems
+	make errors
+	make options
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -198,9 +199,9 @@ hlint :
 # Git : pre-commit test
 
 git_pre_commit :
-	@fix-whitespace --check
-	@make doc
-	@make hlint
+	fix-whitespace --check
+	make doc
+	make hlint
 	@echo "$@ succeeded!"
 
 ##############################################################################

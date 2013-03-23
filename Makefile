@@ -10,9 +10,6 @@ SHELL := /bin/bash
 dump-agdai_path     = tools/dump-agdai
 fix-whitespace_path = tools/fix-whitespace
 
-# Agda standard library path.
-std_lib_path = ~/agda-upstream/std-lib
-
 # Tests paths
 errors_path        = test/errors
 non_theorems_path  = test/non-theorems

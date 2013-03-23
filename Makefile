@@ -22,6 +22,9 @@ theorems_path      = test/theorems
 # Directory for the TPTP files.
 output_dir = /tmp/agda2atp
 
+# Notes path.
+notes_path = notes
+
 ##############################################################################
 # Variables
 
@@ -64,6 +67,14 @@ refute_theorems_files = $(call my_pathsubst,refute_theorems,$(non_theorems_path)
 errors_files = $(call my_pathsubst,errors,$(errors_path))
 
 options_files = $(call my_pathsubst,options,$(options_path))
+
+# Notes
+
+type_check_notes_files = \
+  $(patsubst %.agda,%.type_check_notes, \
+    $(shell find $(notes_path) -name '*.agda' | sort))
+
+prove_notes_files = $(call my_pathsubst,prove_notes,$(notes_path))
 
 ##############################################################################
 # Test suite: Generated conjectures
@@ -157,10 +168,37 @@ doc :
 	@echo "$@ succeeded!"
 
 ##############################################################################
+# Notes: Type-checking
+
+type_check_notes_path = -i$(notes_path) \
+                        -i$(notes_path)/agda-interface
+
+%.type_check_notes :
+	$(AGDA) $(type_check_notes_path) $*.agda
+
+type_check_notes : $(type_check_notes_files)
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Notes: Prove theorems
+
+prove_notes_path = -i$(notes_path)
+
+%.prove_notes :
+	echo $(prove_notes_files)
+	$(AGDA) $(prove_notes_path) $*.agda
+	$(AGDA2ATP) $(prove_notes_path) --output-dir=$(output_dir) --time=10 $*.agda
+
+prove_notes : $(prove_notes_files)
+	@echo "$@ succeeded!"
+
+##############################################################################
 # Test used when there is a modification to Agda
 
 agda_changed : clean
 	make agda2atp_changed
+	make type_check_notes
+	make prove_notes
 	cd $(dump-agdai_path) && cabal clean && cabal install
 	@echo "$@ succeeded!"
 

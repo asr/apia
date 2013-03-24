@@ -9,7 +9,7 @@
 % Name:	TermToFOLTerm.ConTerm.+-Sx
 % Role:	hint
 % Line:	30
-fof(n18_168101849, hypothesis, ( ! [A] : ( ! [B] : ( kAppFn(kAppFn(n43,kAppFn(succ,A)),B) = kAppFn(succ,kAppFn(kAppFn(n43,A),B)) ) ) )).
+fof(n18_168101849, hypothesis, ( ! [A] : ( ! [B] : ( kAppF(kAppF(n43,kAppF(succ,A)),B) = kAppF(succ,kAppF(kAppF(n43,A),B)) ) ) )).
 
 % End general hint(s).
 
@@ -20,7 +20,7 @@ fof(n18_168101849, hypothesis, ( ! [A] : ( ! [B] : ( kAppFn(kAppFn(n43,kAppFn(su
 % Name:	TermToFOLTerm.ConTerm.x+Sy≡S[x+y]
 % Role:	hint
 % Line:	36
-fof(n25_168101849, hypothesis, ( ! [A] : ( ! [B] : ( kAppFn(kAppFn(n43,A),kAppFn(succ,B)) = kAppFn(succ,kAppFn(kAppFn(n43,A),B)) ) ) )).
+fof(n25_168101849, hypothesis, ( ! [A] : ( ! [B] : ( kAppF(kAppF(n43,A),kAppF(succ,B)) = kAppF(succ,kAppF(kAppF(n43,A),B)) ) ) )).
 
 % End local hint(s).
 
@@ -31,7 +31,7 @@ fof(n25_168101849, hypothesis, ( ! [A] : ( ! [B] : ( kAppFn(kAppFn(n43,A),kAppFn
 % Name:	TermToFOLTerm.ConTerm._.prf
 % Role:	prove
 % Line:	42
-fof(n34_168101849, conjecture, ( ! [A] : ( ! [B] : ( ( kAppFn(kAppFn(n43,A),B) = kAppFn(kAppFn(n43,B),A) ) => ( kAppFn(kAppFn(n43,kAppFn(succ,A)),B) = kAppFn(kAppFn(n43,B),kAppFn(succ,A)) ) ) ) )).
+fof(n34_168101849, conjecture, ( ! [A] : ( ! [B] : ( ( kAppF(kAppF(n43,A),B) = kAppF(kAppF(n43,B),A) ) => ( kAppF(kAppF(n43,kAppF(succ,A)),B) = kAppF(kAppF(n43,B),kAppF(succ,A)) ) ) ) )).
 
 % End conjecture.
 

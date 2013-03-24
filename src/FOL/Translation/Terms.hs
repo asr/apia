@@ -71,7 +71,7 @@ import FOL.Constants
   , folImplies, folEquiv, folExists, folForAll, folEquals
   )
 
-import FOL.Primitives       ( appFn, appP, equal )
+import FOL.Primitives       ( appF, appP, equal )
 import FOL.Translation.Name ( concatName )
 
 import {-# source #-} FOL.Translation.Types
@@ -465,11 +465,11 @@ termToFormula _ = __IMPOSSIBLE__
 
 -- Translate the function @foo x1 ... xn@ to
 --
--- @kAppFn (... kAppFn(kAppFn(foo, X1), X2), ..., Xn)@.
-appArgsFn ∷ String → Args → T FOLTerm
-appArgsFn fn args = do
+-- @kAppF (... kAppF(kAppF(foo, X1), X2), ..., Xn)@.
+appArgsF ∷ String → Args → T FOLTerm
+appArgsF fn args = do
   termsFOL ← mapM argTermToFOLTerm args
-  return $ foldl' appFn (FOLFun fn []) termsFOL
+  return $ foldl' appF (FOLFun fn []) termsFOL
 
 -- | Translate an Agda internal 'Term' to a first-order logic term
 -- 'FOLTerm'.
@@ -491,7 +491,7 @@ termToFOLTerm term@(Con (QName _ name) args) = do
     C.Name _ [C.Id str] →
      case args of
        [] → return $ FOLFun str []
-       _  → appArgsFn str args
+       _  → appArgsF str args
 
     -- The term @Con@ has holes. It is translated as a first-order
     -- logic function.
@@ -518,14 +518,14 @@ termToFOLTerm term@(Def (QName _ name) args) = do
     C.Name _ [C.Id str] →
      case args of
        [] → return $ FOLFun str []
-       _  → appArgsFn str args
+       _  → appArgsF str args
 
     -- The term @Def@ has holes. It is translated as a first-order
     -- logic function.
     C.Name _ parts →
       case args of
         [] → __IMPOSSIBLE__
-        _  → appArgsFn (concatName parts) args
+        _  → appArgsF (concatName parts) args
 
 termToFOLTerm term@(Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ termLam)) = do
   reportSLn "t2f" 10 $ "termToFOLTerm Lam:\n" ++ show term
@@ -567,7 +567,7 @@ termToFOLTerm term@(Var n args) = do
 
       ifM (isTPragmaOption p)
           (do termsFOL ← mapM argTermToFOLTerm varArgs
-              return $ foldl' appFn (FOLVar (vars !! n)) termsFOL)
+              return $ foldl' appF (FOLVar (vars !! n)) termsFOL)
           (throwError $ universalQuantificationMsg p)
 
 termToFOLTerm _ = __IMPOSSIBLE__

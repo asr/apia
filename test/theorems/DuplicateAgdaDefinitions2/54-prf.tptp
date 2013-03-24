@@ -9,7 +9,7 @@
 % Name:	DuplicateAgdaDefinitions2._≤_
 % Role:	definition
 % Line:	40
-fof(n26_49333747, definition, ( ! [A] : ( ! [B] : ( kAppFn(kAppFn(n8804,A),B) = kAppFn(kAppFn(n60,A),kAppFn(succ,B)) ) ) )).
+fof(n26_49333747, definition, ( ! [A] : ( ! [B] : ( kAppF(kAppF(n8804,A),B) = kAppF(kAppF(n60,A),kAppF(succ,B)) ) ) )).
 
 % End common required definition(s).
 
@@ -20,13 +20,13 @@ fof(n26_49333747, definition, ( ! [A] : ( ! [B] : ( kAppFn(kAppFn(n8804,A),B) = 
 % Name:	DuplicateAgdaDefinitions2.Bool.tB
 % Role:	axiom
 % Line:	29
-fof(n15_49333747, axiom, ( kAppP1(fBool,true) )).
+fof(n15_49333747, axiom, ( kAppP1(cBool,true) )).
 
 % The original Agda term was:
 % Name:	DuplicateAgdaDefinitions2.Bool.fB
 % Role:	axiom
 % Line:	30
-fof(n16_49333747, axiom, ( kAppP1(fBool,false) )).
+fof(n16_49333747, axiom, ( kAppP1(cBool,false) )).
 
 % End general axiom(s).
 
@@ -37,7 +37,7 @@ fof(n16_49333747, axiom, ( kAppP1(fBool,false) )).
 % Name:	DuplicateAgdaDefinitions2.Sx≰0
 % Role:	hint
 % Line:	48
-fof(n33_49333747, hypothesis, ( ! [A] : ( ( kAppP1(fN,A) ) => ( kAppP2(fNLE_29_49333747,kAppFn(succ,A),zero) ) ) )).
+fof(n33_49333747, hypothesis, ( ! [A] : ( ( kAppP1(cN,A) ) => ( kAppP2(cNLE_29_49333747,kAppF(succ,A),zero) ) ) )).
 
 % End local hint(s).
 
@@ -48,7 +48,7 @@ fof(n33_49333747, hypothesis, ( ! [A] : ( ( kAppP1(fN,A) ) => ( kAppP2(fNLE_29_4
 % Name:	DuplicateAgdaDefinitions2.NLE
 % Role:	definition
 % Line:	44
-fof(n29_49333747, definition, ( ! [A] : ( ! [B] : ( ( kAppP2(fNLE_29_49333747,A,B) ) <=> ( kAppFn(kAppFn(n8804,A),B) = false ) ) ) )).
+fof(n29_49333747, definition, ( ! [A] : ( ! [B] : ( ( kAppP2(cNLE_29_49333747,A,B) ) <=> ( kAppF(kAppF(n8804,A),B) = false ) ) ) )).
 
 % End required ATP definition(s) by the local hint(s).
 
@@ -59,7 +59,7 @@ fof(n29_49333747, definition, ( ! [A] : ( ! [B] : ( ( kAppP2(fNLE_29_49333747,A,
 % Name:	DuplicateAgdaDefinitions2._.prf
 % Role:	prove
 % Line:	54
-fof(n46_49333747, conjecture, ( ! [A] : ( ( kAppP1(fN,A) ) => ( kAppP1(fBool,kAppFn(kAppFn(n8804,kAppFn(succ,A)),zero)) ) ) )).
+fof(n46_49333747, conjecture, ( ! [A] : ( ( kAppP1(cN,A) ) => ( kAppP1(cBool,kAppF(kAppF(n8804,kAppF(succ,A)),zero)) ) ) )).
 
 % End conjecture.
 

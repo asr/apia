@@ -195,7 +195,6 @@ prove_notes : $(prove_notes_files)
 agda_changed : clean
 	make agda2atp_changed
 	make type_check_notes
-	make prove_notes
 	cd $(dump-agdai_path) && cabal clean && cabal install
 	@echo "$@ succeeded!"
 
@@ -207,6 +206,7 @@ agda2atp_changed : clean
 	make generated_conjectures
 	make errors
 	make options
+	make prove_notes
 	cabal install
 	@echo "$@ succeeded!"
 

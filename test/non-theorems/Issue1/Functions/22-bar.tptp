@@ -9,7 +9,7 @@
 % Name:	Issue1.Functions.foo
 % Role:	axiom
 % Line:	18
-fof(n6_82241428, axiom, ( ! [A] : ( kAppP1(fNAME,A) ) )).
+fof(n6_82241428, axiom, ( ! [A] : ( kAppP1(cNAME,A) ) )).
 
 % End general axiom(s).
 

@@ -16,7 +16,7 @@
 
 -- Adapted from AgdaLight (Plugins.FOL.Primitive).
 
-module FOL.Primitives ( appFn, appP, equal )
+module FOL.Primitives ( appF, appP, equal )
 where
 
 ------------------------------------------------------------------------------
@@ -33,18 +33,18 @@ import FOL.Types ( FOLTerm(FOLFun), FOLFormula(Predicate) )
 
 ------------------------------------------------------------------------------
 
-kAppFn ∷ String
-kAppFn = "kAppFn"
+kAppF ∷ String
+kAppF = "kAppF"
 
 -- | Translation to first-order logic functions. For example, the
--- function @foo x1 ... xn@ will be translate to @kAppFn (... kAppFn
--- (kAppFn(foo, x1), x2), ..., xn)@, where @kAppFn@ is a hard-coded
+-- function @foo x1 ... xn@ will be translate to @kAppF (... kAppF
+-- (kAppF(foo, x1), x2), ..., xn)@, where @kAppF@ is a hard-coded
 -- binary function symbol.
-appFn ∷ FOLTerm → FOLTerm → FOLTerm
-appFn t1 t2 = FOLFun kAppFn [t1, t2]
+appF ∷ FOLTerm → FOLTerm → FOLTerm
+appF t1 t2 = FOLFun kAppF [t1, t2]
 
 -- | Translation to first-order logic predicates. For example, the
--- predicate @P x1 x2 x3@ will be translate to @kAppP3 (P, x1, x2,
+-- predicate @P x1 x2 x3@ will be translate to @kAppP3 (p, x1, x2,
 -- x3)@, where @kAppP3@ is a hard-coded constant 4-ary predicate
 -- symbol.
 appP ∷ FOLTerm → [FOLTerm] → FOLFormula

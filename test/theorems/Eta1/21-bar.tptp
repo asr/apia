@@ -9,7 +9,7 @@
 % Name:	Eta1.bar
 % Role:	prove
 % Line:	21
-fof(n9_17544139, conjecture, ( ! [A] : ( ( kAppP1(fA,A) ) => ( ? [B] : ( kAppP1(fA,B) ) ) ) )).
+fof(n9_17544139, conjecture, ( ! [A] : ( ( kAppP1(cA,A) ) => ( ? [B] : ( kAppP1(cA,B) ) ) ) )).
 
 % End conjecture.
 

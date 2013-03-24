@@ -9,13 +9,13 @@
 % Name:	NonFOL.HigherOrderFunctions.beta
 % Role:	axiom
 % Line:	26
-fof(n9_11489169, axiom, ( ! [A] : ( ! [B] : ( kAppFn(kAppFn(n8729,kAppFn(lam,A)),B) = kAppFn(A,B) ) ) )).
+fof(n9_11489169, axiom, ( ! [A] : ( ! [B] : ( kAppF(kAppF(n8729,kAppF(lam,A)),B) = kAppF(A,B) ) ) )).
 
 % The original Agda term was:
 % Name:	NonFOL.HigherOrderFunctions.fix-f
 % Role:	axiom
 % Line:	29
-fof(n11_11489169, axiom, ( ! [A] : ( kAppFn(fix,A) = kAppFn(A,kAppFn(fix,A)) ) )).
+fof(n11_11489169, axiom, ( ! [A] : ( kAppF(fix,A) = kAppF(A,kAppF(fix,A)) ) )).
 
 % End general axiom(s).
 

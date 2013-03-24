@@ -9,7 +9,7 @@
 % Name:	Definition2.foo
 % Role:	definition
 % Line:	15
-fof(n3_177394723, definition, ( ! [A] : ( kAppFn(foo,A) = A ) )).
+fof(n3_177394723, definition, ( ! [A] : ( kAppF(foo,A) = A ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n3_177394723, definition, ( ! [A] : ( kAppFn(foo,A) = A ) )).
 % Name:	Definition2.bar
 % Role:	prove
 % Line:	19
-fof(n6_177394723, conjecture, ( ! [A] : ( A = kAppFn(foo,A) ) )).
+fof(n6_177394723, conjecture, ( ! [A] : ( A = kAppF(foo,A) ) )).
 
 % End conjecture.
 

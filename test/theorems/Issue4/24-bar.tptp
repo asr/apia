@@ -9,7 +9,7 @@
 % Name:	Issue4._.c
 % Role:	definition
 % Line:	20
-fof(n15_126633305, definition, ( ! [A] : ( ( kAppP1(fP,A) ) => ( ! [B] : ( ( kAppP1(fP,B) ) => ( kAppFn(kAppFn(c,A),B) = A ) ) ) ) )).
+fof(n15_126633305, definition, ( ! [A] : ( ( kAppP1(cP,A) ) => ( ! [B] : ( ( kAppP1(cP,B) ) => ( kAppF(kAppF(c,A),B) = A ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n15_126633305, definition, ( ! [A] : ( ( kAppP1(fP,A) ) => ( ! [B] : ( ( kAp
 % Name:	Issue4._.bar
 % Role:	prove
 % Line:	24
-fof(n16_126633305, conjecture, ( ! [A] : ( ( kAppP1(fP,A) ) => ( ! [B] : ( ( kAppP1(fP,B) ) => ( kAppFn(kAppFn(c,A),B) = A ) ) ) ) )).
+fof(n16_126633305, conjecture, ( ! [A] : ( ( kAppP1(cP,A) ) => ( ! [B] : ( ( kAppP1(cP,B) ) => ( kAppF(kAppF(c,A),B) = A ) ) ) ) )).
 
 % End conjecture.
 

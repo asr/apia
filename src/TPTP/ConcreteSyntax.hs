@@ -77,16 +77,19 @@ type TPTP = String
 class ToTPTP a where
   toTPTP ∷ a → TPTP
 
+-- Constant, function or predicate.
+data CFP = C | F | P
+
 ------------------------------------------------------------------------------
 -- Auxiliary functions
 
 -- We prefixed the names with @n@ because TPTP does not accept names
 -- starting with digits or @_@.
 prefixLetter ∷ TPTP → TPTP
-prefixLetter []           = __IMPOSSIBLE__
+prefixLetter [] = __IMPOSSIBLE__
 prefixLetter name@(x : _)
-  | isDigit x || x == '_'  = 'n' : name
-  | otherwise              = name
+  | isDigit x || x == '_' = 'n' : name
+  | otherwise             = name
 
 toUpperFirstSymbol ∷ TPTP → TPTP
 toUpperFirstSymbol []       = __IMPOSSIBLE__
@@ -99,19 +102,21 @@ toUpperFirstSymbol (x : xs) =  toUpper x : xs
 -- functors either start with lower case and contain alphanumerics and
 -- underscore ...
 
--- If a function name start by an uppper case letter, we add a @'f'@.
-functionName2TPTP ∷ String → TPTP
-functionName2TPTP name =
-  if isUpper (head nameTPTP) then 'f' : nameTPTP else nameTPTP
+-- Constants, functions and predicates names to TPTP
+cfpNameToTPTP ∷ CFP → String → TPTP
+cfpNameToTPTP cfp name =
+  if isUpper (head nameTPTP) then symbol cfp : nameTPTP else nameTPTP
   where
-  nameTPTP ∷ String
-  nameTPTP = toTPTP name
+  symbol ∷ CFP → Char
+  -- If a function is applied to zero arguments, then if the function
+  -- name start by an uppper case letter, we add a @'c'@.
+  symbol C = 'c'
+  -- If a function name start by an uppper case letter, we add an
+  -- @'f'@.
+  symbol F = __IMPOSSIBLE__  -- 'f'
+  -- If a predicate name start by an uppper case letter, we add a @'p'@.
+  symbol P = 'p'
 
--- If a predicate name start by an uppper case letter, we add a @'p'@.
-predicateName2TPTP ∷ String → TPTP
-predicateName2TPTP name =
-  if isUpper (head nameTPTP) then 'p' : nameTPTP else nameTPTP
-  where
   nameTPTP ∷ String
   nameTPTP = toTPTP name
 
@@ -175,8 +180,8 @@ instance ToTPTP String where
   toTPTP = prefixLetter . concatMap toTPTP
 
 instance ToTPTP FOLTerm where
-  toTPTP (FOLFun name [])    = functionName2TPTP name
-  toTPTP (FOLFun name terms) = functionName2TPTP name
+  toTPTP (FOLFun name [])    = cfpNameToTPTP C name
+  toTPTP (FOLFun name terms) = cfpNameToTPTP F name
                                ++ "(" ++ toTPTP terms ++ ")"
   toTPTP (FOLVar name)       = toUpperFirstSymbol name
 
@@ -197,10 +202,10 @@ instance ToTPTP FOLFormula where
   -- If the predicate represents a propositional logic variable,
   -- following the TPTP syntax, we do not print the internal
   -- parenthesis.
-  toTPTP (Predicate name []) = "( " ++ predicateName2TPTP name ++ " )"
+  toTPTP (Predicate name []) = "( " ++ cfpNameToTPTP P name ++ " )"
 
   toTPTP (Predicate name terms) =
-    "( " ++ predicateName2TPTP name ++ "(" ++ toTPTP terms ++ ")" ++ " )"
+    "( " ++ cfpNameToTPTP P name ++ "(" ++ toTPTP terms ++ ")" ++ " )"
 
   toTPTP (And f1 f2)     = "( " ++ toTPTP f1 ++ " & " ++ toTPTP f2 ++ " )"
   toTPTP (Or f1 f2)      = "( " ++ toTPTP f1 ++ " | " ++ toTPTP f2 ++ " )"

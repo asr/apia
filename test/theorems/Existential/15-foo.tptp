@@ -9,7 +9,7 @@
 % Name:	Existential.foo
 % Role:	prove
 % Line:	15
-fof(n7_221690953, conjecture, ( ( ? [A] : ( kAppP1(fA,A) ) ) => ( ? [A] : ( kAppP1(fA,A) ) ) )).
+fof(n7_221690953, conjecture, ( ( ? [A] : ( kAppP1(cA,A) ) ) => ( ? [A] : ( kAppP1(cA,A) ) ) )).
 
 % End conjecture.
 

@@ -7,7 +7,7 @@
 -- Maintainer  : Andrés Sicard-Ramírez <andres.sicard.ramirez@gmail.com>
 -- Stability   : experimental
 --
--- Process the arguments.
+-- Process the command-line arguments.
 -----------------------------------------------------------------------------
 
 {-# LANGUAGE CPP #-}
@@ -17,7 +17,9 @@ module Options
   ( defaultOptions
   , options
   , MOptions  -- Required by Haddock.
-  , Options( optATP
+  , Options( Options --Improve Haddock information.
+           , optAppF
+           , optATP
            , optHelp
            , optInputFile
            , optIncludePath
@@ -72,7 +74,8 @@ import qualified Agda.Utils.Trie as Trie ( insert, singleton )
 
 -- | Program command-line options.
 data Options = Options
-  { optATP             ∷ [String]
+  { optAppF            ∷ Bool
+  , optATP             ∷ [String]
   , optHelp            ∷ Bool
   , optIncludePath     ∷ [FilePath]
   , optInputFile       ∷ Maybe FilePath
@@ -94,7 +97,8 @@ data Options = Options
 -- | Default options use by the program.
 defaultOptions ∷ Options
 defaultOptions = Options
-  { optATP             = []
+  { optAppF            = False
+  , optATP             = []
   , optHelp            = False
   , optIncludePath     = []
   , optInputFile       = Nothing
@@ -113,6 +117,9 @@ defaultOptions = Options
 
 -- | 'Options' monad.
 type MOptions = Options → Either String Options
+
+appFOpt ∷ MOptions
+appFOpt opts = Right opts { optAppF = True }
 
 atpOpt ∷ String → MOptions
 atpOpt []   _    = Left "Option `--atp' requires an argument NAME"
@@ -193,7 +200,10 @@ versionOpt opts = Right opts { optVersion = True }
 -- | Description of the command-line 'Options'.
 options ∷ [OptDescr MOptions]
 options =
-  [ Option []  ["atp"] (ReqArg atpOpt "NAME") $
+  [ Option []  ["appF"] (NoArg appFOpt) $
+               "use the binary function symbol 'appF' for the translation\n"
+               ++ "of functions (required for handling currying)"
+  , Option []  ["atp"] (ReqArg atpOpt "NAME") $
                "set the ATP (e, equinox, ileancop, metis, spass, vampire)\n"
                ++ "(default: e, equinox, and vampire)"
   , Option []  ["help"] (NoArg helpOpt)

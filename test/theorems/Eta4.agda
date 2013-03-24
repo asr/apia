@@ -21,8 +21,8 @@ postulate
 
 
 -- We don't eta-expand the definition of _*_ before the translation,
--- because we cannot translate the lambda abstractions generated (from
--- *-helper₂ n ) to FOL terms.
+-- because we cannot translate the λ-abstraction generated from
+-- *-helper₂ n to FOL terms.
 _*_ : D → D → D
 m * n = rec m zero (lam (*-helper₂ n))
 {-# ATP definition _*_ #-}

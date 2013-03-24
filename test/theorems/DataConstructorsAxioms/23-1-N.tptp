@@ -15,7 +15,7 @@ fof(n5_16080198, axiom, ( kAppP1(cN,zero) )).
 % Name:	DataConstructorsAxioms.N.sN
 % Role:	axiom
 % Line:	17
-fof(n7_16080198, axiom, ( ! [A] : ( ( kAppP1(cN,A) ) => ( kAppP1(cN,kAppF(succ,A)) ) ) )).
+fof(n7_16080198, axiom, ( ! [A] : ( ( kAppP1(cN,A) ) => ( kAppP1(cN,succ(A)) ) ) )).
 
 % End general axiom(s).
 
@@ -26,7 +26,7 @@ fof(n7_16080198, axiom, ( ! [A] : ( ( kAppP1(cN,A) ) => ( kAppP1(cN,kAppF(succ,A
 % Name:	DataConstructorsAxioms.1-N
 % Role:	prove
 % Line:	23
-fof(n9_16080198, conjecture, ( kAppP1(cN,kAppF(succ,zero)) )).
+fof(n9_16080198, conjecture, ( kAppP1(cN,succ(zero)) )).
 
 % End conjecture.
 

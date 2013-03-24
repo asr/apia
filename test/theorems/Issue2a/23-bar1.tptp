@@ -9,7 +9,7 @@
 % Name:	Issue2a.foo₁
 % Role:	definition
 % Line:	15
-fof(n3_55583567, definition, ( ! [A] : ( kAppF(foo1,A) = A ) )).
+fof(n3_55583567, definition, ( ! [A] : ( foo1(A) = A ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n3_55583567, definition, ( ! [A] : ( kAppF(foo1,A) = A ) )).
 % Name:	Issue2a.bar₁
 % Role:	prove
 % Line:	23
-fof(n8_55583567, conjecture, ( ! [A] : ( A = kAppF(foo1,A) ) )).
+fof(n8_55583567, conjecture, ( ! [A] : ( A = foo1(A) ) )).
 
 % End conjecture.
 

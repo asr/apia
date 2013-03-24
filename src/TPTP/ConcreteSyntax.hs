@@ -113,7 +113,7 @@ cfpNameToTPTP cfp name =
   symbol C = 'c'
   -- If a function name start by an uppper case letter, we add an
   -- @'f'@.
-  symbol F = __IMPOSSIBLE__  -- 'f'
+  symbol F = 'f'
   -- If a predicate name start by an uppper case letter, we add a @'p'@.
   symbol P = 'p'
 

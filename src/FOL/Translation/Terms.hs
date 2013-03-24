@@ -85,7 +85,8 @@ import FOL.Types
   )
 
 import Monad.Base
-  ( getTVars
+  ( askTOpt
+  , getTVars
   , isTPragmaOption
   , newTVar
   , popTVar
@@ -94,6 +95,8 @@ import Monad.Base
   )
 
 import Monad.Reports ( reportSLn )
+
+import Options ( Options(optAppF) )
 
 #include "../../undefined.h"
 
@@ -469,7 +472,9 @@ termToFormula _ = __IMPOSSIBLE__
 appArgsF ∷ String → Args → T FOLTerm
 appArgsF fn args = do
   termsFOL ← mapM argTermToFOLTerm args
-  return $ foldl' appF (FOLFun fn []) termsFOL
+  ifM (askTOpt optAppF)
+      (return $ foldl' appF (FOLFun fn []) termsFOL)
+      (return $ FOLFun fn termsFOL)
 
 -- | Translate an Agda internal 'Term' to a first-order logic term
 -- 'FOLTerm'.
@@ -561,13 +566,17 @@ termToFOLTerm term@(Var n args) = do
     -- therefore we need to apply this variable/function to the others
     -- variables. See an example in
     -- Test.Succeed.AgdaInternalTerms.Var2.agda
-    varArgs → do
+    _varArgs → do
       let p ∷ String
           p = "--universal-quantified-functions"
 
       ifM (isTPragmaOption p)
-          (do termsFOL ← mapM argTermToFOLTerm varArgs
-              return $ foldl' appF (FOLVar (vars !! n)) termsFOL)
+          -- TODO (24 March 2013). Implementation.
+          (throwError "The option '--universal-quantified-functions' is not implemented")
+          -- (do termsFOL ← mapM argTermToFOLTerm varArgs
+          --     ifM (askTOpt optAppF)
+          --         (return $ foldl' appF (FOLVar (vars !! n)) termsFOL)
+          --         (return $ FOLFun (vars !! n) termsFOL))
           (throwError $ universalQuantificationMsg p)
 
 termToFOLTerm _ = __IMPOSSIBLE__

@@ -4,6 +4,8 @@ dist/build/agda2atp/agda2atp --help
 >>>
 Usage: agda2atp [OPTIONS] FILE
 
+          --appF                          use the binary function symbol 'appF' for the translation
+                                          of functions (required for handling currying)
           --atp=NAME                      set the ATP (e, equinox, ileancop, metis, spass, vampire)
                                           (default: e, equinox, and vampire)
           --help                          show this help

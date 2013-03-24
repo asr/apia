@@ -36,10 +36,12 @@ import FOL.Types ( FOLTerm(FOLFun), FOLFormula(Predicate) )
 kAppF ∷ String
 kAppF = "kAppF"
 
--- | Translation to first-order logic functions. For example, the
--- function @foo x1 ... xn@ will be translate to @kAppF (... kAppF
--- (kAppF(foo, x1), x2), ..., xn)@, where @kAppF@ is a hard-coded
--- binary function symbol.
+-- TODO (24 March 2013). Why there is not Haddock link for 'optAppF'?
+
+-- | Translation of first-order logic functions using the option
+-- 'optAppF'. For example, the function @foo x1 ... xn@ will be
+-- translate to @kAppF (... kAppF (kAppF(foo, x1), x2), ..., xn)@,
+-- where @kAppF@ is a hard-coded binary function symbol.
 appF ∷ FOLTerm → FOLTerm → FOLTerm
 appF t1 t2 = FOLFun kAppF [t1, t2]
 

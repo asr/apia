@@ -15,7 +15,7 @@ fof(n5_187407804, definition, ( b = a )).
 % Name:	Definition5.c
 % Role:	definition
 % Line:	20
-fof(n6_187407804, definition, ( c = kAppF(op,b) )).
+fof(n6_187407804, definition, ( c = op(b) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -26,7 +26,7 @@ fof(n6_187407804, definition, ( c = kAppF(op,b) )).
 % Name:	Definition5.foo
 % Role:	prove
 % Line:	25
-fof(n7_187407804, conjecture, ( c = kAppF(op,a) )).
+fof(n7_187407804, conjecture, ( c = op(a) )).
 
 % End conjecture.
 

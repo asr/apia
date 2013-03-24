@@ -6,7 +6,7 @@
 {-# OPTIONS --universal-quantified-functions #-}
 {-# OPTIONS --without-K #-}
 
-module NonFOL.AgdaInternalTerms.VarNonEmptyArgumentsTerm where
+module NonFOLAgdaInternalTermsVarNonEmptyArgumentsTerm where
 
 postulate
   D   : Set

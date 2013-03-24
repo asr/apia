@@ -11,7 +11,7 @@
 -- conversion rules for the λ-abstraction and the fixed-point
 -- operator.
 
-module NonFOL.HigherOrderFunctions where
+module NonFOLHigherOrderFunctions where
 
 infixl 6 _∙_
 infix  4 _≡_

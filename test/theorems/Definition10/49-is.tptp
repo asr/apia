@@ -9,13 +9,13 @@
 % Name:	Definition10.+-0x
 % Role:	axiom
 % Line:	33
-fof(n22_16837688, axiom, ( ! [A] : ( kAppF(kAppF(n43,zero),A) = A ) )).
+fof(n22_16837688, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
 
 % The original Agda term was:
 % Name:	Definition10.+-Sx
 % Role:	axiom
 % Line:	34
-fof(n25_16837688, axiom, ( ! [A] : ( ! [B] : ( kAppF(kAppF(n43,kAppF(succ,A)),B) = kAppF(succ,kAppF(kAppF(n43,A),B)) ) ) )).
+fof(n25_16837688, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
 
 % End general axiom(s).
 
@@ -26,7 +26,7 @@ fof(n25_16837688, axiom, ( ! [A] : ( ! [B] : ( kAppF(kAppF(n43,kAppF(succ,A)),B)
 % Name:	Definition10._.A
 % Role:	definition
 % Line:	42
-fof(n37_16837688, definition, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kAppP1(cN,A) ) => ( ( kAppP1(cN,B) ) => ( ( kAppP1(cN,C) ) => ( ! [D] : ( ( kAppP4(cA_37_16837688,A,B,C,D) ) <=> ( kAppF(kAppF(n43,kAppF(kAppF(n43,D),B)),C) = kAppF(kAppF(n43,D),kAppF(kAppF(n43,B),C)) ) ) ) ) ) ) ) ) )).
+fof(n37_16837688, definition, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kAppP1(cN,A) ) => ( ( kAppP1(cN,B) ) => ( ( kAppP1(cN,C) ) => ( ! [D] : ( ( kAppP4(cA_37_16837688,A,B,C,D) ) <=> ( n43(n43(D,B),C) = n43(D,n43(B,C)) ) ) ) ) ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -37,7 +37,7 @@ fof(n37_16837688, definition, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kAppP1(cN,A) ) =
 % Name:	Definition10._.is
 % Role:	prove
 % Line:	49
-fof(n41_16837688, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kAppP1(cN,A) ) => ( ( kAppP1(cN,B) ) => ( ( kAppP1(cN,C) ) => ( ! [D] : ( ( kAppP4(cA_37_16837688,A,B,C,D) ) => ( kAppP4(cA_37_16837688,A,B,C,kAppF(succ,D)) ) ) ) ) ) ) ) ) )).
+fof(n41_16837688, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kAppP1(cN,A) ) => ( ( kAppP1(cN,B) ) => ( ( kAppP1(cN,C) ) => ( ! [D] : ( ( kAppP4(cA_37_16837688,A,B,C,D) ) => ( kAppP4(cA_37_16837688,A,B,C,succ(D)) ) ) ) ) ) ) ) ) )).
 
 % End conjecture.
 

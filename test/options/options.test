@@ -4,8 +4,6 @@ dist/build/agda2atp/agda2atp --help
 >>>
 Usage: agda2atp [OPTIONS] FILE
 
-          --appF                          use the binary function symbol 'appF' for the translation
-                                          of functions (required for handling currying)
           --atp=NAME                      set the ATP (e, equinox, ileancop, metis, spass, vampire)
                                           (default: e, equinox, and vampire)
           --help                          show this help
@@ -24,6 +22,10 @@ Usage: agda2atp [OPTIONS] FILE
           --vampire-exec=COMMAND          set the vampire executable (default: vampire_lin64)
   -v N    --verbose=N                     set verbosity level to N
           --version                       show version number
+          --with-appF                     use the binary function symbol 'appF' for the translation
+                                          of functions (required for handling currying)
+          --without-appPn                 do not use an n-ary predicate symbol appPn for the translation
+                                          of an n-ary predicate
 
 >>>2
 >>>= 0

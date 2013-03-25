@@ -18,7 +18,6 @@ module Options
   , options
   , MOptions  -- Required by Haddock.
   , Options( Options --Improve Haddock information.
-           , optAppF
            , optATP
            , optHelp
            , optInputFile
@@ -34,6 +33,8 @@ module Options
            , optVampireExec
            , optVerbose
            , optVersion
+           , optWithAppF
+           , optWithoutAppPn
            )
   , printUsage
   , processOptions
@@ -74,8 +75,7 @@ import qualified Agda.Utils.Trie as Trie ( insert, singleton )
 
 -- | Program command-line options.
 data Options = Options
-  { optAppF            ∷ Bool
-  , optATP             ∷ [String]
+  { optATP             ∷ [String]
   , optHelp            ∷ Bool
   , optIncludePath     ∷ [FilePath]
   , optInputFile       ∷ Maybe FilePath
@@ -90,6 +90,8 @@ data Options = Options
   , optVampireExec     ∷ String
   , optVerbose         ∷ Verbosity
   , optVersion         ∷ Bool
+  , optWithAppF        ∷ Bool
+  , optWithoutAppPn    ∷ Bool
   }
 
 -- N.B. The default ATPs are handled by @ATP.callATPs@.
@@ -97,8 +99,7 @@ data Options = Options
 -- | Default options use by the program.
 defaultOptions ∷ Options
 defaultOptions = Options
-  { optAppF            = False
-  , optATP             = []
+  { optATP             = []
   , optHelp            = False
   , optIncludePath     = []
   , optInputFile       = Nothing
@@ -113,13 +114,12 @@ defaultOptions = Options
   , optVampireExec     = "vampire_lin64"
   , optVerbose         = Trie.singleton [] 1
   , optVersion         = False
+  , optWithAppF        = False
+  , optWithoutAppPn    = False
   }
 
 -- | 'Options' monad.
 type MOptions = Options → Either String Options
-
-appFOpt ∷ MOptions
-appFOpt opts = Right opts { optAppF = True }
 
 atpOpt ∷ String → MOptions
 atpOpt []   _    = Left "Option `--atp' requires an argument NAME"
@@ -197,13 +197,16 @@ verboseOpt str opts =
 versionOpt ∷ MOptions
 versionOpt opts = Right opts { optVersion = True }
 
+withAppFOpt ∷ MOptions
+withAppFOpt opts = Right opts { optWithAppF = True }
+
+withoutAppPnOpt ∷ MOptions
+withoutAppPnOpt opts = Right opts { optWithoutAppPn = True }
+
 -- | Description of the command-line 'Options'.
 options ∷ [OptDescr MOptions]
 options =
-  [ Option []  ["appF"] (NoArg appFOpt) $
-               "use the binary function symbol 'appF' for the translation\n"
-               ++ "of functions (required for handling currying)"
-  , Option []  ["atp"] (ReqArg atpOpt "NAME") $
+  [ Option []  ["atp"] (ReqArg atpOpt "NAME") $
                "set the ATP (e, equinox, ileancop, metis, spass, vampire)\n"
                ++ "(default: e, equinox, and vampire)"
   , Option []  ["help"] (NoArg helpOpt)
@@ -235,6 +238,12 @@ options =
                "set verbosity level to N"
   , Option []  ["version"] (NoArg versionOpt)
                "show version number"
+  , Option []  ["with-appF"] (NoArg withAppFOpt) $
+               "use the binary function symbol 'appF' for the translation\n"
+               ++ "of functions (required for handling currying)"
+  , Option []  ["without-appPn"] (NoArg withoutAppPnOpt) $
+               "do not use an n-ary predicate symbol appPn for the translation\n"
+               ++ "of an n-ary predicate"
   ]
 
 usageHeader ∷ String → String

@@ -36,7 +36,8 @@ import FOL.Types ( FOLTerm(FOLFun), FOLFormula(Predicate) )
 kAppF ∷ String
 kAppF = "kAppF"
 
--- TODO (24 March 2013). Why there is not Haddock link for 'optAppF'?
+-- TODO (24 March 2013). Why there is not Haddock link for
+-- 'optWithAppF'?
 
 -- | Translation of first-order logic functions using the option
 -- 'optAppF'. For example, the function @foo x1 ... xn@ will be
@@ -45,10 +46,19 @@ kAppF = "kAppF"
 appF ∷ FOLTerm → FOLTerm → FOLTerm
 appF t1 t2 = FOLFun kAppF [t1, t2]
 
--- | Translation to first-order logic predicates. For example, the
--- predicate @P x1 x2 x3@ will be translate to @kAppP3 (p, x1, x2,
--- x3)@, where @kAppP3@ is a hard-coded constant 4-ary predicate
--- symbol.
+-- TODO (25 March 2013). Why there is not Haddock link for
+-- 'optWithoutAppPN'?
+
+-- | Translation of first-order logic predicates by default. For
+-- example, the predicate @P x1 x2 x3@
+--
+-- will be translate to
+--
+-- @kAppP3 (p, x1, x2, x3)@,
+--
+-- where @kAppP3@ is a hard-coded constant 4-ary predicate
+-- symbol. Using the option 'without-appPN' the predicates are
+-- translated directly.
 appP ∷ FOLTerm → [FOLTerm] → FOLFormula
 appP _ [] = __IMPOSSIBLE__
 appP p ts = Predicate name (p : ts)

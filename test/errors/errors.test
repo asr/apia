@@ -295,3 +295,11 @@ dist/build/agda2atp/agda2atp -itest/errors test/errors/TPTP4XError.agda
 agda2atp: tptp4X found an error in the file /tmp/TPTP4XError/17-foo.tptp
 Please report this as a bug
 >>>= 1
+
+#37. Terms.hs: incompatible options --universal-quantified-propositional-functions and --without-appPn
+dist/build/agda2atp/agda2atp --without-appPn -itest/errors test/errors/UniversalQuantifiedPropositionalFunctions-WithoutAppPn.agda
+<<<
+>>>
+>>>2
+agda2atp: The options '--universal-quantified-propositional-functions' and '--without-appPn' are incompatible
+>>>= 1

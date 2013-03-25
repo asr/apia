@@ -96,7 +96,7 @@ import Monad.Base
 
 import Monad.Reports ( reportSLn )
 
-import Options ( Options(optAppF) )
+import Options ( Options(optWithAppF, optWithoutAppPn) )
 
 #include "../../undefined.h"
 
@@ -154,19 +154,20 @@ binConst ∷ (FOLFormula → FOLFormula → FOLFormula) →
 binConst op arg1 arg2 =
   liftM2 op (argTermToFormula arg1) (argTermToFormula arg2)
 
--- We translate n-ary predicates. For example, the predicate
---
--- @P : D → D → D → Set@
---
--- is translated to @kAppP3(p,X,Y,Z)@, where @kAppP3@ is a hard-coded
--- 4-ary predicate symbol and @p@ is constant obtained from the name
--- @P@.
+
+-- Translation of predicates.
 predicate ∷ QName → Args → T FOLFormula
 predicate qName args = do
   folName ← qName2String qName
+  termsFOL ← mapM argTermToFOLTerm args
+
   case length args of
     0 → __IMPOSSIBLE__
-    _ → fmap (appP (FOLFun folName [])) (mapM argTermToFOLTerm args)
+    _ → ifM (askTOpt optWithoutAppPn)
+            -- Direct translation.
+            (return $ Predicate folName termsFOL)
+            -- Translation using Koen's suggestion.
+            (return $ appP (FOLFun folName []) termsFOL)
 
 predicateLogicalScheme ∷ [String] → Nat → Args → T FOLFormula
 predicateLogicalScheme vars n args = do
@@ -461,7 +462,12 @@ termToFormula term@(Var n args) = do
           p = "--universal-quantified-propositional-functions"
 
       ifM (isTPragmaOption p)
-          (predicateLogicalScheme vars n args)
+          (ifM (askTOpt optWithoutAppPn)
+               (throwError $
+                 "The options '--universal-quantified-propositional-functions'"
+                 ++ " and '--without-appPn' are incompatible")
+               (predicateLogicalScheme vars n args)
+          )
           (throwError $ universalQuantificationMsg p)
 
 termToFormula _ = __IMPOSSIBLE__
@@ -472,7 +478,7 @@ termToFormula _ = __IMPOSSIBLE__
 appArgsF ∷ String → Args → T FOLTerm
 appArgsF fn args = do
   termsFOL ← mapM argTermToFOLTerm args
-  ifM (askTOpt optAppF)
+  ifM (askTOpt optWithAppF)
       (return $ foldl' appF (FOLFun fn []) termsFOL)
       (return $ FOLFun fn termsFOL)
 

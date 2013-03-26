@@ -211,17 +211,6 @@ agda2atp_changed : clean
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test used when there is a new ATP or a new version of an ATP
-
-atp_changed :
-	make generated_conjectures
-	make prove_theorems
-	make refute_theorems
-	make errors
-	make options
-	@echo "$@ succeeded!"
-
-##############################################################################
 # Hlint test
 
 hlint :

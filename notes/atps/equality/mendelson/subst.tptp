@@ -4,7 +4,7 @@
 
 % The conjecture *could not be* proved by the following ATPs:
 
-% E 1.6
+% E 1.7
 % $ eprover --auto --cpu-limit=180 --memory-limit=Auto --tstp-format file_name
 
 % Equinox 5.0alpha (2010-06-29)

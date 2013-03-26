@@ -140,7 +140,7 @@ atpArgs E timeLimit file = do
                 , file
                 ]
     else
-      if eVersion == "E 1.6 Tiger Hill"
+      if eVersion == "E 1.6 Tiger Hill" || eVersion == "E 1.7 Jun Chiabari"
         then return [ "--auto"
                     , "--cpu-limit=" ++ show timeLimit
                     , "--memory-limit=Auto"

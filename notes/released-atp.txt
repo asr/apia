@@ -1,21 +1,24 @@
 When there is a new release of an ATP, we should follow the following
 procedure:
 
-* In agda2atp, to update the documentation of src/ATP.hs with the new
-  version.
+* In agda2atp, to update src/ATP.hs with the new version.
 
-* In agda2atp, to run the suite of proved conjectures with the new
-  ATP.
+* In agda2atp, to test all the proved conjectures.
 
-* In fotc/src/fot, to test all the conjectures.
+* In fotc/src/fot, to test all the proved conjectures.
 
-* In fotc/src/fot, to test the ATPs failures in FOTC/README.agda with
-  the new ATP.
+* In fotc/notes, to test all the proved conjectures.
+
+* In fotc/src/fot, to test the ATPs failures and to update the date:
+
+  find -name 'UnprovedATP.agda'
 
 * In fotc/src/fot, to test the "Only ATP x proved the theorem" using
   something like
 
-  find src/ -name '*.agda' | xargs grep '11 July 2012 : Only'
+  find src/ -name '*.agda' | xargs grep Only
+
+  agda2atp --atp=xxx --time=240 --unproven-conjecture-no-error file_name
 
 * Test fotc/notes/atp/equality/
 
@@ -23,5 +26,3 @@ procedure:
   i.e. something like
 
   $ find -name '*' | xargs grep -I 'old version' | sort
-
-* To update the website.

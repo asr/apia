@@ -45,7 +45,7 @@ app ∷ FOLTerm → FOLTerm → FOLTerm
 app t1 t2 = FOLFun kApp [t1, t2]
 
 -- | Translation of first-order logic predicates by default. For
--- example, the predicate @P x1 x2 x3@ will be translate to @kp3_ (p,
+-- example, the predicate @P x1 x2 x3@ will be translated to @kp3_ (p,
 -- x1, x2, x3)@, where @kp3_@ is a hard-coded 4-ary predicate
 -- symbol. Using the option @--without-predicate-symbols@ the
 -- predicates are translated directly.

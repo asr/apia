@@ -71,7 +71,7 @@ import FOL.Constants
   , folImplies, folEquiv, folExists, folForAll, folEquals
   )
 
-import FOL.Primitives       ( appF, appP, equal )
+import FOL.Primitives       ( app, equal, predicateTranslation )
 import FOL.Translation.Name ( concatName )
 
 import {-# source #-} FOL.Translation.Types
@@ -96,7 +96,7 @@ import Monad.Base
 
 import Monad.Reports ( reportSLn )
 
-import Options ( Options(optWithAppF, optWithoutAppPn) )
+import Options ( Options(optWithFnApp, optWithoutPSymbols) )
 
 #include "../../undefined.h"
 
@@ -163,11 +163,11 @@ predicate qName args = do
 
   case length args of
     0 → __IMPOSSIBLE__
-    _ → ifM (askTOpt optWithoutAppPn)
+    _ → ifM (askTOpt optWithoutPSymbols)
             -- Direct translation.
             (return $ Predicate folName termsFOL)
             -- Translation using Koen's suggestion.
-            (return $ appP (FOLFun folName []) termsFOL)
+            (return $ predicateTranslation (FOLFun folName []) termsFOL)
 
 predicateLogicalScheme ∷ [String] → Nat → Args → T FOLFormula
 predicateLogicalScheme vars n args = do
@@ -176,7 +176,7 @@ predicateLogicalScheme vars n args = do
 
   case length args of
     0 → __IMPOSSIBLE__
-    _ → fmap (appP (FOLVar var)) (mapM argTermToFOLTerm args)
+    _ → fmap (predicateTranslation (FOLVar var)) (mapM argTermToFOLTerm args)
 
 -- | Translate an Agda internal 'Term' to a first-order logic formula
 -- 'FOLFormula'.
@@ -462,24 +462,24 @@ termToFormula term@(Var n args) = do
           p = "--universal-quantified-propositional-functions"
 
       ifM (isTPragmaOption p)
-          (ifM (askTOpt optWithoutAppPn)
+          (ifM (askTOpt optWithoutPSymbols)
                (throwError $
                  "The options '--universal-quantified-propositional-functions'"
-                 ++ " and '--without-appPn' are incompatible")
+                 ++ " and '--without-predicate-symbols' are incompatible")
                (predicateLogicalScheme vars n args)
           )
           (throwError $ universalQuantificationMsg p)
 
 termToFormula _ = __IMPOSSIBLE__
 
--- Translate the function @foo x1 ... xn@ to
---
--- @kAppF (... kAppF(kAppF(foo, X1), X2), ..., Xn)@.
+-- Translate the function @foo x1 ... xn@.
 appArgsF ∷ String → Args → T FOLTerm
 appArgsF fn args = do
   termsFOL ← mapM argTermToFOLTerm args
-  ifM (askTOpt optWithAppF)
-      (return $ foldl' appF (FOLFun fn []) termsFOL)
+  ifM (askTOpt optWithFnApp)
+      -- Trannslation using a binary function symbol.
+      (return $ foldl' app (FOLFun fn []) termsFOL)
+      -- Direct translation.
       (return $ FOLFun fn termsFOL)
 
 -- | Translate an Agda internal 'Term' to a first-order logic term
@@ -581,7 +581,7 @@ termToFOLTerm term@(Var n args) = do
           (throwError "The option '--universal-quantified-functions' is not implemented")
           -- (do termsFOL ← mapM argTermToFOLTerm varArgs
           --     ifM (askTOpt optAppF)
-          --         (return $ foldl' appF (FOLVar (vars !! n)) termsFOL)
+          --         (return $ foldl' app (FOLVar (vars !! n)) termsFOL)
           --         (return $ FOLFun (vars !! n) termsFOL))
           (throwError $ universalQuantificationMsg p)
 

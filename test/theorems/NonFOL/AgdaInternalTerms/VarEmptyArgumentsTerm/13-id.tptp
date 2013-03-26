@@ -9,7 +9,7 @@
 % Name:	NonFOL.AgdaInternalTerms.VarEmptyArgumentsTerm.id
 % Role:	prove
 % Line:	13
-fof(n6_164351268, conjecture, ( ! [A] : ( ! [B] : ( ( kAppP1(A,B) ) => ( kAppP1(A,B) ) ) ) )).
+fof(n6_164351268, conjecture, ( ! [A] : ( ! [B] : ( ( kp1_(A,B) ) => ( kp1_(A,B) ) ) ) )).
 
 % End conjecture.
 

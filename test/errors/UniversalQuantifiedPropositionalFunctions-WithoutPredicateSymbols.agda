@@ -5,9 +5,9 @@
 {-# OPTIONS --universal-quantified-propositional-functions #-}
 
 -- The options @--universal-quantified-propositional-functions@ and
--- @--without-appPn<@ are incompatible.
+-- @--without-predicate-symbols<@ are incompatible.
 
-module UniversalQuantifiedPropositionalFunctions-WithoutAppPn where
+module UniversalQuantifiedPropositionalFunctions-WithoutPredicateSymbols where
 
 postulate D : Set
 

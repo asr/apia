@@ -9,7 +9,7 @@
 % Name:	PredicateNameConstantName.foo
 % Role:	prove
 % Line:	14
-fof(n4_197099929, conjecture, ( ! [A] : ( ( kAppP1(cP,A) ) => ( kAppP1(cP,A) ) ) )).
+fof(n4_197099929, conjecture, ( ! [A] : ( ( kp1_(cP,A) ) => ( kp1_(cP,A) ) ) )).
 
 % End conjecture.
 

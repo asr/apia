@@ -192,12 +192,12 @@ instance ToTPTP [FOLTerm] where
   toTPTP (a : as) = toTPTP a ++ "," ++ toTPTP as
 
 instance ToTPTP FOLFormula where
-  -- We translate the hard-coded first-order logic predicate @kEqual@
+  -- We translate the hard-coded first-order logic predicate @equal_@
   -- as the predefined equality in the ATP.
-  toTPTP (Predicate "kEqual" [t1, t2] ) =
+  toTPTP (Predicate "equal_" [t1, t2] ) =
     "( " ++ toTPTP t1 ++ " = " ++ toTPTP t2 ++ " )"
 
-  toTPTP (Predicate "kEqual" _) = __IMPOSSIBLE__
+  toTPTP (Predicate "equal_" _) = __IMPOSSIBLE__
 
   -- If the predicate represents a propositional logic variable,
   -- following the TPTP syntax, we do not print the internal

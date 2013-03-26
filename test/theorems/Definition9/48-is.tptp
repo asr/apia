@@ -26,7 +26,7 @@ fof(n25_17022218, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) )
 % Name:	Definition9._.A
 % Role:	definition
 % Line:	41
-fof(n31_17022218, definition, ( ! [A] : ( ( kAppP1(cN,A) ) => ( ! [B] : ( ( kAppP2(cA_31_17022218,A,B) ) <=> ( n43(B,zero) = B ) ) ) ) )).
+fof(n31_17022218, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cA_31_17022218,A,B) ) <=> ( n43(B,zero) = B ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -37,7 +37,7 @@ fof(n31_17022218, definition, ( ! [A] : ( ( kAppP1(cN,A) ) => ( ! [B] : ( ( kApp
 % Name:	Definition9._.is
 % Role:	prove
 % Line:	48
-fof(n35_17022218, conjecture, ( ! [A] : ( ( kAppP1(cN,A) ) => ( ! [B] : ( ( kAppP2(cA_31_17022218,A,B) ) => ( kAppP2(cA_31_17022218,A,succ(B)) ) ) ) ) )).
+fof(n35_17022218, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cA_31_17022218,A,B) ) => ( kp2_(cA_31_17022218,A,succ(B)) ) ) ) ) )).
 
 % End conjecture.
 

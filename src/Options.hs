@@ -33,8 +33,8 @@ module Options
            , optVampireExec
            , optVerbose
            , optVersion
-           , optWithAppF
-           , optWithoutAppPn
+           , optWithFnApp
+           , optWithoutPSymbols
            )
   , printUsage
   , processOptions
@@ -90,8 +90,8 @@ data Options = Options
   , optVampireExec     ∷ String
   , optVerbose         ∷ Verbosity
   , optVersion         ∷ Bool
-  , optWithAppF        ∷ Bool
-  , optWithoutAppPn    ∷ Bool
+  , optWithFnApp       ∷ Bool
+  , optWithoutPSymbols ∷ Bool
   }
 
 -- N.B. The default ATPs are handled by @ATP.callATPs@.
@@ -114,8 +114,8 @@ defaultOptions = Options
   , optVampireExec     = "vampire_lin64"
   , optVerbose         = Trie.singleton [] 1
   , optVersion         = False
-  , optWithAppF        = False
-  , optWithoutAppPn    = False
+  , optWithFnApp       = False
+  , optWithoutPSymbols = False
   }
 
 -- | 'Options' monad.
@@ -197,11 +197,11 @@ verboseOpt str opts =
 versionOpt ∷ MOptions
 versionOpt opts = Right opts { optVersion = True }
 
-withAppFOpt ∷ MOptions
-withAppFOpt opts = Right opts { optWithAppF = True }
+withFnAppOpt ∷ MOptions
+withFnAppOpt opts = Right opts { optWithFnApp = True }
 
-withoutAppPnOpt ∷ MOptions
-withoutAppPnOpt opts = Right opts { optWithoutAppPn = True }
+withoutPSymbolsOpt ∷ MOptions
+withoutPSymbolsOpt opts = Right opts { optWithoutPSymbols = True }
 
 -- | Description of the command-line 'Options'.
 options ∷ [OptDescr MOptions]
@@ -238,12 +238,12 @@ options =
                "set verbosity level to N"
   , Option []  ["version"] (NoArg versionOpt)
                "show version number"
-  , Option []  ["with-appF"] (NoArg withAppFOpt) $
-               "use the binary function symbol 'appF' for the translation\n"
+  , Option []  ["with-function-application"] (NoArg withFnAppOpt) $
+               "use a hard-coded binary function symbol for the translation\n"
                ++ "of functions (required for handling currying)"
-  , Option []  ["without-appPn"] (NoArg withoutAppPnOpt) $
-               "do not use an n-ary predicate symbol appPn for the translation\n"
-               ++ "of an n-ary predicate"
+  , Option []  ["without-predicate-symbols"] (NoArg withoutPSymbolsOpt) $
+               "do not use hard-coded (n+1)-ary predicate symbols for the\n"
+               ++ "translation of n-ary predicates"
   ]
 
 usageHeader ∷ String → String

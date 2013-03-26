@@ -297,9 +297,9 @@ Please report this as a bug
 >>>= 1
 
 #37. Terms.hs: incompatible options --universal-quantified-propositional-functions and --without-appPn
-dist/build/agda2atp/agda2atp --without-appPn -itest/errors test/errors/UniversalQuantifiedPropositionalFunctions-WithoutAppPn.agda
+dist/build/agda2atp/agda2atp --without-predicate-symbols -itest/errors test/errors/UniversalQuantifiedPropositionalFunctions-WithoutPredicateSymbols.agda
 <<<
 >>>
 >>>2
-agda2atp: The options '--universal-quantified-propositional-functions' and '--without-appPn' are incompatible
+agda2atp: The options '--universal-quantified-propositional-functions' and '--without-predicate-symbols' are incompatible
 >>>= 1

@@ -15,7 +15,7 @@ fof(n6_45017211, axiom, ( ! [A] : ( fFUN33(A) = A ) )).
 % Name:	Names.funnyP
 % Role:	axiom
 % Line:	33
-fof(n8_45017211, axiom, ( ! [A] : ( kAppP1(cPRED33,A) ) )).
+fof(n8_45017211, axiom, ( ! [A] : ( kp1_(cPRED33,A) ) )).
 
 % End general axiom(s).
 

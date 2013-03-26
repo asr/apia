@@ -22,10 +22,10 @@ Usage: agda2atp [OPTIONS] FILE
           --vampire-exec=COMMAND          set the vampire executable (default: vampire_lin64)
   -v N    --verbose=N                     set verbosity level to N
           --version                       show version number
-          --with-appF                     use the binary function symbol 'appF' for the translation
+          --with-function-application     use a hard-coded binary function symbol for the translation
                                           of functions (required for handling currying)
-          --without-appPn                 do not use an n-ary predicate symbol appPn for the translation
-                                          of an n-ary predicate
+          --without-predicate-symbols     do not use hard-coded (n+1)-ary predicate symbols for the
+                                          translation of n-ary predicates
 
 >>>2
 >>>= 0

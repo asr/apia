@@ -9,7 +9,7 @@
 % Name:	Eta6-Issue8.foo
 % Role:	prove
 % Line:	15
-fof(n5_247799157, conjecture, ( ! [A] : ( ( ? [B] : ( kAppP1(A,B) ) ) => ( ? [B] : ( kAppP1(A,B) ) ) ) )).
+fof(n5_247799157, conjecture, ( ! [A] : ( ( ? [B] : ( kp1_(A,B) ) ) => ( ? [B] : ( kp1_(A,B) ) ) ) )).
 
 % End conjecture.
 

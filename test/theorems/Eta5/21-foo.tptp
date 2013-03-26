@@ -9,7 +9,7 @@
 % Name:	Eta5.P
 % Role:	definition
 % Line:	17
-fof(n8_19183374, definition, ( ! [A] : ( ( kAppP1(cP_8_19183374,A) ) <=> ( ? [B] : ( kAppP2(n_8776_,A,B) ) ) ) )).
+fof(n8_19183374, definition, ( ! [A] : ( ( kp1_(cP_8_19183374,A) ) <=> ( ? [B] : ( kp2_(n_8776_,A,B) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n8_19183374, definition, ( ! [A] : ( ( kAppP1(cP_8_19183374,A) ) <=> ( ? [B]
 % Name:	Eta5.foo
 % Role:	prove
 % Line:	21
-fof(n13_19183374, conjecture, ( ! [A] : ( ( kAppP1(cP_8_19183374,A) ) => ( ? [B] : ( kAppP2(n_8776_,A,B) ) ) ) )).
+fof(n13_19183374, conjecture, ( ! [A] : ( ( kp1_(cP_8_19183374,A) ) => ( ? [B] : ( kp2_(n_8776_,A,B) ) ) ) )).
 
 % End conjecture.
 

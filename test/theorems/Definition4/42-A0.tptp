@@ -26,7 +26,7 @@ fof(n25_92201930, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) )
 % Name:	Definition4.A
 % Role:	definition
 % Line:	38
-fof(n26_92201930, definition, ( ! [A] : ( ( kAppP1(cA_26_92201930,A) ) <=> ( n43(zero,A) = A ) ) )).
+fof(n26_92201930, definition, ( ! [A] : ( ( kp1_(cA_26_92201930,A) ) <=> ( n43(zero,A) = A ) ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -37,7 +37,7 @@ fof(n26_92201930, definition, ( ! [A] : ( ( kAppP1(cA_26_92201930,A) ) <=> ( n43
 % Name:	Definition4.A0
 % Role:	prove
 % Line:	42
-fof(n28_92201930, conjecture, ( kAppP1(cA_26_92201930,zero) )).
+fof(n28_92201930, conjecture, ( kp1_(cA_26_92201930,zero) )).
 
 % End conjecture.
 

@@ -13,13 +13,6 @@ procedure:
 
   find -name 'UnprovedATP.agda'
 
-* In fotc/src/fot, to test the "Only ATP x proved the theorem" using
-  something like
-
-  find src/ -name '*.agda' | xargs grep Only
-
-  agda2atp --atp=xxx --time=240 --unproven-conjecture-no-error file_name
-
 * Test fotc/notes/atp/equality/
 
 * In agda2atp and fotc, to search for comments using the old version,

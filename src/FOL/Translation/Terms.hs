@@ -102,15 +102,15 @@ import Options ( Options(optWithFnApp, optWithoutPSymbols) )
 
 ------------------------------------------------------------------------------
 
-universalQuantificationMsg ∷ String → String
-universalQuantificationMsg p =
-  "Use the Agda option " ++ "`" ++ p ++ "'" ++ " in your Agda file "
+universalQuantificationErrorMsg ∷ String → String
+universalQuantificationErrorMsg opt =
+  "Use the Agda option " ++ "`" ++ opt ++ "'" ++ " in your Agda file "
   ++ "for the translation of first-order logic universal quantified "
   ++ entities
   where
     entities ∷ String
     entities =
-      case p of
+      case opt of
         "--universal-quantified-formulae"                → "formulae"
         "--universal-quantified-functions"               → "functions"
         "--universal-quantified-propositional-functions" → "propositional functions"
@@ -199,9 +199,8 @@ termToFormula term@(Def qName@(QName _ name) args) = do
           | isCNameFOLConst folFalse → return FALSE
 
           | otherwise → do
-            -- In this guard we translate 0-ary predicates,
-            --
-            -- e.g.  @P : Set@.
+            -- In this guard we translate 0-ary predicates, i.e. propositional
+            -- functions, for example, @A : Set@.
             folName ← qName2String qName
             return $ Predicate folName []
 
@@ -403,12 +402,12 @@ termToFormula (Pi domTy (Abs x absTy)) = do
     El (Type (Max [ClosedLevel 1])) (Sort _) → do
       reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
 
-      let p ∷ String
-          p = "--universal-quantified-formulae"
+      let opt ∷ String
+          opt = "--universal-quantified-formulae"
 
-      ifM (isTPragmaOption p)
+      ifM (isTPragmaOption opt)
           (return f)
-          (throwError $ universalQuantificationMsg p)
+          (throwError $ universalQuantificationErrorMsg opt)
 
     -- Non-FOL translation: First-order logic universal quantified
     -- propositional functions.
@@ -458,17 +457,17 @@ termToFormula term@(Var n args) = do
     -- others variables. See an example in
     -- Test.Succeed.AgdaInternalTerms.Var1.agda.
     _ → do
-      let p ∷ String
-          p = "--universal-quantified-propositional-functions"
+      let opt ∷ String
+          opt = "--universal-quantified-propositional-functions"
 
-      ifM (isTPragmaOption p)
+      ifM (isTPragmaOption opt)
           (ifM (askTOpt optWithoutPSymbols)
                (throwError $
                  "The options '--universal-quantified-propositional-functions'"
                  ++ " and '--without-predicate-symbols' are incompatible")
                (predicateLogicalScheme vars n args)
           )
-          (throwError $ universalQuantificationMsg p)
+          (throwError $ universalQuantificationErrorMsg opt)
 
 termToFormula _ = __IMPOSSIBLE__
 
@@ -573,17 +572,17 @@ termToFOLTerm term@(Var n args) = do
     -- variables. See an example in
     -- Test.Succeed.AgdaInternalTerms.Var2.agda
     _varArgs → do
-      let p ∷ String
-          p = "--universal-quantified-functions"
+      let opt ∷ String
+          opt = "--universal-quantified-functions"
 
-      ifM (isTPragmaOption p)
+      ifM (isTPragmaOption opt)
           -- TODO (24 March 2013). Implementation.
           (throwError "The option '--universal-quantified-functions' is not implemented")
           -- (do termsFOL ← mapM argTermToFOLTerm varArgs
           --     ifM (askTOpt optAppF)
           --         (return $ foldl' app (FOLVar (vars !! n)) termsFOL)
           --         (return $ FOLFun (vars !! n) termsFOL))
-          (throwError $ universalQuantificationMsg p)
+          (throwError $ universalQuantificationErrorMsg opt)
 
 termToFOLTerm _ = __IMPOSSIBLE__
 

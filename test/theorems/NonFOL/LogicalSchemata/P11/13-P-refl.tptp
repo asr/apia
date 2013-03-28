@@ -3,24 +3,13 @@
 %-----------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------
-% The local hint(s).
-
-% The original Agda term was:
-% Name:	NonFOL.SchemaInstance.schema
-% Role:	hint
-% Line:	15
-fof(n6_75224334, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp1_(A,C) ) => ( kp1_(B,C) ) ) ) ) )).
-
-% End local hint(s).
-
-%-----------------------------------------------------------------------------
 % The conjecture.
 
 % The original Agda term was:
-% Name:	NonFOL.SchemaInstance.instanceC
+% Name:	NonFOL.LogicalSchemata.P11.P-refl
 % Role:	prove
-% Line:	22
-fof(n10_75224334, conjecture, ( ( kp1_(cA,d) ) => ( kp1_(cB,d) ) )).
+% Line:	13
+fof(n16_235377916, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : ( ! [E] : ( ! [F] : ( ! [G] : ( ! [H] : ( ! [I] : ( ! [J] : ( ! [K] : ( ! [L] : ( ( kp11_(A,B,C,D,E,F,G,H,I,J,K,L) ) => ( kp11_(A,B,C,D,E,F,G,H,I,J,K,L) ) ) ) ) ) ) ) ) ) ) ) ) ) )).
 
 % End conjecture.
 

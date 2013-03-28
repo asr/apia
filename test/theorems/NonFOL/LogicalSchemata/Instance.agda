@@ -6,7 +6,7 @@
 {-# OPTIONS --universal-quantified-propositional-functions #-}
 {-# OPTIONS --without-K #-}
 
-module NonFOL.SchemaInstance where
+module NonFOL.LogicalSchemata.Instance where
 
 -- A schema
 -- Current translation: ∀ p q x. app(p,x) → app(q,x).

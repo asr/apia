@@ -13,9 +13,11 @@ procedure:
 
   find -name 'UnprovedATP.agda'
 
-* Test fotc/notes/atp/equality/
+* Test fotc/notes/atp/equality/.
 
 * In agda2atp and fotc, to search for comments using the old version,
   i.e. something like
 
   $ find -name '*' | xargs grep -I 'old version' | sort
+
+* In agda2atp, run make agda2atp_changed.

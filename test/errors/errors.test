@@ -111,7 +111,7 @@ dist/build/agda2atp/agda2atp -itest/errors --atp=e test/errors/NoTheorem.agda
 <<<
 >>>
 Proving the conjecture in /tmp/NoTheorem/15-foo.tptp ...
-E 1.6 Tiger Hill *did not* prove the conjecture
+E 1.7 Jun Chiabari *did not* prove the conjecture
 >>>2
 agda2atp: The ATP(s) did not prove the conjecture in /tmp/NoTheorem/15-foo.tptp
 >>>= 1

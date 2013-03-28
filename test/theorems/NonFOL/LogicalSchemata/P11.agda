@@ -1,12 +1,12 @@
 ------------------------------------------------------------------------------
--- Testing the translation of schemas with 11-ary predicates symbols
+-- Testing the translation of logical schemata with 11-ary predicates symbols
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --universal-quantified-propositional-functions #-}
 {-# OPTIONS --without-K #-}
 
-module NonFOL.SchemasP11 where
+module NonFOL.LogicalSchemata.P11 where
 
 postulate
   D      : Set

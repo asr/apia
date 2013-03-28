@@ -1,0 +1,28 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by agda2atp.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The required ATP definition(s) by the conjecture.
+
+% The original Agda term was:
+% Name:	PropositionalFunction2.A
+% Role:	definition
+% Line:	18
+fof(n5_1676460, definition, ( ! [A] : ( ( kp1_(cA_5_1676460,A) ) <=> ( ( kp1_(cP,A) ) | ( kp1_(cP,A) ) ) ) )).
+
+% End required ATP definition(s) by the conjecture.
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name:	PropositionalFunction2.foo
+% Role:	prove
+% Line:	22
+fof(n7_1676460, conjecture, ( ( kp1_(cA_5_1676460,a) ) => ( kp1_(cA_5_1676460,a) ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

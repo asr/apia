@@ -6,10 +6,10 @@
 % The conjecture.
 
 % The original Agda term was:
-% Name:	LogicalConstants.thm₁
+% Name:	LogicalConstants2.∀I₁
 % Role:	prove
-% Line:	60
-fof(n21_143722291, conjecture, ( ( ( pA ) & ( $true ) ) => ( pA ) )).
+% Line:	96
+fof(n36_76783960, conjecture, ( ( ! [A] : ( kp1_(cA185,A) ) ) => ( ! [A] : ( kp1_(cA185,A) ) ) )).
 
 % End conjecture.
 

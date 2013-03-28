@@ -5,7 +5,7 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K #-}
 
-module LogicalConstants where
+module LogicalConstants2 where
 
 infix  5 ¬_
 infixr 4 _∧_

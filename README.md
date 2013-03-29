@@ -23,7 +23,7 @@
   [SPASS](http://www.spass-prover.org/) or
   [Vampire](http://www.vprover.org/). The tested versions of the ATPs
   are: E 1.7 Jun Chiabari, Equinox version 5.0alpha (2010-06-29),
-  ileanCoP v1.3beta1, Metis 2.3 (release 20110926), SPASS v3.7 and
+  ileanCoP v1.3beta1, Metis 2.3 (release 20120927), SPASS v3.7 and
   Vampire 0.6 (revision 903).
 
 * The `tptp4X` program

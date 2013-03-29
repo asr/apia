@@ -3,17 +3,22 @@ procedure:
 
 * In agda2atp, to update src/ATP.hs with the new version.
 
-* In agda2atp, to test all the proved conjectures.
+* In agda2atp, to test all the proved conjectures if the ATP is a
+  default one.
 
-* In fotc/src/fot, to test all the proved conjectures.
+* In fotc/src/fot, to test all the proved conjectures if the ATP is a
+  default one.
 
-* In fotc/notes, to test all the proved conjectures.
+* In fotc/notes, to test all the proved conjectures if the ATP is a
+  default one.
 
 * In fotc/src/fot, to test the ATPs failures and to update the date:
 
   find -name 'UnprovedATP.agda'
 
-* Test fotc/notes/atp/equality/.
+* Test agda2atp/notes/atp/equality/.
+
+* Test agda2atp/notes/tptp.
 
 * In agda2atp and fotc, to search for comments using the old version,
   i.e. something like

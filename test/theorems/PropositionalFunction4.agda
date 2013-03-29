@@ -5,17 +5,20 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K #-}
 
-module PropositionalFunction3 where
+module PropositionalFunction4 where
 
 ------------------------------------------------------------------------------
 
 postulate
   D   : Set
-  P   : D → Set
+  f   : D → D
   a   : D
-  _∨_ : Set → Set → Set
+  _≡_ : D → D → Set
 
--- In this case, the propositional function uses predicates and it is
--- an anonymous function.
-postulate foo : (λ x → P x ∨ P x) a → (λ x → P x ∨ P x) a
+A : D → Set
+A x = f x ≡ f x
+{-# ATP definition A #-}
+
+-- In this case the propositional function uses functions.
+postulate foo : A a → A a
 {-# ATP prove foo #-}

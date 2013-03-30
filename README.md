@@ -103,7 +103,7 @@
    ````bash
    $ agda2atp Test.agda
    Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
-   E 1.6 Tiger Hill proved the conjecture in /tmp/Test/9-8744-comm.tptp
+   E 1.7 Jun Chiabari proved the conjecture
    ````
 
    The program will call the installed ATPs and tell which of the ATPs
@@ -118,7 +118,7 @@
    ````bash
    $ agda2atp --atp=equinox Test.agda
    Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
-   Equinox, version 5.0alpha, 2010-06-29 proved the conjecture in /tmp/Test/9-8744-comm.tptp
+   Equinox, version 5.0alpha, 2010-06-29 proved the conjecture
    ````
 
 # Known limitations

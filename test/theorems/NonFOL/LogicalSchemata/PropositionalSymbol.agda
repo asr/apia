@@ -1,14 +1,14 @@
 ------------------------------------------------------------------------------
--- Testing the translation of universal quantified propositional functions
+-- Testing the translation of the universal quantified propositional symbols
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --universal-quantified-propositional-functions #-}
+{-# OPTIONS --schematic-propositional-symbols #-}
 {-# OPTIONS --without-K #-}
 
-module NonFOL.LogicalSchemata.UniversalQuantifiedPropositionalFunctions where
+module NonFOL.LogicalSchemata.PropositionalSymbol where
 
 postulate D : Set
 
-postulate id : {A : D → Set}{x : D} → A x → A x
+postulate id : {P : Set} → P → P
 {-# ATP prove id #-}

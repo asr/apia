@@ -2,12 +2,12 @@
 -- Incompatible options
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --universal-quantified-propositional-functions #-}
+{-# OPTIONS --schematic-propositional-functions #-}
 
--- The options @--universal-quantified-propositional-functions@ and
+-- The options @--schematic-propositional-functions@ and
 -- @--without-predicate-symbols<@ are incompatible.
 
-module UniversalQuantifiedPropositionalFunctions-WithoutPredicateSymbols where
+module SchematicPropositionalFunctions-WithoutPredicateSymbols where
 
 postulate D : Set
 

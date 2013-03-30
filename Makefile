@@ -168,7 +168,8 @@ doc :
 # Notes: Type-checking
 
 type_check_notes_path = -i$(notes_path) \
-                        -i$(notes_path)/agda-interface
+                        -i$(notes_path)/agda-interface \
+                        -i$(notes_path)/README
 
 %.type_check_notes :
 	$(AGDA) $(type_check_notes_path) $*.agda
@@ -179,7 +180,8 @@ type_check_notes : $(type_check_notes_files)
 ##############################################################################
 # Notes: Prove theorems
 
-prove_notes_path = -i$(notes_path)
+prove_notes_path = -i$(notes_path) \
+                   -i$(notes_path)/README
 
 %.prove_notes :
 	echo $(prove_notes_files)

@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing the Agda pragma --universal-quantified-functions
+-- Testing the Agda pragma --schematic-functions
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --no-universe-polymorphism #-}

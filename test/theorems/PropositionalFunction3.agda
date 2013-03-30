@@ -15,7 +15,7 @@ postulate
   a   : D
   _∨_ : Set → Set → Set
 
--- In this case, the propositional function uses predicates and it is
--- an anonymous function.
+-- In this case, the propositional function uses predicates and logical
+-- constants, and it is an anonymous function.
 postulate foo : (λ x → P x ∨ P x) a → (λ x → P x ∨ P x) a
 {-# ATP prove foo #-}

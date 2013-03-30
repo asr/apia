@@ -19,6 +19,7 @@ A : D → Set
 A x = P x ∨ P x
 {-# ATP definition A #-}
 
--- In this case the propositional function uses predicates.
+-- In this case the propositional function uses predicates and logical
+-- constants.
 postulate foo : A a → A a
 {-# ATP prove foo #-}

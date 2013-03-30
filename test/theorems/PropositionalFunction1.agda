@@ -14,6 +14,7 @@ postulate
   A  : D → Set
   a  : D
 
--- In this case, the propositional function is a predicate.
+-- In this case, the propositional function does not use logical
+-- constants.
 postulate foo : A a → A a
 {-# ATP prove foo #-}

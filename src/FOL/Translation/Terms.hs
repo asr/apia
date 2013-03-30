@@ -71,7 +71,7 @@ import FOL.Constants
   , folImplies, folEquiv, folExists, folForAll, folEquals
   )
 
-import FOL.Primitives       ( app, equal, predicateTranslation )
+import FOL.Primitives       ( appF, appP, equal )
 import FOL.Translation.Name ( concatName )
 
 import {-# source #-} FOL.Translation.Types
@@ -167,16 +167,16 @@ predicate qName args = do
             -- Direct translation.
             (return $ Predicate folName termsFOL)
             -- Translation using Koen's suggestion.
-            (return $ predicateTranslation (FOLFun folName []) termsFOL)
+            (return $ appP (FOLFun folName []) termsFOL)
 
-predicateLogicalScheme ∷ [String] → Nat → Args → T FOLFormula
-predicateLogicalScheme vars n args = do
+propositionalFunctionScheme ∷ [String] → Nat → Args → T FOLFormula
+propositionalFunctionScheme vars n args = do
   let var ∷ String
       var = vars !! n
 
   case length args of
     0 → __IMPOSSIBLE__
-    _ → fmap (predicateTranslation (FOLVar var)) (mapM argTermToFOLTerm args)
+    _ → fmap (appP (FOLVar var)) (mapM argTermToFOLTerm args)
 
 -- | Translate an Agda internal 'Term' to a first-order logic formula
 -- 'FOLFormula'.
@@ -384,16 +384,16 @@ termToFormula (Pi domTy (Abs x absTy)) = do
       __IMPOSSIBLE__
 
     -- Non-FOL translation: First-order logic universal quantified
-    -- formulae.
+    -- propositional symbols.
     --
     -- The bounded variable is quantified on a @Set₁@,
     --
-    -- e.g. the bounded variable is @P : Set@,
+    -- e.g. the bounded variable is @A : Set@,
     --
-    -- so we just return the consequent. We use this case for translate
-    -- predicate logical schemata such
+    -- so we just return the consequent. We use this case for
+    -- translating logical schemata such
     --
-    -- @∨-comm  : {P Q : Set} → P ∨ Q → Q ∨ P@.
+    -- @∨-comm  : {A B : Set} → A ∨ B → B ∨ A@.
     --
     -- In this case we handle the bounded variable/function in
     -- @termToFormula (Var n args)@, which is processed first due to
@@ -414,13 +414,13 @@ termToFormula (Pi domTy (Abs x absTy)) = do
     --
     -- The bounded variable is quantified on a @Set₁@,
     --
-    -- e.g. the bounded variable is @P : D → D → Set@.
+    -- e.g. the bounded variable is @A : D → D → Set@.
     --
     -- In this case we return a forall bind on the fresh variable. We
-    -- use this case for translate predicate logic schemas, e.g.
+    -- use this case for translate logic schemata such as
     --
-    --   ∨-comm₂ : {P₂ Q₂ : D → D → Set}{x y : D} →
-    --             P₂ x y ∨ Q₂ x y → Q₂ x y ∨ P₂ x y
+    --   ∨-comm₂ : {A₂ B₂ : D → D → Set}{x y : D} →
+    --             A₂ x y ∨ B₂ x y → A₂ x y ∨ B₂ x y.
 
     El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → do
       reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
@@ -445,17 +445,16 @@ termToFormula term@(Var n args) = do
     -- propositional functions.
 
     -- If we have a bounded variable quantified on a function of a
-    -- @Set@ to a @Set₁@, for example, the variable/predicate @P@ in
+    -- @Set@ to a @Set₁@, for example, the variable/function @A@ in
     --
-    -- @(P : D → Set) → (x : D) → P x → P x@
+    -- @(A : D → Set) → (x : D) → A x → A x@
     --
     -- we are quantifying on this variable/function
     --
     -- (see @termToFormula (Pi domTy (Abs _ absTy))@),
     --
-    -- therefore we need to apply this variable/predicate to the
-    -- others variables. See an example in
-    -- Test.Succeed.AgdaInternalTerms.Var1.agda.
+    -- therefore we need to apply this variable/function to the others
+    -- variables.
     _ → do
       let p ∷ String
           p = "--schematic-propositional-functions"
@@ -465,7 +464,7 @@ termToFormula term@(Var n args) = do
                (throwError $
                  "The options '--schematic-propositional-functions'"
                  ++ " and '--without-predicate-symbols' are incompatible")
-               (predicateLogicalScheme vars n args)
+               (propositionalFunctionScheme vars n args)
           )
           (throwError $ universalQuantificationErrorMsg p)
 
@@ -476,8 +475,8 @@ appArgsF ∷ String → Args → T FOLTerm
 appArgsF fn args = do
   termsFOL ← mapM argTermToFOLTerm args
   ifM (askTOpt optWithFnApp)
-      -- Trannslation using a binary function symbol.
-      (return $ foldl' app (FOLFun fn []) termsFOL)
+      -- Translation using a hard-coded binary function symbol.
+      (return $ foldl' appF (FOLFun fn []) termsFOL)
       -- Direct translation.
       (return $ FOLFun fn termsFOL)
 

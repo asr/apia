@@ -10,5 +10,8 @@ module NonFOL.LogicalSchemata.PropositionalFunction where
 
 postulate D : Set
 
-postulate id : {A : D → Set}{x : D} → A x → A x
-{-# ATP prove id #-}
+postulate id₁ : {A : D → Set}{x : D} → A x → A x
+{-# ATP prove id₁ #-}
+
+postulate id₂ : {A : D → D → Set}{x y : D} → A x y → A x y
+{-# ATP prove id₂ #-}

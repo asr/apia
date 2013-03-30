@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name:	PropositionalFunction1.foo
 % Role:	prove
-% Line:	18
+% Line:	19
 fof(n4_9044857, conjecture, ( ( kp1_(cA,a) ) => ( kp1_(cA,a) ) )).
 
 % End conjecture.

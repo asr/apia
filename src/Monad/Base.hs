@@ -67,10 +67,11 @@ import Utils.Names       ( freshName )
 -- | The translation monad state.
 
 -- See note [@OptionsPragma@].
-data TState = TState { tDefs          ∷ Definitions    -- ^ Agda definitions.
-                     , tVars          ∷ [String]       -- ^ Variables names.
-                     , tPragmaOptions ∷ OptionsPragma  -- ^ Pragma options.
-                     }
+data TState = TState
+  { tDefs          ∷ Definitions    -- ^ Agda definitions.
+  , tVars          ∷ [String]       -- ^ Variables names.
+  , tPragmaOptions ∷ OptionsPragma  -- ^ Pragma options.
+  }
 
 -- The initial state.
 initTState ∷ TState

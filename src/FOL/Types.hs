@@ -41,14 +41,14 @@ data FOLTerm = FOLFun String [FOLTerm]
 -- | First-order logic formulae.
 data FOLFormula = TRUE
                 | FALSE
-                | Predicate String     [FOLTerm]
-                | Not       FOLFormula
-                | And       FOLFormula FOLFormula
-                | Or        FOLFormula FOLFormula
-                | Implies   FOLFormula FOLFormula
-                | Equiv     FOLFormula FOLFormula
-                | ForAll    String     (FOLTerm → FOLFormula)
-                | Exists    String     (FOLTerm → FOLFormula)
+                | Predicate String [FOLTerm]
+                | Not FOLFormula
+                | And FOLFormula FOLFormula
+                | Or FOLFormula FOLFormula
+                | Implies FOLFormula FOLFormula
+                | Equiv FOLFormula FOLFormula
+                | ForAll String (FOLTerm → FOLFormula)
+                | Exists String (FOLTerm → FOLFormula)
 
 instance Show FOLFormula where
   show TRUE                = " TRUE "

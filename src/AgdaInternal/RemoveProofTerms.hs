@@ -153,7 +153,9 @@ instance RemoveVar Term where
     reportSLn "removePT" 20 $ "Pop variable " ++ show y
     return newTerm
 
-  removeVar _ _ = __IMPOSSIBLE__
+  removeVar term _ = do
+    reportSLn "removeVar" 20 $ "The term is: " ++ show term
+    __IMPOSSIBLE__
 
 instance RemoveVar a ⇒ RemoveVar (I.Dom a) where
   removeVar (Dom info e) x = fmap (Dom info) (removeVar e x)

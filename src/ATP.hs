@@ -280,7 +280,7 @@ callATPs file = do
 ------------------------------------------------------------------------------
 -- Note [Vampire termination].
 
--- TODO: Ugly hack. Using the thread delay and repeating the
+-- ToDo: Ugly hack. Using the thread delay and repeating the
 -- @terminateProcess@ instruction was the way to kill the Vampire
 -- process.
 --

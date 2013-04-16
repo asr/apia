@@ -241,7 +241,7 @@ install :
 ##############################################################################
 # Haskell program coverage
 
-# TODO: Fix
+# ToDo: Fix
 
 hpc_html_dir = $(agda2atp_path)/hpc
 
@@ -272,9 +272,9 @@ hpc_clean :
 TAGS :
 	hasktags -e $(agda2atp_haskell_files)
 
-TODO :
+ToDo :
 	find -wholename './dist' -prune -o -print \
-	| xargs grep -I 'TODO:' \
+	| xargs grep -I 'ToDo:' \
 	| sort
 
 clean :

@@ -96,7 +96,7 @@ import Monad.Base
 
 import Monad.Reports ( reportSLn )
 
-import Options ( Options(optWithFnApp, optWithoutPSymbols) )
+import Options ( Options(optWithFnConsts, optWithoutPConsts) )
 
 #include "../../undefined.h"
 
@@ -163,7 +163,7 @@ predicate qName args = do
 
   case length args of
     0 → __IMPOSSIBLE__
-    _ → ifM (askTOpt optWithoutPSymbols)
+    _ → ifM (askTOpt optWithoutPConsts)
             -- Direct translation.
             (return $ Predicate folName termsFOL)
             -- Translation using Koen's suggestion.
@@ -460,10 +460,10 @@ termToFormula term@(Var n args) = do
           p = "--schematic-propositional-functions"
 
       ifM (isTPragmaOption p)
-          (ifM (askTOpt optWithoutPSymbols)
+          (ifM (askTOpt optWithoutPConsts)
                (throwError $
                  "The options '--schematic-propositional-functions'"
-                 ++ " and '--without-predicate-symbols' are incompatible")
+                 ++ " and '--without-predicate-constants' are incompatible")
                (propositionalFunctionScheme vars n args)
           )
           (throwError $ universalQuantificationErrorMsg p)
@@ -474,7 +474,7 @@ termToFormula _ = __IMPOSSIBLE__
 appArgsF ∷ String → Args → T FOLTerm
 appArgsF fn args = do
   termsFOL ← mapM argTermToFOLTerm args
-  ifM (askTOpt optWithFnApp)
+  ifM (askTOpt optWithFnConsts)
       -- Translation using a hard-coded binary function symbol.
       (return $ foldl' appF (FOLFun fn []) termsFOL)
       -- Direct translation.

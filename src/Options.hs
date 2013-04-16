@@ -33,8 +33,8 @@ module Options
            , optVampireExec
            , optVerbose
            , optVersion
-           , optWithFnApp
-           , optWithoutPSymbols
+           , optWithFnConsts
+           , optWithoutPConsts
            )
   , printUsage
   , processOptions
@@ -90,8 +90,8 @@ data Options = Options
   , optVampireExec     ∷ String
   , optVerbose         ∷ Verbosity
   , optVersion         ∷ Bool
-  , optWithFnApp       ∷ Bool
-  , optWithoutPSymbols ∷ Bool
+  , optWithFnConsts    ∷ Bool
+  , optWithoutPConsts  ∷ Bool
   }
 
 -- N.B. The default ATPs are handled by @ATP.callATPs@.
@@ -114,8 +114,8 @@ defaultOptions = Options
   , optVampireExec     = "vampire_lin64"
   , optVerbose         = Trie.singleton [] 1
   , optVersion         = False
-  , optWithFnApp       = False
-  , optWithoutPSymbols = False
+  , optWithFnConsts    = False
+  , optWithoutPConsts  = False
   }
 
 -- | 'Options' monad.
@@ -197,11 +197,11 @@ verboseOpt str opts =
 versionOpt ∷ MOptions
 versionOpt opts = Right opts { optVersion = True }
 
-withFnAppOpt ∷ MOptions
-withFnAppOpt opts = Right opts { optWithFnApp = True }
+withFnConstsOpt ∷ MOptions
+withFnConstsOpt opts = Right opts { optWithFnConsts = True }
 
-withoutPSymbolsOpt ∷ MOptions
-withoutPSymbolsOpt opts = Right opts { optWithoutPSymbols = True }
+withoutPConstsOpt ∷ MOptions
+withoutPConstsOpt opts = Right opts { optWithoutPConsts = True }
 
 -- | Description of the command-line 'Options'.
 options ∷ [OptDescr MOptions]
@@ -238,10 +238,10 @@ options =
                "set verbosity level to N"
   , Option []  ["version"] (NoArg versionOpt)
                "show version number"
-  , Option []  ["with-function-application"] (NoArg withFnAppOpt) $
-               "use a hard-coded binary function symbol for the translation\n"
+  , Option []  ["with-function-constans"] (NoArg withFnConstsOpt) $
+               "use an hard-coded binary function symbol for the translation\n"
                ++ "of functions (required for handling currying)"
-  , Option []  ["without-predicate-symbols"] (NoArg withoutPSymbolsOpt) $
+  , Option []  ["without-predicate-constants"] (NoArg withoutPConstsOpt) $
                "do not use hard-coded (n+1)-ary predicate symbols for the\n"
                ++ "translation of n-ary predicates"
   ]

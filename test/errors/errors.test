@@ -296,10 +296,10 @@ agda2atp: tptp4X found an error in the file /tmp/TPTP4XError/17-foo.tptp
 Please report this as a bug
 >>>= 1
 
-#37. Terms.hs: incompatible options --schematic-propositional-functions and --without-appPn
-dist/build/agda2atp/agda2atp --without-predicate-symbols -itest/errors test/errors/SchematicPropositionalFunctions-WithoutPredicateSymbols.agda
+#37. Terms.hs: incompatible options --schematic-propositional-functions and --without-predicate-constants
+dist/build/agda2atp/agda2atp --without-predicate-constants -itest/errors test/errors/SchematicPropositionalFunctions-WithoutPredicateSymbols.agda
 <<<
 >>>
 >>>2
-agda2atp: The options '--schematic-propositional-functions' and '--without-predicate-symbols' are incompatible
+agda2atp: The options '--schematic-propositional-functions' and '--without-predicate-constants' are incompatible
 >>>= 1

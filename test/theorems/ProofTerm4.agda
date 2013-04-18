@@ -8,13 +8,15 @@
 module ProofTerm4 where
 
 postulate
-  D      : Set
-  _≡_    : D → D → Set
-  SomeP  : D → D → D → D → Set
+  D   : Set
+  _≡_ : D → D → Set
+  A   : D → D → D → D → Set
 
--- We can erase proof terms of type D → ... → D → Set
-foo : ∀ m₁ m₂ m₃ m₄ → SomeP m₁ m₂ m₃ m₄ → m₁ ≡ m₁
-foo m₁ m₂ m₃ m₄ h = bar m₁
+-- We can erase proof terms of type D → ⋯ → D → Set.
+foo : ∀ x₁ x₂ x₃ x₄ → A x₁ x₂ x₃ x₄ → x₁ ≡ x₁
+foo x₁ x₂ x₃ x₄ h = bar x₁
   where
-  postulate bar : ∀ m → m ≡ m
+  -- Since @bar@ is insidere a where clause, we erase the proof
+  -- term @h@.
+  postulate bar : ∀ x → x ≡ x
   {-# ATP prove bar #-}

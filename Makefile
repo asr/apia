@@ -7,7 +7,6 @@ SHELL := /bin/bash
 ##############################################################################
 # Paths
 
-dump-agdai_path     = tools/dump-agdai
 fix-whitespace_path = tools/fix-whitespace
 
 # Tests paths
@@ -63,7 +62,8 @@ refute_theorems_files = $(call my_pathsubst,refute_theorems,$(non_theorems_path)
 
 errors_files = $(call my_pathsubst,errors,$(errors_path))
 
-options_files = $(call my_pathsubst,options,$(options_path))
+options_files = $(patsubst %.agda,%.options,\
+  $(shell find $(options_path) -name '*.agda' | sort))
 
 # Notes
 
@@ -197,7 +197,6 @@ prove_notes : $(prove_notes_files)
 agda_changed : clean
 	make agda2atp_changed
 	make type_check_notes
-	cd $(dump-agdai_path) && cabal clean && cabal install
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -217,7 +216,6 @@ agda2atp_changed : clean
 
 hlint :
 	hlint src/
-	hlint $(dump-agdai_path)/src -i "Use on"
 	hlint $(fix-whitespace_path)
 	@echo "$@ succeeded!"
 
@@ -235,7 +233,6 @@ git_pre_commit :
 
 install :
 	cabal install
-	cd $(dump-agdai_path) && cabal install
 	cd $(fix-whitespace_path) && cabal install
 
 ##############################################################################

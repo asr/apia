@@ -6,6 +6,7 @@ Usage: agda2atp [OPTIONS] FILE
 
           --atp=NAME                      set the ATP (e, equinox, ileancop, metis, spass, vampire)
                                           (default: e, equinox, and vampire)
+          --dump-agdai                    dump the Agda interface file and type information to stdout only
           --help                          show this help
   -i DIR  --include-path=DIR              look for imports in DIR
           --not-check                     no check the syntax of the generated TPTP files
@@ -72,5 +73,22 @@ Created /tmp/snapshot/TrivialTheorem/18-foo.tptp
 The files are different:
 /tmp/TrivialTheorem/18-foo.tptp
 /tmp/snapshot/TrivialTheorem/18-foo.tptp
+>>>2
+>>>= 0
+
+#7. --dump-agdai
+dist/build/agda2atp/agda2atp -itest/options --dump-agdai test/options/Foo.agda
+<<<
+>>>
+Interface {iImportedModules = [], iModuleName = Foo, iScope = fromList [(Foo,* scope Foo
+)], iInsideScope = ScopeInfo
+  current = Foo
+  context = TopCtx
+  modules
+    * scope 
+    * scope Foo
+, iSignature = Sig {sigSections = fromList [(Foo,Section {secTelescope = EmptyTel, secFreeVars = 0})], sigDefinitions = fromList []}, iBuiltin = fromList [], iHaskellImports = fromList [], iHighlighting = CompressedFile {ranges = [(Range {from = 1, to = 79},MetaInfo {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 80, to = 93},MetaInfo {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 94, to = 172},MetaInfo {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 174, to = 177},MetaInfo {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 178, to = 185},MetaInfo {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 213, to = 216},MetaInfo {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 217, to = 220},MetaInfo {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 221, to = 228},MetaInfo {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 241, to = 244},MetaInfo {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 246, to = 252},MetaInfo {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 253, to = 256},MetaInfo {aspect = Just (Name (Just Module) False), otherAspects = [], note = Nothing, definitionSite = Just (TopLevelModuleName {moduleNameParts = ["Foo"]},1)}),(Range {from = 257, to = 262},MetaInfo {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing})]}, iPragmaOptions = [["--no-universe-polymorphism"],["--without-K"]], iPatternSyns = fromList []}
+
+Types ***********************************************************
 >>>2
 >>>= 0

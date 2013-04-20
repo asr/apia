@@ -1,10 +1,8 @@
 ------------------------------------------------------------------------------
--- Testing a module with imports.
+-- Foo module
 ------------------------------------------------------------------------------
 
-module Imports where
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
 
-open import Data.Nat
-
-foo : ℕ → ℕ
-foo n = n
+module Foo where

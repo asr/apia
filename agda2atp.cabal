@@ -47,6 +47,7 @@ executable agda2atp
                  AgdaInternal.Vars
                  ATP
                  CheckTPTP
+                 DumpAgdai
                  FOL.Constants
                  FOL.Primitives
                  FOL.Translation.ClauseBody

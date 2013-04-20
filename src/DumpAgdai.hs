@@ -1,24 +1,35 @@
+-----------------------------------------------------------------------------
+-- |
+-- Module      : DumpAgdai
+-- Copyright   : (c) Andrés Sicard-Ramírez 2009-2013
+-- License     : See the file LICENSE.
+--
+-- Maintainer  : Andrés Sicard-Ramírez <andres.sicard.ramirez@gmail.com>
+-- Stability   : experimental
+--
+-- Dump the Agda interface file and type information to stdout.
+-----------------------------------------------------------------------------
+
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Types ( printTypes ) where
+module DumpAgdai ( dumpAgdai )
+where
 
 ------------------------------------------------------------------------------
 -- Haskell imports
 
 import qualified Data.HashMap.Strict as HashMap ( toList )
 
-import Data.Int  ( Int32 )
-import Data.List ( sortBy )
+import Data.Function ( on )
+import Data.List     ( sortBy )
+
+import Control.Monad.Trans ( MonadIO(liftIO) )
 
 ------------------------------------------------------------------------------
 -- Agda library imports
 
-import Agda.Syntax.Abstract.Name
-  ( Name(nameBindingSite)
-  , QName(qnameName)
-  )
-
-import Agda.Syntax.Internal ( Type )
+import Agda.Syntax.Abstract.Name ( QName )
+import Agda.Syntax.Internal      ( Type )
 
 import Agda.TypeChecking.Monad.Base
   ( Definition
@@ -28,33 +39,19 @@ import Agda.TypeChecking.Monad.Base
   , Signature(sigDefinitions)
   )
 
-import Agda.Syntax.Position
-  ( Interval'(iStart)
-  , Position'(posLine)
-  , rangeToInterval
-  )
+------------------------------------------------------------------------------
+-- Local imports
+
+import AgdaInternal.Interface ( myReadInterface, qNameLine )
+import Monad.Base             ( T )
 
 ------------------------------------------------------------------------------
--- Auxiliary functions
-
--- From Data.Function. This function is not in Haskell2010.
-on ∷ (b → b → c) → (a → b) → a → a → c
-(.*.) `on` f = \x y → f x .*. f y
-
-qNameLine ∷ QName → Int32
-qNameLine qName =
-  case rangeToInterval $ nameBindingSite $ qnameName qName of
-    Nothing → error "qNameLine"
-    Just i  → posLine $ iStart i
-
 -- We sort the 'QName's by its position in the Agda module.
 myQNameCompare ∷ QName → QName → Ordering
 myQNameCompare = compare `on` qNameLine
 
 myQNameDefinitionCompare ∷ (QName, Definition) → (QName, Definition) → Ordering
 myQNameDefinitionCompare = myQNameCompare `on` fst
-
-------------------------------------------------------------------------------
 
 printQNameType ∷ (QName, Definition) → IO ()
 printQNameType (qName, def) = do
@@ -74,3 +71,10 @@ printTypes i = do
       defs = sigDefinitions $ iSignature i
 
   mapM_ printQNameType $ sortBy myQNameDefinitionCompare $ HashMap.toList defs
+
+-- | Print the Agda interface file and type information to stdout.
+dumpAgdai ∷ FilePath → T ()
+dumpAgdai agdaFile = do
+  i ← myReadInterface agdaFile
+  liftIO $ print i
+  liftIO $ printTypes i

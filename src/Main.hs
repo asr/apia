@@ -52,6 +52,8 @@ import ATP                    ( callATPs )
 
 import CheckTPTP ( checkTPTP )
 
+import DumpAgdai ( dumpAgdai )
+
 import Monad.Base
   ( modifyDefs
   , modifyPragmaOptions
@@ -62,7 +64,8 @@ import Monad.Base
 import Monad.Reports ( reportSLn )
 
 import Options
-  ( Options(optHelp
+  ( Options(optDumpAgdai
+           , optHelp
            , optInputFile
            , optNotCheck
            , optOnlyFiles
@@ -121,24 +124,29 @@ runAgda2ATP = do
                  Nothing → throwError "Missing input file (try --help)"
                  Just f  → return f
 
-        -- The ATP pragmas are translated to TPTP annotated formulae.
-        allAFs ← translation file
-
-        -- Creation of the TPTP files.
-        tptpFiles ← mapM (createConjectureFile (fst allAFs)) (snd allAFs)
-
-        -- Check the generated TPTP files using the tptp4X program
-        -- from the TPTP library
-        unless (optNotCheck opts) $ mapM_ checkTPTP tptpFiles
-
         case () of
-          _ | -- Run the snapshot test.
-              optSnapshotTest opts → mapM_ snapshotTest tptpFiles
+          _ | -- Dump the Agda interface file and type information to stdout.
+              optDumpAgdai opts → dumpAgdai file
+            | otherwise         → do
 
-            | -- The ATPs systems are called on the TPTP files.
-              not (optOnlyFiles opts) → mapM_ callATPs tptpFiles
+              -- The ATP pragmas are translated to TPTP annotated formulae.
+              allAFs ← translation file
 
-            | otherwise → return ()
+              -- Creation of the TPTP files.
+              tptpFiles ← mapM (createConjectureFile (fst allAFs)) (snd allAFs)
+
+              -- Check the generated TPTP files using the tptp4X
+              -- program from the TPTP library
+              unless (optNotCheck opts) $ mapM_ checkTPTP tptpFiles
+
+              case () of
+                _ | -- Run the snapshot test.
+                    optSnapshotTest opts → mapM_ snapshotTest tptpFiles
+
+                  | -- The ATPs systems are called on the TPTP files.
+                    not (optOnlyFiles opts) → mapM_ callATPs tptpFiles
+
+                  | otherwise → return ()
 
 -- | Main.
 main ∷ IO ()

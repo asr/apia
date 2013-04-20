@@ -19,6 +19,7 @@ module Options
   , MOptions  -- Required by Haddock.
   , Options( Options --Improve Haddock information.
            , optATP
+           , optDumpAgdai
            , optHelp
            , optInputFile
            , optIncludePath
@@ -76,6 +77,7 @@ import qualified Agda.Utils.Trie as Trie ( insert, singleton )
 -- | Program command-line options.
 data Options = Options
   { optATP             ∷ [String]
+  , optDumpAgdai       ∷ Bool
   , optHelp            ∷ Bool
   , optIncludePath     ∷ [FilePath]
   , optInputFile       ∷ Maybe FilePath
@@ -100,6 +102,7 @@ data Options = Options
 defaultOptions ∷ Options
 defaultOptions = Options
   { optATP             = []
+  , optDumpAgdai       = False
   , optHelp            = False
   , optIncludePath     = []
   , optInputFile       = Nothing
@@ -124,6 +127,9 @@ type MOptions = Options → Either String Options
 atpOpt ∷ String → MOptions
 atpOpt []   _    = Left "Option `--atp' requires an argument NAME"
 atpOpt name opts = Right opts { optATP = optATP opts ++ [name] }
+
+dumpAgdaiOpt ∷ MOptions
+dumpAgdaiOpt opts = Right opts { optDumpAgdai = True }
 
 helpOpt ∷ MOptions
 helpOpt opts = Right opts { optHelp = True }
@@ -209,6 +215,8 @@ options =
   [ Option []  ["atp"] (ReqArg atpOpt "NAME") $
                "set the ATP (e, equinox, ileancop, metis, spass, vampire)\n"
                ++ "(default: e, equinox, and vampire)"
+  , Option []  ["dump-agdai"] (NoArg dumpAgdaiOpt)
+               "dump the Agda interface file and type information to stdout only"
   , Option []  ["help"] (NoArg helpOpt)
                "show this help"
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")

@@ -3,7 +3,7 @@ version:       0.1
 cabal-version: >= 1.10
 build-type:    Simple
 description:   Fixes whitespace issues.
-tested-with:   GHC == 7.6.2
+tested-with:   GHC == 7.6.3
 
 executable fix-whitespace
   default-language: Haskell2010
@@ -14,7 +14,7 @@ executable fix-whitespace
                  , text        >= 0.11 && < 0.12
 
   -- Only warnings.
-  if impl(ghc == 7.6.2)
+  if impl(ghc == 7.6.2) || impl(ghc == 7.6.3)
      ghc-options: -Wall
                   -fwarn-auto-orphans
                   -fwarn-identities

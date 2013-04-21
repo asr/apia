@@ -10,7 +10,7 @@ category:      Dependent types
 homepage:      https://github.com/asr/agda2atp
 bug-reports:   https://github.com/asr/agda2atp/issues/
 synopsis:      Program for proving first-order formulae written in Agda using ATPs
-tested-with:   GHC == 7.6.2
+tested-with:   GHC == 7.6.3
 description:
   This package provides a program for proving first-order
   formulae written in the dependently typed language Agda
@@ -81,7 +81,7 @@ executable agda2atp
 
   -- Only warnings (tested with cabal-install version 1.16.0.2 using
   -- version 1.16.0.3 of the Cabal library).
-  if impl(ghc == 7.6.2)
+  if impl(ghc == 7.6.2) || impl(ghc == 7.6.3)
      ghc-options: -Wall
                   -fwarn-auto-orphans
                   -fwarn-identities

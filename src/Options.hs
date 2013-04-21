@@ -20,6 +20,7 @@ module Options
   , Options( Options --Improve Haddock information.
            , optATP
            , optDumpAgdai
+           , optDumpTypes
            , optHelp
            , optInputFile
            , optIncludePath
@@ -78,6 +79,7 @@ import qualified Agda.Utils.Trie as Trie ( insert, singleton )
 data Options = Options
   { optATP             ∷ [String]
   , optDumpAgdai       ∷ Bool
+  , optDumpTypes       ∷ Bool
   , optHelp            ∷ Bool
   , optIncludePath     ∷ [FilePath]
   , optInputFile       ∷ Maybe FilePath
@@ -103,6 +105,7 @@ defaultOptions ∷ Options
 defaultOptions = Options
   { optATP             = []
   , optDumpAgdai       = False
+  , optDumpTypes       = False
   , optHelp            = False
   , optIncludePath     = []
   , optInputFile       = Nothing
@@ -130,6 +133,9 @@ atpOpt name opts = Right opts { optATP = optATP opts ++ [name] }
 
 dumpAgdaiOpt ∷ MOptions
 dumpAgdaiOpt opts = Right opts { optDumpAgdai = True }
+
+dumpTypesOpt ∷ MOptions
+dumpTypesOpt opts = Right opts { optDumpTypes = True }
 
 helpOpt ∷ MOptions
 helpOpt opts = Right opts { optHelp = True }
@@ -216,7 +222,9 @@ options =
                "set the ATP (e, equinox, ileancop, metis, spass, vampire)\n"
                ++ "(default: e, equinox, and vampire)"
   , Option []  ["dump-agdai"] (NoArg dumpAgdaiOpt)
-               "dump the Agda interface file and type information to stdout only"
+               "dump the Agda interface file to stdout"
+  , Option []  ["dump-types"] (NoArg dumpTypesOpt)
+               "dump type information to stdout"
   , Option []  ["help"] (NoArg helpOpt)
                "show this help"
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")

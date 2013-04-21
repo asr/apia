@@ -1,18 +1,18 @@
 -----------------------------------------------------------------------------
 -- |
--- Module      : DumpAgdai
+-- Module      : Dump
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2013
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <andres.sicard.ramirez@gmail.com>
 -- Stability   : experimental
 --
--- Dump the Agda interface file and type information to stdout.
+-- Dump Agda interface file information to stdout.
 -----------------------------------------------------------------------------
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module DumpAgdai ( dumpAgdai )
+module Dump ( dumpAgdai, dumpTypes )
 where
 
 ------------------------------------------------------------------------------
@@ -53,28 +53,28 @@ myQNameCompare = compare `on` qNameLine
 myQNameDefinitionCompare ∷ (QName, Definition) → (QName, Definition) → Ordering
 myQNameDefinitionCompare = myQNameCompare `on` fst
 
-printQNameType ∷ (QName, Definition) → IO ()
-printQNameType (qName, def) = do
+dumpQNameType ∷ (QName, Definition) → T ()
+dumpQNameType (qName, def) = do
 
   let ty ∷ Type
       ty = defType def
 
-  putStrLn $ "Qname: " ++ show qName
-  putStrLn $ "Type: "  ++ show ty ++ "\n"
+  liftIO $ putStrLn $ "Qname: " ++ show qName
+  liftIO $ putStrLn $ "Type: "  ++ show ty ++ "\n"
 
-printTypes ∷ Interface → IO ()
-printTypes i = do
+-- | Print type information to stdout.
+dumpTypes ∷ FilePath → T ()
+dumpTypes file = do
 
-  putStrLn "\nTypes ***********************************************************"
+  i ← myReadInterface file
 
   let defs ∷ Definitions
       defs = sigDefinitions $ iSignature i
 
-  mapM_ printQNameType $ sortBy myQNameDefinitionCompare $ HashMap.toList defs
+  mapM_ dumpQNameType $ sortBy myQNameDefinitionCompare $ HashMap.toList defs
 
--- | Print the Agda interface file and type information to stdout.
+-- | Print the Agda interface file to stdout.
 dumpAgdai ∷ FilePath → T ()
-dumpAgdai agdaFile = do
-  i ← myReadInterface agdaFile
+dumpAgdai file = do
+  i ← myReadInterface file
   liftIO $ print i
-  liftIO $ printTypes i

@@ -6,3 +6,5 @@
 {-# OPTIONS --without-K #-}
 
 module Foo where
+
+postulate foo : Set

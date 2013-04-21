@@ -6,16 +6,16 @@
 % The general axiom(s).
 
 % The original Agda term was:
-% Name:	Where.+-x0
+% Name:	Where2.+-0x
 % Role:	axiom
-% Line:	34
-fof(n22_236866687, axiom, ( ! [A] : ( n43(A,zero) = A ) )).
+% Line:	32
+fof(n22_21954566, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
 
 % The original Agda term was:
-% Name:	Where.+-xS
+% Name:	Where2.+-Sx
 % Role:	axiom
-% Line:	35
-fof(n25_236866687, axiom, ( ! [A] : ( ! [B] : ( n43(A,succ(B)) = succ(n43(A,B)) ) ) )).
+% Line:	33
+fof(n25_21954566, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
 
 % End general axiom(s).
 
@@ -23,10 +23,10 @@ fof(n25_236866687, axiom, ( ! [A] : ( ! [B] : ( n43(A,succ(B)) = succ(n43(A,B)) 
 % The conjecture.
 
 % The original Agda term was:
-% Name:	Where._.is
+% Name:	Where2._.is
 % Role:	prove
-% Line:	49
-fof(n34_236866687, conjecture, ( ! [A] : ( ! [B] : ( ( n43(zero,B) = B ) => ( n43(zero,succ(B)) = succ(B) ) ) ) )).
+% Line:	45
+fof(n41_21954566, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp1_(cN,A) ) => ( ( kp1_(cN,B) ) => ( ( kp1_(cN,C) ) => ( ! [D] : ( ( n43(n43(D,B),C) = n43(D,n43(B,C)) ) => ( n43(n43(succ(D),B),C) = n43(succ(D),n43(B,C)) ) ) ) ) ) ) ) ) )).
 
 % End conjecture.
 

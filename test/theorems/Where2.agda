@@ -1,11 +1,11 @@
 ------------------------------------------------------------------------------
--- Testing the translation of definitions
+-- Testing the conjectures inside a @where@ clause
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K #-}
 
-module Definition9 where
+module Where2 where
 
 infixl 6 _+_
 infix  4 _≡_
@@ -33,17 +33,15 @@ postulate
   +-Sx : ∀ m n → succ m + n ≡ succ (m + n)
 {-# ATP axiom +-0x +-Sx #-}
 
--- We test the translation of a definition where we need to erase
--- proof terms.
-+-rightIdentity : ∀ {n} → N n → n + zero ≡ n
-+-rightIdentity Nn = N-ind A A0 is Nn
++-assoc : ∀ {m n o} → N m → N n → N o → m + n + o ≡ m + (n + o)
++-assoc {n = n} {o} Nm Nn No = N-ind A A0 is Nm
   where
   A : D → Set
-  A i = i + zero ≡ i
-  {-# ATP definition A #-}
+  A i = i + n + o ≡ i + (n + o)
 
-  postulate A0 : A zero
+  postulate A0 : zero + n + o ≡ zero + (n + o)
   {-# ATP prove A0 #-}
 
-  postulate is : ∀ {i} → A i → A (succ i)
+  postulate is : ∀ {i} → i + n + o ≡ i + (n + o) →
+                 succ i + n + o ≡ succ i + (n + o)
   {-# ATP prove is #-}

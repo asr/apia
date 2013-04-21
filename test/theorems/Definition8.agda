@@ -14,7 +14,7 @@ postulate
   op   : D → D
 
 -- In this case the proof term Pb is referenced in the types of the
--- definitions of c and d via the where clause. Therefore in the
+-- definitions of c and d via the @where@ clause. Therefore in the
 -- translation of c and d, we need to erase this proof term.
 foo : D → ∀ {b} → P b → D
 foo a Pb = a

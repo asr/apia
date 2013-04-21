@@ -11,7 +11,7 @@ postulate
   D   : Set
   _≡_ : D → D → Set
 
--- We test the translation of the definition of a 2-ary function.
+-- We test the translation of the definition of a binary function.
 foo : D → D → D
 foo d e = d
 {-# ATP definition foo #-}

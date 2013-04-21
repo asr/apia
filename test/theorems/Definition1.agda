@@ -12,7 +12,7 @@ postulate
   _≡_ : D → D → Set
   d   : D
 
--- We test the translation of the definition of a 0-ary function.
+-- We test the translation of the definition of a nullary function.
 e : D
 e = d
 {-# ATP definition e #-}

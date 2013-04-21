@@ -33,7 +33,7 @@ postulate
   +-Sx : ∀ m n → succ m + n ≡ succ (m + n)
 {-# ATP axiom +-0x +-Sx #-}
 
--- We test the translation of the definition of a 1-ary predicate.
+-- We test the translation of the definition of a unary predicate.
 
 A : D → Set
 A i = zero + i ≡ i

@@ -17,16 +17,16 @@ postulate
   _≡_    : D → D → Set
 
 data N : D → Set where
-  zN : N zero
-  sN : ∀ {n} → N n → N (succ n)
+  nzero : N zero
+  nsucc : ∀ {n} → N n → N (succ n)
 
 -- Induction principle.
 N-ind : (A : D → Set) →
-       A zero →
-       (∀ {n} → A n → A (succ n)) →
-       ∀ {n} → N n → A n
-N-ind A A0 h zN      = A0
-N-ind A A0 h (sN Nn) = h (N-ind A A0 h Nn)
+        A zero →
+        (∀ {n} → A n → A (succ n)) →
+        ∀ {n} → N n → A n
+N-ind A A0 h nzero      = A0
+N-ind A A0 h (nsucc Nn) = h (N-ind A A0 h Nn)
 
 postulate
   _+_  : D → D → D

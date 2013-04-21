@@ -11,7 +11,7 @@ postulate
   D   : Set
   _≡_ : D → D → Set
 
--- We test the translation of the definition of a 1-ary function.
+-- We test the translation of the definition of a unary function.
 foo : D → D
 foo d = d
 {-# ATP definition foo #-}

@@ -16,7 +16,7 @@ options_path       = test/options
 theorems_path      = test/theorems
 
 # Directory for the TPTP files.
-output_dir = /tmp/agda2atp
+output_dir = /tmp/apia
 
 # Notes path.
 notes_path = notes
@@ -24,18 +24,18 @@ notes_path = notes
 ##############################################################################
 # Variables
 
-agda2atp_haskell_files = $(shell find src/ -name '*.hs')
+apia_haskell_files = $(shell find src/ -name '*.hs')
 
 AGDA = agda -v 0
 
 # The defaults ATPs are e, equinox, and vampire.
-AGDA2ATP = dist/build/agda2atp/agda2atp
-# AGDA2ATP = dist/build/agda2atp/agda2atp --atp=e
-# AGDA2ATP = dist/build/agda2atp/agda2atp --atp=equinox
-# AGDA2ATP = dist/build/agda2atp/agda2atp --atp=ileancop
-# AGDA2ATP = dist/build/agda2atp/agda2atp --atp=metis
-# AGDA2ATP = dist/build/agda2atp/agda2atp --atp=spass
-# AGDA2ATP = dist/build/agda2atp/agda2atp --atp=vampire
+APIA = dist/build/apia/apia
+# APIA = dist/build/apia/apia --atp=e
+# APIA = dist/build/apia/apia --atp=equinox
+# APIA = dist/build/apia/apia --atp=ileancop
+# APIA = dist/build/apia/apia --atp=metis
+# APIA = dist/build/apia/apia --atp=spass
+# APIA = dist/build/apia/apia --atp=vampire
 
 ##############################################################################
 # Auxiliary functions
@@ -82,7 +82,7 @@ flags_gt = -i$(theorems_path) --only-files \
 %.generated_theorems :
 	@echo "Processing $*.agda"
 	@$(AGDA) -i$(theorems_path) $*.agda
-	@$(AGDA2ATP) -v 0 $(flags_gt) $*.agda
+	@$(APIA) -v 0 $(flags_gt) $*.agda
 	@diff -r $* $(output_dir)/$*
 
 flags_ngt = -i$(non_theorems_path) --only-files \
@@ -91,7 +91,7 @@ flags_ngt = -i$(non_theorems_path) --only-files \
 %.generated_non_theorems :
 	@echo "Processing $*.agda"
 	@$(AGDA) -i$(non_theorems_path) $*.agda
-	@$(AGDA2ATP) -v 0 $(flags_ngt) $*.agda
+	@$(APIA) -v 0 $(flags_ngt) $*.agda
 	@diff -r $* $(output_dir)/$*
 
 generated_conjectures_aux : $(generated_theorems_files) \
@@ -107,7 +107,7 @@ generated_conjectures :
 
 %.prove_theorems :
 	$(AGDA) -i$(theorems_path) $*.agda
-	$(AGDA2ATP) -i$(theorems_path) --output-dir=$(output_dir) \
+	$(APIA) -i$(theorems_path) --output-dir=$(output_dir) \
 	            --time=10 $*.agda
 
 prove_theorems : $(prove_theorems_files)
@@ -119,7 +119,7 @@ prove_theorems : $(prove_theorems_files)
 %.refute_theorems :
 	@echo "Processing $*.agda"
 	@$(AGDA) -i$(non_theorems_path) $*.agda
-	@if ( $(AGDA2ATP) -i$(non_theorems_path) \
+	@if ( $(APIA) -i$(non_theorems_path) \
 	                 --output-dir=$(output_dir) --time=5 $*.agda ); then \
 	    exit 1; \
 	fi
@@ -186,7 +186,7 @@ prove_notes_path = -i$(notes_path) \
 %.prove_notes :
 	echo $(prove_notes_files)
 	$(AGDA) $(prove_notes_path) $*.agda
-	$(AGDA2ATP) $(prove_notes_path) --output-dir=$(output_dir) --time=10 $*.agda
+	$(APIA) $(prove_notes_path) --output-dir=$(output_dir) --time=10 $*.agda
 
 prove_notes : $(prove_notes_files)
 	@echo "$@ succeeded!"
@@ -195,14 +195,14 @@ prove_notes : $(prove_notes_files)
 # Test used when there is a modification to Agda
 
 agda_changed : clean
-	make agda2atp_changed
+	make apia_changed
 	make type_check_notes
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test used when there is a modification to agda2atp
+# Test used when there is a modification to apia
 
-agda2atp_changed : clean
+apia_changed : clean
 	cabal clean && cabal configure && cabal build
 	make generated_conjectures
 	make errors
@@ -240,22 +240,22 @@ install :
 
 # ToDo: Fix
 
-hpc_html_dir = $(agda2atp_path)/hpc
+hpc_html_dir = $(apia_path)/hpc
 
 hpc : hpc_clean
-	cd $(agda2atp_path) && cabal clean && cabal install --ghc-option=-fhpc
+	cd $(apia_path) && cabal clean && cabal install --ghc-option=-fhpc
 	make prove_theorems
 	make refute_theorems
 	make errors
 	make options
-	hpc markup --exclude=Paths_agda2atp \
+	hpc markup --exclude=Paths_apia \
 	           --destdir=$(hpc_html_dir) \
-	           --srcdir=$(agda2atp_path) \
-                   agda2atp.tix
-	hpc report --exclude=Paths_agda2atp \
+	           --srcdir=$(apia_path) \
+                   apia.tix
+	hpc report --exclude=Paths_apia \
                    --decl-list \
-	           --srcdir=$(agda2atp_path) \
-                   agda2atp.tix
+	           --srcdir=$(apia_path) \
+                   apia.tix
 	rm -f *.tix
 
 hpc_clean :
@@ -267,7 +267,7 @@ hpc_clean :
 
 .PHONY : TAGS
 TAGS :
-	hasktags -e $(agda2atp_haskell_files)
+	hasktags -e $(apia_haskell_files)
 
 ToDo :
 	find -wholename './dist' -prune -o -print \
@@ -278,6 +278,6 @@ clean :
 	find -name '*.agdai' | xargs rm -f
 	find -name '*.hi' | xargs rm -f
 	find -name '*.o' | xargs rm -f
-	find -name 'agda2atp.tix' | xargs rm -f
+	find -name 'apia.tix' | xargs rm -f
 	find -name 'model' | xargs rm -f
 	rm -f -r $(output_dir)

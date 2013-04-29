@@ -26,7 +26,7 @@ import System.Environment ( getProgName )
 ------------------------------------------------------------------------------
 -- Local imports
 
-import qualified Paths_agda2atp as P ( version )
+import qualified Paths_apia as P ( version )
 
 ------------------------------------------------------------------------------
 

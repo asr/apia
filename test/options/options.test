@@ -1,8 +1,8 @@
 #1. --help
-dist/build/agda2atp/agda2atp --help
+dist/build/apia/apia --help
 <<<
 >>>
-Usage: agda2atp [OPTIONS] FILE
+Usage: apia [OPTIONS] FILE
 
           --atp=NAME                      set the ATP (e, equinox, ileancop, metis, spass, vampire)
                                           (default: e, equinox, and vampire)
@@ -33,7 +33,7 @@ Usage: agda2atp [OPTIONS] FILE
 >>>= 0
 
 #2. --only-files
-dist/build/agda2atp/agda2atp -itest/options --only-files test/options/TrivialTheorem.agda
+dist/build/apia/apia -itest/options --only-files test/options/TrivialTheorem.agda
 <<<
 >>>
 Created /tmp/TrivialTheorem/18-foo.tptp
@@ -41,7 +41,7 @@ Created /tmp/TrivialTheorem/18-foo.tptp
 >>>= 0
 
 #3. --verbose
-dist/build/agda2atp/agda2atp -itest/options -v1 --only-files test/options/TrivialTheorem.agda
+dist/build/apia/apia -itest/options -v1 --only-files test/options/TrivialTheorem.agda
 <<<
 >>>
 Created /tmp/TrivialTheorem/18-foo.tptp
@@ -49,15 +49,15 @@ Created /tmp/TrivialTheorem/18-foo.tptp
 >>>= 0
 
 #4. --version
-dist/build/agda2atp/agda2atp --version
+dist/build/apia/apia --version
 <<<
 >>>
-agda2atp version 0.9.1
+apia version 0.9.1
 >>>2
 >>>= 0
 
 #5. --unproven-conjecture-no-error
-dist/build/agda2atp/agda2atp -itest/options --atp=e --unproven-conjecture-no-error test/options/NoTheorem.agda
+dist/build/apia/apia -itest/options --atp=e --unproven-conjecture-no-error test/options/NoTheorem.agda
 <<<
 >>>
 Proving the conjecture in /tmp/NoTheorem/15-foo.tptp ...
@@ -67,7 +67,7 @@ The ATP(s) did not prove the conjecture in /tmp/NoTheorem/15-foo.tptp
 >>>= 0
 
 #6. --snapshot-no-error
-dist/build/agda2atp/agda2atp -itest/options --only-files --output-dir=/tmp/snapshot test/options/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/18-foo.tptp && dist/build/agda2atp/agda2atp -itest/options --snapshot-no-error --snapshot-dir=/tmp/snapshot test/options/TrivialTheorem.agda
+dist/build/apia/apia -itest/options --only-files --output-dir=/tmp/snapshot test/options/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/18-foo.tptp && dist/build/apia/apia -itest/options --snapshot-no-error --snapshot-dir=/tmp/snapshot test/options/TrivialTheorem.agda
 <<<
 >>>
 Created /tmp/snapshot/TrivialTheorem/18-foo.tptp
@@ -78,7 +78,7 @@ The files are different:
 >>>= 0
 
 #7. --dump-agdai
-dist/build/agda2atp/agda2atp -itest/options --dump-agdai test/options/Foo.agda
+dist/build/apia/apia -itest/options --dump-agdai test/options/Foo.agda
 <<<
 >>>
 Interface {iImportedModules = [], iModuleName = Foo, iScope = fromList [(Foo,* scope Foo
@@ -99,7 +99,7 @@ Interface {iImportedModules = [], iModuleName = Foo, iScope = fromList [(Foo,* s
 >>>= 0
 
 #8. --dump-types
-dist/build/agda2atp/agda2atp -itest/options --dump-types test/options/Foo.agda
+dist/build/apia/apia -itest/options --dump-types test/options/Foo.agda
 <<<
 >>>
 Qname: Foo.foo

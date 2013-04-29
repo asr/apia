@@ -1,10 +1,10 @@
 When there is a new release of an ATP, we should follow the following
 procedure:
 
-* In agda2atp, to update src/ATP.hs with the new version.
+* In apia, to update src/ATP.hs with the new version.
 
-* In agda2atp, to test all the proved conjectures if the ATP is a
-  default one.
+* In apia, to test all the proved conjectures if the ATP is a default
+  one.
 
 * In fotc/src/fot, to test all the proved conjectures if the ATP is a
   default one.
@@ -16,13 +16,13 @@ procedure:
 
   find -name 'UnprovedATP.agda'
 
-* Test agda2atp/notes/atp/equality/.
+* Test apia/notes/atp/equality/.
 
-* Test agda2atp/notes/tptp.
+* Test apia/notes/tptp.
 
-* In agda2atp and fotc, to search for comments using the old version,
+* In apia and fotc, to search for comments using the old version,
   i.e. something like
 
   $ find -name '*' | xargs grep -I 'old version' | sort
 
-* In agda2atp, run make agda2atp_changed.
+* In apia, run make apia_changed.

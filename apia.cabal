@@ -1,4 +1,4 @@
-name:          agda2atp
+name:          apia
 version:       0.9.1
 build-type:    Simple
 cabal-version: >= 1.8
@@ -7,14 +7,14 @@ license:       MIT
 license-file:  LICENSE
 maintainer:    Andrés Sicard-Ramírez <andres.sicard.ramirez@gmail.com>
 category:      Dependent types
-homepage:      https://github.com/asr/agda2atp
-bug-reports:   https://github.com/asr/agda2atp/issues/
+homepage:      https://github.com/asr/apia
+bug-reports:   https://github.com/asr/apia/issues/
 synopsis:      Program for proving first-order formulae written in Agda using ATPs
 tested-with:   GHC == 7.6.3
 description:
   This package provides a program for proving first-order
-  formulae written in the dependently typed language Agda
-  <http://wiki.portal.chalmers.se/agda/pmwiki.php> using (first-order)
+  theorems written in the dependently typed language Agda
+  <http://wiki.portal.chalmers.se/agda/pmwiki.php> using first-order
   automatic theorem provers (ATPs), via the translation of the Agda
   formulae to the TPTP format which is a standard for input and output
   for the ATPs <http://www.cs.miami.edu/~tptp/>.
@@ -23,9 +23,9 @@ extra-source-files:
 
 source-repository head
   type:     git
-  location: git://github.com/asr/agda2atp.git
+  location: git://github.com/asr/apia.git
 
-executable agda2atp
+executable apia
   main-is:        Main.hs
   hs-source-dirs: src
 
@@ -60,7 +60,7 @@ executable agda2atp
                  Monad.Environment
                  Monad.Reports
                  Options
-                 Paths_agda2atp
+                 Paths_apia
                  Snapshot
                  TPTP.ConcreteSyntax
                  TPTP.Files

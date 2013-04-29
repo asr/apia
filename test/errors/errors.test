@@ -1,305 +1,305 @@
 #1. Interface.hs: No file
-dist/build/agda2atp/agda2atp /tmp/NoFile.agda
+dist/build/apia/apia /tmp/NoFile.agda
 <<<
 >>>
 >>>2
-agda2atp: The file /tmp/NoFile.agda does not exist
+apia: The file /tmp/NoFile.agda does not exist
 >>>= 1
 
 #2. RemoveProofTerms.hs : Don't erase a proof term
-dist/build/agda2atp/agda2atp -itest/errors test/errors/NotErasedProofTerm.agda
+dist/build/apia/apia -itest/errors test/errors/NotErasedProofTerm.agda
 <<<
 >>>
 >>>2
-agda2atp: The translation failed because we do not know how erase the term
+apia: The translation failed because we do not know how erase the term
 Pi []r(El {getSort = Type (Max []), unEl = Def NotErasedProofTerm.D []}) (Abs "k" El {getSort = Type (Max []), unEl = Def NotErasedProofTerm._≤_ [[]r(Var 0 []),[]r(Var 0 [])]})
 >>>= 1
 
 #3. Terms.hs: Required pragma --schematic-propositional-symbols
-dist/build/agda2atp/agda2atp -itest/errors test/errors/PragmaRequired1.agda
+dist/build/apia/apia -itest/errors test/errors/PragmaRequired1.agda
 <<<
 >>>
 >>>2
-agda2atp: Use the Agda option `--schematic-propositional-symbols' in your Agda file for the translation of first-order logic universal quantified propositional symbols
+apia: Use the Agda option `--schematic-propositional-symbols' in your Agda file for the translation of first-order logic universal quantified propositional symbols
 >>>= 1
 
 #4. Terms.hs: Required pragma --schematic-propositional-functions
-dist/build/agda2atp/agda2atp -itest/errors test/errors/PragmaRequired2.agda
+dist/build/apia/apia -itest/errors test/errors/PragmaRequired2.agda
 <<<
 >>>
 >>>2
-agda2atp: Use the Agda option `--schematic-propositional-functions' in your Agda file for the translation of first-order logic universal quantified propositional functions
+apia: Use the Agda option `--schematic-propositional-functions' in your Agda file for the translation of first-order logic universal quantified propositional functions
 >>>= 1
 
 #5. Terms.hs: Required pragma --schematic-functions
-dist/build/agda2atp/agda2atp -itest/errors test/errors/PragmaRequired3.agda
+dist/build/apia/apia -itest/errors test/errors/PragmaRequired3.agda
 <<<
 >>>
 >>>2
-agda2atp: Use the Agda option `--schematic-functions' in your Agda file for the translation of first-order logic universal quantified functions
+apia: Use the Agda option `--schematic-functions' in your Agda file for the translation of first-order logic universal quantified functions
 >>>= 1
 
 #6. RemoveProofTerms.hs: Underscore variables
-dist/build/agda2atp/agda2atp -itest/errors test/errors/Underscore.agda
+dist/build/apia/apia -itest/errors test/errors/Underscore.agda
 <<<
 >>>
 >>>2
-agda2atp: The translation of underscore variables is not implemented
+apia: The translation of underscore variables is not implemented
 >>>= 1
 
 #7. Options.hs: Only process one input file
-dist/build/agda2atp/agda2atp File1.agda File2.agda
+dist/build/apia/apia File1.agda File2.agda
 <<<
 >>>
 >>>2
-agda2atp: Only one input file allowed
+apia: Only one input file allowed
 >>>= 1
 
 #8. Unrecognized option
-dist/build/agda2atp/agda2atp --xxx
+dist/build/apia/apia --xxx
 <<<
 >>>
 >>>2
-agda2atp: unrecognized option `--xxx'
+apia: unrecognized option `--xxx'
 >>>= 1
 
 #9. Main.hs: Missing input file
-dist/build/agda2atp/agda2atp
+dist/build/apia/apia
 <<<
 >>>
 >>>2
-agda2atp: Missing input file (try --help)
+apia: Missing input file (try --help)
 >>>= 1
 
 #10. Snapshot.hs: The --output-dir cannot be the same than the --snapshot-dir
-dist/build/agda2atp/agda2atp -itest/errors --output-dir=/tmp --snapshot-test --snapshot-dir=/tmp test/errors/TrivialTheorem.agda
+dist/build/apia/apia -itest/errors --output-dir=/tmp --snapshot-test --snapshot-dir=/tmp test/errors/TrivialTheorem.agda
 <<<
 >>>
 >>>2
-agda2atp: The options `--output-dir' and `--snapshot-dir' cannot be the same
+apia: The options `--output-dir' and `--snapshot-dir' cannot be the same
 >>>= 1
 
 #11. Snapshot.hs: Missing snapshot file
-dist/build/agda2atp/agda2atp -itest/errors --snapshot-test --snapshot-dir=no-dir test/errors/TrivialTheorem.agda
+dist/build/apia/apia -itest/errors --snapshot-test --snapshot-dir=no-dir test/errors/TrivialTheorem.agda
 <<<
 >>>
 >>>2
-agda2atp: The file no-dir/TrivialTheorem/18-foo.tptp does not exist
+apia: The file no-dir/TrivialTheorem/18-foo.tptp does not exist
 >>>= 1
 
 #12. ATP.hs: ATP unknown
-dist/build/agda2atp/agda2atp -itest/errors --atp=xxx test/errors/TrivialTheorem.agda
+dist/build/apia/apia -itest/errors --atp=xxx test/errors/TrivialTheorem.agda
 <<<
 >>>
 Proving the conjecture in /tmp/TrivialTheorem/18-foo.tptp ...
 >>>2
-agda2atp: ATP xxx unknown
+apia: ATP xxx unknown
 >>>= 1
 
 #13. ATP.hs: Bad ATP executable name
-dist/build/agda2atp/agda2atp -itest/errors --vampire-exec=xxx test/errors/TrivialTheorem.agda
+dist/build/apia/apia -itest/errors --vampire-exec=xxx test/errors/TrivialTheorem.agda
 <<<
 >>>
 Proving the conjecture in /tmp/TrivialTheorem/18-foo.tptp ...
 >>>2
-agda2atp: The command xxx associated with Vampire does not exist.
+apia: The command xxx associated with Vampire does not exist.
 You can use the command-line option --atp=NAME to avoid call some ATP
 >>>= 1
 
 #14. ATP.hs: No theorem
-dist/build/agda2atp/agda2atp -itest/errors --atp=e test/errors/NoTheorem.agda
+dist/build/apia/apia -itest/errors --atp=e test/errors/NoTheorem.agda
 <<<
 >>>
 Proving the conjecture in /tmp/NoTheorem/15-foo.tptp ...
 E 1.7 Jun Chiabari *did not* prove the conjecture
 >>>2
-agda2atp: The ATP(s) did not prove the conjecture in /tmp/NoTheorem/15-foo.tptp
+apia: The ATP(s) did not prove the conjecture in /tmp/NoTheorem/15-foo.tptp
 >>>= 1
 
 #15. Functions.hs : The definitions to be translated only can have one clause
-dist/build/agda2atp/agda2atp -itest/errors test/errors/OnlyOneClause.agda
+dist/build/apia/apia -itest/errors test/errors/OnlyOneClause.agda
 <<<
 >>>
 >>>2
-agda2atp: The translation of OnlyOneClause._+_ failed because its definition only can have a clause
+apia: The translation of OnlyOneClause._+_ failed because its definition only can have a clause
 >>>= 1
 
 #16. Interface.hs: Missing interface file
-echo -e "module A where" > /tmp/A.agda && agda2atp /tmp/A.agda
+echo -e "module A where" > /tmp/A.agda && dist/build/apia/apia /tmp/A.agda
 <<<
 >>>
 >>>2
-agda2atp: The interface file /tmp/A.agdai does not exist. Use Agda to generate it
+apia: The interface file /tmp/A.agdai does not exist. Use Agda to generate it
 >>>= 1
 
 #17. Snapshot.hs: The snapshot and the generated conjecture are differents.
-dist/build/agda2atp/agda2atp -itest/errors --only-files --output-dir=/tmp/snapshot test/errors/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/18-foo.tptp && dist/build/agda2atp/agda2atp -itest/errors --snapshot-test --snapshot-dir=/tmp/snapshot test/errors/TrivialTheorem.agda
+dist/build/apia/apia -itest/errors --only-files --output-dir=/tmp/snapshot test/errors/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/18-foo.tptp && dist/build/apia/apia -itest/errors --snapshot-test --snapshot-dir=/tmp/snapshot test/errors/TrivialTheorem.agda
 <<<
 >>>
 Created /tmp/snapshot/TrivialTheorem/18-foo.tptp
 >>>2
-agda2atp: The files are different:
+apia: The files are different:
 /tmp/TrivialTheorem/18-foo.tptp
 /tmp/snapshot/TrivialTheorem/18-foo.tptp
 >>>= 1
 
 #18. Options.hs (System.Console.GetOpt): -i
-dist/build/agda2atp/agda2atp -i
+dist/build/apia/apia -i
 <<<
 >>>
 >>>2
-agda2atp: option `-i' requires an argument DIR
+apia: option `-i' requires an argument DIR
 >>>= 1
 
 #19. Options.hs (System.Console.GetOpt): --include-path
-dist/build/agda2atp/agda2atp --include-path
+dist/build/apia/apia --include-path
 <<<
 >>>
 >>>2
-agda2atp: option `--include-path' requires an argument DIR
+apia: option `--include-path' requires an argument DIR
 >>>= 1
 
 #20. Options.hs: --include-path=
-dist/build/agda2atp/agda2atp --include-path=
+dist/build/apia/apia --include-path=
 <<<
 >>>
 >>>2
-agda2atp: Option `--include-path' requires an argument DIR
+apia: Option `--include-path' requires an argument DIR
 >>>= 1
 
 #21. Options.hs (System.Console.GetOpt): --atp
-dist/build/agda2atp/agda2atp --atp
+dist/build/apia/apia --atp
 <<<
 >>>
 >>>2
-agda2atp: option `--atp' requires an argument NAME
+apia: option `--atp' requires an argument NAME
 >>>= 1
 
 #22. Options.hs: --atp=
-dist/build/agda2atp/agda2atp --atp=
+dist/build/apia/apia --atp=
 <<<
 >>>
 >>>2
-agda2atp: Option `--atp' requires an argument NAME
+apia: Option `--atp' requires an argument NAME
 >>>= 1
 
 #23. Options.hs (System.Console.GetOpt): --output-dir
-dist/build/agda2atp/agda2atp --output-dir
+dist/build/apia/apia --output-dir
 <<<
 >>>
 >>>2
-agda2atp: option `--output-dir' requires an argument DIR
+apia: option `--output-dir' requires an argument DIR
 >>>= 1
 
 #24. Options.hs: --output-dir=
-dist/build/agda2atp/agda2atp --output-dir=
+dist/build/apia/apia --output-dir=
 <<<
 >>>
 >>>2
-agda2atp: Option `--output-dir' requires an argument DIR
+apia: Option `--output-dir' requires an argument DIR
 >>>= 1
 
 #25. Options.hs (System.Console.GetOpt): --snapshot-dir
-dist/build/agda2atp/agda2atp --snapshot-dir
+dist/build/apia/apia --snapshot-dir
 <<<
 >>>
 >>>2
-agda2atp: option `--snapshot-dir' requires an argument DIR
+apia: option `--snapshot-dir' requires an argument DIR
 >>>= 1
 
 #26. Options.hs: --snapshot-dir=
-dist/build/agda2atp/agda2atp --snapshot-dir=
+dist/build/apia/apia --snapshot-dir=
 <<<
 >>>
 >>>2
-agda2atp: Option `--snapshot-dir' requires an argument DIR
+apia: Option `--snapshot-dir' requires an argument DIR
 >>>= 1
 
 #27. Options.hs (System.Console.GetOpt): --time
-dist/build/agda2atp/agda2atp --time
+dist/build/apia/apia --time
 <<<
 >>>
 >>>2
-agda2atp: option `--time' requires an argument NUM
+apia: option `--time' requires an argument NUM
 >>>= 1
 
 #28. Options.hs: --time=
-agda2atp --time=
+dist/build/apia/apia --time=
 <<<
 >>>
 >>>2
-agda2atp: Option `--time' requires an argument NUM
+apia: Option `--time' requires an argument NUM
 >>>= 1
 
 #29. Options.hs: --time=negative_value
-dist/build/agda2atp/agda2atp --time=-10
+dist/build/apia/apia --time=-10
 <<<
 >>>
 >>>2
-agda2atp: Option `--time' requires a non-negative integer argument
+apia: Option `--time' requires a non-negative integer argument
 >>>= 1
 
 #30. Options.hs (System.Console.GetOpt): --vampire-exec
-dist/build/agda2atp/agda2atp --vampire-exec
+dist/build/apia/apia --vampire-exec
 <<<
 >>>
 >>>2
-agda2atp: option `--vampire-exec' requires an argument COMMAND
+apia: option `--vampire-exec' requires an argument COMMAND
 >>>= 1
 
 #31. Options.hs: --vampire-exec=
-dist/build/agda2atp/agda2atp --vampire-exec=
+dist/build/apia/apia --vampire-exec=
 <<<
 >>>
 >>>2
-agda2atp: Option `--vampire-exec' requires an argument COMMAND
+apia: Option `--vampire-exec' requires an argument COMMAND
 >>>= 1
 
 #32. Options.hs (System.Console.GetOpt): -v
-dist/build/agda2atp/agda2atp -v
+dist/build/apia/apia -v
 <<<
 >>>
 >>>2
-agda2atp: option `-v' requires an argument N
+apia: option `-v' requires an argument N
 >>>= 1
 
 #33. Options.hs (System.Console.GetOpt): --verbose
-dist/build/agda2atp/agda2atp --verbose
+dist/build/apia/apia --verbose
 <<<
 >>>
 >>>2
-agda2atp: option `--verbose' requires an argument N
+apia: option `--verbose' requires an argument N
 >>>= 1
 
 #34. Options.hs: --verbose=
-dist/build/agda2atp/agda2atp --verbose=
+dist/build/apia/apia --verbose=
 <<<
 >>>
 >>>2
-agda2atp: Option `--verbose' requires an argument of the form x.y.z:N or N
+apia: Option `--verbose' requires an argument of the form x.y.z:N or N
 >>>= 1
 
 #35. Functions.hs: The definitions to be translated must be first-order
-dist/build/agda2atp/agda2atp -itest/errors test/errors/HigherOrderDefinition.agda
+dist/build/apia/apia -itest/errors test/errors/HigherOrderDefinition.agda
 <<<
 >>>
 >>>2
-agda2atp: The translation of HigherOrderDefinition.twice failed because it is a higher-order definition
+apia: The translation of HigherOrderDefinition.twice failed because it is a higher-order definition
 >>>= 1
 
 #36. ChechTPTP.hs: tptp4X yields an error
-dist/build/agda2atp/agda2atp -itest/errors test/errors/TPTP4XError.agda
+dist/build/apia/apia -itest/errors test/errors/TPTP4XError.agda
 <<<
 >>>
 >>>2
-agda2atp: tptp4X found an error in the file /tmp/TPTP4XError/17-foo.tptp
+apia: tptp4X found an error in the file /tmp/TPTP4XError/17-foo.tptp
 Please report this as a bug
 >>>= 1
 
 #37. Terms.hs: incompatible options --schematic-propositional-functions and --without-predicate-constants
-dist/build/agda2atp/agda2atp --without-predicate-constants -itest/errors test/errors/SchematicPropositionalFunctions-WithoutPredicateSymbols.agda
+dist/build/apia/apia --without-predicate-constants -itest/errors test/errors/SchematicPropositionalFunctions-WithoutPredicateSymbols.agda
 <<<
 >>>
 >>>2
-agda2atp: The options '--schematic-propositional-functions' and '--without-predicate-constants' are incompatible
+apia: The options '--schematic-propositional-functions' and '--without-predicate-constants' are incompatible
 >>>= 1

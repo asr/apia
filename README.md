@@ -1,9 +1,10 @@
 # Description
 
-  `agda2atp` is a Haskell program for proving first-order formulae
-  written in [Agda](http://wiki.portal.chalmers.se/agda/pmwiki.php)
-  using ATPs. Before calling the ATPs, the Agda formulae are
-  translated into [TPTP](http://www.cs.miami.edu/~tptp/) language.
+  `apia` is a Haskell program for proving first-order theorems written
+  in [Agda](http://wiki.portal.chalmers.se/agda/pmwiki.php) using
+  automatic theorem provers for first-order logic (ATPs). Before
+  calling the ATPs, the Agda formulae are translated into
+  [TPTP](http://www.cs.miami.edu/~tptp/) language.
 
 # Prerequisites
 
@@ -11,11 +12,11 @@
 
   We have modified the development version of Agda in order to handle
   the new built-in ATP pragma. This modified version of Agda is
-  required by the `agda2atp` program.
+  required by the `apia` program.
 
 * ATPs
 
-  The `agda2atp` program requires at least one of the following ATPs:
+  The `apia` program requires at least one of the following ATPs:
   [E](http://www4.informatik.tu-muenchen.de/~schulz/WORK/eprover.html),
   [Equinox](http://www.cse.chalmers.se/~koen/code/),
   [ileanCoP](http://www.leancop.de/ileancop/index.html),
@@ -28,7 +29,7 @@
 
 * The `tptp4X` program
 
-  `agda2atp` uses the `tptp4X` program from the [TPTP
+  The `apia` program uses the `tptp4X` program from the [TPTP
   library](http://www.cs.miami.edu/~tptp/) by default. This program
   can be avoided using the command-line option `--no-check`.
 
@@ -83,15 +84,15 @@
    number of Agda, i.e. if the development version number is A.B.C,
    our modified version number is A.B.C.D.
 
-2. The `agda2atp` program
+2. The `apia` program
 
-   You can download the `agda2atp` program using
+   You can download the `apia` program using
    [git](http://git-scm.com/). The program can be downloaded and
    installed with the following commands:
 
    ````bash
-   $ git clone git://github.com/asr/agda2atp.git
-   $ cd agda2atp
+   $ git clone git://github.com/asr/apia.git
+   $ cd apia
    $ cabal install
    ````
 
@@ -101,7 +102,7 @@
    command:
 
    ````bash
-   $ agda2atp Test.agda
+   $ apia Test.agda
    Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
    E 1.7 Jun Chiabari proved the conjecture
    ````
@@ -116,7 +117,7 @@
    run the following command:
 
    ````bash
-   $ agda2atp --atp=equinox Test.agda
+   $ apia --atp=equinox Test.agda
    Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
    Equinox, version 5.0alpha, 2010-06-29 proved the conjecture
    ````
@@ -134,5 +135,5 @@
 
 * Agda version
 
-  The `agda2atp` program must be compiled using the same version of
+  The `apia` program must be compiled using the same version of
   Agda that was used to generate the Agda interface files.

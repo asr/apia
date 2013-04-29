@@ -100,7 +100,7 @@ postulate fac2 : fac (succ (succ zero)) ≡ succ (succ zero)
 ------------------------------------------------------------------------------
 -- Ouput:
 --
--- $ agda2atp -inotes --non-fol-function notes/LambdaLifting.agda
+-- $ apia -inotes --non-fol-function notes/LambdaLifting.agda
 -- Proving the conjecture in /tmp/LambdaLifting/95-fac1.tptp ...
 -- E 1.6 Tiger Hill proved the conjecture in /tmp/LambdaLifting/95-fac1.tptp
 -- Proving the conjecture in /tmp/LambdaLifting/99-fac2.tptp ...

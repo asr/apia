@@ -267,15 +267,15 @@ callATPs file = do
 --
 -- or
 --
--- @$ agda2atp --time=216 --atp=equinox conjecture.agda@
+-- @$ apia --time=216 --atp=equinox conjecture.agda@
 --
 -- it is possible prove the theorem. But running for example
 --
--- @$ agda2atp --time=216 --atp=equinox --atp=vampire --atp=e conjecture.agda@
+-- @$ apia --time=216 --atp=equinox --atp=vampire --atp=e conjecture.agda@
 --
 -- doesn't prove the theorem. I guess there is some overhead for
--- calling various ATPs from agda2atp. Therefore we increase
--- internally 10% the ATPs timeout.
+-- calling various ATPs from apia. Therefore we increase internally
+-- 10% the ATPs timeout.
 
 ------------------------------------------------------------------------------
 -- Note [Vampire termination].

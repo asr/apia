@@ -7,9 +7,9 @@
 -- Maintainer  : Andrés Sicard-Ramírez <andres.sicard.ramirez@gmail.com>
 -- Stability   : experimental
 --
--- agda2atp: A program for proving first-order formulae written in the
--- dependently typed language Agda using (first-order) automatic
--- theorem provers.
+-- apia: A program for proving first-order theorems written in the
+-- dependently typed language Agda using first-order automatic theorem
+-- provers.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP #-}

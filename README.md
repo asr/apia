@@ -1,6 +1,6 @@
 # Description
 
-  `apia` is a Haskell program for proving first-order theorems written
+  `Apia` is a Haskell program for proving first-order theorems written
   in [Agda](http://wiki.portal.chalmers.se/agda/pmwiki.php) using
   automatic theorem provers for first-order logic (ATPs). Before
   calling the ATPs, the Agda formulae are translated into
@@ -8,7 +8,7 @@
 
 # Prerequisites
 
-* Modified version of Agda
+* Modified version of `Agda`
 
   We have modified the development version of Agda in order to handle
   the new built-in ATP pragma. This modified version of Agda is
@@ -16,7 +16,7 @@
 
 * ATPs
 
-  The `apia` program requires at least one of the following ATPs:
+  `Apia` requires at least one of the following ATPs:
   [E](http://www4.informatik.tu-muenchen.de/~schulz/WORK/eprover.html),
   [Equinox](http://www.cse.chalmers.se/~koen/code/),
   [ileanCoP](http://www.leancop.de/ileancop/index.html),
@@ -29,7 +29,7 @@
 
 * The `tptp4X` program
 
-  The `apia` program uses the `tptp4X` program from the [TPTP
+  `Apia` uses the `tptp4X` program from the [TPTP
   library](http://www.cs.miami.edu/~tptp/) by default. This program
   can be avoided using the command-line option `--no-check`.
 
@@ -84,9 +84,9 @@
    number of Agda, i.e. if the development version number is A.B.C,
    our modified version number is A.B.C.D.
 
-2. The `apia` program
+2. The `Apia` program
 
-   You can download the `apia` program using
+   You can download the `Apia` program using
    [git](http://git-scm.com/). The program can be downloaded and
    installed with the following commands:
 
@@ -135,5 +135,5 @@
 
 * Agda version
 
-  The `apia` program must be compiled using the same version of
+  The `Apia` program must be compiled using the same version of
   Agda that was used to generate the Agda interface files.

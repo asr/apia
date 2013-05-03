@@ -254,8 +254,8 @@ options =
                "set verbosity level to N"
   , Option []  ["version"] (NoArg versionOpt)
                "show version number"
-  , Option []  ["with-function-constans"] (NoArg withFnConstsOpt) $
-               "use an hard-coded binary function symbol for the translation\n"
+  , Option []  ["with-function-constants"] (NoArg withFnConstsOpt) $
+               "use a hard-coded binary function symbol for the translation\n"
                ++ "of functions (required for handling currying)"
   , Option []  ["without-predicate-constants"] (NoArg withoutPConstsOpt) $
                "do not use hard-coded (n+1)-ary predicate symbols for the\n"

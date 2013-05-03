@@ -24,7 +24,7 @@ Usage: apia [OPTIONS] FILE
           --vampire-exec=COMMAND          set the vampire executable (default: vampire_lin64)
   -v N    --verbose=N                     set verbosity level to N
           --version                       show version number
-          --with-function-constans        use an hard-coded binary function symbol for the translation
+          --with-function-constants       use a hard-coded binary function symbol for the translation
                                           of functions (required for handling currying)
           --without-predicate-constants   do not use hard-coded (n+1)-ary predicate symbols for the
                                           translation of n-ary predicates

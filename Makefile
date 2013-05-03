@@ -208,7 +208,6 @@ apia_changed : clean
 	make errors
 	make options
 	make prove_notes
-	cabal install
 	@echo "$@ succeeded!"
 
 ##############################################################################

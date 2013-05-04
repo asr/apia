@@ -31,7 +31,6 @@ import Data.Char
   , isDigit
   , isUpper
   , ord
-  , toUpper
   )
 
 ------------------------------------------------------------------------------
@@ -66,6 +65,8 @@ import FOL.Types
 
 import TPTP.Types ( AF(AF) )
 
+import Utils.String ( toUpperFirst )
+
 #include "../undefined.h"
 
 ------------------------------------------------------------------------------
@@ -90,10 +91,6 @@ prefixLetter [] = __IMPOSSIBLE__
 prefixLetter name@(x : _)
   | isDigit x || x == '_' = 'n' : name
   | otherwise             = name
-
-toUpperFirstSymbol ∷ TPTP → TPTP
-toUpperFirstSymbol []       = __IMPOSSIBLE__
-toUpperFirstSymbol (x : xs) =  toUpper x : xs
 
 -- From the technical manual of TPTP
 -- (http://www.cs.miami.edu/~tptp/TPTP/TR/TPTPTR.shtml)
@@ -183,7 +180,7 @@ instance ToTPTP FOLTerm where
   toTPTP (FOLFun name [])    = cfpNameToTPTP C name
   toTPTP (FOLFun name terms) = cfpNameToTPTP F name
                                ++ "(" ++ toTPTP terms ++ ")"
-  toTPTP (FOLVar name)       = toUpperFirstSymbol name
+  toTPTP (FOLVar name)       = toUpperFirst name
 
 -- Requires @FlexibleInstances@.
 instance ToTPTP [FOLTerm] where
@@ -214,12 +211,12 @@ instance ToTPTP FOLFormula where
   toTPTP (Equiv f1 f2)   = "( " ++ toTPTP f1 ++ " <=> " ++ toTPTP f2 ++ " )"
 
   toTPTP (ForAll var f) =
-    "( ! [" ++ toUpperFirstSymbol var ++ "] : "
+    "( ! [" ++ toUpperFirst var ++ "] : "
     ++ toTPTP (f (FOLVar var))
     ++ " )"
 
   toTPTP (Exists var f) =
-    "( ? [" ++ toUpperFirstSymbol var ++ "] : "
+    "( ? [" ++ toUpperFirst var ++ "] : "
     ++ toTPTP (f (FOLVar var))
     ++ " )"
 

@@ -75,7 +75,7 @@ import TPTP.Types
 
 import Utils.List    ( duplicate )
 import Utils.Show    ( showLn )
-import Utils.String  ( removeString )
+import Utils.String  ( removeString, toUpperFirst )
 
 #include "../undefined.h"
 
@@ -108,11 +108,11 @@ commentLineLn = commentLine ++ "\n"
 
 conjectureHeader ∷ IO String
 conjectureHeader = do
-  prg ← getProgName
+  progName ← fmap toUpperFirst getProgName
   return $
     commentLine
     ++ "% This file was generated automatically by "
-    ++ prg ++ ".\n"
+    ++ progName ++ ".\n"
     ++ commentLineLn
 
 conjectureFooter ∷ String

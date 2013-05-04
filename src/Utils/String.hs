@@ -12,14 +12,36 @@
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Utils.String ( removeString ) where
+module Utils.String
+  ( removeString
+  , toUpperFirst
+  )
+where
 
 ------------------------------------------------------------------------------
 -- Haskell imports
 
+import Data.Char ( toUpper )
+
 import Text.Regex ( mkRegex, subRegex )
+
+------------------------------------------------------------------------------
+-- Agda library imports
+
+import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
+
+------------------------------------------------------------------------------
+-- Local imports
+
+#include "../undefined.h"
 
 ------------------------------------------------------------------------------
 -- | @removeString xs ys@ removes every occurrence of @xs@ in @ys@.
 removeString ∷ String → String → String
 removeString repl inp = subRegex (mkRegex repl) inp ""
+
+-- | Convert the first letter of a string to the corresponding
+-- upper-case letter.
+toUpperFirst ∷ String → String
+toUpperFirst []       = __IMPOSSIBLE__
+toUpperFirst (x : xs) =  toUpper x : xs

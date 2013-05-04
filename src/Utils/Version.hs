@@ -28,10 +28,12 @@ import System.Environment ( getProgName )
 
 import qualified Paths_apia as P ( version )
 
+import Utils.String ( toUpperFirst )
+
 ------------------------------------------------------------------------------
 
 -- | Return program name and version information.
 progNameVersion ∷ IO String
 progNameVersion = do
-  progName ← getProgName
+  progName ← fmap toUpperFirst getProgName
   return $ progName ++ " version " ++ showVersion P.version

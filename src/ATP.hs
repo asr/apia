@@ -24,7 +24,7 @@ module ATP
 -- Haskell imports
 
 import Control.Exception       ( evaluate )
-import Control.Concurrent      ( forkIO, threadDelay )
+import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
 import Control.Monad           ( when )
 import Control.Monad.Error     ( MonadError(throwError) )
@@ -37,13 +37,23 @@ import System.Directory ( findExecutable )
 import System.IO        ( hGetContents )
 
 import System.Process
-  ( createProcess
-  , CreateProcess(std_out)
-  , proc
+  ( CmdSpec(RawCommand)
+  , createProcess
+  , CreateProcess
+    ( create_group
+    , CreateProcess
+    , close_fds
+    , cmdspec
+    , cwd
+    , env
+    , std_err
+    , std_in
+    , std_out
+    )
+  , interruptProcessGroupOf
   , ProcessHandle
   , readProcess
-  , StdStream(CreatePipe)
-  , terminateProcess
+  , StdStream(CreatePipe, Inherit)
   )
 
 ------------------------------------------------------------------------------
@@ -183,19 +193,27 @@ atpArgs Vampire timeLimit file = return [ "--input_file", file
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
 runATP atp outputMVar timeLimit file = do
   args ∷ [String] ← atpArgs atp timeLimit file
-  exec ∷ String   ← atpExec atp
+  cmd ∷ String   ← atpExec atp
 
-  e ← liftIO $ findExecutable exec
+  e ← liftIO $ findExecutable cmd
   when (isNothing e) $ throwError $
-    "The command " ++ exec ++ " associated with " ++ show atp
+    "The command " ++ cmd ++ " associated with " ++ show atp
     ++ " does not exist.\nYou can use the command-line option --atp=NAME "
     ++ "to avoid call some ATP"
 
   -- To create the ATPs process we follow the ideas used by
-  -- System.Process.readProcess.
+  -- @System.Process.proc@.
   (_, outputH, _, atpPH) ← liftIO $
-    createProcess (proc exec args) { std_out = CreatePipe }
-
+    createProcess CreateProcess
+                    { cmdspec = RawCommand cmd args
+                    , cwd = Nothing
+                    , env = Nothing
+                    , std_in = Inherit
+                    , std_out = CreatePipe
+                    , std_err = Inherit
+                    , close_fds = False
+                    , create_group = True
+                    }
   output ← liftIO $ hGetContents $ fromMaybe (__IMPOSSIBLE__) outputH
   _      ← liftIO $ forkIO $
              evaluate (length output) >>
@@ -219,12 +237,7 @@ atpsAnswer atps outputMVar atpsPH file n =
       if fst output
         then do
           reportS "" 1 $ atpWithVersion ++ " proved the conjecture"
-          liftIO $ do
-            -- See note [All terminate].
-            mapM_ terminateProcess atpsPH
-            -- See note [Vampire termination].
-            threadDelay 500000
-            mapM_ terminateProcess atpsPH
+          liftIO $ mapM_ interruptProcessGroupOf atpsPH
         else do
           reportS "" 1 $ atpWithVersion ++ " *did not* prove the conjecture"
           atpsAnswer atps outputMVar atpsPH file (n + 1)
@@ -252,13 +265,6 @@ callATPs file = do
   atpsAnswer atps outputMVar atpsPH file 0
 
 ------------------------------------------------------------------------------
--- Note [All terminate].
-
--- It seems that @terminateProcess@ is a nop if the process is
--- finished, therefore we don't care on terminate all the ATPs
--- processes.
-
-------------------------------------------------------------------------------
 -- Note [Timeout increse].
 
 -- 12 June 2012: Hack. Running for example
@@ -276,16 +282,3 @@ callATPs file = do
 -- doesn't prove the theorem. I guess there is some overhead for
 -- calling various ATPs from apia. Therefore we increase internally
 -- 10% the ATPs timeout.
-
-------------------------------------------------------------------------------
--- Note [Vampire termination].
-
--- ToDo: Ugly hack. Using the thread delay and repeating the
--- @terminateProcess@ instruction was the way to kill the Vampire
--- process.
---
--- 2012-01-13: Using the new field @create_group ∷ Bool@ for the
--- datatype @CreateProcess@ in System.Process-1.1.0.0, it is possible
--- to use the function @interruptProcessGroupOf@ to kill the process,
--- however some ATPs continued running after using this function. See
--- http://thread.gmane.org/gmane.comp.lang.haskell.cafe/95473/.

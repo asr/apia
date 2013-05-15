@@ -42,16 +42,16 @@ import Agda.TypeChecking.Monad.Base
 ------------------------------------------------------------------------------
 -- Local imports
 
-import AgdaInternal.Interface ( myReadInterface, qNameLine )
+import AgdaInternal.Interface ( qNameLine, readInterface )
 import Monad.Base             ( T )
 
 ------------------------------------------------------------------------------
 -- We sort the 'QName's by its position in the Agda module.
-myQNameCompare ∷ QName → QName → Ordering
-myQNameCompare = compare `on` qNameLine
+compareQName ∷ QName → QName → Ordering
+compareQName = compare `on` qNameLine
 
-myQNameDefinitionCompare ∷ (QName, Definition) → (QName, Definition) → Ordering
-myQNameDefinitionCompare = myQNameCompare `on` fst
+compareQNameDefinition ∷ (QName, Definition) → (QName, Definition) → Ordering
+compareQNameDefinition = compareQName `on` fst
 
 dumpQNameType ∷ (QName, Definition) → T ()
 dumpQNameType (qName, def) = do
@@ -66,15 +66,15 @@ dumpQNameType (qName, def) = do
 dumpTypes ∷ FilePath → T ()
 dumpTypes file = do
 
-  i ← myReadInterface file
+  i ← readInterface file
 
   let defs ∷ Definitions
       defs = sigDefinitions $ iSignature i
 
-  mapM_ dumpQNameType $ sortBy myQNameDefinitionCompare $ HashMap.toList defs
+  mapM_ dumpQNameType $ sortBy compareQNameDefinition $ HashMap.toList defs
 
 -- | Print the Agda interface file to stdout.
 dumpAgdai ∷ FilePath → T ()
 dumpAgdai file = do
-  i ← myReadInterface file
+  i ← readInterface file
   liftIO $ print i

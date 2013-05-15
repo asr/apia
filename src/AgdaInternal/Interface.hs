@@ -25,11 +25,11 @@ module AgdaInternal.Interface
   , getLocalHints
   , isATPDefinition
   , isProjection
-  , myReadInterface
   , qNameDefinition
   , QNamesIn(qNamesIn)
   , qNameLine
   , qNameType
+  , readInterface
   )
   where
 
@@ -51,7 +51,7 @@ import Data.Maybe ( fromMaybe, isJust )
 -- Agda library imports
 
 import Agda.Interaction.FindFile ( toIFile )
-import Agda.Interaction.Imports  ( getInterface, readInterface )
+import qualified Agda.Interaction.Imports as A ( getInterface, readInterface )
 
 import Agda.Interaction.Options
   ( CommandLineOptions(optIncludeDirs, optPragmaOptions)
@@ -181,8 +181,8 @@ agdaCommandLineOptions = do
                           }
 
 -- | Read an Agda interface file.
-myReadInterface ∷ FilePath → T Interface
-myReadInterface file = do
+readInterface ∷ FilePath → T Interface
+readInterface file = do
   optsCommandLine ← agdaCommandLineOptions
 
   -- The physical Agda file (used only to test if the file exists).
@@ -200,7 +200,7 @@ myReadInterface file = do
 
   r ∷ Either TCErr (Maybe Interface) ← liftIO $ runTCM $
     do setCommandLineOptions optsCommandLine
-       readInterface iFile
+       A.readInterface iFile
 
   case r of
     Right (Just i) → return i
@@ -213,13 +213,13 @@ myReadInterface file = do
                        ++ "type-check your module"
     Left _         → __IMPOSSIBLE__
 
-myGetInterface ∷ ModuleName → T (Maybe Interface)
-myGetInterface x = do
+getInterface ∷ ModuleName → T (Maybe Interface)
+getInterface x = do
   optsCommandLine ← agdaCommandLineOptions
 
   r ← liftIO $ runTCM $ do
     setCommandLineOptions optsCommandLine
-    getInterface x
+    A.getInterface x
 
   case r of
     Right (i, _) → return (Just i)
@@ -387,7 +387,7 @@ importedInterfaces x = do
     then do
       put $ x : visitedModules
 
-      im ← lift $ myGetInterface x
+      im ← lift $ getInterface x
 
       let i ∷ Interface
           i = fromMaybe (__IMPOSSIBLE__) im

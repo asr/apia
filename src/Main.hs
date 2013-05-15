@@ -47,7 +47,7 @@ import Agda.Utils.Impossible ( catchImpossible )
 ------------------------------------------------------------------------------
 -- Local imports
 
-import AgdaInternal.Interface ( getImportedInterfaces, myReadInterface )
+import AgdaInternal.Interface ( getImportedInterfaces, readInterface )
 import ATP                    ( callATPs )
 
 import CheckTPTP ( checkTPTP )
@@ -90,7 +90,7 @@ import Utils.Version    ( progNameVersion )
 translation ∷ FilePath → T (GeneralRoles, [ConjectureSet])
 translation agdaFile = do
   -- Getting the interface for the top level module.
-  i ← myReadInterface agdaFile
+  i ← readInterface agdaFile
 
   -- Getting the interfaces for the imported modules.
   iInterfaces ← getImportedInterfaces i

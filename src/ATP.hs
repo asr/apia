@@ -280,5 +280,5 @@ callATPs file = do
 -- @$ apia --time=216 --atp=equinox --atp=vampire --atp=e conjecture.agda@
 --
 -- doesn't prove the theorem. I guess there is some overhead for
--- calling various ATPs from apia. Therefore we increase internally
+-- calling various ATPs from Apia. Therefore we increase internally
 -- 10% the ATPs timeout.

@@ -268,9 +268,9 @@ hpc_clean :
 TAGS :
 	hasktags -e $(apia_haskell_files)
 
-ToDo :
+TODO :
 	find -wholename './dist' -prune -o -print \
-	| xargs grep -I 'ToDo:' \
+	| xargs grep -I 'TODO:' \
 	| sort
 
 clean :

@@ -45,7 +45,7 @@ import Data.Int     ( Int32 )
 
 import qualified Data.HashMap.Strict as HashMap ( filter, lookup )
 
-import Data.Maybe ( fromMaybe, isJust )
+import Data.Maybe ( fromMaybe )
 
 ------------------------------------------------------------------------------
 -- Agda library imports
@@ -102,6 +102,7 @@ import Agda.TypeChecking.Monad.Base
   , Definition(defType, theDef)
   , Definitions
   , Interface(iImportedModules, iModuleName)
+  , Projection
   , runTCM
   , TCErr
   )
@@ -365,16 +366,13 @@ instance QNamesIn Definition where
   qNamesIn def = qNamesIn $ defType def
 
 -- Adapted from Agda.TypeChecking.Monad.Signature.isProjection.
-projection ∷ QName → T (Maybe (QName, Int))
-projection qname = do
+-- | Is it the 'Qname' a projection?
+isProjection ∷ QName → T (Maybe Projection)
+isProjection qname = do
   defn ← theDef <$> qNameDefinition qname
   case defn of
     Function { funProjection = result } → return result
     _                                   → return Nothing
-
--- | Is it the 'Qname' a projection?
-isProjection ∷ QName → T Bool
-isProjection qname = isJust <$> projection qname
 
 ------------------------------------------------------------------------------
 -- Imported interfaces

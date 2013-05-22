@@ -52,7 +52,7 @@ import Agda.Syntax.Internal as I
 import Agda.TypeChecking.Substitute ( Apply(apply) )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
-import Agda.Utils.Monad      ( whenM )
+import Agda.Utils.Monad      ( whenJustM )
 
 ------------------------------------------------------------------------------
 -- Local imports
@@ -88,7 +88,7 @@ instance EtaExpandible Type where
 
 instance EtaExpandible Term where
   etaExpand (Def qName args) = do
-    whenM (isProjection qName) (__IMPOSSIBLE__)
+    whenJustM (isProjection qName) (__IMPOSSIBLE__)
 
     defTy ∷ Type ← qNameType qName
 

@@ -45,7 +45,7 @@ executable apia
                  AgdaInternal.Interface
                  AgdaInternal.RemoveProofTerms
                  AgdaInternal.Vars
-                 ATP
+                 ATPs
                  CheckTPTP
                  Dump
                  FOL.Constants

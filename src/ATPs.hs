@@ -1,20 +1,20 @@
 -----------------------------------------------------------------------------
 -- |
--- Module      : ATP
+-- Module      : ATPs
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2013
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <andres.sicard.ramirez@gmail.com>
 -- Stability   : experimental
 --
--- Call the automatic theorem provers (ATPs).
+-- Call the automatic theorem provers for first-order logic (ATPs).
 -----------------------------------------------------------------------------
 
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module ATP
+module ATPs
   ( ATP  -- Required by Haddock.
   , callATPs
   )

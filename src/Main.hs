@@ -48,7 +48,7 @@ import Agda.Utils.Impossible ( catchImpossible )
 -- Local imports
 
 import AgdaInternal.Interface ( getImportedInterfaces, readInterface )
-import ATP                    ( callATPs )
+import ATPs                   ( callATPs )
 
 import CheckTPTP ( checkTPTP )
 

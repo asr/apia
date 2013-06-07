@@ -200,7 +200,7 @@ agda_changed : clean
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test used when there is a modification to apia
+# Test used when there is a modification to Apia
 
 apia_changed : clean
 	cabal clean && cabal configure && cabal build
@@ -237,7 +237,7 @@ install :
 ##############################################################################
 # Haskell program coverage
 
-# ToDo: Fix
+# TODO: Fix
 
 hpc_html_dir = $(apia_path)/hpc
 

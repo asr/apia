@@ -77,6 +77,7 @@ import Agda.Syntax.Internal as I
   , Arg
   , Clause(Clause)
   , ClauseBody(Bind, Body, NoBody)
+  , ConHead(ConHead)
   , Dom
   , Term(Con, Def, Lam, Pi, Sort, Var)
   , Type(El)
@@ -339,14 +340,14 @@ instance QNamesIn a ⇒ QNamesIn (Abs a) where
   qNamesIn (NoAbs _ e) = qNamesIn e
 
 instance QNamesIn Term where
-  qNamesIn (Con qName args) = qName : qNamesIn args
+  qNamesIn (Con (ConHead qName _) args) = qName : qNamesIn args
   qNamesIn (Def qName args) = qName : qNamesIn args
-  qNamesIn (Lam _ absTerm)  = qNamesIn absTerm
+  qNamesIn (Lam _ absTerm) = qNamesIn absTerm
   qNamesIn (Pi domTy absTy) = qNamesIn domTy ++ qNamesIn absTy
   qNamesIn (Sort _) = []
   qNamesIn (Var n args) | n >= 0    = qNamesIn args
                         | otherwise = __IMPOSSIBLE__
-  qNamesIn  _ = __IMPOSSIBLE__
+  qNamesIn _ = __IMPOSSIBLE__
 
 instance QNamesIn Type where
   qNamesIn (El _ term) = qNamesIn term

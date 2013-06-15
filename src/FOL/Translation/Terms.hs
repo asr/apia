@@ -50,6 +50,7 @@ import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , Arg
   , Args
+  , ConHead(ConHead)
   , Level(Max)
   , PlusLevel(ClosedLevel)
   , Sort(Type)
@@ -484,7 +485,7 @@ appArgsF fn args = do
 -- 'FOLTerm'.
 termToFOLTerm ∷ Term → T FOLTerm
 
-termToFOLTerm term@(Con (QName _ name) args) = do
+termToFOLTerm term@(Con (ConHead (QName _ name) _) args) = do
   reportSLn "t2t" 10 $ "termToFOLTerm Con:\n" ++ show term
 
   let cName ∷ C.Name

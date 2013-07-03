@@ -39,6 +39,11 @@ import Utils.String ( toUpperFirst )
 progNameVersion ∷ IO String
 progNameVersion = do
   progName ← getProgName
+
+  -- 03 July 2013. We don't use the generated module from Cabal
+  -- (Paths_pkgname) for getting the version because this module
+  -- doesn't pass the -fwarn-missing-import-lists warning.
   version  ← fmap (showVersion . pkgVersion . package . packageDescription)
                   $ readPackageDescription silent (progName ++ ".cabal")
+
   return $ toUpperFirst progName ++ " version " ++ version

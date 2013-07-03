@@ -10,6 +10,7 @@
 -- Utilities on strings.
 ------------------------------------------------------------------------------
 
+{-# LANGUAGE CPP #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Utils.String

@@ -54,7 +54,7 @@ checkTPTP file = do
       throwError $ tptp4Xexec ++ " found an error in the file " ++ file
                    ++ "\nPlease report this as a bug"
 
-    -- TODO (11 December 2012). How add an test case for this branch?
+    -- TODO (11 December 2012). How add a test case for this case?
     ExitSuccess →
       when ("WARNING" `isInfixOf` out) $
         throwError $ tptp4Xexec ++ " found a warning in the file " ++ file

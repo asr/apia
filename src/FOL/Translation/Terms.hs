@@ -265,39 +265,6 @@ termToFormula term@(Lam _ (Abs _ termLam)) = do
 
   return f
 
-termToFormula (Pi domTy (NoAbs x absTy)) = do
-  reportSLn "t2f" 10 $
-    "termToFormula Pi _ (NoAbs _ _):\n"
-    ++ "domTy: " ++ show domTy ++ "\n"
-    ++ "absTy: " ++ show (NoAbs x absTy)
-  f2 ← typeToFormula absTy
-
-  if x /= "_"
-    then
-      case unDom domTy of
-        -- The variable @x@ is an universal quantified variable not
-        -- used, thefefore we generate a quantified first-order logic
-        -- formula.
-        El (Type (Max [])) (Def _ []) → do
-          freshVar ← newTVar
-          return $ ForAll freshVar $ const f2
-
-        -- The variable @x@ is a proof term, therefore we erase the
-        -- quantification on it.
-        El (Type (Max [])) (Def _ _) → do
-          f1 ← domTypeToFormula domTy
-          return $ Implies f1 f2
-
-        undom → do
-          reportSLn "t2f" 20 $ "undom :" ++ show undom
-          __IMPOSSIBLE__
-
-    -- The variable @x@ is a proof term, therefore we erase the
-    -- quantication on it.
-    else do
-      f1 ← domTypeToFormula domTy
-      return $ Implies f1 f2
-
 termToFormula (Pi domTy (Abs x absTy)) = do
   reportSLn "t2f" 10 $
     "termToFormula Pi _ (Abs _ _):\n"
@@ -431,6 +398,41 @@ termToFormula (Pi domTy (Abs x absTy)) = do
       reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
       __IMPOSSIBLE__
 
+termToFormula (Pi domTy (NoAbs x absTy)) = do
+  reportSLn "t2f" 10 $
+    "termToFormula Pi _ (NoAbs _ _):\n"
+    ++ "domTy: " ++ show domTy ++ "\n"
+    ++ "absTy: " ++ show (NoAbs x absTy)
+  f2 ← typeToFormula absTy
+
+  if x /= "_"
+    then
+      case unDom domTy of
+        -- The variable @x@ is an universal quantified variable not
+        -- used, thefefore we generate a quantified first-order logic
+        -- formula.
+        El (Type (Max [])) (Def _ []) → do
+          freshVar ← newTVar
+          return $ ForAll freshVar $ const f2
+
+        -- The variable @x@ is a proof term, therefore we erase the
+        -- quantification on it.
+        El (Type (Max [])) (Def _ _) → do
+          f1 ← domTypeToFormula domTy
+          return $ Implies f1 f2
+
+        -- The variable in @domTy@ has type @Set₁@ (e.g. A : D → Set)
+        -- and it isn't used, so we omit it.
+        El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → return f2
+
+        someType → do
+          reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
+          __IMPOSSIBLE__
+
+    else do
+      f1 ← domTypeToFormula domTy
+      return $ Implies f1 f2
+
 termToFormula term@(Var n args) = do
   reportSLn "t2f" 10 $ "termToFormula Var: " ++ show term
 
@@ -469,7 +471,9 @@ termToFormula term@(Var n args) = do
           )
           (throwError $ universalQuantificationErrorMsg p)
 
-termToFormula _ = __IMPOSSIBLE__
+termToFormula term = do
+  reportSLn "t2f" 20 $ "term: " ++ show term
+  __IMPOSSIBLE__
 
 -- Translate the function @foo x1 ... xn@.
 appArgsF ∷ String → Args → T FOLTerm

@@ -1,16 +1,16 @@
 ------------------------------------------------------------------------------
--- Testing the existential quantifier
+-- Issue 12
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --schematic-propositional-functions #-}
 {-# OPTIONS --without-K #-}
 
-module Existential where
+module Issue12 where
 
 postulate
-  D   : Set
-  A   : D → Set
-  ∃   : (A : D → Set) → Set
+  D : Set
+  ∃ : (A : D → Set) → Set
 
-postulate foo : (∃ λ x → A x) → (∃ λ x → A x)
+postulate foo : (B C : D → Set) → ∃ C → ∃ C
 {-# ATP prove foo #-}

@@ -6,10 +6,10 @@
 % The conjecture.
 
 % The original Agda term was:
-% Name:	Existential.foo
+% Name:	Existential2.foo
 % Role:	prove
 % Line:	15
-fof(n7_221690953, conjecture, ( ( ? [A] : ( kp1_(cA,A) ) ) => ( ? [A] : ( kp1_(cA,A) ) ) )).
+fof(n5_27298079, conjecture, ( ! [A] : ( ( ? [B] : ( kp1_(A,B) ) ) => ( ? [B] : ( kp1_(A,B) ) ) ) )).
 
 % End conjecture.
 

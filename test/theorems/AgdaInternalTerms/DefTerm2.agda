@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing Agda internal terms: Def
+-- Testing Agda internal term: @Def@
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --no-universe-polymorphism #-}

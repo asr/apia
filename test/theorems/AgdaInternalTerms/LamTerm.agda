@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing Agda internal terms: Lam
+-- Testing Agda internal term: @Lam@
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --no-universe-polymorphism #-}

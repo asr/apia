@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing Agda internal terms: Con
+-- Testing Agda internal term: @Con@
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --no-universe-polymorphism #-}

@@ -14,3 +14,6 @@ postulate
 
 postulate foo : (B C : D → Set) → ∃ C → ∃ C
 {-# ATP prove foo #-}
+
+postulate bar : (B C : D → Set) → ∃ B → ∃ B
+{-# ATP prove bar #-}

@@ -111,7 +111,7 @@ dist/build/apia/apia -itest/errors --atp=e test/errors/NoTheorem.agda
 <<<
 >>>
 Proving the conjecture in /tmp/NoTheorem/15-foo.tptp ...
-E 1.7 Jun Chiabari *did not* prove the conjecture
+E 1.8-001 Gopaldhara *did not* prove the conjecture
 >>>2
 apia: The ATP(s) did not prove the conjecture in /tmp/NoTheorem/15-foo.tptp
 >>>= 1

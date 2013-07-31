@@ -23,7 +23,7 @@
   [Metis](http://www.gilith.com/software/metis/),
   [SPASS](http://www.spass-prover.org/) or
   [Vampire](http://www.vprover.org/). The tested versions of the ATPs
-  are: E 1.7 Jun Chiabari, Equinox version 5.0alpha (2010-06-29),
+  are: E 1.8-001 Gopaldhara, Equinox version 5.0alpha (2010-06-29),
   ileanCoP v1.3beta1, Metis 2.3 (release 20120927), SPASS v3.7 and
   Vampire 0.6 (revision 903).
 
@@ -104,7 +104,7 @@
    ````bash
    $ apia Test.agda
    Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
-   E 1.7 Jun Chiabari proved the conjecture
+   E 1.8-001 Gopaldhara proved the conjecture
    ````
 
    The program will call the installed ATPs and tell which of the ATPs

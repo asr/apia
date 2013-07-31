@@ -4,7 +4,7 @@
 
 % The conjecture was proved by the following ATPs:
 
-% E 1.7
+% E 1.8
 % $ eprover --tstp-format file_name
 
 % Equinox 5.0alpha (2010-06-29)

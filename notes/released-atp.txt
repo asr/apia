@@ -14,7 +14,11 @@ procedure:
 
 * In fotc/src/fot, to test the ATPs failures and to update the date:
 
-  find -name 'UnprovedATP.agda'
+  $ find -name 'UnprovedATP.agda'
+
+* In fotc/notes, to test the ATPs failures and to update the date:
+
+  $ find -name 'The ATPs could not'
 
 * Test apia/notes/atp/equality/.
 

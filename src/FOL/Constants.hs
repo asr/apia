@@ -21,27 +21,38 @@ module FOL.Constants
   , folNot
   , folAnd
   , folOr
-  , folImplies
-  , folEquiv
-  , folExists
+  , folCond
+  , folBicond1
+  , folBicond2
   , folForAll
+  , folExists
   , folEquals
   )
   where
 
 ------------------------------------------------------------------------------
 -- | Identifiers recognized by the first-order logic translator.
-folTrue, folFalse, folNot, folAnd, folOr, folImplies, folEquiv ∷ String
+folTrue
+  , folFalse
+  , folNot
+  , folAnd
+  , folOr
+  , folCond
+  , folBicond1
+  , folBicond2
+  , folExists
+  , folForAll
+  , folEquals ∷ String
 folTrue    = "⊤"
 folFalse   = "⊥"
 folNot     = "¬"
 folAnd     = "∧"
 folOr      = "∨"
-folImplies = "⇒"  -- The non-dependent function space @→@ can be used instead.
-folEquiv   = "↔"
-
--- | Identifiers recognized by the first-order logic translator.
-folExists, folForAll, folEquals ∷ String
-folExists = "∃"
-folForAll = "⋀"  -- The dependent function space @∀ x → A@ can be used instead.
-folEquals = "≡"
+folCond    = "⇒"  -- The non-dependent function space @→@ can be used
+                  -- instead.
+folBicond1 = "↔"
+folBicond2 = "⇔"
+folExists  = "∃"
+folForAll  = "⋀"  -- The dependent function space @∀ x → A@ can be
+                  -- used instead.
+folEquals  = "≡"

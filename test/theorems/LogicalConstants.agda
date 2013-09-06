@@ -5,13 +5,13 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K #-}
 
-module LogicalConstants2 where
+module LogicalConstants where
 
 infix  5 ¬_
 infixr 4 _∧_
 infixr 3 _∨_
 infixr 2 _⇒_
-infixr 1 _↔_
+infixr 1 _↔_ _⇔_
 
 ------------------------------------------------------------------------------
 -- Propositional logic
@@ -22,14 +22,18 @@ infixr 1 _↔_
 -- i.e. the following symbols must be used (it is possible to use Agda
 -- non-dependent function space → instead of ⇒).
 postulate
-  ⊥ ⊤     : Set -- N.B. the name of the tautology symbol is "\top", not T.
-  ¬_      : Set → Set -- N.B. the right hole.
+  ⊥ ⊤ : Set -- N.B. the name of the tautology symbol is "\top" not T.
+  ¬_  : Set → Set -- N.B. the right hole.
   _∧_ _∨_ : Set → Set → Set
-  _⇒_ _↔_ : Set → Set → Set
+  _⇒_ _↔_ _⇔_ : Set → Set → Set
 
 -- We postulate some formulae (which are translated as 0-ary
 -- predicates).
 postulate A B C : Set
+
+-- Testing the conditional using the non-dependent function type.
+postulate A→A : A → A
+{-# ATP prove A→A #-}
 
 -- The introduction and elimination rules for the propositional
 -- connectives are theorems.
@@ -60,9 +64,11 @@ postulate
   thm₁ : A ∧ ⊤ → A
   thm₂ : A ∨ ⊥ → A
   thm₃ : A ↔ A
+  thm₄ : A ⇔ A
 {-# ATP prove thm₁ #-}
 {-# ATP prove thm₂ #-}
 {-# ATP prove thm₃ #-}
+{-# ATP prove thm₄ #-}
 
 ------------------------------------------------------------------------------
 -- Predicate logic

@@ -68,8 +68,17 @@ import Agda.Utils.Monad      ( ifM )
 import AgdaInternal.Interface ( isATPDefinition, qNameDefinition )
 
 import FOL.Constants
-  ( folTrue, folFalse, folNot, folAnd, folOr
-  , folImplies, folEquiv, folExists, folForAll, folEquals
+  ( folTrue
+  , folFalse
+  , folNot
+  , folAnd
+  , folOr
+  , folCond
+  , folBicond1
+  , folBicond2
+  , folExists
+  , folForAll
+  , folEquals
   )
 
 import FOL.Primitives       ( appF, appP, equal )
@@ -225,9 +234,10 @@ termToFormula term@(Def qName@(QName _ name) args) = do
 
          | isCNameFOLConstTwoHoles folOr → binConst Or a1 a2
 
-         | isCNameFOLConstTwoHoles folImplies → binConst Implies a1 a2
+         | isCNameFOLConstTwoHoles folCond → binConst Implies a1 a2
 
-         | isCNameFOLConstTwoHoles folEquiv → binConst Equiv a1 a2
+         | isCNameFOLConstTwoHoles folBicond1
+           || isCNameFOLConstTwoHoles folBicond2 → binConst Equiv a1 a2
 
          | isCNameFOLConstTwoHoles folEquals → do
              reportSLn "t2f" 20 "Processing equals"

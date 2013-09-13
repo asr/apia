@@ -15,6 +15,7 @@ import System.FilePath.Find           ( (||?), (==?), always, extension, find )
 
 import System.IO
   ( hPutStr
+  , hPutStrLn
   , IOMode(ReadMode, WriteMode)
   , stderr
   , withFile
@@ -104,9 +105,10 @@ fix mode f = do
   case new of
     Nothing → return False
     Just s  → do
-      putStrLn $ "Whitespace violation "
-                 ++ (if mode == Fix then "fixed" else "detected")
-                 ++ " in " ++ f
+      hPutStrLn stderr $
+        "Whitespace violation " ++
+        (if mode == Fix then "fixed" else "detected") ++
+        " in " ++ f ++ "."
       when (mode == Fix) $
         withFile f WriteMode $ \h → Text.hPutStr h s
       return True

@@ -23,15 +23,16 @@
   [Metis](http://www.gilith.com/software/metis/),
   [SPASS](http://www.spass-prover.org/) or
   [Vampire](http://www.vprover.org/). The tested versions of the ATPs
-  are: E 1.8-001 Gopaldhara, Equinox version 5.0alpha (2010-06-29),
-  ileanCoP v1.3beta1, Metis 2.3 (release 20120927), SPASS v3.7 and
-  Vampire 0.6 (revision 903).
+  are: E 1.8-001 Gopaldhara, Equinox 5.0alpha (2010-06-29), ileanCoP
+  1.3beta1, Metis 2.3 (release 20120927), SPASS 3.7 and Vampire 0.6
+  (revision 903).
 
 * The tptp4X program
 
-  Apia uses the tptp4X program from the [TPTP
-  library](http://www.cs.miami.edu/~tptp/) by default. This program
-  can be avoided using the command-line option `--no-check`.
+  Apia uses by default the tptp4X program from the [TPTP
+  library](http://www.cs.miami.edu/~tptp/). This program can be
+  avoided using the `--no-check` command-line option. The tested
+  version of tptp4X is from TPTP 6.0.0.
 
 # Installation
 

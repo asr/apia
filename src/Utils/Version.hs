@@ -7,7 +7,7 @@
 -- Maintainer  : Andrés Sicard-Ramírez <andres.sicard.ramirez@gmail.com>
 -- Stability   : experimental
 --
--- Utilities related to representation versions.
+-- Utilities related to representation of versions.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE UnicodeSyntax #-}

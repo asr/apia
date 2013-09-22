@@ -7,7 +7,7 @@
 -- Maintainer  : Andrés Sicard-Ramírez <andres.sicard.ramirez@gmail.com>
 -- Stability   : experimental
 --
--- Utilities related to 'Version'.
+-- Utilities related to representation versions.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE UnicodeSyntax #-}
@@ -18,12 +18,13 @@ where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Data.Version ( showVersion )
+import Data.List ( intercalate )
 
 import Distribution.Package                  ( PackageIdentifier(pkgVersion) )
 import Distribution.PackageDescription       ( package , packageDescription )
 import Distribution.PackageDescription.Parse ( readPackageDescription )
 import Distribution.Verbosity                ( silent )
+import Distribution.Version                  ( Version(Version) )
 
 import System.Environment ( getProgName )
 
@@ -35,6 +36,10 @@ import System.Environment ( getProgName )
 import Utils.String ( toUpperFirst )
 
 ------------------------------------------------------------------------------
+
+showVersion ∷ Version → String
+showVersion (Version branch _) = intercalate "." (map show branch)
+
 -- | Return program name and version information.
 progNameVersion ∷ IO String
 progNameVersion = do

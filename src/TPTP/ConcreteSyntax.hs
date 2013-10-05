@@ -148,7 +148,7 @@ instance ToTPTP Char where
     -- We use the character @_@ to separate the Agda NameId (see
     -- below).
     | c == '_' = [c]
-    -- The character is a subscript number (i.e. ₀, ₁, ...).
+    -- The character is a subscript digit (i.e. ₀, ₁, ..., ₉).
     | ord c `elem` [8320 .. 8329]                   = [chr (ord c - 8272)]
     | isDigit c || isAsciiUpper c || isAsciiLower c = [c]
     | otherwise                                     = show $ ord c

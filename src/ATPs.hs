@@ -255,7 +255,7 @@ callATPs file = do
   let atps ∷ [String]
       atps = if null atpsAux then defaultATPs else atpsAux
 
-  reportS "" 1 $ "Proving the conjecture in " ++ file ++ " ..."
+  reportS "" 1 $ "Proving the conjecture in " ++ file
   reportS "" 20 $ "ATPs to be used: " ++ show atps
 
   -- See note [Timeout increse].

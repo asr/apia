@@ -60,7 +60,7 @@ Apia version 0.9.1
 dist/build/apia/apia -itest/options --atp=e --unproven-conjecture-no-error test/options/NoTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/NoTheorem/15-foo.tptp ...
+Proving the conjecture in /tmp/NoTheorem/15-foo.tptp
 E 1.8-001 Gopaldhara *did not* prove the conjecture
 The ATP(s) did not prove the conjecture in /tmp/NoTheorem/15-foo.tptp
 >>>2

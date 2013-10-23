@@ -69,8 +69,9 @@ where
 import Control.Monad       ( liftM2, when )
 import Control.Monad.Error ( MonadError(throwError) )
 
-import Data.List  ( elemIndex )
-import Data.Maybe ( fromMaybe )
+import Data.Functor ( (<$>) )
+import Data.List    ( elemIndex )
+import Data.Maybe   ( fromMaybe )
 
 ------------------------------------------------------------------------------
 -- Agda libray imports
@@ -106,11 +107,11 @@ class RemoveVar a where
   removeVar ∷ a → String → T a
 
 instance RemoveVar Type where
-  removeVar (El ty@(Type _) term) x = fmap (El ty) (removeVar term x)
+  removeVar (El ty@(Type _) term) x = El ty <$> removeVar term x
   removeVar _                     _ = __IMPOSSIBLE__
 
 instance RemoveVar Term where
-  removeVar (Def qname args) x = fmap (Def qname) (removeVar args x)
+  removeVar (Def qname args) x = Def qname <$> removeVar args x
 
   removeVar (Lam h (Abs y absTerm)) x = do
     pushTVar y
@@ -141,13 +142,10 @@ instance RemoveVar Term where
     -- If the Pi term is on a proof term, we replace it by a Pi term
     -- which is not a proof term.
     newTerm ← if y /= x
-                then do
-                  newType ← removeVar absTy x
-                  return $ Pi domTy (Abs y newType)
-                else do
-                  newType ← removeVar absTy x
+                then Pi domTy . Abs y <$> removeVar absTy x
+                else
                   -- We use "_" because Agda uses it.
-                  return $ Pi domTy (NoAbs "_" newType)
+                  Pi domTy . NoAbs "_" <$> removeVar absTy x
 
     popTVar
     reportSLn "removePT" 20 $ "Pop variable " ++ show y
@@ -158,7 +156,7 @@ instance RemoveVar Term where
     __IMPOSSIBLE__
 
 instance RemoveVar a ⇒ RemoveVar (I.Dom a) where
-  removeVar (Dom info e) x = fmap (Dom info) (removeVar e x)
+  removeVar (Dom info e) x = Dom info <$> removeVar e x
 
 -- In the Agda source code (Agda.Syntax.Internal) we have
 --

@@ -79,8 +79,11 @@ import Agda.Syntax.Internal as I
   , ClauseBody(Bind, Body, NoBody)
   , ConHead(ConHead)
   , Dom
+  , Elim
+  , Elim'(Apply, Proj)
   , Term(Con, Def, Lam, Pi, Sort, Var)
-  , Type(El)
+  , Type
+  , Type'(El)
   )
 
 import Agda.Syntax.Position
@@ -324,21 +327,6 @@ getClauses def =
 class QNamesIn a where
   qNamesIn ∷ a → [QName]
 
-instance QNamesIn a ⇒ QNamesIn [a] where
-  qNamesIn = concatMap qNamesIn
-
--- Requires TypeSynonymInstances and FlexibleInstances.
-instance QNamesIn a ⇒ QNamesIn (I.Arg a) where
-  qNamesIn (Arg _ e) = qNamesIn e
-
--- Requires TypeSynonymInstances and FlexibleInstances.
-instance QNamesIn a ⇒ QNamesIn (I.Dom a) where
-  qNamesIn (Dom _ e) = qNamesIn e
-
-instance QNamesIn a ⇒ QNamesIn (Abs a) where
-  qNamesIn (Abs _ e)   = qNamesIn e
-  qNamesIn (NoAbs _ e) = qNamesIn e
-
 instance QNamesIn Term where
   qNamesIn (Con (ConHead qName _) args) = qName : qNamesIn args
   qNamesIn (Def qName args) = qName : qNamesIn args
@@ -351,6 +339,10 @@ instance QNamesIn Term where
 
 instance QNamesIn Type where
   qNamesIn (El _ term) = qNamesIn term
+
+instance QNamesIn Elim where
+  qNamesIn (Apply (Arg _ term)) = qNamesIn term
+  qNamesIn (Proj _)             = __IMPOSSIBLE__
 
 instance QNamesIn ClauseBody where
   qNamesIn (Body term)          = qNamesIn term
@@ -365,6 +357,21 @@ instance QNamesIn Clause where
 
 instance QNamesIn Definition where
   qNamesIn def = qNamesIn $ defType def
+
+instance QNamesIn a ⇒ QNamesIn [a] where
+  qNamesIn = concatMap qNamesIn
+
+-- Requires TypeSynonymInstances and FlexibleInstances.
+instance QNamesIn a ⇒ QNamesIn (I.Arg a) where
+  qNamesIn (Arg _ e) = qNamesIn e
+
+-- Requires TypeSynonymInstances and FlexibleInstances.
+instance QNamesIn a ⇒ QNamesIn (I.Dom a) where
+  qNamesIn (Dom _ e) = qNamesIn e
+
+instance QNamesIn a ⇒ QNamesIn (Abs a) where
+  qNamesIn (Abs _ e)   = qNamesIn e
+  qNamesIn (NoAbs _ e) = qNamesIn e
 
 -- Adapted from Agda.TypeChecking.Monad.Signature.isProjection.
 -- | Is it the 'Qname' a projection?

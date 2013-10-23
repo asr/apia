@@ -80,13 +80,15 @@ import Agda.Syntax.Common ( Arg(Arg), Dom(Dom), Nat )
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
-  , Args
   , Dom
+  , Elim'(Apply)
+  , Elims
   , Level(Max)
   , PlusLevel(ClosedLevel)
   , Term(Def, Lam, Pi, Sort, Var)
   , Sort(Type)
-  , Type(El)
+  , Type
+  , Type'(El)
   , var
   )
 
@@ -101,8 +103,7 @@ import Monad.Reports ( reportSLn )
 #include "../undefined.h"
 
 ------------------------------------------------------------------------------
--- | Remove the reference to a variable (i.e. Var n args) in an Agda
--- entity.
+-- | Remove the reference to a variable (i.e. Var n elims) in an Agda entity.
 class RemoveVar a where
   removeVar ∷ a → String → T a
 
@@ -111,7 +112,7 @@ instance RemoveVar Type where
   removeVar _                     _ = __IMPOSSIBLE__
 
 instance RemoveVar Term where
-  removeVar (Def qname args) x = Def qname <$> removeVar args x
+  removeVar (Def qname elims) x = Def qname <$> removeVar elims x
 
   removeVar (Lam h (Abs y absTerm)) x = do
     pushTVar y
@@ -159,17 +160,14 @@ instance RemoveVar a ⇒ RemoveVar (I.Dom a) where
   removeVar (Dom info e) x = Dom info <$> removeVar e x
 
 -- In the Agda source code (Agda.Syntax.Internal) we have
---
--- type Args = [Arg Term]
---
--- however, we cannot create the instance of Args based on a map,
--- because in some cases we need to erase the term.
+-- type Elims = [Elim], however we cannot create the instance of Elims
+-- based on a map, because in some cases we need to erase the term.
 
 -- Requires TypeSynonymInstances and FlexibleInstances.
-instance RemoveVar Args where
+instance RemoveVar Elims where
   removeVar [] _ = return []
 
-  removeVar (Arg info term@(Var n []) : args) x = do
+  removeVar (Apply (Arg info term@(Var n [])) : elims) x = do
     when (n < 0) (__IMPOSSIBLE__)
     vars ← getTVars
 
@@ -180,15 +178,17 @@ instance RemoveVar Args where
         index = fromMaybe (__IMPOSSIBLE__) $ elemIndex x vars
 
     if n == index
-      then removeVar args x
+      then removeVar elims x
       else if n < index
-             then fmap ((:) (Arg info term)) (removeVar args x)
-             else fmap ((:) (Arg info (var (n - 1)))) (removeVar args x)
+             then fmap ((:) (Apply (Arg info term))) (removeVar elims x)
+             else fmap ((:) (Apply (Arg info (var (n - 1))))) (removeVar elims x)
 
-  removeVar (Arg _ (Var _ _) : _) _ = __IMPOSSIBLE__
+  removeVar (Apply (Arg _ (Var _ _)) : _) _ = __IMPOSSIBLE__
 
-  removeVar (Arg info term : args) x =
-    liftM2 (\t ts → Arg info t : ts) (removeVar term x) (removeVar args x)
+  removeVar (Apply (Arg info term) : elims) x =
+    liftM2 (\t es → Apply (Arg info t) : es) (removeVar term x) (removeVar elims x)
+
+  removeVar _ _ = __IMPOSSIBLE__
 
 -- | Remove a proof term from an Agda 'Type'.
 removeProofTerm ∷ Type → (String, Type) → T Type
@@ -197,30 +197,22 @@ removeProofTerm ty (x, typeVar) = do
     "It is necessary to remove the variable " ++ show x ++ "?"
 
   case typeVar of
-    -- The variable's type is a @Set@,
-    --
-    -- e.g. the variable is @d : D@, where @D : Set@
-    --
-    -- so we don't do anything.
+    -- The variable's type is a Set, e.g. the variable is d : D, where
+    -- D : Set, so we don't do anything.
 
     -- N.B. the pattern matching on @(Def _ [])@.
     El (Type (Max [])) (Def _ []) → return ty
 
-    -- The variable's type is a proof,
-    --
-    -- e.g. the variable is @Nn : N n@ where @D : Set@, @n : D@ and @N
-    -- : D → Set@.
-    --
-    -- In this case, we remove the reference to this
-    -- variable.
+    -- The variable's type is a proof, e.g. the variable is Nn : N n
+    -- where D : Set, n : D and N : D → Set. In this case, we remove
+    -- the reference to this variable.
 
     -- N.B. the pattern matching on @(Def _ _)@.
 
     El (Type (Max [])) (Def _ _) → removeVar ty x
 
-    -- The variable's type is a function type, i.e. @Pi _ (NoAbs _ _ )@
-    --
-    -- e.g. the variable is @f : D → D@, where @D : Set@.
+    -- The variable's type is a function type, i.e. Pi _ (NoAbs _ _ ),
+    -- e.g. the variable is f : D → D, where D : Set.
 
     -- -- In the class TypesOfVar we associated to the variables bounded
     -- -- in Lam terms the type DontCare.

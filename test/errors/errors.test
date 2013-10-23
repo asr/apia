@@ -12,7 +12,7 @@ dist/build/apia/apia -itest/errors test/errors/NotErasedProofTerm.agda
 >>>
 >>>2
 apia: The translation failed because we do not know how erase the term
-Pi []r(El {getSort = Type (Max []), unEl = Def NotErasedProofTerm.D []}) (Abs "k" El {getSort = Type (Max []), unEl = Def NotErasedProofTerm._≤_ [[]r(Var 0 []),[]r(Var 0 [])]})
+Pi []r(El {getSort = Type (Max []), unEl = Def NotErasedProofTerm.D []}) (Abs "k" El {getSort = Type (Max []), unEl = Def NotErasedProofTerm._≤_ [Apply []r(Var 0 []),Apply []r(Var 0 [])]})
 >>>= 1
 
 #3. Terms.hs: Required pragma --schematic-propositional-symbols

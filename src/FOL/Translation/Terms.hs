@@ -48,14 +48,18 @@ import qualified Agda.Syntax.Concrete.Name as C
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
+  , allApplyElims
   , Arg
   , Args
   , ConHead(ConHead)
+  , Elim
+  , Elim'(Apply, Proj)
+  , Elims
   , Level(Max)
   , PlusLevel(ClosedLevel)
   , Sort(Type)
   , Term(Con, Def, Lam, Pi, Sort, Var)
-  , Type(El)
+  , Type'(El)
   )
 
 import Agda.Syntax.Position  ( noRange )
@@ -164,14 +168,17 @@ binConst ∷ (FOLFormula → FOLFormula → FOLFormula) →
 binConst op arg1 arg2 =
   liftM2 op (argTermToFormula arg1) (argTermToFormula arg2)
 
+elimTermToFOLTerm ∷ Elim → T FOLTerm
+elimTermToFOLTerm (Apply arg) = argTermToFOLTerm arg
+elimTermToFOLTerm (Proj _)    = __IMPOSSIBLE__
 
 -- Translation of predicates.
-predicate ∷ QName → Args → T FOLFormula
-predicate qName args = do
-  folName ← qName2String qName
-  termsFOL ← mapM argTermToFOLTerm args
+predicate ∷ QName → Elims → T FOLFormula
+predicate qName elims = do
+  folName  ← qName2String qName
+  termsFOL ← mapM elimTermToFOLTerm elims
 
-  case length args of
+  case length elims of
     0 → __IMPOSSIBLE__
     _ → ifM (askTOpt optWithoutPConsts)
             -- Direct translation.
@@ -179,19 +186,19 @@ predicate qName args = do
             -- Translation using Koen's suggestion.
             (return $ appP (FOLFun folName []) termsFOL)
 
-propositionalFunctionScheme ∷ [String] → Nat → Args → T FOLFormula
-propositionalFunctionScheme vars n args = do
+propositionalFunctionScheme ∷ [String] → Nat → Elims → T FOLFormula
+propositionalFunctionScheme vars n elims = do
   let var ∷ String
       var = vars !! n
 
-  case length args of
+  case length elims of
     0 → __IMPOSSIBLE__
-    _ → fmap (appP (FOLVar var)) (mapM argTermToFOLTerm args)
+    _ → fmap (appP (FOLVar var)) (mapM elimTermToFOLTerm elims)
 
 -- | Translate an Agda internal 'Term' to a first-order logic formula
 -- 'FOLFormula'.
 termToFormula ∷ Term → T FOLFormula
-termToFormula term@(Def qName@(QName _ name) args) = do
+termToFormula term@(Def qName@(QName _ name) elims) = do
   reportSLn "t2f" 10 $ "termToFormula Def:\n" ++ show term
 
   let cName ∷ C.Name
@@ -203,18 +210,20 @@ termToFormula term@(Def qName@(QName _ name) args) = do
     C.Name _ [] → __IMPOSSIBLE__
 
     C.Name{} →
-     case args of
-       [] | isCNameFOLConst folTrue  → return TRUE
+     case allApplyElims elims of
+       Nothing → __IMPOSSIBLE__
 
-          | isCNameFOLConst folFalse → return FALSE
+       Just [] | isCNameFOLConst folTrue  → return TRUE
 
-          | otherwise → do
-            -- In this guard we translate 0-ary predicates, i.e. propositional
-            -- functions, for example, @A : Set@.
-            folName ← qName2String qName
-            return $ Predicate folName []
+               | isCNameFOLConst folFalse → return FALSE
 
-       (a : [])
+               | otherwise → do
+                 -- In this guard we translate 0-ary predicates, i.e.
+                 -- propositional functions, for example, A : Set.
+                 folName ← qName2String qName
+                 return $ Predicate folName []
+
+       Just [a]
          | isCNameFOLConstHoleRight folNot → fmap Not (argTermToFormula a)
 
          | isCNameFOLConst folExists ||
@@ -227,9 +236,9 @@ termToFormula term@(Def qName@(QName _ name) args) = do
                       then Exists freshVar $ const fm
                       else ForAll freshVar $ const fm
 
-         | otherwise → predicate qName args
+         | otherwise → predicate qName elims
 
-       (a1 : a2 : [])
+       Just [a1, a2]
          | isCNameFOLConstTwoHoles folAnd → binConst And a1 a2
 
          | isCNameFOLConstTwoHoles folOr → binConst Or a1 a2
@@ -243,9 +252,9 @@ termToFormula term@(Def qName@(QName _ name) args) = do
              reportSLn "t2f" 20 "Processing equals"
              liftM2 equal (argTermToFOLTerm a1) (argTermToFOLTerm a2)
 
-         | otherwise → predicate qName args
+         | otherwise → predicate qName elims
 
-       _ → predicate qName args
+       _ → predicate qName elims
 
        where
        isCNameFOLConst ∷ String → Bool
@@ -443,14 +452,14 @@ termToFormula (Pi domTy (NoAbs x absTy)) = do
       f1 ← domTypeToFormula domTy
       return $ Implies f1 f2
 
-termToFormula term@(Var n args) = do
+termToFormula term@(Var n elims) = do
   reportSLn "t2f" 10 $ "termToFormula Var: " ++ show term
 
   when (n < 0) (__IMPOSSIBLE__)
   vars ← getTVars
   when (length vars <= n) (__IMPOSSIBLE__)
 
-  case args of
+  case elims of
     -- N.B. In this case we *don't* use Koen's approach.
     [] → return $ Predicate (vars !! n) []
 
@@ -477,7 +486,7 @@ termToFormula term@(Var n args) = do
                (throwError $
                  "The options '--schematic-propositional-functions'"
                  ++ " and '--without-predicate-constants' are incompatible")
-               (propositionalFunctionScheme vars n args)
+               (propositionalFunctionScheme vars n elims)
           )
           (throwError $ universalQuantificationErrorMsg p)
 
@@ -526,7 +535,7 @@ termToFOLTerm term@(Con (ConHead (QName _ name) _) args) = do
     --     [] → __IMPOSSIBLE__
     --     _  → appArgsFn (concatName parts) args
 
-termToFOLTerm term@(Def (QName _ name) args) = do
+termToFOLTerm term@(Def (QName _ name) elims) = do
   reportSLn "t2t" 10 $ "termToFOLTerm Def:\n" ++ show term
 
   let cName ∷ C.Name
@@ -540,16 +549,18 @@ termToFOLTerm term@(Def (QName _ name) args) = do
     -- The term @Def@ doesn't have holes. It is translated as a
     -- first-order logic function.
     C.Name _ [C.Id str] →
-     case args of
-       [] → return $ FOLFun str []
-       _  → appArgsF str args
+     case allApplyElims elims of
+       Nothing    → __IMPOSSIBLE__
+       Just []    → return $ FOLFun str []
+       Just args  → appArgsF str args
 
     -- The term @Def@ has holes. It is translated as a first-order
     -- logic function.
     C.Name _ parts →
-      case args of
-        [] → __IMPOSSIBLE__
-        _  → appArgsF (concatName parts) args
+      case allApplyElims elims of
+        Nothing    → __IMPOSSIBLE__
+        Just []    → __IMPOSSIBLE__
+        Just args  → appArgsF (concatName parts) args
 
 termToFOLTerm term@(Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ termLam)) = do
   reportSLn "t2f" 10 $ "termToFOLTerm Lam:\n" ++ show term

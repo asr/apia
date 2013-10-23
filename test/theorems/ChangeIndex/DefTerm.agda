@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing the class AgdaLib.DeBruijn.ChangeIndex: (Def _ []) term
+-- Testing the class AgdaInternal.DeBruijn.ChangeIndex: (Def _ []) term
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --no-universe-polymorphism #-}

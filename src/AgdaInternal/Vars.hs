@@ -36,9 +36,12 @@ import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , Arg
   , ClauseBody(Bind, Body, NoBody)
+  , Elim
+  , Elim'(Apply, Proj)
   , Term(Con, Def, Lam, Pi, Var)
   , Sort(Type)
-  , Type(El)
+  , Type
+  , Type'(El)
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
@@ -55,12 +58,16 @@ class BoundedVars a where
 
 instance BoundedVars Term where
 
-  boundedVars (Def _ args) = boundedVars args
+  boundedVars (Def _ elims) = boundedVars elims
   boundedVars (Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ absTerm)) =
     1 + boundedVars absTerm
   boundedVars (Var n _) | n >= 0    = 0
                         | otherwise = __IMPOSSIBLE__
   boundedVars _ = __IMPOSSIBLE__
+
+instance BoundedVars Elim where
+  boundedVars (Apply (Arg _ term)) = boundedVars term
+  boundedVars (Proj _)             = __IMPOSSIBLE__
 
 -- Requires TypeSynonymInstances and FlexibleInstances.
 instance BoundedVars a ⇒ BoundedVars (I.Arg a) where
@@ -97,7 +104,7 @@ instance BoundedVarsType Term where
   boundedVarsType (Pi _ (NoAbs _ absTy)) = boundedVarsType absTy
   boundedVarsType (Pi (Dom _ ty) (Abs x absTy)) = (x, ty) : boundedVarsType absTy
 
-  boundedVarsType (Def _ args) = boundedVarsType args
+  boundedVarsType (Def _ elims) = boundedVarsType elims
 
   boundedVarsType (Con _ _) = []
   boundedVarsType (Lam _ _) = []
@@ -106,6 +113,10 @@ instance BoundedVarsType Term where
                             | otherwise = __IMPOSSIBLE__
 
   boundedVarsType _ = __IMPOSSIBLE__
+
+instance BoundedVarsType Elim where
+  boundedVarsType (Apply (Arg _ term)) = boundedVarsType term
+  boundedVarsType (Proj _)             = __IMPOSSIBLE__
 
 -- Requires TypeSynonymInstances and FlexibleInstances.
 instance BoundedVarsType a ⇒ BoundedVarsType (I.Arg a) where

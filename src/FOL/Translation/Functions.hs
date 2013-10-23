@@ -41,16 +41,18 @@ import Agda.Syntax.Abstract.Name ( QName )
 
 import Agda.Syntax.Internal
   ( Abs(Abs)
-  , Args
   , Clause(Clause)
   , ClauseBody
+  , Elim'(Apply)
+  , Elims
   , Level(Max)
   , PlusLevel(ClosedLevel)
   , Sort(Type)
   , Tele(ExtendTel)
   , Telescope
   , Term(Def, Pi)
-  , Type(El)
+  , Type
+  , Type'(El)
   , var
   )
 
@@ -87,9 +89,9 @@ import Monad.Reports ( reportSLn )
 ------------------------------------------------------------------------------
 -- Auxiliary functions
 
-varsToArgs ∷ Nat → Args
-varsToArgs 0 = []
-varsToArgs n = Arg defaultArgInfo (var (n - 1)) : varsToArgs (n - 1)
+varsToElims ∷ Nat → Elims
+varsToElims 0 = []
+varsToElims n = Apply (Arg defaultArgInfo (var (n - 1))) : varsToElims (n - 1)
 
 ------------------------------------------------------------------------------
 -- In general a definition's function is given by various clauses
@@ -205,7 +207,7 @@ clauseToFormula qName ty (Clause _ _ _ [] cBody _) = do
       -- We create the Agda term corresponds to the LHS of the symbol's
       -- definition.
       let lhs ∷ Term
-          lhs = Def qName $ varsToArgs $ length vars
+          lhs = Def qName $ varsToElims $ length vars
 
       -- Because the LHS and the RHS (the body of the clause) are
       -- formulae, they are related via an equivalence logic.
@@ -225,7 +227,7 @@ clauseToFormula qName ty (Clause _ _ _ [] cBody _) = do
       -- @foo = λ d → ...
 
       let lhs ∷ Term
-          lhs = Def qName $ varsToArgs totalBoundedVars
+          lhs = Def qName $ varsToElims totalBoundedVars
 
       if length vars == totalBoundedVars
         -- The definition is of the form

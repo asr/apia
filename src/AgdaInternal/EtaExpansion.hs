@@ -29,7 +29,7 @@ import Data.Functor  ( (<$>) )
 -- Agda library imports
 
 import Agda.Syntax.Common
-  ( Arg(Arg, unArg)
+  ( Arg(Arg)
   , Dom(Dom)
   , defaultArgInfo
   , Nat
@@ -38,14 +38,17 @@ import Agda.Syntax.Common
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , Arg
-  , Args
   , arity
+  , Elim
+  , Elim'(Apply, Proj)
+  , Elims
   , Dom
   , Level(Max)
   , PlusLevel(ClosedLevel)
   , Term(Con, Def, Lam, Pi, Sort, Var)
   , Sort(Type)
-  , Type(El)
+  , Type
+  , Type'(El)
   , var
   )
 
@@ -79,7 +82,7 @@ instance EtaExpandible Sort where
   etaExpand _                   = __IMPOSSIBLE__
 
 instance EtaExpandible Type where
-  etaExpand (El (Type (Max [])) term) =  El (Type (Max [])) <$> etaExpand term
+  etaExpand (El (Type (Max [])) term) = El (Type (Max [])) <$> etaExpand term
 
   etaExpand (El (Type (Max [ClosedLevel 1])) term) =
     El (Type (Max [ClosedLevel 1])) <$> etaExpand term
@@ -87,7 +90,7 @@ instance EtaExpandible Type where
   etaExpand _ = __IMPOSSIBLE__
 
 instance EtaExpandible Term where
-  etaExpand (Def qName args) = do
+  etaExpand (Def qName elims) = do
     whenJustM (isProjection qName) (__IMPOSSIBLE__)
 
     defTy ∷ Type ← qNameType qName
@@ -95,58 +98,60 @@ instance EtaExpandible Term where
     let qNameArity ∷ Nat
         qNameArity = arity defTy
 
-    argsEtaExpanded ← mapM etaExpand args
+    elimsEtaExpanded ← mapM etaExpand elims
 
     -- Although a term has the right number of arguments, it can be
-    -- η-contracted. For example, given
-    --
-    -- @∃ : (A : D → Set) → Set@, the term @∃ A@ is η-contracted, so
-    -- we should η-expand it to @∃ (λ x → A x)@.
-    if qNameArity == length args
+    -- η-contracted. For example, given ∃ : (A : D → Set) → Set, the
+    -- term ∃ A is η-contracted, so we should η-expand it to
+    -- ∃ (λ x → A x).
+    if qNameArity == length elims
       then case defTy of
         El (Type (Max [ClosedLevel 1]))
            (Pi (Dom _ (El (Type (Max [ClosedLevel 1]))
                            (Pi (Dom _ (El (Type (Max [])) _))
                                (NoAbs _ (El (Type (Max [ClosedLevel 1]))
                                         (Sort (Type (Max [])))))))) _)  →
-           case map unArg args of
-             (Def _ _ : []) → return $ Def qName argsEtaExpanded
+           case elims of
+             [Apply (Arg _ term)] →
+               case term of
+                 (Def _ _) → return $ Def qName elimsEtaExpanded
 
-             (Lam _ _ : []) → return $ Def qName argsEtaExpanded
+                 (Lam _ _) → return $ Def qName elimsEtaExpanded
 
-             (Var 0 [] : []) → do
-               freshVar ← newTVar
+                 (Var 0 []) → do
+                   freshVar ← newTVar
 
-               let newArg ∷ I.Arg Term
-                   newArg = Arg defaultArgInfo
-                                (Lam defaultArgInfo
-                                (Abs freshVar (Var 1 [Arg defaultArgInfo (var 0)])))
+                   let newArg ∷ I.Arg Term
+                       newArg = Arg defaultArgInfo
+                                  (Lam defaultArgInfo
+                                  (Abs freshVar (Var 1 [Apply (Arg defaultArgInfo (var 0))])))
 
-               return $ Def qName [newArg]
+                   return $ Def qName [Apply newArg]
 
-             unArgs → do
-               reportSLn "etaExpansion" 20 $ "unArgs: " ++ show unArgs
+                 someTerm → do
+                   reportSLn "etaExpansion" 20 $ "someTerm: " ++ show someTerm
+                   __IMPOSSIBLE__
+
+             someElims → do
+               reportSLn "etaExpansion" 20 $ "someElims: " ++ show someElims
                __IMPOSSIBLE__
 
-        _ → return $ Def qName argsEtaExpanded
+        _ → return $ Def qName elimsEtaExpanded
 
       else do
         -- The η-contraction can *only* reduces by 1 the number of
-        -- arguments of a term, for example:
-
-        -- Given @P : D → Set@, @λ x → P x@ η-contracts to @P@ or
-        --
-        -- given @_≡_ : D → D → Set@, @(x : D) → (λ y → x ≡ y)@
-        -- η-contracts to @(x : D) → _≡_ x@.
+        -- arguments of a term, for example: Given P : D → Set,
+        -- λ x → P x η-contracts to P or given _≡_ : D → D → Set,
+        -- (x : D) → (λ y → x ≡ y) η-contracts to (x : D) → _≡_ x.
 
         -- We applied the η-expansion in this case.
-        when (qNameArity - 1 /= length args) (__IMPOSSIBLE__)
+        when (qNameArity - 1 /= length elims) (__IMPOSSIBLE__)
 
         -- Because we are going to add a new abstraction, we need
         -- increase by one the numbers associated with the variables
         -- in the arguments.
-        let incVarsEtaExpanded ∷ Args
-            incVarsEtaExpanded = map incIndex argsEtaExpanded
+        let incVarsEtaExpanded ∷ Elims
+            incVarsEtaExpanded = map incIndex elimsEtaExpanded
 
             newVar ∷ I.Arg Term
             newVar = Arg defaultArgInfo (var 0)
@@ -156,7 +161,7 @@ instance EtaExpandible Term where
         return $ Lam defaultArgInfo
                      (Abs freshVar (Def qName incVarsEtaExpanded `apply` [newVar]))
 
-  -- We don't know an example of eta-contraction with @Con@, therefore
+  -- We don't know an example of eta-contraction with Con, therefore
   -- we don't do anything.
   etaExpand term@(Con _ _) = return term
 
@@ -166,8 +171,8 @@ instance EtaExpandible Term where
      tDom ← etaExpand domTy
      tAbs ← etaExpand absTy
      return $ Pi tDom (NoAbs x tAbs)
-  -- It seems it is not necessary to eta-expand the @domTy@ like in the
-  -- case of @Pi _ (NoAbs _ _)@.
+  -- It seems it is not necessary to eta-expand the domTy like in the
+  -- case of Pi _ (NoAbs _ _).
   etaExpand (Pi domTy (Abs x absTy)) = Pi domTy . Abs x <$> etaExpand absTy
 
   etaExpand (Sort sort) = Sort <$> etaExpand sort
@@ -179,9 +184,9 @@ instance EtaExpandible Term where
    reportSLn "etaExpansion" 20 $ "term: " ++ show term
    __IMPOSSIBLE__
 
--- Requires TypeSynonymInstances and FlexibleInstances.
-instance EtaExpandible a ⇒ EtaExpandible (I.Arg a) where
-  etaExpand (Arg info e) = Arg info <$> etaExpand e
+instance EtaExpandible Elim where
+  etaExpand (Apply (Arg color term)) = Apply . Arg color <$> etaExpand term
+  etaExpand (Proj _)                 = __IMPOSSIBLE__
 
 -- Requires TypeSynonymInstances and FlexibleInstances.
 instance EtaExpandible a ⇒ EtaExpandible (I.Dom a) where

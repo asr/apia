@@ -42,15 +42,17 @@ import Agda.Syntax.Common ( Arg(Arg), Dom(Dom), Nat )
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
-  , Arg
-  , Args
-  , ClauseBody(Bind,Body)
+  , ClauseBody(Bind, Body)
   , Dom
+  , Elim
+  , Elim'(Apply, Proj)
+  , Elims
   , Level(Max)
   , Tele(EmptyTel, ExtendTel)
   , Term(Def, Lam, Var)
   , Sort(Type)
-  , Type(El)
+  , Type
+  , Type'(El)
   , var
   )
 
@@ -73,8 +75,12 @@ instance IncIndex Term where
   incIndex (Var _ _) = __IMPOSSIBLE__
   incIndex _         = __IMPOSSIBLE__
 
-instance IncIndex a ⇒ IncIndex (I.Arg a) where
-  incIndex (Arg info e) = Arg info $ incIndex e
+instance IncIndex Elim where
+  incIndex (Apply (Arg color term)) = Apply (Arg color $ incIndex term)
+  incIndex (Proj _)                 = __IMPOSSIBLE__
+
+instance IncIndex a ⇒ IncIndex [a] where
+  incIndex = map incIndex
 
 ------------------------------------------------------------------------------
 -- | To decrease by one the de Bruijn index of the variable in an Agda
@@ -83,22 +89,23 @@ class DecIndex a where
   decIndex ∷ a → a
 
 instance DecIndex Term where
-  decIndex (Def qname args) = Def qname $ decIndex args
+  decIndex (Def qname elims) = Def qname $ decIndex elims
   decIndex term@(Var 0 []) = term
   decIndex (Var n []) | n > 0     = var (n - 1)
                       | otherwise = __IMPOSSIBLE__
   decIndex (Var _ _) = __IMPOSSIBLE__
   decIndex _ = __IMPOSSIBLE__
 
-instance DecIndex a ⇒ DecIndex [a] where
-  decIndex = map decIndex
-
 instance DecIndex Type where
   decIndex (El (Type (Max [])) term) = El (Type (Max [])) (decIndex term)
   decIndex _                         = __IMPOSSIBLE__
 
-instance DecIndex a ⇒ DecIndex (I.Arg a) where
-  decIndex (Arg info e) = Arg info $ decIndex e
+instance DecIndex Elim where
+  decIndex (Apply (Arg color term)) = Apply (Arg color $ decIndex term)
+  decIndex (Proj _)                 = __IMPOSSIBLE__
+
+instance DecIndex a ⇒ DecIndex [a] where
+  decIndex = map decIndex
 
 instance DecIndex a ⇒ DecIndex (I.Dom a) where
   decIndex (Dom info e) = Dom info $ decIndex e
@@ -123,7 +130,7 @@ class VarNames a where
   varNames ∷ a → [String]
 
 instance VarNames Term where
-  varNames (Def _ args) = varNames args
+  varNames (Def _ elims) = varNames elims
 
   varNames (Lam _ (Abs x term)) = varNames term ++ [x]
 
@@ -135,8 +142,9 @@ instance VarNames Term where
   varNames (Var _ _) = __IMPOSSIBLE__
   varNames _         = __IMPOSSIBLE__
 
-instance VarNames a ⇒ VarNames (I.Arg a) where
-  varNames (Arg _ e) = varNames e
+instance VarNames Elim where
+  varNames (Apply (Arg _ term)) = varNames term
+  varNames (Proj _)             = __IMPOSSIBLE__
 
 instance VarNames a ⇒ VarNames [a] where
   varNames = concatMap varNames
@@ -171,7 +179,7 @@ class ChangeIndex a where
 instance ChangeIndex Term where
   changeIndex term@(Def _ []) _ = term
 
-  changeIndex (Def qName args) index = Def qName $ changeIndex args index
+  changeIndex (Def qName elims) index = Def qName $ changeIndex elims index
 
   changeIndex (Lam h (Abs x term)) index = Lam h (Abs x (changeIndex term index))
 
@@ -191,36 +199,35 @@ instance ChangeIndex Term where
   changeIndex _ _ = __IMPOSSIBLE__
 
 -- In the Agda source code (Agda.Syntax.Internal) we have
---
--- type Args = [Arg Term]
---
--- however, we cannot create the instance of Args based on a simple
--- map, because in some cases we need to erase the term.
+-- type Elims = [Elim], however we cannot create the instance of Elims
+-- based on a map, because in some cases we need to erase the term.
 
 -- Requires TypeSynonymInstances and FlexibleInstances.
-instance ChangeIndex Args where
+instance ChangeIndex Elims where
   changeIndex [] _ = []
 
-  changeIndex (Arg info term@(Var n []) : args) index
+  changeIndex (Apply (Arg info term@(Var n [])) : elims) index
     -- The variable was before than the quantified variable, we don't
     -- do nothing.
-    | n < index = Arg info term : changeIndex args index
+    | n < index = Apply (Arg info term) : changeIndex elims index
 
     -- The variable was after than the quantified variable, we need
     -- "unbound" the quantified variable.
-    | n > index = Arg info (var (n - 1)) : changeIndex args index
+    | n > index = Apply (Arg info (var (n - 1))) : changeIndex elims index
 
     -- The variable is the quantified variable. This can happen when
     -- the quantified variable is used indirectly by other term via
     -- for example a where clause (see for example xxx). In this case,
     -- we drop the variable. Before this modification, we returned
     -- __IMPOSSIBLE__.
-    | n == index = changeIndex args index
+    | n == index = changeIndex elims index
 
-  changeIndex (Arg _ (Var _ _) : _) _ = __IMPOSSIBLE__
+  changeIndex (Apply (Arg _ (Var _ _)) : _) _ = __IMPOSSIBLE__
 
-  changeIndex (Arg info term : args) index =
-    Arg info (changeIndex term index) : changeIndex args index
+  changeIndex (Apply (Arg info term) : elims) index =
+    Apply (Arg info (changeIndex term index)) : changeIndex elims index
+
+  changeIndex _ _ = __IMPOSSIBLE__
 
 instance ChangeIndex ClauseBody where
   changeIndex (Bind (Abs x cBody)) index = Bind (Abs x (changeIndex cBody index))

@@ -33,7 +33,8 @@ import Agda.Syntax.Internal as I
   , Level(Max)
   , PlusLevel(ClosedLevel)
   , Sort(Type)
-  , Type(El)
+  , Type
+  , Type'(El)
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )

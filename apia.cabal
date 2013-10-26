@@ -78,7 +78,7 @@ executable apia
     Utils.Version
 
   -- Required by cabal haddock (cabal-install version 1.18.0.2 using
-  -- version 1.18.1.1 of the Cabal library). See
+  -- version 1.18.1.2 of the Cabal library). See
   -- https://github.com/haskell/cabal/issues/223.
   extensions: CPP
 

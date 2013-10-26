@@ -188,14 +188,17 @@ createConjectureFile generalRoles conjectureSet = do
       file ∷ FilePath
       file = addExtension f tptpExt
 
-  reportSLn "createConjectureFile" 20 $
-            "Creating " ++ show file
+  reportSLn "createConjectureFile" 20 $ "Creating " ++ show file
 
   let commonDefs ∷ [AF]
       commonDefs = commonRequiredDefs generalRoles conjectureSet
 
+  reportSLn "createConjectureFile" 20 $ "commonDefs: " ++ show commonDefs
+
+  let newGeneralRoles  ∷ GeneralRoles
+      newConjectureSet ∷ ConjectureSet
       (newGeneralRoles, newConjectureSet) =
-          dropCommonRequiredDefs generalRoles conjectureSet
+        dropCommonRequiredDefs generalRoles conjectureSet
 
   when (duplicate (allRequiredDefs newGeneralRoles newConjectureSet))
        (__IMPOSSIBLE__)

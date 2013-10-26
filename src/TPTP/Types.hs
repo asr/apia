@@ -60,6 +60,9 @@ instance Eq AF where
 instance Ord AF where
   compare (AF qName1 _ _) (AF qName2 _ _) = compare qName1 qName2
 
+instance Show AF where
+  show (AF qname _ _) = show qname
+
 -- | The 'ATPRole's share by all the conjetures in an Agda module.
 data GeneralRoles = GeneralRoles
   { axioms     ∷ [AF]  -- ^ The axioms.

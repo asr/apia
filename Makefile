@@ -231,8 +231,8 @@ git_pre_commit :
 # Install
 
 install :
-	cabal install
-	cd $(fix-whitespace_path) && cabal install
+	cabal install --disable-documentation
+	cd $(fix-whitespace_path) && cabal install --disable-documentation
 
 ##############################################################################
 # Haskell program coverage

@@ -33,7 +33,6 @@ executable apia
     Agda                   == 2.3.3.1
     , base                 >= 4.2 && < 4.7
     , Cabal                >= 1.14.0 && < 1.19
-    , Diff                 >= 0.2.0 && < 0.3
     , directory            >= 1.0 && < 1.3
     , filepath             >= 1.1 && < 1.4
     , ghc-prim             >= 0.2 && < 0.4

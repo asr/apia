@@ -13,24 +13,22 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Utils.Directory ( diff )
+module Utils.Directory ( equalFiles, notEqualFiles )
 where
 
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Data.Algorithm.Diff ( Diff(First, Second, Both), getDiff )
+import Control.Monad ( liftM2 )
 
 ------------------------------------------------------------------------------
+
+-- | Return 'True' if the files are equals, otherwise the function
+-- returns 'False'.
+equalFiles ∷ FilePath → FilePath → IO Bool
+equalFiles f1 f2 = liftM2 (==) (readFile f1) (readFile f2)
+
 -- | Return 'True' if the files are different, otherwise the function
 -- returns 'False'.
-diff ∷ FilePath → FilePath → IO Bool
-diff f1 f2 = do
-  let areEquals ∷ [Diff a] → Bool
-      areEquals []              = True
-      areEquals (First _  : _)  = False
-      areEquals (Second _ : _)  = False
-      areEquals (Both _ _ : xs) = areEquals xs
-
-  [l1, l2] ← mapM readFile [f1, f2]
-  return $ not $ areEquals $ getDiff l1 l2
+notEqualFiles ∷ FilePath → FilePath → IO Bool
+notEqualFiles f1 f2 = liftM2 (/=) (readFile f1) (readFile f2)

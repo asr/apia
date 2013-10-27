@@ -39,7 +39,7 @@ import Options
   ( Options(optOutputDir, optSnapshotDir, optSnapshotNoError)
   )
 
-import Utils.Directory ( diff )
+import Utils.Directory ( notEqualFiles )
 
 ------------------------------------------------------------------------------
 -- | Compare the generated TPTP files against a snapshot of them in
@@ -63,7 +63,7 @@ snapshotTest file = do
       if not b
         then throwError $ "The file " ++ snapshotFile ++ " does not exist"
         else
-          whenM (liftIO $ diff file snapshotFile) $ do
+          whenM (liftIO $ notEqualFiles file snapshotFile) $ do
             let msg ∷ String
                 msg = "The files are different:\n" ++ file ++ "\n" ++ snapshotFile
 

@@ -102,4 +102,4 @@ executable apia
   -- enabled by default.
   ghc-options: -rtsopts
 
-  ghc-prof-options: -auto-all
+  ghc-prof-options: -fprof-auto

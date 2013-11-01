@@ -228,16 +228,15 @@ git_pre_commit :
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Install Apia
+# Apia install
 
-install_apia :
+apia_install :
 	cabal install --disable-documentation
 
 ##############################################################################
-# Install all
+# fix-whitespace install
 
-install_all :
-	make install_apia
+fix_whitespace_install :
 	cd $(fix-whitespace_path) && cabal install --disable-documentation
 
 ##############################################################################

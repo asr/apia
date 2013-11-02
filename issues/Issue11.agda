@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- All the arguments are required in an ATP definition
+-- All parameters are required in an ATP definition
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --no-universe-polymorphism #-}
@@ -15,16 +15,19 @@ data Bool : D → Set where
   btrue  : Bool true
   bfalse : Bool false
 
-BitOk : D → Set
-BitOk b = Bool b
-{-# ATP definition BitOk #-}
+OkBit : D → Set
+OkBit b = Bool b
+{-# ATP definition OkBit #-}
 
-postulate foo : ∀ b → BitOk b → BitOk b
+postulate foo : ∀ b → OkBit b → OkBit b
 {-# ATP prove foo #-}
 
-BitWrong : D → Set
-BitWrong = Bool
-{-# ATP definition BitWrong #-}
+WrongBit : D → Set
+WrongBit = Bool
+{-# ATP definition WrongBit #-}
 
-postulate bar : ∀ b → BitWrong b → BitWrong b
+postulate bar : ∀ b → WrongBit b → WrongBit b
 {-# ATP prove bar #-}
+
+-- $ apia Issue11.agda
+-- apia: tptp4X found an error in the file /tmp/Issue11/29-bar.tptp

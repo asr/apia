@@ -9,13 +9,13 @@ SHELL := /bin/bash
 
 fix-whitespace_path = tools/fix-whitespace
 
-# Tests paths
-errors_path        = test/errors
-non_theorems_path  = test/non-theorems
-options_path       = test/options
-theorems_path      = test/theorems
+# Tests paths.
+errors_path       = test/errors
+non_theorems_path = test/non-theorems
+options_path      = test/options
+theorems_path     = test/theorems
 
-# Directory for the TPTP files.
+# Output directory for the TPTP files.
 output_dir = /tmp/apia
 
 # Notes path.
@@ -80,7 +80,7 @@ flags_gt = -i$(theorems_path) --only-files \
 	   --output-dir=$(output_dir)/$(theorems_path) \
 
 %.generated_theorems :
-	@echo "Processing $*.agda"
+	@echo "Comparing $*.agda"
 	@$(AGDA) -i$(theorems_path) $*.agda
 	@$(APIA) -v 0 $(flags_gt) $*.agda
 	@diff -r $* $(output_dir)/$*
@@ -89,7 +89,7 @@ flags_ngt = -i$(non_theorems_path) --only-files \
 	   --output-dir=$(output_dir)/$(non_theorems_path) \
 
 %.generated_non_theorems :
-	@echo "Processing $*.agda"
+	@echo "Comparing $*.agda"
 	@$(AGDA) -i$(non_theorems_path) $*.agda
 	@$(APIA) -v 0 $(flags_ngt) $*.agda
 	@diff -r $* $(output_dir)/$*

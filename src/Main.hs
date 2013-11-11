@@ -12,8 +12,6 @@
 -- provers.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
-{-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
@@ -82,8 +80,6 @@ import TPTP.Translation ( conjecturesToAFs, generalRolesToAFs )
 import TPTP.Types       ( ConjectureSet, GeneralRoles )
 import Utils.Monad      ( failureMsg, pair )
 import Utils.Version    ( progNameVersion )
-
-#include "undefined.h"
 
 ------------------------------------------------------------------------------
 
@@ -154,7 +150,7 @@ runAgda2ATP = do
 -- | Main.
 main ∷ IO ()
 main = do
-  -- Adapted from @Agda.Main.main@.
+  -- Adapted from @Agda.Main.main@. Requires -XScopedTypeVariables.
   r ∷ Either String () ← runT $ runAgda2ATP `catchError` \err →
     do liftIO $ failureMsg err
        throwError err

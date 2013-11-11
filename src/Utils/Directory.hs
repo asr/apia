@@ -10,7 +10,6 @@
 -- Utilities on directories.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Utils.Directory ( equalFiles, notEqualFiles )

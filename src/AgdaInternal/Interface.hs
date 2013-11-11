@@ -76,7 +76,8 @@ import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , Arg
   , Clause(Clause)
-  , ClauseBody(Bind, Body, NoBody)
+  , ClauseBody
+  , ClauseBodyF(Bind, Body, NoBody)
   , ConHead(ConHead)
   , Dom
   , Elim

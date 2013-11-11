@@ -35,7 +35,8 @@ import Agda.Syntax.Common
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , Arg
-  , ClauseBody(Bind, Body, NoBody)
+  , ClauseBody
+  , ClauseBodyF(Bind, Body, NoBody)
   , Elim
   , Elim'(Apply, Proj)
   , Term(Con, Def, Lam, Pi, Var)

@@ -28,7 +28,8 @@ import Agda.Syntax.Common ( Nat )
 
 import Agda.Syntax.Internal
   ( Abs(Abs)
-  , ClauseBody(Bind,Body)
+  , ClauseBody
+  , ClauseBodyF(Bind, Body)
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )

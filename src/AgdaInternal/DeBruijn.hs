@@ -42,7 +42,8 @@ import Agda.Syntax.Common ( Arg(Arg), Dom(Dom), Nat )
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
-  , ClauseBody(Bind, Body)
+  , ClauseBody
+  , ClauseBodyF(Bind, Body)
   , Dom
   , Elim
   , Elim'(Apply, Proj)

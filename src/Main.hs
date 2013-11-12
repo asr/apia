@@ -109,8 +109,8 @@ translation agdaFile = do
   pair generalRolesToAFs $ conjecturesToAFs topLevelDefs
 
 -- | The main function.
-runAgda2ATP ∷ T ()
-runAgda2ATP = do
+runApia ∷ T ()
+runApia = do
   opts ← ask
   case () of
     _ | optHelp opts    → liftIO printUsage
@@ -151,7 +151,7 @@ runAgda2ATP = do
 main ∷ IO ()
 main = do
   -- Adapted from @Agda.Main.main@. Requires -XScopedTypeVariables.
-  r ∷ Either String () ← runT $ runAgda2ATP `catchError` \err →
+  r ∷ Either String () ← runT $ runApia `catchError` \err →
     do liftIO $ failureMsg err
        throwError err
 

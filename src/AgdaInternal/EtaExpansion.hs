@@ -55,7 +55,7 @@ import Agda.Syntax.Internal as I
 import Agda.TypeChecking.Substitute ( Apply(apply) )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
-import Agda.Utils.Monad      ( whenJustM )
+import Agda.Utils.Maybe      ( whenJustM )
 
 ------------------------------------------------------------------------------
 -- Local imports

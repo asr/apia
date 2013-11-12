@@ -221,7 +221,6 @@ createConjectureFile generalRoles conjectureSet = do
     addRoles [theConjecture newConjectureSet] file "conjecture"
     appendFile file conjectureFooter
 
-  whenM (askTOpt optOnlyFiles) $
-       reportS "" 1 $ "Created " ++ file
+  whenM (askTOpt optOnlyFiles) $ reportS "" 1 $ "Created " ++ file
 
   return file

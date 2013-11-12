@@ -28,7 +28,7 @@ import System.FilePath ( combine, joinPath, splitPath )
 -- Agda library imports
 
 import Agda.Utils.FileName ( doesFileExistCaseSensitive )
-import Agda.Utils.Monad    ( ifM, whenM )
+import Agda.Utils.Monad    ( ifM, unlessM, whenM )
 
 ------------------------------------------------------------------------------
 -- Local imports
@@ -49,24 +49,23 @@ snapshotTest file = do
   outputDir   ← askTOpt optOutputDir
   snapshotDir ← askTOpt optSnapshotDir
 
-  -- The original file without the output directory.
-  let auxFile ∷ FilePath
-      auxFile = joinPath $ drop (length $ splitPath outputDir) $ splitPath file
-
-      snapshotFile ∷ FilePath
-      snapshotFile = combine snapshotDir auxFile
-
   if outputDir == snapshotDir
     then throwError "The options `--output-dir' and `--snapshot-dir' cannot be the same"
     else do
-      b ← liftIO $ doesFileExistCaseSensitive snapshotFile
-      if not b
-        then throwError $ "The file " ++ snapshotFile ++ " does not exist"
-        else
-          whenM (liftIO $ notEqualFiles file snapshotFile) $ do
-            let msg ∷ String
-                msg = "The files are different:\n" ++ file ++ "\n" ++ snapshotFile
+      -- The original file without the output directory.
+      let auxFile ∷ FilePath
+          auxFile = joinPath $ drop (length $ splitPath outputDir) $ splitPath file
 
-            ifM (askTOpt optSnapshotNoError)
-                (liftIO $ putStrLn msg)
-                (throwError msg)
+          snapshotFile ∷ FilePath
+          snapshotFile = combine snapshotDir auxFile
+
+      unlessM (liftIO $ doesFileExistCaseSensitive snapshotFile) $ throwError $
+        "The file " ++ snapshotFile ++ " does not exist"
+
+      whenM (liftIO $ notEqualFiles file snapshotFile) $ do
+        let msg ∷ String
+            msg = "The files are different:\n" ++ file ++ "\n" ++ snapshotFile
+
+        ifM (askTOpt optSnapshotNoError)
+            (liftIO $ putStrLn msg)
+            (throwError msg)

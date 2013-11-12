@@ -29,7 +29,7 @@ import Control.Monad.Trans ( MonadIO(liftIO) )
 ------------------------------------------------------------------------------
 -- Agda library imports
 
-import Agda.Utils.Impossible    ( Impossible (Impossible), throwImpossible )
+import Agda.Utils.Impossible ( Impossible (Impossible), throwImpossible )
 
 import qualified Agda.Utils.Trie as Trie ( lookupPath )
 

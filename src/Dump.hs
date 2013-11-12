@@ -75,6 +75,4 @@ dumpTypes file = do
 
 -- | Print the Agda interface file to stdout.
 dumpAgdai ∷ FilePath → T ()
-dumpAgdai file = do
-  i ← readInterface file
-  liftIO $ print i
+dumpAgdai file = readInterface file >>= liftIO . print

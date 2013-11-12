@@ -18,8 +18,7 @@
 module TPTP.ConcreteSyntax
   ( ToTPTP(toTPTP)
   , TPTP  -- Required by Haddock.
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

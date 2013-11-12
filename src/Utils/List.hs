@@ -16,8 +16,7 @@
 module Utils.List
   ( duplicate
   , duplicatesElements
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

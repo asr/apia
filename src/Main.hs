@@ -17,8 +17,7 @@
 
 module Main
   ( main  -- Required by Haddock.
-  )
-where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

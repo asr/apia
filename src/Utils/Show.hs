@@ -16,8 +16,7 @@
 module Utils.Show
   ( showListLn
   , showLn
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 -- | Version of 'show' adding a newline character.

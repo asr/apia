@@ -12,8 +12,10 @@
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Dump ( dumpAgdai, dumpTypes )
-where
+module Dump
+  ( dumpAgdai
+  , dumpTypes
+  ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

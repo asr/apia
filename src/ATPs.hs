@@ -17,8 +17,7 @@
 module ATPs
   ( ATP  -- Required by Haddock.
   , callATPs
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

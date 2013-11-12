@@ -13,8 +13,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Monad.Environment ( env )
-where
+module Monad.Environment ( env ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

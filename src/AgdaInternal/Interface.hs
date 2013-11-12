@@ -30,8 +30,7 @@ module AgdaInternal.Interface
   , qNameLine
   , qNameType
   , readInterface
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

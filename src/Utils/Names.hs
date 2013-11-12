@@ -13,8 +13,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Utils.Names ( freshName )
-where
+module Utils.Names ( freshName ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

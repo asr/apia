@@ -18,8 +18,7 @@ module FOL.Translation.ClauseBody
   ( cBodyToFormula
   , cBodyToFOLTerm
   , dropProofTermOnCBody
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Agda library imports

@@ -15,8 +15,7 @@
 {-# LANGUAGE TypeSynonymInstances #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module TPTP.Files ( createConjectureFile )
-where
+module TPTP.Files ( createConjectureFile ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

@@ -19,8 +19,7 @@
 module AgdaInternal.Vars
   ( BoundedVars(boundedVars)
   , BoundedVarsType(boundedVarsType)
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Agda libray imports

@@ -18,8 +18,7 @@
 -- Only are translated the functions that will be translate as TPTP
 -- definitions.
 
-module FOL.Translation.Functions ( fnToFormula )
-where
+module FOL.Translation.Functions ( fnToFormula ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

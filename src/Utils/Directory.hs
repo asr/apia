@@ -12,8 +12,10 @@
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Utils.Directory ( equalFiles, notEqualFiles )
-where
+module Utils.Directory
+  ( equalFiles
+  , notEqualFiles
+  ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

@@ -13,8 +13,7 @@
 {-# LANGUAGE CPP #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module FOL.Translation.Name ( concatName )
-where
+module FOL.Translation.Name ( concatName ) where
 
 ------------------------------------------------------------------------------
 -- Agda library imports

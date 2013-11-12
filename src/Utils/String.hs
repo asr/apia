@@ -16,8 +16,7 @@
 module Utils.String
   ( removeString
   , toUpperFirst
-  )
-where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

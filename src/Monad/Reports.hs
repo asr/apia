@@ -17,8 +17,7 @@ module Monad.Reports
   ( reportS
   , reportSLn
   , VerboseKey  -- Required by Haddock.
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

@@ -28,8 +28,7 @@ module Monad.Base
   , runT
   , T
   , TState  -- Required by Haddock.
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

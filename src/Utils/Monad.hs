@@ -16,8 +16,7 @@ module Utils.Monad
   ( die
   , failureMsg
   , pair
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

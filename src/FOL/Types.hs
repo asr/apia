@@ -27,8 +27,7 @@ module FOL.Types
               , TRUE
               )
   , FOLTerm(FOLFun, FOLVar)
-  )
-  where
+  ) where
 
 ------------------------------------------------------------------------------
 -- Adapted from AgdaLight (Plugins.FOL.Types).

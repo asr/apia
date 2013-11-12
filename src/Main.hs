@@ -15,7 +15,9 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Main ( main )
+module Main
+  ( main  -- Required by Haddock.
+  )
 where
 
 ------------------------------------------------------------------------------

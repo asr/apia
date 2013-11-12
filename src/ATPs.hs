@@ -97,7 +97,7 @@ optATP2ATP "ileancop" = return IleanCoP
 optATP2ATP "metis"    = return Metis
 optATP2ATP "spass"    = return SPASS
 optATP2ATP "vampire"  = return Vampire
-optATP2ATP nonATP     = throwError $ "ATP " ++ nonATP ++ " unknown"
+optATP2ATP other      = throwError $ "ATP " ++ other ++ " unknown"
 
 -- | Default ATPs.
 defaultATPs ∷ [String]
@@ -118,13 +118,13 @@ atpOk SPASS = "Proof found"
 atpOk Vampire = "Termination reason: Refutation\n"
 
 atpVersion ∷ ATP → T String
- -- Don't version option in Equinox.
+ -- No version option in Equinox.
 atpVersion Equinox = do
   exec ← atpExec Equinox
   liftIO $ fmap (init . takeWhile (/= '\n')) (readProcess exec ["--help"] "")
--- Don't version option in IleanCoP
+-- No version option in ileanCoP.
 atpVersion IleanCoP = return $ show IleanCoP
--- Don't version option in SPASS.
+-- No version option in SPASS.
 atpVersion SPASS = return $ show SPASS
 atpVersion atp = do
   exec ← atpExec atp
@@ -170,7 +170,7 @@ atpArgs Equinox timeLimit file = return [ "--time", show timeLimit
                                         , file
                                         ]
 
--- N.B. The order of the IleanCop arguments is fixed.
+-- N.B. The order of the ileanCoP arguments is fixed.
 atpArgs IleanCoP timeLimit file = return [ file
                                          , show timeLimit
                                          ]
@@ -186,7 +186,7 @@ atpArgs SPASS timeLimit file = return [ "-PProblem=0"
                                       , file
                                       ]
 
--- 25 July 2012. We don't know if vampire has an option to reduce the
+-- 25 July 2012. We don't know if Vampire has an option to reduce the
 -- output.
 atpArgs Vampire timeLimit file = return [ "--input_file", file
                                         , "--mode", "casc"

@@ -7,7 +7,7 @@
 -- Maintainer  : Andrés Sicard-Ramírez <andres.sicard.ramirez@gmail.com>
 -- Stability   : experimental
 --
--- apia: A program for proving first-order theorems written in the
+-- Apia: A program for proving first-order theorems written in the
 -- dependently typed language Agda using first-order automatic theorem
 -- provers.
 ------------------------------------------------------------------------------

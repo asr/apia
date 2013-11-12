@@ -31,8 +31,6 @@ import System.Environment ( getProgName )
 ------------------------------------------------------------------------------
 -- Local imports
 
--- import qualified Paths_apia as P ( version )
-
 import Utils.String ( toUpperFirst )
 
 ------------------------------------------------------------------------------

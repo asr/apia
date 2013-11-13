@@ -20,7 +20,7 @@ module Utils.Directory
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import qualified Data.ByteString.Lazy as BL
+import qualified Data.ByteString.Lazy as BL ( readFile )
 
 import Control.Monad ( liftM2 )
 

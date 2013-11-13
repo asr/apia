@@ -27,14 +27,12 @@ import System.IO          ( hPutStrLn, stderr )
 
 ------------------------------------------------------------------------------
 -- | Sequences a pair of monadic computations.
-pair ∷ Monad m ⇒ m a → m b → m (a,b)
-pair mx my = mx >>= \x → my >>= \y → return (x,y)
+pair ∷ Monad m ⇒ m a → m b → m (a, b)
+pair mx my = mx >>= \x → my >>= \y → return (x, y)
 
 -- | Failure message.
 failureMsg ∷ String → IO ()
-failureMsg err = do
-  progName ← getProgName
-  hPutStrLn stderr $ progName ++ ": " ++ err
+failureMsg err = getProgName >>= \prg → hPutStrLn stderr $ prg ++ ": " ++ err
 
 -- | Exit with an error message.
 die ∷ String → IO a

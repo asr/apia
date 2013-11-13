@@ -69,7 +69,7 @@ executable apia
     TPTP.Files
     TPTP.Translation
     TPTP.Types
-    Utils.Directory
+    Utils.File
     Utils.List
     Utils.Monad
     Utils.Names

@@ -38,7 +38,7 @@ import Options
   ( Options(optOutputDir, optSnapshotDir, optSnapshotNoError)
   )
 
-import Utils.Directory ( notEqualFiles )
+import Utils.File ( notEqualFiles )
 
 ------------------------------------------------------------------------------
 -- | Compare the generated TPTP files against a snapshot of them in

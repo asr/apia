@@ -1,18 +1,18 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Utils.Directory
+-- Module      : Utils.File
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2013
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <andres.sicard.ramirez@gmail.com>
 -- Stability   : experimental
 --
--- Utilities on directories.
+-- Utilities on files.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Utils.Directory
+module Utils.File
   ( equalFiles
   , notEqualFiles
   ) where

@@ -133,7 +133,7 @@ refute_theorems : $(refute_theorems_files)
 %.options :
 	@$(AGDA) -i$(options_path) $*.agda
 
-# Tested with shelltestrunner 1.3.1.
+# Tested with shelltestrunner 1.3.2.
 options : $(options_files)
 	shelltest --color $(options_path)/options.test
 	@echo "$@ succeeded!"
@@ -144,7 +144,7 @@ options : $(options_files)
 %.errors :
 	@$(AGDA) -i$(errors_path) $*.agda
 
-# Tested with shelltestrunner 1.3.1.
+# Tested with shelltestrunner 1.3.2.
 errors : $(errors_files)
 	shelltest --color $(errors_path)/errors.test
 	@echo "$@ succeeded!"

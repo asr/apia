@@ -204,6 +204,8 @@ instance ChangeIndex Term where
 
 -- Requires TypeSynonymInstances and FlexibleInstances.
 instance ChangeIndex Elims where
+  changeIndex [] _ = []
+
   changeIndex (Apply (Arg info term@(Var n [])) : elims) index
     -- The variable was before than the quantified variable, we don't
     -- do nothing.
@@ -225,8 +227,7 @@ instance ChangeIndex Elims where
   changeIndex (Apply (Arg info term) : elims) index =
     Apply (Arg info (changeIndex term index)) : changeIndex elims index
 
-  changeIndex [] _ = []
-  changeIndex _  _ = __IMPOSSIBLE__
+  changeIndex _ _ = __IMPOSSIBLE__
 
 instance ChangeIndex ClauseBody where
   changeIndex (Bind (Abs x cBody)) index = Bind (Abs x (changeIndex cBody index))

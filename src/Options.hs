@@ -127,8 +127,8 @@ defaultOptions = Options
 type MOptions = Options → Either String Options
 
 atpOpt ∷ String → MOptions
-atpOpt name@(_ : _) opts = Right opts { optATP = optATP opts ++ [name] }
-atpOpt []           _    = Left "Option `--atp' requires an argument NAME"
+atpOpt []   _    = Left "Option `--atp' requires an argument NAME"
+atpOpt name opts = Right opts { optATP = optATP opts ++ [name] }
 
 dumpAgdaiOpt ∷ MOptions
 dumpAgdaiOpt opts = Right opts { optDumpAgdai = True }
@@ -140,10 +140,10 @@ helpOpt ∷ MOptions
 helpOpt opts = Right opts { optHelp = True }
 
 includePathOpt ∷ FilePath → MOptions
-includePathOpt dir@(_ : _) opts =
-  Right opts { optIncludePath = optIncludePath opts ++ [dir] }
 includePathOpt [] _ =
   error "Option `--include-path' requires an argument DIR"
+includePathOpt dir opts =
+  Right opts { optIncludePath = optIncludePath opts ++ [dir] }
 
 inputFileOpt ∷ FilePath → MOptions
 inputFileOpt file opts =
@@ -158,12 +158,12 @@ onlyFilesOpt ∷ MOptions
 onlyFilesOpt opts = Right opts { optOnlyFiles = True }
 
 outputDirOpt ∷ FilePath → MOptions
-outputDirOpt dir@(_ : _) opts = Right opts { optOutputDir = dir }
-outputDirOpt [] _ = Left "Option `--output-dir' requires an argument DIR"
+outputDirOpt []  _    = Left "Option `--output-dir' requires an argument DIR"
+outputDirOpt dir opts = Right opts { optOutputDir = dir }
 
 snapshotDirOpt ∷ FilePath → MOptions
-snapshotDirOpt dir@(_ : _) opts = Right opts { optSnapshotDir = dir }
-snapshotDirOpt [] _ = Left "Option `--snapshot-dir' requires an argument DIR"
+snapshotDirOpt []  _    = Left "Option `--snapshot-dir' requires an argument DIR"
+snapshotDirOpt dir opts = Right opts { optSnapshotDir = dir }
 
 snapshotNoErrorOpt ∷ MOptions
 snapshotNoErrorOpt opts = Right opts { optSnapshotNoError = True
@@ -174,22 +174,23 @@ snapshotTestOpt ∷ MOptions
 snapshotTestOpt opts = Right opts { optSnapshotTest = True }
 
 timeOpt ∷ String → MOptions
-timeOpt secs@(_ : _) opts =
+timeOpt []   _    = Left "Option `--time' requires an argument NUM"
+timeOpt secs opts =
   if all isDigit secs
   then Right opts { optTime = read secs }
   else Left "Option `--time' requires a non-negative integer argument"
-timeOpt [] _ = Left "Option `--time' requires an argument NUM"
 
 unprovenNoErrorOpt ∷ MOptions
 unprovenNoErrorOpt opts = Right opts { optUnprovenNoError = True }
 
 vampireExecOpt ∷ String → MOptions
-vampireExecOpt name@(_ : _) opts = Right opts { optVampireExec = name }
-vampireExecOpt [] _ = Left "Option `--vampire-exec' requires an argument COMMAND"
+vampireExecOpt []   _    = Left "Option `--vampire-exec' requires an argument COMMAND"
+vampireExecOpt name opts = Right opts { optVampireExec = name }
 
 -- Adapted from @Agda.Interaction.Options.verboseFlag@.
 verboseOpt ∷ String → MOptions
-verboseOpt str@(_ : _) opts =
+verboseOpt [] _ = Left "Option `--verbose' requires an argument of the form x.y.z:N or N"
+verboseOpt str opts =
   Right opts { optVerbose = Trie.insert k n $ optVerbose opts }
   where
   k ∷ [String]
@@ -199,12 +200,10 @@ verboseOpt str@(_ : _) opts =
   parseVerbose ∷ String → ([String], Int)
   parseVerbose s =
     case wordsBy (`elem` ":.") s of
-      ss@(_ : _)  → let m ∷ Int
-                        m = read $ last ss
-                    in  (init ss, m)
-      []          → __IMPOSSIBLE__
-
-verboseOpt [] _ = Left "Option `--verbose' requires an argument of the form x.y.z:N or N"
+      []  → __IMPOSSIBLE__
+      ss  → let m ∷ Int
+                m = read $ last ss
+            in  (init ss, m)
 
 versionOpt ∷ MOptions
 versionOpt opts = Right opts { optVersion = True }

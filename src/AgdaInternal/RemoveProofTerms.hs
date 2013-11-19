@@ -164,6 +164,8 @@ instance RemoveVar a ⇒ RemoveVar (I.Dom a) where
 
 -- Requires TypeSynonymInstances and FlexibleInstances.
 instance RemoveVar Elims where
+  removeVar [] _ = return []
+
   removeVar (Apply (Arg info term@(Var n [])) : elims) x = do
     when (n < 0) (__IMPOSSIBLE__)
     vars ← getTVars
@@ -185,8 +187,7 @@ instance RemoveVar Elims where
   removeVar (Apply (Arg info term) : elims) x =
     liftM2 (\t es → Apply (Arg info t) : es) (removeVar term x) (removeVar elims x)
 
-  removeVar [] _ = return []
-  removeVar _  _ = __IMPOSSIBLE__
+  removeVar _ _ = __IMPOSSIBLE__
 
 -- | Remove a proof term from an Agda 'Type'.
 removeProofTerm ∷ Type → (String, Type) → T Type

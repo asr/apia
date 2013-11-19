@@ -26,5 +26,5 @@ showLn = (++ "\n") . show
 -- | Version of 'show' on lists where the elements are separated by
 -- newline characters.
 showListLn ∷ Show a ⇒ [a] → String
-showListLn xs@(_ : _) = concatMap showLn xs
-showListLn []         = "[]"
+showListLn [] = "[]"
+showListLn xs = concatMap showLn xs

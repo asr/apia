@@ -40,9 +40,9 @@ freeNames ∷ [String]
 freeNames = map (:[]) chars ++ [ s ++ [c] | s ← freeNames, c ← chars ]
 
 findFreeName ∷ [String] → [String] → String
+findFreeName _         []       = __IMPOSSIBLE__
 findFreeName usedNames (x : xs) =
   if x `elem` usedNames then findFreeName usedNames xs else x
-findFreeName _ [] = __IMPOSSIBLE__
 
 -- | Generate a fresh name.
 freshName ∷ State [String] String

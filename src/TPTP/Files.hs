@@ -130,7 +130,8 @@ addRole af@(AF qName afRole _) file = do
   appendFile file $ toTPTP af
 
 addRoles ∷ [AF] → FilePath → String → IO ()
-addRoles afs@(_ : _) file str = do
+addRoles []  _    _   = return ()
+addRoles afs file str = do
   let header, footer ∷ String
       header = commentLine ++ "% The " ++ str ++ ".\n\n"
       footer = "% End " ++ str ++ ".\n\n"
@@ -138,8 +139,6 @@ addRoles afs@(_ : _) file str = do
   appendFile file header
   mapM_ (`addRole` file) $ sort afs
   appendFile file footer
-
-addRoles [] _ _  = return ()
 
 -- | The function 'createConjectureFile' creates a TPTP file with a
 -- conjecture.

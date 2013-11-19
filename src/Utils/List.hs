@@ -36,9 +36,9 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- | Return 'True' if the elements of a list occur in ascending order.
 isSorted ∷ Ord a ⇒ [a] → Bool
-isSorted []           = True
-isSorted [_]          = True
 isSorted (x : y : xs) = x <= y && isSorted (y : xs)
+isSorted [_]          = True
+isSorted []           = True
 
 -- | Return 'True' if there are duplicate elements in the list.
 duplicate ∷ Eq a ⇒ [a] → Bool
@@ -50,6 +50,6 @@ duplicatesElements zs =
   if isSorted zs then nub (helper zs) else __IMPOSSIBLE__
   where
   helper ∷ Eq a ⇒ [a] → [a]
-  helper []           = []
-  helper [_]          = []
   helper (x : y : xs) = if x == y then x : helper (y : xs) else helper (y : xs)
+  helper [_]          = []
+  helper []           = []

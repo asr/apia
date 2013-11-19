@@ -86,10 +86,10 @@ data CFP = C | F | P
 -- We prefixed the names with @n@ because TPTP does not accept names
 -- starting with digits or @_@.
 prefixLetter ∷ TPTP → TPTP
-prefixLetter [] = __IMPOSSIBLE__
 prefixLetter name@(x : _)
   | isDigit x || x == '_' = 'n' : name
   | otherwise             = name
+prefixLetter [] = __IMPOSSIBLE__
 
 -- From the technical manual of TPTP
 -- (http://www.cs.miami.edu/~tptp/TPTP/TR/TPTPTR.shtml)
@@ -183,9 +183,9 @@ instance ToTPTP FOLTerm where
 
 -- Requires @FlexibleInstances@.
 instance ToTPTP [FOLTerm] where
-  toTPTP []       = __IMPOSSIBLE__
   toTPTP (a : []) = toTPTP a
   toTPTP (a : as) = toTPTP a ++ "," ++ toTPTP as
+  toTPTP []       = __IMPOSSIBLE__
 
 instance ToTPTP FOLFormula where
   -- We translate the hard-coded first-order logic predicate @equal_@

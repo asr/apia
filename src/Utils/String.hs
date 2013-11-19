@@ -43,5 +43,5 @@ removeString repl inp = subRegex (mkRegex repl) inp ""
 -- | Convert the first letter of a string to the corresponding
 -- upper-case letter.
 toUpperFirst ∷ String → String
-toUpperFirst []       = __IMPOSSIBLE__
 toUpperFirst (x : xs) =  toUpper x : xs
+toUpperFirst []       = __IMPOSSIBLE__

@@ -53,10 +53,10 @@ appF t1 t2 = FOLFun kApp [t1, t2]
 -- symbol. Using the option @--without-predicate-symbols@ the
 -- predicates are translated directly.
 appP ∷ FOLTerm → [FOLTerm] → FOLFormula
-appP _ [] = __IMPOSSIBLE__
-appP p ts = Predicate name (p : ts)
+appP p ts@(_ : _) = Predicate name (p : ts)
   where name ∷ String
         name = "kp" ++ show (length ts) ++ "_"
+appP _ [] = __IMPOSSIBLE__
 
 -- The constant @kEqual@ refers to the predefined equality in the
 -- ATPs.

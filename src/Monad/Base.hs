@@ -107,8 +107,8 @@ popTVar ∷ T ()
 popTVar = do
   state ← get
   case tVars state of
-    []       → __IMPOSSIBLE__
     (_ : xs) → put state { tVars = xs }
+    []       → __IMPOSSIBLE__
 
 -- | Push a variable in the translation monad state.
 pushTVar ∷ String → T ()

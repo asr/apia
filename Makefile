@@ -230,13 +230,13 @@ git_pre_commit :
 ##############################################################################
 # Apia install
 
-apia_install :
+install_apia :
 	cabal install --disable-documentation
 
 ##############################################################################
 # fix-whitespace install
 
-fix_whitespace_install :
+install_fix_whitespace :
 	cd $(fix-whitespace_path) && cabal install --disable-documentation
 
 ##############################################################################

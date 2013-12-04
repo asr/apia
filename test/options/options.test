@@ -6,12 +6,12 @@ Usage: apia [OPTIONS] FILE
 
           --atp=NAME                      set the ATP (e, equinox, ileancop, metis, spass, vampire)
                                           (default: e, equinox, and vampire)
+          --check                         check the syntax of the generated TPTP files
+                                          using the tptp4X program from the TPTP library
           --dump-agdai                    dump the Agda interface file to stdout
           --dump-types                    dump type information to stdout
           --help                          show this help
   -i DIR  --include-path=DIR              look for imports in DIR
-          --not-check                     no check the syntax of the generated TPTP files
-                                          using the tptp4X program from the TPTP library
           --only-files                    do not call the ATPs, only to create the TPTP files
           --output-dir=DIR                directory in which TPTP files are placed (default: /tmp)
           --snapshot-dir=DIR              directory where is the snapshot of the TPTP files

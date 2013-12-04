@@ -19,12 +19,12 @@ module Options
   , MOptions  -- Required by Haddock.
   , Options( Options --Improve Haddock information.
            , optATP
+           , optCheck
            , optDumpAgdai
            , optDumpTypes
            , optHelp
            , optInputFile
            , optIncludePath
-           , optNotCheck
            , optOnlyFiles
            , optOutputDir
            , optSnapshotDir
@@ -77,12 +77,12 @@ import qualified Agda.Utils.Trie as Trie ( insert, singleton )
 -- | Program command-line options.
 data Options = Options
   { optATP             ∷ [String]
+  , optCheck           ∷ Bool
   , optDumpAgdai       ∷ Bool
   , optDumpTypes       ∷ Bool
   , optHelp            ∷ Bool
   , optIncludePath     ∷ [FilePath]
   , optInputFile       ∷ Maybe FilePath
-  , optNotCheck        ∷ Bool
   , optOnlyFiles       ∷ Bool
   , optOutputDir       ∷ FilePath
   , optSnapshotDir     ∷ FilePath
@@ -103,12 +103,12 @@ data Options = Options
 defaultOptions ∷ Options
 defaultOptions = Options
   { optATP             = []
+  , optCheck           = False
   , optDumpAgdai       = False
   , optDumpTypes       = False
   , optHelp            = False
   , optIncludePath     = []
   , optInputFile       = Nothing
-  , optNotCheck        = False
   , optOnlyFiles       = False
   , optOutputDir       = "/tmp"
   , optSnapshotDir     = "snapshot"
@@ -130,6 +130,9 @@ atpOpt ∷ String → MOptions
 atpOpt []   _    = Left "Option `--atp' requires an argument NAME"
 atpOpt name opts = Right opts { optATP = optATP opts ++ [name] }
 
+checkOpt ∷ MOptions
+checkOpt opts = Right opts { optCheck = True }
+
 dumpAgdaiOpt ∷ MOptions
 dumpAgdaiOpt opts = Right opts { optDumpAgdai = True }
 
@@ -150,9 +153,6 @@ inputFileOpt file opts =
   case optInputFile opts of
     Nothing → Right opts { optInputFile = Just file }
     Just _  → Left "Only one input file allowed"
-
-notCheckOpt ∷ MOptions
-notCheckOpt opts = Right opts { optNotCheck = True }
 
 onlyFilesOpt ∷ MOptions
 onlyFilesOpt opts = Right opts { optOnlyFiles = True }
@@ -220,6 +220,9 @@ options =
   [ Option []  ["atp"] (ReqArg atpOpt "NAME") $
                "set the ATP (e, equinox, ileancop, metis, spass, vampire)\n"
                ++ "(default: e, equinox, and vampire)"
+  , Option []  ["check"] (NoArg checkOpt) $
+               "check the syntax of the generated TPTP files\n"
+               ++ "using the tptp4X program from the TPTP library"
   , Option []  ["dump-agdai"] (NoArg dumpAgdaiOpt)
                "dump the Agda interface file to stdout"
   , Option []  ["dump-types"] (NoArg dumpTypesOpt)
@@ -228,9 +231,6 @@ options =
                "show this help"
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")
                "look for imports in DIR"
-  , Option []  ["not-check"] (NoArg notCheckOpt) $
-               "no check the syntax of the generated TPTP files\n"
-               ++ "using the tptp4X program from the TPTP library"
   , Option []  ["only-files"] (NoArg onlyFilesOpt)
                "do not call the ATPs, only to create the TPTP files"
   , Option []  ["output-dir"] (ReqArg outputDirOpt "DIR")

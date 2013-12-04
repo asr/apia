@@ -97,7 +97,7 @@ apia: ATP xxx unknown
 >>>= 1
 
 #13. ATP.hs: Bad ATP executable name
-dist/build/apia/apia -itest/errors --vampire-exec=xxx test/errors/TrivialTheorem.agda
+dist/build/apia/apia -itest/errors --atp=vampire --vampire-exec=xxx test/errors/TrivialTheorem.agda
 <<<
 >>>
 Proving the conjecture in /tmp/TrivialTheorem/18-foo.tptp
@@ -288,7 +288,7 @@ apia: The translation of HigherOrderDefinition.twice failed because it is a high
 >>>= 1
 
 #36. ChechTPTP.hs: tptp4X yields an error
-dist/build/apia/apia -itest/errors test/errors/TPTP4XError.agda
+dist/build/apia/apia -itest/errors --check test/errors/TPTP4XError.agda
 <<<
 >>>
 >>>2

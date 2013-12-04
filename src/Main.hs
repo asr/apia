@@ -22,7 +22,7 @@ module Main
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad        ( unless )
+import Control.Monad        ( when )
 import Control.Monad.Error  ( MonadError(catchError, throwError) )
 import Control.Monad.Reader ( MonadReader(ask) )
 import Control.Monad.Trans  ( MonadIO(liftIO) )
@@ -63,11 +63,11 @@ import Monad.Base
 import Monad.Reports ( reportSLn )
 
 import Options
-  ( Options(optDumpAgdai
+  ( Options(optCheck
+           , optDumpAgdai
            , optDumpTypes
            , optHelp
            , optInputFile
-           , optNotCheck
            , optOnlyFiles
            , optSnapshotTest
            , optVersion
@@ -137,7 +137,7 @@ runApia = do
 
               -- Check the generated TPTP files using the tptp4X
               -- program from the TPTP library
-              unless (optNotCheck opts) $ mapM_ checkTPTP tptpFiles
+              when (optCheck opts) $ mapM_ checkTPTP tptpFiles
 
               case () of
                 _ | -- Run the snapshot test.

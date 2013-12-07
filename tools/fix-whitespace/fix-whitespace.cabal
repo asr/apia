@@ -11,7 +11,7 @@ executable fix-whitespace
 
   build-depends: filemanip     >= 0.3  && < 0.4
                  , haskell2010 >= 1.0  && < 1.2
-                 , text        >= 0.11 && < 0.12
+                 , text        >= 0.11 && < 1.1
 
   -- Only warnings.
   if impl(ghc == 7.6.2) || impl(ghc == 7.6.3)

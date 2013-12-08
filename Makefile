@@ -30,12 +30,12 @@ AGDA = agda -v 0
 
 # The defaults ATPs are e, equinox, and vampire.
 APIA = dist/build/apia/apia --check
-# APIA = dist/build/apia/apia --atp=e
-# APIA = dist/build/apia/apia --atp=equinox
-# APIA = dist/build/apia/apia --atp=ileancop
-# APIA = dist/build/apia/apia --atp=metis
-# APIA = dist/build/apia/apia --atp=spass
-# APIA = dist/build/apia/apia --atp=vampire
+# APIA = dist/build/apia/apia --check --atp=e
+# APIA = dist/build/apia/apia --check --atp=equinox
+# APIA = dist/build/apia/apia --check --atp=ileancop
+# APIA = dist/build/apia/apia --check --atp=metis
+# APIA = dist/build/apia/apia --check --atp=spass
+# APIA = dist/build/apia/apia --check --atp=vampire
 
 ##############################################################################
 # Auxiliary functions

@@ -7,7 +7,7 @@
 
 -- Fails because requires the above pragma.
 
-module PragmaRequired3 where
+module AgdaPragmaRequired.SchematicFunctions where
 
 postulate
   D   : Set

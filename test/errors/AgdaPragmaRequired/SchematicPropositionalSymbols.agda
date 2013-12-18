@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing the Agda pragma --universal-quantified-formulae
+-- Testing the Agda pragma --schematic-propositional-symbols
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --no-universe-polymorphism #-}
@@ -7,9 +7,9 @@
 
 -- Fails because requires the above pragma.
 
-module PragmaRequired1 where
+module AgdaPragmaRequired.SchematicPropositionalSymbols where
 
 postulate D : Set
 
-postulate id : {P : Set} → P → P
+postulate id : (P : Set) → P → P
 {-# ATP prove id #-}

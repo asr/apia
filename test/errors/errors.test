@@ -16,7 +16,7 @@ Pi []r(El {getSort = Type (Max []), unEl = Def NotErasedProofTerm.D []}) (Abs "k
 >>>= 1
 
 #3. Terms.hs: Required pragma --schematic-propositional-symbols
-dist/build/apia/apia -itest/errors test/errors/PragmaRequired1.agda
+dist/build/apia/apia -itest/errors test/errors/AgdaPragmaRequired/SchematicPropositionalSymbols.agda
 <<<
 >>>
 >>>2
@@ -24,7 +24,7 @@ apia: Use the Agda option `--schematic-propositional-symbols' in your Agda file 
 >>>= 1
 
 #4. Terms.hs: Required pragma --schematic-propositional-functions
-dist/build/apia/apia -itest/errors test/errors/PragmaRequired2.agda
+dist/build/apia/apia -itest/errors test/errors/AgdaPragmaRequired/SchematicPropositionalFunctions.agda
 <<<
 >>>
 >>>2
@@ -32,7 +32,7 @@ apia: Use the Agda option `--schematic-propositional-functions' in your Agda fil
 >>>= 1
 
 #5. Terms.hs: Required pragma --schematic-functions
-dist/build/apia/apia -itest/errors test/errors/PragmaRequired3.agda
+dist/build/apia/apia -itest/errors test/errors/AgdaPragmaRequired/SchematicFunctions.agda
 <<<
 >>>
 >>>2

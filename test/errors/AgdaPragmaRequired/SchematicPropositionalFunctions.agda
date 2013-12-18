@@ -7,9 +7,9 @@
 
 -- Fails because requires the above pragma.
 
-module PragmaRequired2 where
+module AgdaPragmaRequired.SchematicPropositionalFunctions where
 
 postulate D : Set
 
-postulate id : {P : D → Set}{x : D} → P x → P x
+postulate id : (P : D → Set)(x : D) → P x → P x
 {-# ATP prove id #-}

@@ -29,5 +29,5 @@ WrongBit = Bool
 postulate bar : ∀ b → WrongBit b → WrongBit b
 {-# ATP prove bar #-}
 
--- $ apia Issue11.agda
+-- $ apia --check Issue11.agda
 -- apia: tptp4X found an error in the file /tmp/Issue11/29-bar.tptp

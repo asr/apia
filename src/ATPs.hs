@@ -187,9 +187,9 @@ atpArgs SPASS timeLimit file = return [ "-PProblem=0"
 
 -- 25 July 2012. We don't know if Vampire has an option to reduce the
 -- output.
-atpArgs Vampire timeLimit file = return [ "--input_file", file
-                                        , "--mode", "casc"
+atpArgs Vampire timeLimit file = return ["--mode", "casc"
                                         , "-t", show timeLimit
+                                        , "--input_file", file
                                         ]
 
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle

@@ -218,7 +218,7 @@ readInterface file = do
                        ++ "type-check your module"
     Left _         → __IMPOSSIBLE__
 
-getInterface ∷ ModuleName → T (Maybe Interface)
+getInterface ∷ ModuleName → T Interface
 getInterface x = do
   optsCommandLine ← agdaCommandLineOptions
 
@@ -227,11 +227,8 @@ getInterface x = do
     A.getInterface x
 
   case r of
-    Right (i, _) → return (Just i)
-    -- 31 May 2012. We don't have an example of this case.
-    --
-    -- Left  _      → return Nothing
-    Left _ → __IMPOSSIBLE__
+    Right i → return i
+    Left _  → __IMPOSSIBLE__
 
 -- | Return 'True' if an Agda 'Definition' is an ATP axiom.
 isATPAxiom ∷ Definition → Bool
@@ -393,13 +390,10 @@ importedInterfaces x = do
     then do
       put $ x : visitedModules
 
-      im ← lift $ getInterface x
-
-      let i ∷ Interface
-          i = fromMaybe (__IMPOSSIBLE__) im
+      i ← lift $ getInterface x
 
       let iModules ∷ [ModuleName]
-          iModules = iImportedModules i
+          iModules = (fst . unzip . iImportedModules) i
 
       is ← fmap concat $ mapM importedInterfaces iModules
       return $ i : is
@@ -410,7 +404,7 @@ importedInterfaces x = do
 getImportedInterfaces ∷ Interface → T [Interface]
 getImportedInterfaces i = do
   iInterfaces ← fmap concat $
-                evalStateT (mapM importedInterfaces $ iImportedModules i) []
+    evalStateT (mapM importedInterfaces $ (fst . unzip . iImportedModules) i) []
   reportSLn "ii" 20 $
     "Imported module names: " ++ show (map iModuleName iInterfaces)
   return iInterfaces

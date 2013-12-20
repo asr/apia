@@ -81,7 +81,7 @@ The files are different:
 dist/build/apia/apia -itest/options --dump-agdai test/options/Foo.agda
 <<<
 >>>
-Interface {iImportedModules = [], iModuleName = Foo, iScope = fromList [(Foo,* scope Foo
+Interface {iSourceHash = 6158050943730719700, iImportedModules = [], iModuleName = Foo, iScope = fromList [(Foo,* scope Foo
   public
     names
       foo --> [Foo.foo]

@@ -270,8 +270,8 @@ TAGS :
 	hasktags -e $(apia_haskell_files)
 
 TODO :
-	find -wholename './dist' -prune -o -print \
-	| xargs grep -I 'TODO:' \
+	find . -type d \( -path './.git' -o -path './dist' \) -prune -o -print \
+	| xargs grep -I 'TODO' \
 	| sort
 
 clean :

@@ -42,8 +42,7 @@ checkTPTP ∷ FilePath → T ()
 checkTPTP file = do
   e ← liftIO $ findExecutable tptp4Xexec
   when (isNothing e) $ throwError $
-    "The command "++ tptp4Xexec ++ " from the TPTP library does not exist.\n"
-    ++ "You can use the --no-check command-line option instead."
+    "The " ++ tptp4Xexec ++ " command from the TPTP library does not exist"
 
   (exitCode, out, _) ←
     liftIO $ readProcessWithExitCode tptp4Xexec

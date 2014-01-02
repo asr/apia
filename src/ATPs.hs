@@ -195,7 +195,7 @@ atpArgs Vampire timeLimit file = return ["--mode", "casc"
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
 runATP atp outputMVar timeLimit file = do
   args ∷ [String] ← atpArgs atp timeLimit file
-  cmd ∷ String   ← atpExec atp
+  cmd ∷ String    ← atpExec atp
 
   e ← liftIO $ findExecutable cmd
   when (isNothing e) $ throwError $

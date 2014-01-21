@@ -36,7 +36,7 @@ APIA = dist/build/apia/apia --check
 ##############################################################################
 # Auxiliary functions
 
-my_pathsubst = $(patsubst %.agda,%.$(1), \
+my_pathsubst = $(patsubst %.agda, %.$(1), \
                  $(shell find $(2) -name '*.agda' \
                          | xargs grep -l 'ATP prove' \
                          | sort))
@@ -47,27 +47,29 @@ my_pathsubst = $(patsubst %.agda,%.$(1), \
 # Tests
 
 generated_theorems_files = \
-  $(call my_pathsubst,generated_theorems,$(theorems_path))
+  $(call my_pathsubst, generated_theorems, $(theorems_path))
 
 generated_non_theorems_files = \
-  $(call my_pathsubst,generated_non_theorems,$(non_theorems_path))
+  $(call my_pathsubst, generated_non_theorems, $(non_theorems_path))
 
-prove_theorems_files = $(call my_pathsubst,prove_theorems,$(theorems_path))
+prove_theorems_files = $(call my_pathsubst, prove_theorems, $(theorems_path))
 
-refute_theorems_files = $(call my_pathsubst,refute_theorems,$(non_theorems_path))
+refute_theorems_files = \
+  $(call my_pathsubst, refute_theorems, $(non_theorems_path))
 
-errors_files = $(call my_pathsubst,errors,$(errors_path))
+errors_files = $(call my_pathsubst, errors, $(errors_path))
 
-options_files = $(patsubst %.agda,%.options,\
-  $(shell find $(options_path) -name '*.agda' | sort))
+options_files = \
+  $(patsubst %.agda, %.options,\
+    $(shell find $(options_path) -name '*.agda' | sort))
 
 # Notes
 
 type_check_notes_files = \
-  $(patsubst %.agda,%.type_check_notes, \
+  $(patsubst %.agda, %.type_check_notes, \
     $(shell find $(notes_path) -name '*.agda' | sort))
 
-prove_notes_files = $(call my_pathsubst,prove_notes,$(notes_path))
+prove_notes_files = $(call my_pathsubst, prove_notes, $(notes_path))
 
 ##############################################################################
 # Test suite: Generated conjectures

@@ -3,8 +3,6 @@ SHELL := /bin/bash
 ##############################################################################
 # Paths
 
-fix-whitespace_path = tools/fix-whitespace
-
 # Tests paths.
 errors_path       = test/errors
 non_theorems_path = test/non-theorems
@@ -213,7 +211,6 @@ apia_changed : clean
 
 hlint :
 	hlint src/
-	hlint $(fix-whitespace_path)
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -230,12 +227,6 @@ git_pre_commit :
 
 install_apia :
 	cabal install --disable-documentation
-
-##############################################################################
-# fix-whitespace install
-
-install_fix_whitespace :
-	cd $(fix-whitespace_path) && cabal install --disable-documentation
 
 ##############################################################################
 # Haskell program coverage

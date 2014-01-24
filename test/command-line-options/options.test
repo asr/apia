@@ -33,7 +33,7 @@ Usage: apia [OPTIONS] FILE
 >>>= 0
 
 #2. --only-files
-dist/build/apia/apia -itest/options --only-files test/options/TrivialTheorem.agda
+dist/build/apia/apia -itest/command-line-options --only-files test/command-line-options/TrivialTheorem.agda
 <<<
 >>>
 Created /tmp/TrivialTheorem/18-foo.tptp
@@ -41,7 +41,7 @@ Created /tmp/TrivialTheorem/18-foo.tptp
 >>>= 0
 
 #3. --verbose
-dist/build/apia/apia -itest/options -v1 --only-files test/options/TrivialTheorem.agda
+dist/build/apia/apia -itest/command-line-options -v1 --only-files test/command-line-options/TrivialTheorem.agda
 <<<
 >>>
 Created /tmp/TrivialTheorem/18-foo.tptp
@@ -57,7 +57,7 @@ Apia version 0.9.1
 >>>= 0
 
 #5. --unproven-conjecture-no-error
-dist/build/apia/apia -itest/options --atp=e --unproven-conjecture-no-error test/options/NoTheorem.agda
+dist/build/apia/apia -itest/command-line-options --atp=e --unproven-conjecture-no-error test/command-line-options/NoTheorem.agda
 <<<
 >>>
 Proving the conjecture in /tmp/NoTheorem/15-foo.tptp
@@ -67,7 +67,7 @@ The ATP(s) did not prove the conjecture in /tmp/NoTheorem/15-foo.tptp
 >>>= 0
 
 #6. --snapshot-no-error
-dist/build/apia/apia -itest/options --only-files --output-dir=/tmp/snapshot test/options/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/18-foo.tptp && dist/build/apia/apia -itest/options --snapshot-no-error --snapshot-dir=/tmp/snapshot test/options/TrivialTheorem.agda
+dist/build/apia/apia -itest/command-line-options --only-files --output-dir=/tmp/snapshot test/command-line-options/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/18-foo.tptp && dist/build/apia/apia -itest/command-line-options --snapshot-no-error --snapshot-dir=/tmp/snapshot test/command-line-options/TrivialTheorem.agda
 <<<
 >>>
 Created /tmp/snapshot/TrivialTheorem/18-foo.tptp
@@ -78,7 +78,7 @@ The files are different:
 >>>= 0
 
 #7. --dump-agdai
-dist/build/apia/apia -itest/options --dump-agdai test/options/Foo.agda
+dist/build/apia/apia -itest/command-line-options --dump-agdai test/command-line-options/Foo.agda
 <<<
 >>>
 Interface {iSourceHash = 6158050943730719700, iImportedModules = [], iModuleName = Foo, iScope = fromList [(Foo,* scope Foo
@@ -99,7 +99,7 @@ Interface {iSourceHash = 6158050943730719700, iImportedModules = [], iModuleName
 >>>= 0
 
 #8. --dump-types
-dist/build/apia/apia -itest/options --dump-types test/options/Foo.agda
+dist/build/apia/apia -itest/command-line-options --dump-types test/command-line-options/Foo.agda
 <<<
 >>>
 Qname: Foo.foo

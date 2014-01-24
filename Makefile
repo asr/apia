@@ -4,10 +4,10 @@ SHELL := /bin/bash
 # Paths
 
 # Tests paths.
-errors_path       = test/errors
-non_theorems_path = test/non-theorems
-options_path      = test/options
-theorems_path     = test/theorems
+errors_path               = test/errors
+non_theorems_path         = test/non-theorems
+command_line_options_path = test/command-line-options
+theorems_path             = test/theorems
 
 # Output directory for the TPTP files.
 output_dir = /tmp/apia
@@ -57,9 +57,9 @@ refute_theorems_files = \
 
 errors_files = $(call my_pathsubst,errors,$(errors_path))
 
-options_files = \
-  $(patsubst %.agda, %.options,\
-    $(shell find $(options_path) -name '*.agda' | sort))
+command_line_options_files = \
+  $(patsubst %.agda, %.command_line_options,\
+    $(shell find $(command_line_options_path) -name '*.agda' | sort))
 
 # Notes
 
@@ -124,14 +124,14 @@ refute_theorems : $(refute_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test suite: Options
+# Test suite: Command line options
 
-%.options :
-	@$(AGDA) -i$(options_path) $*.agda
+%.command_line_options :
+	@$(AGDA) -i$(command_line_options_path) $*.agda
 
 # Tested with shelltestrunner 1.3.2.
-options : $(options_files)
-	shelltest --color $(options_path)/options.test
+command_line_options : $(command_line_options_files)
+	shelltest --color $(command_line_options_path)/options.test
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -202,7 +202,7 @@ apia_changed : clean
 	cabal clean && cabal configure && cabal build
 	make generated_conjectures
 	make errors
-	make options
+	make command_line_options
 	make prove_notes
 	@echo "$@ succeeded!"
 
@@ -240,7 +240,7 @@ hpc : hpc_clean
 	make prove_theorems
 	make refute_theorems
 	make errors
-	make options
+	make command_line_options
 	hpc markup --exclude=Paths_apia \
 	           --destdir=$(hpc_html_dir) \
 	           --srcdir=$(apia_path) \

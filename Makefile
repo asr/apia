@@ -104,7 +104,7 @@ generated_conjectures :
 %.prove_theorems :
 	$(AGDA) -i$(theorems_path) $*.agda
 	$(APIA) -i$(theorems_path) --output-dir=$(output_dir) \
-	            --time=10 $*.agda
+	         --time=10 $*.agda
 
 prove_theorems : $(prove_theorems_files)
 	@echo "$@ succeeded!"
@@ -116,7 +116,7 @@ prove_theorems : $(prove_theorems_files)
 	@echo "Processing $*.agda"
 	@$(AGDA) -i$(non_theorems_path) $*.agda
 	@if ( $(APIA) -i$(non_theorems_path) \
-	                 --output-dir=$(output_dir) --time=5 $*.agda ); then \
+	              --output-dir=$(output_dir) --time=5 $*.agda ); then \
 	    exit 1; \
 	fi
 

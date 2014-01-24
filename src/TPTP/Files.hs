@@ -53,11 +53,16 @@ import Agda.Utils.Monad      ( whenM )
 ------------------------------------------------------------------------------
 -- Local imports
 
-import AgdaInternal.Interface ( qNameLine )
-import Monad.Base             ( askTOpt, T )
-import Monad.Reports          ( reportS, reportSLn )
-import Options                ( Options(optOnlyFiles, optOutputDir) )
-import TPTP.ConcreteSyntax    ( ToTPTP(toTPTP) )
+import AgdaInternal.Interface
+ ( qNameConcreteNameRange
+ , qNameLine
+ , qNameNameBindingSiteRange
+ )
+
+import Monad.Base          ( askTOpt, T )
+import Monad.Reports       ( reportS, reportSLn )
+import Options             ( Options(optOnlyFiles, optOutputDir) )
+import TPTP.ConcreteSyntax ( ToTPTP(toTPTP) )
 
 import TPTP.Types
   ( AF(AF)
@@ -177,6 +182,13 @@ createConjectureFile generalRoles conjectureSet = do
   liftIO $ createDirectoryIfMissing True finalDir
 
   reportSLn "createConjectureFile" 20 $ "Final dir: " ++ finalDir
+
+  reportSLn "createConjectureFile" 20 $
+    "Qname's concrete name range: " ++ show (qNameConcreteNameRange qName)
+
+  reportSLn "createConjectureFile" 20 $
+    "Qname's nameBindingSite range: "
+    ++ show (qNameNameBindingSiteRange qName)
 
   let f ∷ FilePath
       f = finalDir </>

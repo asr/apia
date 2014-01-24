@@ -25,9 +25,11 @@ module AgdaInternal.Interface
   , getLocalHints
   , isATPDefinition
   , isProjection
+  , qNameConcreteNameRange
   , qNameDefinition
   , QNamesIn(qNamesIn)
   , qNameLine
+  , qNameNameBindingSiteRange
   , qNameType
   , readInterface
   ) where
@@ -62,7 +64,7 @@ import Agda.Interaction.Options
 
 import Agda.Syntax.Abstract.Name
   ( ModuleName
-  , Name(nameBindingSite)
+  , Name(nameBindingSite, nameConcrete)
   , QName(qnameName)
   )
 
@@ -87,8 +89,10 @@ import Agda.Syntax.Internal as I
   )
 
 import Agda.Syntax.Position
-  ( Interval'(Interval)
+  ( HasRange(getRange)
+  , Interval'(Interval)
   , Position'(posLine)
+  , Range
   , rangeToInterval
   )
 
@@ -300,16 +304,24 @@ qNameDefinition qName = do
   allDefs ← getTDefs
   return $ fromMaybe (__IMPOSSIBLE__) $ HashMap.lookup qName allDefs
 
--- | Return the 'Type' of a 'QNname'.
+-- | Return the 'Type' of a 'QName'.
 qNameType ∷ QName → T Type
 qNameType qName = fmap defType $ qNameDefinition qName
 
--- | Return the line where a 'QNname' is defined.
+-- | Return the line where a 'QName' is defined.
 qNameLine ∷ QName → Int32
 qNameLine qName =
   case rangeToInterval $ nameBindingSite $ qnameName qName of
     Nothing              → __IMPOSSIBLE__
     Just (Interval s _)  → posLine s
+
+-- | Return the 'Range' of the concrete name of a 'QName'.
+qNameConcreteNameRange ∷ QName → Range
+qNameConcreteNameRange = getRange . nameConcrete . qnameName
+
+-- | Return the 'Range' of the 'nameBindingSite' of a 'QName'.
+qNameNameBindingSiteRange ∷ QName → Range
+qNameNameBindingSiteRange = getRange . nameBindingSite . qnameName
 
 -- | Return the 'Clause's associted with an Agda 'Definition'.
 getClauses ∷ Definition → [Clause]

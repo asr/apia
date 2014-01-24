@@ -87,7 +87,7 @@ import Agda.Syntax.Internal as I
   )
 
 import Agda.Syntax.Position
-  ( Interval'(iStart)
+  ( Interval'(Interval)
   , Position'(posLine)
   , rangeToInterval
   )
@@ -308,8 +308,8 @@ qNameType qName = fmap defType $ qNameDefinition qName
 qNameLine ∷ QName → Int32
 qNameLine qName =
   case rangeToInterval $ nameBindingSite $ qnameName qName of
-    Nothing → __IMPOSSIBLE__
-    Just i  → posLine $ iStart i
+    Nothing              → __IMPOSSIBLE__
+    Just (Interval s _)  → posLine s
 
 -- | Return the 'Clause's associted with an Agda 'Definition'.
 getClauses ∷ Definition → [Clause]

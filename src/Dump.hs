@@ -14,7 +14,7 @@
 
 module Dump
   ( dumpAgdai
-  , dumpTypes
+  , dumpQNames
   ) where
 
 ------------------------------------------------------------------------------
@@ -44,7 +44,12 @@ import Agda.TypeChecking.Monad.Base
 ------------------------------------------------------------------------------
 -- Local imports
 
-import AgdaInternal.Interface ( qNameLine, readInterface )
+import AgdaInternal.Interface
+  ( qNameConcreteNameRange
+  , qNameLine
+  , qNameNameBindingSiteRange
+  , readInterface
+  )
 import Monad.Base             ( T )
 
 ------------------------------------------------------------------------------
@@ -55,25 +60,29 @@ compareQName = compare `on` qNameLine
 compareQNameDefinition ∷ (QName, Definition) → (QName, Definition) → Ordering
 compareQNameDefinition = compareQName `on` fst
 
-dumpQNameType ∷ (QName, Definition) → T ()
-dumpQNameType (qName, def) = do
+dumpQNameInformation ∷ (QName, Definition) → T ()
+dumpQNameInformation (qName, def) = do
 
   let ty ∷ Type
       ty = defType def
 
   liftIO $ putStrLn $ "Qname: " ++ show qName
-  liftIO $ putStrLn $ "Type: "  ++ show ty ++ "\n"
+  liftIO $ putStrLn $ "Type: "  ++ show ty
+  liftIO $ putStrLn $ "Concrete name range: "
+                      ++ show (qNameConcreteNameRange qName)
+  liftIO $ putStrLn $ "nameBindingSite range: "
+                      ++ show (qNameNameBindingSiteRange qName) ++ "\n"
 
--- | Print type information to stdout.
-dumpTypes ∷ FilePath → T ()
-dumpTypes file = do
+-- | Print 'QName's information to stdout.
+dumpQNames ∷ FilePath → T ()
+dumpQNames file = do
 
   i ← readInterface file
 
   let defs ∷ Definitions
       defs = sigDefinitions $ iSignature i
 
-  mapM_ dumpQNameType $ sortBy compareQNameDefinition $ HashMap.toList defs
+  mapM_ dumpQNameInformation $ sortBy compareQNameDefinition $ HashMap.toList defs
 
 -- | Print the Agda interface file to stdout.
 dumpAgdai ∷ FilePath → T ()

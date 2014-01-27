@@ -21,7 +21,7 @@ module Options
            , optATP
            , optCheck
            , optDumpAgdai
-           , optDumpTypes
+           , optDumpQNames
            , optHelp
            , optInputFile
            , optIncludePath
@@ -79,7 +79,7 @@ data Options = Options
   { optATP             ∷ [String]
   , optCheck           ∷ Bool
   , optDumpAgdai       ∷ Bool
-  , optDumpTypes       ∷ Bool
+  , optDumpQNames      ∷ Bool
   , optHelp            ∷ Bool
   , optIncludePath     ∷ [FilePath]
   , optInputFile       ∷ Maybe FilePath
@@ -105,7 +105,7 @@ defaultOptions = Options
   { optATP             = []
   , optCheck           = False
   , optDumpAgdai       = False
-  , optDumpTypes       = False
+  , optDumpQNames      = False
   , optHelp            = False
   , optIncludePath     = []
   , optInputFile       = Nothing
@@ -136,8 +136,8 @@ checkOpt opts = Right opts { optCheck = True }
 dumpAgdaiOpt ∷ MOptions
 dumpAgdaiOpt opts = Right opts { optDumpAgdai = True }
 
-dumpTypesOpt ∷ MOptions
-dumpTypesOpt opts = Right opts { optDumpTypes = True }
+dumpQNamesOpt ∷ MOptions
+dumpQNamesOpt opts = Right opts { optDumpQNames = True }
 
 helpOpt ∷ MOptions
 helpOpt opts = Right opts { optHelp = True }
@@ -225,8 +225,8 @@ options =
                ++ "using the tptp4X program from the TPTP library"
   , Option []  ["dump-agdai"] (NoArg dumpAgdaiOpt)
                "dump the Agda interface file to stdout"
-  , Option []  ["dump-types"] (NoArg dumpTypesOpt)
-               "dump type information to stdout"
+  , Option []  ["dump-qnames"] (NoArg dumpQNamesOpt)
+               "dump Agda QNames information to stdout"
   , Option []  ["help"] (NoArg helpOpt)
                "show this help"
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")

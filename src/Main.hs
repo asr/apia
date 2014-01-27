@@ -51,7 +51,7 @@ import ATPs                   ( callATPs )
 
 import CheckTPTP ( checkTPTP )
 
-import Dump ( dumpAgdai, dumpTypes )
+import Dump ( dumpAgdai, dumpQNames )
 
 import Monad.Base
   ( modifyDefs
@@ -65,7 +65,7 @@ import Monad.Reports ( reportSLn )
 import Options
   ( Options(optCheck
            , optDumpAgdai
-           , optDumpTypes
+           , optDumpQNames
            , optHelp
            , optInputFile
            , optOnlyFiles
@@ -125,8 +125,8 @@ runApia = do
         case () of
           _ | -- Dump the Agda interface file to stdout.
               optDumpAgdai opts → dumpAgdai file
-            | -- Dump type information to stdout.
-              optDumpTypes opts → dumpTypes file
+            | -- Dump Agda QNames information to stdout.
+              optDumpQNames opts → dumpQNames file
             | otherwise → do
 
               -- The ATP pragmas are translated to TPTP annotated formulae.

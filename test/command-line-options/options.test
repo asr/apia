@@ -9,7 +9,7 @@ Usage: apia [OPTIONS] FILE
           --check                         check the syntax of the generated TPTP files
                                           using the tptp4X program from the TPTP library
           --dump-agdai                    dump the Agda interface file to stdout
-          --dump-types                    dump type information to stdout
+          --dump-qnames                   dump Agda QNames information to stdout
           --help                          show this help
   -i DIR  --include-path=DIR              look for imports in DIR
           --only-files                    do not call the ATPs, only to create the TPTP files
@@ -98,12 +98,14 @@ Interface {iSourceHash = 6158050943730719700, iImportedModules = [], iModuleName
 >>>2
 >>>= 0
 
-#8. --dump-types
-dist/build/apia/apia -itest/command-line-options --dump-types test/command-line-options/Foo.agda
+#8. --dump-qnames
+dist/build/apia/apia -itest/command-line-options --dump-qnames test/command-line-options/Foo.agda
 <<<
 >>>
 Qname: Foo.foo
 Type: El {getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}
+Concrete name range: /home/asr/code/phd/repos/apia/test/command-line-options/Foo.agda:10,11-14
+nameBindingSite range: /home/asr/code/phd/repos/apia/test/command-line-options/Foo.agda:10,11-14
 
 >>>2
 >>>= 0

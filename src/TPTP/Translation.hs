@@ -32,12 +32,7 @@ import qualified Data.HashMap.Strict as HashMap ( elems, keys )
 ------------------------------------------------------------------------------
 -- Agda library imports
 
-import Agda.Syntax.Abstract.Name
-  ( Name
-  , nameBindingSite
-  , QName
-  , qnameName
-  )
+import Agda.Syntax.Abstract.Name ( QName )
 
 import Agda.Syntax.Common
   ( ATPRole(ATPAxiom, ATPConjecture, ATPDefinition, ATPHint) )
@@ -69,6 +64,7 @@ import AgdaInternal.Interface
   , isATPDefinition
   , qNameDefinition
   , QNamesIn(qNamesIn)
+  , qNameConcreteNameRange
   )
 
 import FOL.Translation.Functions ( fnToFormula )
@@ -92,18 +88,18 @@ toAF ∷ ATPRole → QName → Definition → T AF
 toAF role qName def = do
   let ty ∷ Type
       ty = defType def
-  reportSLn "toAF" 20 $
+  reportSLn "toAF" 10 $
      "Translating QName: " ++ showLn qName
-     ++ "Position: " ++ showLn (nameBindingSite $ qnameName qName)
-     ++ "Role: " ++ showLn role
-     ++ "Type:\n" ++ show ty
+     ++ "Type:\n" ++ showLn ty
+     ++ "Role: " ++ showLn role ++ "\n"
+     ++ "Position: " ++ showLn (qNameConcreteNameRange qName)
 
   -- We eta-expand the type before the translation.
   tyEtaExpanded ← ifM isTVarsEmpty (etaExpand ty) (__IMPOSSIBLE__)
 
-  reportSLn "toAF" 20 $ "The eta-expanded type is:\n" ++ show tyEtaExpanded
+  reportSLn "toAF" 10 $ "The eta-expanded type is:\n" ++ show tyEtaExpanded
 
-  reportSLn "toAF" 20 $
+  reportSLn "toAF" 10 $
     if ty == tyEtaExpanded
     then "The type and the eta-expanded type: equals"
     else "The type and the eta-expanded type: different"
@@ -111,7 +107,7 @@ toAF role qName def = do
   let boundedVarsTy ∷ [(String, Type)]
       boundedVarsTy = boundedVarsType tyEtaExpanded
 
-  reportSLn "toAF" 20 $
+  reportSLn "toAF" 10 $
     "The types of the bounded variables,"
     ++ "i.e. (Abs x _), but not (NoAbs x _) are:\n"
     ++ showListLn boundedVarsTy
@@ -121,12 +117,12 @@ toAF role qName def = do
                   tyEtaExpanded
                   (reverse boundedVarsTy)
 
-  reportSLn "toAF" 20 $ "tyReady:\n" ++ show tyReady
+  reportSLn "toAF" 10 $ "tyReady:\n" ++ show tyReady
 
   -- We run the translation from Agda types to FOL.
   for ← ifM isTVarsEmpty (typeToFormula tyReady) (__IMPOSSIBLE__)
 
-  reportSLn "toAF" 20 $
+  reportSLn "toAF" 10 $
     "The FOL formula for " ++ show qName ++ " is:\n" ++ show for
 
   ifM isTVarsEmpty (return $ AF qName role for) (__IMPOSSIBLE__)
@@ -136,8 +132,11 @@ fnToAF ∷ QName → Definition → T AF
 fnToAF qName def = do
   let ty ∷ Type
       ty = defType def
+
   reportSLn "symbolToAF" 10 $
-    "Symbol: " ++ showLn qName ++ "Type: " ++ show ty
+    "Symbol: " ++ showLn qName
+    ++ "Type:\n" ++ showLn ty
+    ++ "Position: " ++ showLn (qNameConcreteNameRange qName)
 
   -- We get the clauses that define the symbol (all the symbols must
   -- be functions).

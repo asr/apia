@@ -125,9 +125,9 @@ conjectureFooter = commentLine ++ "% End TPTP file.\n"
 agdaOriginalTerm ∷ QName → ATPRole → String
 agdaOriginalTerm qName role =
   "% The original Agda term was:\n"
-  ++ "% Name:\t" ++ showLn qName
-  ++ "% Role:\t" ++ showLn role
-  ++ "% Line:\t" ++ showLn (qNameLine qName)
+  ++ "% Name: " ++ showLn qName
+  ++ "% Role: " ++ showLn role
+  ++ "% ATP pragma line: " ++ showLn (qNameLine qName)
 
 addRole ∷ AF → FilePath → IO ()
 addRole af@(AF qName afRole _) file = do

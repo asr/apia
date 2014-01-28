@@ -6,9 +6,9 @@
 % The general axiom(s).
 
 % The original Agda term was:
-% Name:	VariableNamesClash.a≡b
-% Role:	axiom
-% Line:	15
+% Name: VariableNamesClash.a≡b
+% Role: axiom
+% ATP pragma line: 16
 fof(n5_167217889, axiom, ( a = b )).
 
 % End general axiom(s).
@@ -17,9 +17,9 @@ fof(n5_167217889, axiom, ( a = b )).
 % The conjecture.
 
 % The original Agda term was:
-% Name:	VariableNamesClash._.prf
-% Role:	prove
-% Line:	23
+% Name: VariableNamesClash._.prf
+% Role: prove
+% ATP pragma line: 23
 fof(n12_167217889, conjecture, ( ! [A] : ( ! [B] : ( a = b ) ) )).
 
 % End conjecture.

@@ -6,9 +6,9 @@
 % The required ATP definition(s) by the conjecture.
 
 % The original Agda term was:
-% Name:	Issue4._.c
-% Role:	definition
-% Line:	20
+% Name: Issue4._.c
+% Role: definition
+% ATP pragma line: -1
 fof(n15_126633305, definition, ( ! [A] : ( ( kp1_(cP,A) ) => ( ! [B] : ( ( kp1_(cP,B) ) => ( c(A,B) = A ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
@@ -17,9 +17,9 @@ fof(n15_126633305, definition, ( ! [A] : ( ( kp1_(cP,A) ) => ( ! [B] : ( ( kp1_(
 % The conjecture.
 
 % The original Agda term was:
-% Name:	Issue4._.bar
-% Role:	prove
-% Line:	24
+% Name: Issue4._.bar
+% Role: prove
+% ATP pragma line: 24
 fof(n16_126633305, conjecture, ( ! [A] : ( ( kp1_(cP,A) ) => ( ! [B] : ( ( kp1_(cP,B) ) => ( c(A,B) = A ) ) ) ) )).
 
 % End conjecture.

@@ -6,9 +6,9 @@
 % The common required definition(s).
 
 % The original Agda term was:
-% Name:	DuplicateAgdaDefinitions2._≤_
-% Role:	definition
-% Line:	40
+% Name: DuplicateAgdaDefinitions2._≤_
+% Role: definition
+% ATP pragma line: 45
 fof(n26_49333747, definition, ( ! [A] : ( ! [B] : ( n8804(A,B) = n60(A,succ(B)) ) ) )).
 
 % End common required definition(s).
@@ -17,15 +17,15 @@ fof(n26_49333747, definition, ( ! [A] : ( ! [B] : ( n8804(A,B) = n60(A,succ(B)) 
 % The general axiom(s).
 
 % The original Agda term was:
-% Name:	DuplicateAgdaDefinitions2.Bool.tB
-% Role:	axiom
-% Line:	29
+% Name: DuplicateAgdaDefinitions2.Bool.tB
+% Role: axiom
+% ATP pragma line: 31
 fof(n15_49333747, axiom, ( kp1_(cBool,true) )).
 
 % The original Agda term was:
-% Name:	DuplicateAgdaDefinitions2.Bool.fB
-% Role:	axiom
-% Line:	30
+% Name: DuplicateAgdaDefinitions2.Bool.fB
+% Role: axiom
+% ATP pragma line: 31
 fof(n16_49333747, axiom, ( kp1_(cBool,false) )).
 
 % End general axiom(s).
@@ -34,9 +34,9 @@ fof(n16_49333747, axiom, ( kp1_(cBool,false) )).
 % The local hint(s).
 
 % The original Agda term was:
-% Name:	DuplicateAgdaDefinitions2.Sx≰0
-% Role:	hint
-% Line:	48
+% Name: DuplicateAgdaDefinitions2.Sx≰0
+% Role: hint
+% ATP pragma line: 55
 fof(n33_49333747, hypothesis, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cNLE_29_49333747,succ(A),zero) ) ) )).
 
 % End local hint(s).
@@ -45,9 +45,9 @@ fof(n33_49333747, hypothesis, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cNLE_29_49333
 % The required ATP definition(s) by the local hint(s).
 
 % The original Agda term was:
-% Name:	DuplicateAgdaDefinitions2.NLE
-% Role:	definition
-% Line:	44
+% Name: DuplicateAgdaDefinitions2.NLE
+% Role: definition
+% ATP pragma line: -1
 fof(n29_49333747, definition, ( ! [A] : ( ! [B] : ( ( kp2_(cNLE_29_49333747,A,B) ) <=> ( n8804(A,B) = false ) ) ) )).
 
 % End required ATP definition(s) by the local hint(s).
@@ -56,9 +56,9 @@ fof(n29_49333747, definition, ( ! [A] : ( ! [B] : ( ( kp2_(cNLE_29_49333747,A,B)
 % The conjecture.
 
 % The original Agda term was:
-% Name:	DuplicateAgdaDefinitions2._.prf
-% Role:	prove
-% Line:	54
+% Name: DuplicateAgdaDefinitions2._.prf
+% Role: prove
+% ATP pragma line: 54
 fof(n46_49333747, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp1_(cBool,n8804(succ(A),zero)) ) ) )).
 
 % End conjecture.

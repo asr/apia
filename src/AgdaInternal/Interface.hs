@@ -311,8 +311,9 @@ qNameType qName = fmap defType $ qNameDefinition qName
 -- | Return the line where a 'QName' is defined.
 qNameLine ∷ QName → Int32
 qNameLine qName =
-  case rangeToInterval $ nameBindingSite $ qnameName qName of
-    Nothing              → __IMPOSSIBLE__
+  -- See issue 13.
+  case rangeToInterval $ qNameConcreteNameRange qName of
+    Nothing              → -1 -- __IMPOSSIBLE__
     Just (Interval s _)  → posLine s
 
 -- | Return the 'Range' of the concrete name of a 'QName'.

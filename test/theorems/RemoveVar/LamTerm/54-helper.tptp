@@ -6,9 +6,9 @@
 % The general axiom(s).
 
 % The original Agda term was:
-% Name:	RemoveVar.LamTerm.≈-gfp₁
-% Role:	axiom
-% Line:	43
+% Name: RemoveVar.LamTerm.≈-gfp₁
+% Role: axiom
+% ATP pragma line: 45
 fof(n32_227209975, axiom, ( ! [A] : ( ! [B] : ( ( kp2_(n_8776_,A,B) ) => ( ? [C] : ( ? [D] : ( ? [E] : ( ( kp2_(n_8776_,D,E) ) & ( ( A = n8759(C,D) ) & ( B = n8759(C,E) ) ) ) ) ) ) ) ) )).
 
 % End general axiom(s).
@@ -17,9 +17,9 @@ fof(n32_227209975, axiom, ( ! [A] : ( ! [B] : ( ( kp2_(n_8776_,A,B) ) => ( ? [C]
 % The required ATP definition(s) by the conjecture.
 
 % The original Agda term was:
-% Name:	RemoveVar.LamTerm._.P
-% Role:	definition
-% Line:	50
+% Name: RemoveVar.LamTerm._.P
+% Role: definition
+% ATP pragma line: -1
 fof(n41_227209975, definition, ( ! [A] : ( ! [B] : ( ( kp2_(n_8776_,A,B) ) => ( ! [C] : ( ( kp3_(cP_41_227209975,A,B,C) ) <=> ( ? [D] : ( kp2_(n_8776_,C,D) ) ) ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
@@ -28,9 +28,9 @@ fof(n41_227209975, definition, ( ! [A] : ( ! [B] : ( ( kp2_(n_8776_,A,B) ) => ( 
 % The conjecture.
 
 % The original Agda term was:
-% Name:	RemoveVar.LamTerm._.helper
-% Role:	prove
-% Line:	54
+% Name: RemoveVar.LamTerm._.helper
+% Role: prove
+% ATP pragma line: 54
 fof(n47_227209975, conjecture, ( ! [A] : ( ! [B] : ( ( kp2_(n_8776_,A,B) ) => ( ! [C] : ( ( kp3_(cP_41_227209975,A,B,C) ) => ( ? [D] : ( ? [E] : ( ( kp3_(cP_41_227209975,A,B,E) ) & ( C = n8759(D,E) ) ) ) ) ) ) ) ) )).
 
 % End conjecture.

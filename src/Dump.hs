@@ -50,7 +50,8 @@ import AgdaInternal.Interface
   , qNameNameBindingSiteRange
   , readInterface
   )
-import Monad.Base             ( T )
+
+import Monad.Base ( T )
 
 ------------------------------------------------------------------------------
 -- We sort the 'QName's by its position in the Agda module.

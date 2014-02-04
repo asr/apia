@@ -21,8 +21,8 @@ module AgdaInternal.EtaExpansion ( EtaExpandible(etaExpand) ) where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad ( when )
-import Data.Functor  ( (<$>) )
+import Control.Applicative ( (<$>) )
+import Control.Monad       ( when )
 
 ------------------------------------------------------------------------------
 -- Agda library imports

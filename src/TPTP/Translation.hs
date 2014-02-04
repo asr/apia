@@ -22,9 +22,9 @@ module TPTP.Translation
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad ( foldM, liftM2, liftM4, zipWithM )
+import Control.Applicative ( (<$>) )
+import Control.Monad       ( foldM, liftM2, liftM4, zipWithM )
 
-import Data.Functor ( (<$>) )
 import Data.List    ( nub )
 
 import qualified Data.HashMap.Strict as HashMap ( elems, keys )

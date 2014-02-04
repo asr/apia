@@ -17,6 +17,8 @@ module Utils.Version ( progNameVersion ) where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
+import Control.Applicative ( (<$>) )
+
 import Data.List ( intercalate )
 
 import Distribution.Package                  ( PackageIdentifier(pkgVersion) )
@@ -45,7 +47,7 @@ progNameVersion = do
   -- 03 July 2013. We don't use the generated module from Cabal
   -- (Paths_pkgname) for getting the version because this module
   -- doesn't pass the -fwarn-missing-import-lists warning.
-  version  ← fmap (showVersion . pkgVersion . package . packageDescription)
-                  $ readPackageDescription silent (progName ++ ".cabal")
+  version ← (showVersion . pkgVersion . package . packageDescription)
+            <$> readPackageDescription silent (progName ++ ".cabal")
 
   return $ toUpperFirst progName ++ " version " ++ version

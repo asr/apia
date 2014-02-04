@@ -37,11 +37,11 @@ module AgdaInternal.Interface
 ------------------------------------------------------------------------------
 -- Haskell imports
 
+import Control.Applicative ( (<$>) )
 import Control.Monad.Error ( MonadError(throwError) )
 import Control.Monad.State ( evalStateT, MonadState(get, put), StateT )
 import Control.Monad.Trans ( MonadIO(liftIO), MonadTrans(lift) )
 
-import Data.Functor ( (<$>) )
 import Data.Int     ( Int32 )
 
 import qualified Data.HashMap.Strict as HashMap ( filter, lookup )
@@ -306,7 +306,7 @@ qNameDefinition qName = do
 
 -- | Return the 'Type' of a 'QName'.
 qNameType ∷ QName → T Type
-qNameType qName = fmap defType $ qNameDefinition qName
+qNameType qName = defType <$> qNameDefinition qName
 
 -- | Return the line where a 'QName' is defined.
 qNameLine ∷ QName → Int32
@@ -408,7 +408,7 @@ importedInterfaces x = do
       let iModules ∷ [ModuleName]
           iModules = (fst . unzip . iImportedModules) i
 
-      is ← fmap concat $ mapM importedInterfaces iModules
+      is ← concat <$> mapM importedInterfaces iModules
       return $ i : is
     else return []
 
@@ -416,7 +416,7 @@ importedInterfaces x = do
 -- level interface file.
 getImportedInterfaces ∷ Interface → T [Interface]
 getImportedInterfaces i = do
-  iInterfaces ← fmap concat $
+  iInterfaces ← concat <$>
     evalStateT (mapM importedInterfaces $ (fst . unzip . iImportedModules) i) []
   reportSLn "ii" 20 $
     "Imported module names: " ++ show (map iModuleName iInterfaces)

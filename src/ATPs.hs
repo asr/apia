@@ -39,11 +39,14 @@ import System.Process
   ( CmdSpec(RawCommand)
   , createProcess
   , CreateProcess
-    ( create_group
+    ( close_fds
+    , create_group
     , CreateProcess
-    , close_fds
     , cmdspec
     , cwd
+#if MIN_VERSION_process(1,2,0)
+    , delegate_ctlc
+#endif
     , env
     , std_err
     , std_in
@@ -207,14 +210,17 @@ runATP atp outputMVar timeLimit file = do
   -- @System.Process.proc@.
   (_, outputH, _, atpPH) ← liftIO $
     createProcess CreateProcess
-                    { cmdspec = RawCommand cmd args
-                    , cwd = Nothing
-                    , env = Nothing
-                    , std_in = Inherit
-                    , std_out = CreatePipe
-                    , std_err = Inherit
-                    , close_fds = False
-                    , create_group = True
+                    { cmdspec       = RawCommand cmd args
+                    , cwd           = Nothing
+                    , env           = Nothing
+                    , std_in        = Inherit
+                    , std_out       = CreatePipe
+                    , std_err       = Inherit
+                    , close_fds     = False
+                    , create_group  = True
+#if MIN_VERSION_process(1,2,0)
+                    , delegate_ctlc = False
+#endif
                     }
   output ← liftIO $ hGetContents $ fromMaybe (__IMPOSSIBLE__) outputH
   _      ← liftIO $ forkIO $

@@ -114,7 +114,7 @@ defaultOptions = Options
   , optSnapshotDir     = "snapshot"
   , optSnapshotNoError = False
   , optSnapshotTest    = False
-  , optTime            = 300
+  , optTime            = 240
   , optUnprovenNoError = False
   , optVampireExec     = "vampire_lin64"
   , optVerbose         = Trie.singleton [] 1
@@ -244,7 +244,7 @@ options =
   , Option []  ["snapshot-test"] (NoArg snapshotTestOpt)
                "compare the generated TPTP files against a snapshot of them"
   , Option []  ["time"] (ReqArg timeOpt "NUM")
-               "set timeout for the ATPs in seconds (default: 300)"
+               "set timeout for the ATPs in seconds (default: 240)"
   , Option []  ["unproven-conjecture-no-error"] (NoArg unprovenNoErrorOpt)
                "an unproven TPTP conjecture does not generate an error\n"
   , Option []  ["vampire-exec"] (ReqArg vampireExecOpt "COMMAND")

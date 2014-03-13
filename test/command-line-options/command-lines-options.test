@@ -19,7 +19,7 @@ Usage: apia [OPTIONS] FILE
           --snapshot-no-error             a difference in the snapshot-test does not generate an error
                                           (implies --snapshot-test)
           --snapshot-test                 compare the generated TPTP files against a snapshot of them
-          --time=NUM                      set timeout for the ATPs in seconds (default: 300)
+          --time=NUM                      set timeout for the ATPs in seconds (default: 240)
           --unproven-conjecture-no-error  an unproven TPTP conjecture does not generate an error
           --vampire-exec=COMMAND          set the vampire executable (default: vampire_lin64)
   -v N    --verbose=N                     set verbosity level to N

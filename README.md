@@ -110,7 +110,7 @@
 
    The program will call the installed ATPs and tell which of the ATPs
    was able to first prove a certain conjecture. If none ATP could
-   prove a conjecture after 300 seconds, the process of proving that
+   prove a conjecture after four minutes, the process of proving that
    particular conjecture is aborted and the ATPs try to prove the next
    conjecture.
 

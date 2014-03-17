@@ -131,7 +131,7 @@ refute_theorems : $(refute_theorems_files)
 
 # Tested with shelltestrunner 1.3.2.
 command_line_options : $(command_line_options_files)
-	shelltest --color \
+	shelltest --color --precise \
                   $(command_line_options_path)/command-lines-options.test
 	@echo "$@ succeeded!"
 
@@ -143,7 +143,7 @@ command_line_options : $(command_line_options_files)
 
 # Tested with shelltestrunner 1.3.2.
 errors : $(errors_files)
-	shelltest --color $(errors_path)/errors.test
+	shelltest --color --precise $(errors_path)/errors.test
 	@echo "$@ succeeded!"
 
 ##############################################################################

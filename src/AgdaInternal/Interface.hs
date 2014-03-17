@@ -198,14 +198,14 @@ readInterface file = do
   pFile ∷ FilePath ← liftIO $ fmap filePath (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive pFile)
-          (throwError $ "The file " ++ pFile ++ " does not exist")
+          (throwError $ "the file " ++ pFile ++ " does not exist")
 
   -- The physical Agda interface file.
   iFile ∷ FilePath ← liftIO $ fmap (filePath . toIFile) (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive iFile)
-          (throwError $ "The interface file " ++ iFile
-                        ++ " does not exist. Use Agda to generate it")
+          (throwError $ "the interface file " ++ iFile
+                        ++ " does not exist (use Agda to generate it)")
 
   r ∷ Either TCErr (Maybe Interface) ← liftIO $ runTCM $
     do setCommandLineOptions optsCommandLine

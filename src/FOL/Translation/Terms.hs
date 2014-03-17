@@ -117,7 +117,7 @@ import Options ( Options(optWithFnConsts, optWithoutPConsts) )
 
 universalQuantificationErrorMsg ∷ String → String
 universalQuantificationErrorMsg p =
-  "Use the Agda option " ++ "`" ++ p ++ "'" ++ " in your Agda file "
+  "use the Agda option " ++ "`" ++ p ++ "'" ++ " in your Agda file "
   ++ "for the translation of first-order logic universal quantified "
   ++ entities
   where
@@ -601,7 +601,7 @@ termToFOLTerm term@(Var n args) = do
 
       ifM (isTPragmaOption p)
           -- TODO (24 March 2013). Implementation.
-          (throwError "The option '--schematic-functions' is not implemented")
+          (throwError "the option '--schematic-functions' is not implemented")
           -- (do termsFOL ← mapM argTermToFOLTerm varArgs
           --     ifM (askTOpt optAppF)
           --         (return $ foldl' app (FOLVar (vars !! n)) termsFOL)

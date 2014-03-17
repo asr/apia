@@ -62,7 +62,7 @@ dist/build/apia/apia -itest/command-line-options --atp=e --unproven-conjecture-n
 >>>
 Proving the conjecture in /tmp/NoTheorem/16-foo.tptp
 E 1.8-001 Gopaldhara *did not* prove the conjecture
-The ATP(s) did not prove the conjecture in /tmp/NoTheorem/16-foo.tptp
+the ATP(s) did not prove the conjecture in /tmp/NoTheorem/16-foo.tptp
 >>>2
 >>>= 0
 
@@ -71,7 +71,7 @@ dist/build/apia/apia -itest/command-line-options --only-files --output-dir=/tmp/
 <<<
 >>>
 Created /tmp/snapshot/TrivialTheorem/19-foo.tptp
-The files are different:
+the files are different:
 /tmp/TrivialTheorem/19-foo.tptp
 /tmp/snapshot/TrivialTheorem/19-foo.tptp
 >>>2

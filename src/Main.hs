@@ -119,7 +119,7 @@ runApia = do
       | otherwise       → do
 
         file ← case optInputFile opts of
-                 Nothing → throwError "Missing input file (try --help)"
+                 Nothing → throwError "missing input file (try --help)"
                  Just f  → return f
 
         case () of

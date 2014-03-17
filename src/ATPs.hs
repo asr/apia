@@ -164,7 +164,7 @@ atpArgs E timeLimit file = do
                     , file
                     ]
         -- This message is not included in the error test.
-        else throwError $ "The ATP " ++ eVersion ++ " is not supported"
+        else throwError $ "the ATP " ++ eVersion ++ " is not supported"
 
 -- Equinox bug. Neither the option @--no-progress@ nor the option
 -- @--verbose 0@ reduce the output.
@@ -202,7 +202,7 @@ runATP atp outputMVar timeLimit file = do
 
   e ← liftIO $ findExecutable cmd
   when (isNothing e) $ throwError $
-    "The command " ++ cmd ++ " associated with " ++ show atp
+    "the command " ++ cmd ++ " associated with " ++ show atp
     ++ " does not exist.\nYou can use the command-line option --atp=NAME "
     ++ "to avoid call some ATP"
 
@@ -235,7 +235,7 @@ atpsAnswer atps outputMVar atpsPH file n =
   if n == length atps
     then do
       let msg ∷ String
-          msg = "The ATP(s) did not prove the conjecture in " ++ file
+          msg = "the ATP(s) did not prove the conjecture in " ++ file
       ifM (askTOpt optUnprovenNoError)
           (liftIO $ putStrLn msg)
           (throwError msg)

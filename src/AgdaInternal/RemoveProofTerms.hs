@@ -171,7 +171,7 @@ instance RemoveVar Elims where
     vars ← getTVars
 
     when (x == "_") $
-      throwError "The translation of underscore variables is not implemented"
+      throwError "the translation of underscore variables is not implemented"
 
     let index ∷ Nat
         index = fromMaybe (__IMPOSSIBLE__) $ elemIndex x vars
@@ -239,7 +239,7 @@ removeProofTerm ty (x, typeVar) = do
     El (Type (Max [])) someTerm → do
       reportSLn "removePT" 20 $
                 "The term someTerm is: " ++ show someTerm
-      throwError $ "The translation failed because we do not know how erase "
+      throwError $ "the translation failed because we do not know how erase "
                    ++ "the term\n" ++ show someTerm
 
     -- The variable's type is @Set₁@,

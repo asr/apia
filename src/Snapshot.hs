@@ -49,7 +49,7 @@ snapshotTest file = do
   snapshotDir ← askTOpt optSnapshotDir
 
   if outputDir == snapshotDir
-    then throwError "The options `--output-dir' and `--snapshot-dir' cannot be the same"
+    then throwError "the options `--output-dir' and `--snapshot-dir' cannot be the same"
     else do
       -- The original file without the output directory.
       let auxFile ∷ FilePath
@@ -59,11 +59,11 @@ snapshotTest file = do
           snapshotFile = combine snapshotDir auxFile
 
       unlessM (liftIO $ doesFileExistCaseSensitive snapshotFile) $ throwError $
-        "The file " ++ snapshotFile ++ " does not exist"
+        "the file " ++ snapshotFile ++ " does not exist"
 
       whenM (liftIO $ notEqualFiles file snapshotFile) $ do
         let msg ∷ String
-            msg = "The files are different:\n" ++ file ++ "\n" ++ snapshotFile
+            msg = "the files are different:\n" ++ file ++ "\n" ++ snapshotFile
 
         ifM (askTOpt optSnapshotNoError)
             (liftIO $ putStrLn msg)

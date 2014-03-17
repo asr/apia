@@ -3,7 +3,7 @@ dist/build/apia/apia /tmp/NoFile.agda
 <<<
 >>>
 >>>2
-apia: The file /tmp/NoFile.agda does not exist
+apia: the file /tmp/NoFile.agda does not exist
 >>>= 1
 
 #2. RemoveProofTerms.hs : Don't erase a proof term
@@ -11,7 +11,7 @@ dist/build/apia/apia -itest/errors test/errors/NotErasedProofTerm.agda
 <<<
 >>>
 >>>2
-apia: The translation failed because we do not know how erase the term
+apia: the translation failed because we do not know how erase the term
 Pi []r(El {getSort = Type (Max []), unEl = Def NotErasedProofTerm.D []}) (Abs "k" El {getSort = Type (Max []), unEl = Def NotErasedProofTerm._≤_ [Apply []r(Var 0 []),Apply []r(Var 0 [])]})
 >>>= 1
 
@@ -20,7 +20,7 @@ dist/build/apia/apia -itest/errors test/errors/AgdaPragmaRequired/SchematicPropo
 <<<
 >>>
 >>>2
-apia: Use the Agda option `--schematic-propositional-symbols' in your Agda file for the translation of first-order logic universal quantified propositional symbols
+apia: use the Agda option `--schematic-propositional-symbols' in your Agda file for the translation of first-order logic universal quantified propositional symbols
 >>>= 1
 
 #4. Terms.hs: Required pragma --schematic-propositional-functions
@@ -28,7 +28,7 @@ dist/build/apia/apia -itest/errors test/errors/AgdaPragmaRequired/SchematicPropo
 <<<
 >>>
 >>>2
-apia: Use the Agda option `--schematic-propositional-functions' in your Agda file for the translation of first-order logic universal quantified propositional functions
+apia: use the Agda option `--schematic-propositional-functions' in your Agda file for the translation of first-order logic universal quantified propositional functions
 >>>= 1
 
 #5. Terms.hs: Required pragma --schematic-functions
@@ -36,7 +36,7 @@ dist/build/apia/apia -itest/errors test/errors/AgdaPragmaRequired/SchematicFunct
 <<<
 >>>
 >>>2
-apia: Use the Agda option `--schematic-functions' in your Agda file for the translation of first-order logic universal quantified functions
+apia: use the Agda option `--schematic-functions' in your Agda file for the translation of first-order logic universal quantified functions
 >>>= 1
 
 #6. RemoveProofTerms.hs: Underscore variables
@@ -44,7 +44,7 @@ dist/build/apia/apia -itest/errors test/errors/Underscore.agda
 <<<
 >>>
 >>>2
-apia: The translation of underscore variables is not implemented
+apia: the translation of underscore variables is not implemented
 >>>= 1
 
 #7. Options.hs: Only process one input file
@@ -68,7 +68,7 @@ dist/build/apia/apia
 <<<
 >>>
 >>>2
-apia: Missing input file (try --help)
+apia: missing input file (try --help)
 >>>= 1
 
 #10. Snapshot.hs: The --output-dir cannot be the same than the --snapshot-dir
@@ -76,7 +76,7 @@ dist/build/apia/apia -itest/errors --output-dir=/tmp --snapshot-test --snapshot-
 <<<
 >>>
 >>>2
-apia: The options `--output-dir' and `--snapshot-dir' cannot be the same
+apia: the options `--output-dir' and `--snapshot-dir' cannot be the same
 >>>= 1
 
 #11. Snapshot.hs: Missing snapshot file
@@ -84,7 +84,7 @@ dist/build/apia/apia -itest/errors --snapshot-test --snapshot-dir=no-dir test/er
 <<<
 >>>
 >>>2
-apia: The file no-dir/TrivialTheorem/19-foo.tptp does not exist
+apia: the file no-dir/TrivialTheorem/19-foo.tptp does not exist
 >>>= 1
 
 #12. ATP.hs: ATP unknown
@@ -102,7 +102,7 @@ dist/build/apia/apia -itest/errors --atp=vampire --vampire-exec=xxx test/errors/
 >>>
 Proving the conjecture in /tmp/TrivialTheorem/19-foo.tptp
 >>>2
-apia: The command xxx associated with Vampire does not exist.
+apia: the command xxx associated with Vampire does not exist.
 You can use the command-line option --atp=NAME to avoid call some ATP
 >>>= 1
 
@@ -113,7 +113,7 @@ dist/build/apia/apia -itest/errors --atp=e test/errors/NoTheorem.agda
 Proving the conjecture in /tmp/NoTheorem/16-foo.tptp
 E 1.8-001 Gopaldhara *did not* prove the conjecture
 >>>2
-apia: The ATP(s) did not prove the conjecture in /tmp/NoTheorem/16-foo.tptp
+apia: the ATP(s) did not prove the conjecture in /tmp/NoTheorem/16-foo.tptp
 >>>= 1
 
 #15. Functions.hs : The definitions to be translated only can have one clause
@@ -121,7 +121,7 @@ dist/build/apia/apia -itest/errors test/errors/OnlyOneClause.agda
 <<<
 >>>
 >>>2
-apia: The translation of OnlyOneClause._+_ failed because its definition only can have a clause
+apia: the translation of OnlyOneClause._+_ failed because its definition only can have a clause
 >>>= 1
 
 #16. Interface.hs: Missing interface file
@@ -129,7 +129,7 @@ echo -e "module A where" > /tmp/A.agda && dist/build/apia/apia /tmp/A.agda
 <<<
 >>>
 >>>2
-apia: The interface file /tmp/A.agdai does not exist. Use Agda to generate it
+apia: the interface file /tmp/A.agdai does not exist (use Agda to generate it)
 >>>= 1
 
 #17. Snapshot.hs: The snapshot and the generated conjecture are differents.
@@ -138,7 +138,7 @@ dist/build/apia/apia -itest/errors --only-files --output-dir=/tmp/snapshot test/
 >>>
 Created /tmp/snapshot/TrivialTheorem/19-foo.tptp
 >>>2
-apia: The files are different:
+apia: the files are different:
 /tmp/TrivialTheorem/19-foo.tptp
 /tmp/snapshot/TrivialTheorem/19-foo.tptp
 >>>= 1
@@ -284,7 +284,7 @@ dist/build/apia/apia -itest/errors test/errors/HigherOrderDefinition.agda
 <<<
 >>>
 >>>2
-apia: The translation of HigherOrderDefinition.twice failed because it is a higher-order definition
+apia: the translation of HigherOrderDefinition.twice failed because it is a higher-order definition
 >>>= 1
 
 #36. ChechTPTP.hs: tptp4X yields an error

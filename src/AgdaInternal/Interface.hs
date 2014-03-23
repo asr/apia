@@ -42,7 +42,7 @@ import Control.Monad.Error ( MonadError(throwError) )
 import Control.Monad.State ( evalStateT, MonadState(get, put), StateT )
 import Control.Monad.Trans ( MonadIO(liftIO), MonadTrans(lift) )
 
-import Data.Int     ( Int32 )
+import Data.Int ( Int32 )
 
 import qualified Data.HashMap.Strict as HashMap ( filter, lookup )
 
@@ -111,7 +111,7 @@ import Agda.TypeChecking.Monad.Base
   , Definitions
   , Interface(iImportedModules, iModuleName)
   , Projection
-  , runTCM
+  , runTCMTop
   , TCErr
   )
 
@@ -207,7 +207,7 @@ readInterface file = do
           (throwError $ "the interface file " ++ iFile
                         ++ " does not exist (use Agda to generate it)")
 
-  r ∷ Either TCErr (Maybe Interface) ← liftIO $ runTCM $
+  r ∷ Either TCErr (Maybe Interface) ← liftIO $ runTCMTop $
     do setCommandLineOptions optsCommandLine
        A.readInterface iFile
 
@@ -226,7 +226,7 @@ getInterface ∷ ModuleName → T Interface
 getInterface x = do
   optsCommandLine ← agdaCommandLineOptions
 
-  r ← liftIO $ runTCM $ do
+  r ← liftIO $ runTCMTop $ do
     setCommandLineOptions optsCommandLine
     A.getInterface x
 

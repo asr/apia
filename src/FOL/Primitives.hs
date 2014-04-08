@@ -40,16 +40,16 @@ kApp ∷ String
 kApp = "app_"
 
 -- | Translation of first-order logic functions using the command-line
--- option @--with-function-application@. For example, the function
--- @foo x1 ... xn@ will be translated to @app_(... app_(app_(foo, x1),
--- x2), ..., xn)@, where @app_@ is a hard-coded binary function
--- symbol.
+-- option @--with-function-application@.
+-- For example, the function @foo x1 ... xn@ will be translated to
+-- @app(... app(app(foo,x1),x2), ...,xn)@, where @app@ is a hard-coded
+-- binary function symbol.
 appF ∷ FOLTerm → FOLTerm → FOLTerm
 appF t1 t2 = FOLFun kApp [t1, t2]
 
--- | Translation of first-order logic predicates by default. For
--- example, the predicate @P x1 x2 x3@ will be translated to @kp3_(p,
--- x1, x2, x3)@, where @kp3_@ is a hard-coded 4-ary predicate
+-- | Translation of first-order logic predicates by default.
+-- For example, the predicate @P x1 x2 x3@ will be translated to
+-- @kp3(p,x1,x2,x3)@, where @kp3@ is a hard-coded 4-ary predicate
 -- symbol. Using the option @--without-predicate-symbols@ the
 -- predicates are translated directly.
 appP ∷ FOLTerm → [FOLTerm] → FOLFormula

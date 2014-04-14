@@ -211,7 +211,7 @@ apia_changed : clean
 # Hlint test
 
 hlint :
-	hlint src/
+	hlint --cpp-file=dist/build/autogen/cabal_macros.h src/
 	@echo "$@ succeeded!"
 
 ##############################################################################

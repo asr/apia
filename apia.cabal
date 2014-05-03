@@ -77,7 +77,7 @@ executable apia
     Utils.String
     Utils.Version
 
-  -- Required by cabal haddock (cabal-install version 1.20.0.0 using
+  -- Required by cabal haddock (cabal-install version 1.20.0.1 using
   -- version 1.20.0.0 of the Cabal library). See
   -- https://github.com/haskell/cabal/issues/223.
   extensions: CPP

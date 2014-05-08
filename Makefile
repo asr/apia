@@ -191,7 +191,7 @@ prove_notes : $(prove_notes_files)
 ##############################################################################
 # Test used when there is a modification to Agda
 
-agda_changed : clean
+agda_changed :
 	make apia_changed
 	make type_check_notes
 	@echo "$@ succeeded!"

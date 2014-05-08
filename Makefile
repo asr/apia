@@ -200,7 +200,11 @@ agda_changed :
 # Test used when there is a modification to Apia
 
 apia_changed : clean
-	cabal clean && cabal configure && cabal build
+# cabal clean should be unnecessary. See issue
+# https://github.com/haskell/cabal/issues/1844
+	cabal clean
+	cabal configure
+	cabal build
 	make generated_conjectures
 	make errors
 	make command_line_options
@@ -227,6 +231,9 @@ git_pre_commit :
 # Apia install
 
 install :
+# cabal clean should be unnecessary. See issue
+# https://github.com/haskell/cabal/issues/1844
+	cabal clean
 	cabal install --disable-documentation
 
 ##############################################################################

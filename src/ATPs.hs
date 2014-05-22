@@ -22,12 +22,12 @@ module ATPs
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Exception       ( evaluate )
-import Control.Concurrent      ( forkIO )
-import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
-import Control.Monad           ( when )
-import Control.Monad.Error     ( MonadError(throwError) )
-import Control.Monad.Trans     ( MonadIO(liftIO) )
+import Control.Exception         ( evaluate )
+import Control.Concurrent        ( forkIO )
+import Control.Concurrent.MVar   ( MVar, newEmptyMVar, putMVar, takeMVar )
+import Control.Monad             ( when )
+import Control.Monad.IO.Class    ( MonadIO(liftIO) )
+import Control.Monad.Trans.Error ( throwError )
 
 import Data.List  ( isInfixOf )
 import Data.Maybe ( fromMaybe, isNothing )

@@ -33,14 +33,16 @@ module Monad.Base
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad.Error  ( ErrorT(runErrorT) )
-import Control.Monad.Reader ( MonadReader(ask), ReaderT(runReaderT) )
+import Control.Monad.Trans.Class  ( MonadTrans(lift) )
+import Control.Monad.Trans.Error  ( ErrorT(runErrorT) )
+import Control.Monad.Trans.Reader ( ask, ReaderT(runReaderT) )
 
-import Control.Monad.State
+import Control.Monad.Trans.State
   ( evalState
   , evalStateT
+  , get
   , modify
-  , MonadState(get, put)
+  , put
   , StateT
   )
 
@@ -89,32 +91,32 @@ runT ta = env >>= runReaderT (evalStateT (runErrorT ta) initTState)
 -- | Return 'True' if the list of variables in the translation monad
 -- state is empty.
 isTVarsEmpty ∷ T Bool
-isTVarsEmpty = fmap (null . tVars) get
+isTVarsEmpty = lift $ fmap (null . tVars) get
 
 -- | @isTPragmaOption p@ returns 'True' if the pragma option @p@ is
 -- set.
 isTPragmaOption ∷ String → T Bool
 isTPragmaOption p = do
-  state ← get
+  state ← lift get
   return (p `elem` tPragmaOptions state)
 
 -- | Fresh variable.
 newTVar ∷ T String
-newTVar = fmap (evalState freshName . tVars) get
+newTVar = lift $ fmap (evalState freshName . tVars) get
 
 -- | Pop a variable from the translation monad state.
 popTVar ∷ T ()
 popTVar = do
-  state ← get
+  state ← lift get
   case tVars state of
     []       → __IMPOSSIBLE__
-    (_ : xs) → put state { tVars = xs }
+    (_ : xs) → lift $ put state { tVars = xs }
 
 -- | Push a variable in the translation monad state.
 pushTVar ∷ String → T ()
 pushTVar x = do
-  state ← get
-  put state { tVars = x : tVars state }
+  state ← lift get
+  lift $ put state { tVars = x : tVars state }
 
 -- | Create a fresh variable and push it in the translation monad state.
 pushTNewVar ∷ T String
@@ -122,24 +124,24 @@ pushTNewVar = newTVar >>= \freshVar → pushTVar freshVar >> return freshVar
 
 -- | Get the Agda 'Definitions' from the translation monad state.
 getTDefs ∷ T Definitions
-getTDefs = fmap tDefs get
+getTDefs = lift $ fmap tDefs get
 
 -- | Ask for a concrete 'Options' from the translation monad
 -- environment.
 askTOpt ∷ (Options → a) → T a
-askTOpt opt = fmap opt ask
+askTOpt opt = lift $ lift $ fmap opt ask
 
 -- | Get the variables from the translation monad state.
 getTVars ∷ T [String]
-getTVars = fmap tVars get
+getTVars = lift $ fmap tVars get
 
 -- | Modify the Agda 'Definitions' in the translation monad state.
 modifyDefs ∷ Definitions → T ()
-modifyDefs defs = modify $ \s → s { tDefs = defs }
+modifyDefs defs = lift $ modify $ \s → s { tDefs = defs }
 
 -- | Modify the 'OptionsPragma' in the translation monad state.
 modifyPragmaOptions ∷ OptionsPragma → T ()
-modifyPragmaOptions ps = modify $ \s → s { tPragmaOptions = ps }
+modifyPragmaOptions ps = lift $ modify $ \s → s { tPragmaOptions = ps }
 
 ------------------------------------------------------------------------------
 -- Note [@OptionsPragma@].

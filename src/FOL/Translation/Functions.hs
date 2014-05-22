@@ -23,8 +23,8 @@ module FOL.Translation.Functions ( fnToFormula ) where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad       ( liftM2, replicateM, replicateM_, when )
-import Control.Monad.Error ( MonadError(throwError) )
+import Control.Monad             ( liftM2, replicateM, replicateM_, when )
+import Control.Monad.Trans.Error ( throwError )
 
 ------------------------------------------------------------------------------
 -- Agda library imports

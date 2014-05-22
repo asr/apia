@@ -22,8 +22,8 @@ module Monad.Reports
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad       ( when )
-import Control.Monad.Trans ( MonadIO(liftIO) )
+import Control.Monad          ( when )
+import Control.Monad.IO.Class ( MonadIO(liftIO) )
 
 ------------------------------------------------------------------------------
 -- Agda library imports

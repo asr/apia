@@ -21,8 +21,8 @@ module FOL.Translation.Terms
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad ( liftM2, when )
-import Control.Monad.Error ( MonadError(throwError) )
+import Control.Monad             ( liftM2, when )
+import Control.Monad.Trans.Error ( throwError )
 
 import Data.List ( foldl' )
 

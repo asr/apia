@@ -22,10 +22,11 @@ module Main
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad        ( when )
-import Control.Monad.Error  ( MonadError(catchError, throwError) )
-import Control.Monad.Reader ( MonadReader(ask) )
-import Control.Monad.Trans  ( MonadIO(liftIO) )
+import Control.Monad              ( when )
+import Control.Monad.IO.Class     ( MonadIO(liftIO) )
+import Control.Monad.Trans.Class  ( MonadTrans(lift) )
+import Control.Monad.Trans.Error  ( catchError, throwError )
+import Control.Monad.Trans.Reader ( ask )
 
 import qualified Data.HashMap.Strict as HashMap ( unions )
 
@@ -112,7 +113,7 @@ translation agdaFile = do
 -- | The main function.
 runApia ∷ T ()
 runApia = do
-  opts ← ask
+  opts ← lift $ lift ask
   case () of
     _ | optHelp opts    → liftIO printUsage
       | optVersion opts → liftIO $ progNameVersion >>= putStrLn

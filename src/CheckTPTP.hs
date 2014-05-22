@@ -16,15 +16,15 @@ module CheckTPTP ( checkTPTP ) where
 
 -- Haskell imports
 
-import Control.Monad       ( when )
-import Control.Monad.Error ( MonadError(throwError) )
-import Control.Monad.Trans ( MonadIO(liftIO) )
+import Control.Monad             ( when )
+import Control.Monad.IO.Class    ( MonadIO(liftIO) )
+import Control.Monad.Trans.Error ( throwError )
 
 import Data.List  ( isInfixOf )
 import Data.Maybe ( isNothing )
 
 import System.Directory ( findExecutable )
-import System.Exit      ( ExitCode (ExitSuccess, ExitFailure) )
+import System.Exit      ( ExitCode(ExitSuccess, ExitFailure) )
 import System.Process   ( readProcessWithExitCode )
 
 ------------------------------------------------------------------------------

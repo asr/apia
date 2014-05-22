@@ -20,8 +20,8 @@ module TPTP.Files ( createConjectureFile ) where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad        ( when )
-import Control.Monad.Trans  ( MonadIO(liftIO) )
+import Control.Monad           ( when )
+import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
 import Data.Char ( chr, isAsciiUpper, isAsciiLower, isDigit, ord )
 import Data.List ( sort )

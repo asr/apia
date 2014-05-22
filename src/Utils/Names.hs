@@ -18,7 +18,7 @@ module Utils.Names ( freshName ) where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad.State ( MonadState(get, put), State )
+import Control.Monad.Trans.State ( get, put, State )
 
 ------------------------------------------------------------------------------
 -- Agda library imports

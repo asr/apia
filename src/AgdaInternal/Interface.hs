@@ -37,10 +37,11 @@ module AgdaInternal.Interface
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Applicative ( (<$>) )
-import Control.Monad.Error ( MonadError(throwError) )
-import Control.Monad.State ( evalStateT, MonadState(get, put), StateT )
-import Control.Monad.Trans ( MonadIO(liftIO), MonadTrans(lift) )
+import Control.Applicative       ( (<$>) )
+import Control.Monad.IO.Class    ( MonadIO(liftIO) )
+import Control.Monad.Trans.Class ( MonadTrans(lift) )
+import Control.Monad.Trans.Error ( throwError )
+import Control.Monad.Trans.State ( evalStateT, get, put, StateT )
 
 import Data.Int ( Int32 )
 

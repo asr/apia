@@ -18,8 +18,8 @@ module Snapshot ( snapshotTest ) where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad.Error ( MonadError(throwError) )
-import Control.Monad.Trans ( liftIO )
+import Control.Monad.IO.Class    ( MonadIO(liftIO) )
+import Control.Monad.Trans.Error ( throwError )
 
 import System.FilePath ( combine, joinPath, splitPath )
 

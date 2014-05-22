@@ -25,7 +25,7 @@ import qualified Data.HashMap.Strict as HashMap ( toList )
 import Data.Function ( on )
 import Data.List     ( sortBy )
 
-import Control.Monad.Trans ( MonadIO(liftIO) )
+import Control.Monad.IO.Class ( MonadIO(liftIO) )
 
 ------------------------------------------------------------------------------
 -- Agda library imports

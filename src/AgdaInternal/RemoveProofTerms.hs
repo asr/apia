@@ -65,9 +65,9 @@ module AgdaInternal.RemoveProofTerms ( removeProofTerm ) where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Applicative ( (<$>) )
-import Control.Monad       ( liftM2, when )
-import Control.Monad.Error ( MonadError(throwError) )
+import Control.Applicative       ( (<$>) )
+import Control.Monad             ( liftM2, when )
+import Control.Monad.Trans.Error ( throwError )
 
 import Data.List    ( elemIndex )
 import Data.Maybe   ( fromMaybe )

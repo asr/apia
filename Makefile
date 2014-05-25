@@ -129,7 +129,7 @@ refute_theorems : $(refute_theorems_files)
 %.command_line_options :
 	@$(AGDA) -i$(command_line_options_path) $*.agda
 
-# Tested with shelltestrunner 1.3.2.
+# Tested with shelltestrunner 1.3.3 compiled with GHC 7.4.2.
 command_line_options : $(command_line_options_files)
 	shelltest --color --precise \
                   $(command_line_options_path)/command-lines-options.test
@@ -141,7 +141,7 @@ command_line_options : $(command_line_options_files)
 %.errors :
 	@$(AGDA) -i$(errors_path) $*.agda
 
-# Tested with shelltestrunner 1.3.2.
+# Tested with shelltestrunner 1.3.3 compiled with GHC 7.4.2.
 errors : $(errors_files)
 	shelltest --color --precise $(errors_path)/errors.test
 	@echo "$@ succeeded!"

@@ -218,47 +218,47 @@ withoutPConstsOpt opts = Right opts { optWithoutPConsts = True }
 options ∷ [OptDescr MOptions]
 options =
   [ Option []  ["atp"] (ReqArg atpOpt "NAME") $
-               "set the ATP (e, equinox, ileancop, metis, spass, vampire)\n"
-               ++ "(default: e, equinox, and vampire)"
+               "Set the ATP (e, equinox, ileancop, metis, spass, vampire)\n"
+               ++ "(default: e, equinox, and vampire)."
   , Option []  ["check"] (NoArg checkOpt) $
-               "check the syntax of the generated TPTP files\n"
-               ++ "using the tptp4X program from the TPTP library"
+               "Check the syntax of the generated TPTP files using the\n"
+               ++ "tptp4X program from the TPTP library."
   , Option []  ["dump-agdai"] (NoArg dumpAgdaiOpt)
-               "dump the Agda interface file to stdout"
+               "Dump the Agda interface file to stdout."
   , Option []  ["dump-qnames"] (NoArg dumpQNamesOpt)
-               "dump Agda QNames information to stdout"
+               "Dump Agda QNames information to stdout."
   , Option []  ["help"] (NoArg helpOpt)
-               "show this help"
+               "Show this help."
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")
-               "look for imports in DIR"
+               "Look for imports in DIR."
   , Option []  ["only-files"] (NoArg onlyFilesOpt)
-               "do not call the ATPs, only to create the TPTP files"
+               "Do not call the ATPs, only to create the TPTP files."
   , Option []  ["output-dir"] (ReqArg outputDirOpt "DIR")
-               "directory in which TPTP files are placed (default: /tmp)"
+               "Directory in which the TPTP files are placed (default: /tmp)."
   , Option []  ["snapshot-dir"] (ReqArg snapshotDirOpt "DIR") $
-               "directory where is the snapshot of the TPTP files\n"
-               ++ "(default: snapshot)"
+               "Directory where is the snapshot of the TPTP files\n"
+               ++ "(default: snapshot)."
   , Option []  ["snapshot-no-error"] (NoArg snapshotNoErrorOpt) $
-               "a difference in the snapshot-test does not generate an error\n"
-               ++ "(implies --snapshot-test)"
+               "A difference in the snapshot-test does not generate an error\n"
+               ++ "(implies --snapshot-test)."
   , Option []  ["snapshot-test"] (NoArg snapshotTestOpt)
-               "compare the generated TPTP files against a snapshot of them"
+               "Compare the generated TPTP files against a snapshot of them."
   , Option []  ["time"] (ReqArg timeOpt "NUM")
-               "set timeout for the ATPs in seconds (default: 240)"
+               "Set timeout for the ATPs in seconds (default: 240)."
   , Option []  ["unproven-conjecture-no-error"] (NoArg unprovenNoErrorOpt)
-               "an unproven TPTP conjecture does not generate an error\n"
+               "An unproven TPTP conjecture does not generate an error."
   , Option []  ["vampire-exec"] (ReqArg vampireExecOpt "COMMAND")
-               "set the vampire executable (default: vampire_lin64)"
+               "Set the Vampire executable (default: vampire_lin64)."
   , Option "v" ["verbose"] (ReqArg verboseOpt "N")
-               "set verbosity level to N"
+               "Set verbosity level to N."
   , Option []  ["version"] (NoArg versionOpt)
-               "show version number"
+               "Show version number."
   , Option []  ["with-function-constants"] (NoArg withFnConstsOpt) $
-               "use a hard-coded binary function symbol for the translation\n"
-               ++ "of functions (required for handling currying)"
+               "Use a hard-coded binary function symbol for the translation\n"
+               ++ "of functions (required for handling currying)."
   , Option []  ["without-predicate-constants"] (NoArg withoutPConstsOpt) $
-               "do not use hard-coded (n+1)-ary predicate symbols for the\n"
-               ++ "translation of n-ary predicates"
+               "Do not use hard-coded (n+1)-ary predicate symbols for the\n"
+               ++ "translation of n-ary predicates."
   ]
 
 usageHeader ∷ String → String

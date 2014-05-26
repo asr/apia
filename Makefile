@@ -18,7 +18,7 @@ notes_path = notes
 ##############################################################################
 # Variables
 
-apia_haskell_files = $(shell find src/ -name '*.hs')
+haskell_files = $(shell find src/ -name '*.hs')
 
 AGDA = agda -v 0
 
@@ -268,7 +268,7 @@ hpc_clean :
 
 .PHONY : TAGS
 TAGS :
-	hasktags -e $(apia_haskell_files)
+	hasktags -e $(haskell_files)
 
 TODO :
 	find . -type d \( -path './.git' -o -path './dist' \) -prune -o -print \

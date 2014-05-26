@@ -50,6 +50,8 @@ generated_theorems_files = \
 generated_non_theorems_files = \
   $(call my_pathsubst,generated_non_theorems,$(non_theorems_path))
 
+only_theorems_files = $(call my_pathsubst,only_theorems,$(theorems_path))
+
 prove_theorems_files = $(call my_pathsubst,prove_theorems,$(theorems_path))
 
 refute_theorems_files = \
@@ -96,6 +98,17 @@ generated_conjectures_aux : $(generated_theorems_files) \
 generated_conjectures :
 	rm -r -f $(output_dir)
 	make generated_conjectures_aux
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Test suite: Only files
+
+%.only_theorems :
+	$(AGDA) -i$(theorems_path) $*.agda
+	$(APIA) -i$(theorems_path) --only-files --output-dir=$(output_dir) \
+                $*.agda
+
+only_theorems : $(only_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################

@@ -137,7 +137,7 @@ runApia = do
               tptpFiles ← mapM (createConjectureFile (fst allAFs)) (snd allAFs)
 
               -- Check the generated TPTP files using the tptp4X
-              -- program from the TPTP library
+              -- program from the TPTP library.
               when (optCheck opts) $ mapM_ checkTPTP tptpFiles
 
               case () of

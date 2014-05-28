@@ -21,10 +21,8 @@ module FOL.Translation.Terms
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad             ( liftM2, when )
-import Control.Monad.Trans.Error ( throwError )
-
-import Data.List ( foldl' )
+import Control.Monad ( liftM2, when )
+import Data.List     ( foldl' )
 
 ------------------------------------------------------------------------------
 -- Agda library imports
@@ -105,6 +103,7 @@ import Monad.Base
   , popTVar
   , pushTNewVar
   , T
+  , throwE
   )
 
 import Monad.Reports ( reportSLn )
@@ -393,7 +392,7 @@ termToFormula (Pi domTy (Abs x absTy)) = do
 
       ifM (isTPragmaOption p)
           (return f)
-          (throwError $ universalQuantificationErrorMsg p)
+          (throwE $ universalQuantificationErrorMsg p)
 
     -- Non-FOL translation: First-order logic universal quantified
     -- propositional functions.
@@ -482,12 +481,12 @@ termToFormula term@(Var n elims) = do
 
       ifM (isTPragmaOption p)
           (ifM (askTOpt optWithoutPConsts)
-               (throwError $
+               (throwE $
                  "The options '--schematic-propositional-functions'"
                  ++ " and '--without-predicate-constants' are incompatible")
                (propositionalFunctionScheme vars n elims)
           )
-          (throwError $ universalQuantificationErrorMsg p)
+          (throwE $ universalQuantificationErrorMsg p)
 
 termToFormula term = do
   reportSLn "t2f" 20 $ "term: " ++ show term
@@ -601,12 +600,12 @@ termToFOLTerm term@(Var n args) = do
 
       ifM (isTPragmaOption p)
           -- TODO (24 March 2013). Implementation.
-          (throwError "the option '--schematic-functions' is not implemented")
+          (throwE "the option '--schematic-functions' is not implemented")
           -- (do termsFOL ← mapM argTermToFOLTerm varArgs
           --     ifM (askTOpt optAppF)
           --         (return $ foldl' app (FOLVar (vars !! n)) termsFOL)
           --         (return $ FOLFun (vars !! n) termsFOL))
-          (throwError $ universalQuantificationErrorMsg p)
+          (throwE $ universalQuantificationErrorMsg p)
 
 termToFOLTerm _ = __IMPOSSIBLE__
 

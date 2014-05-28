@@ -65,12 +65,11 @@ module AgdaInternal.RemoveProofTerms ( removeProofTerm ) where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Applicative       ( (<$>) )
-import Control.Monad             ( liftM2, when )
-import Control.Monad.Trans.Error ( throwError )
+import Control.Applicative ( (<$>) )
+import Control.Monad       ( liftM2, when )
 
-import Data.List    ( elemIndex )
-import Data.Maybe   ( fromMaybe )
+import Data.List  ( elemIndex )
+import Data.Maybe ( fromMaybe )
 
 ------------------------------------------------------------------------------
 -- Agda libray imports
@@ -96,7 +95,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- Local imports
 
-import Monad.Base    ( getTVars, popTVar, pushTVar, T )
+import Monad.Base    ( getTVars, popTVar, pushTVar, T, throwE )
 import Monad.Reports ( reportSLn )
 
 #include "../undefined.h"
@@ -171,7 +170,7 @@ instance RemoveVar Elims where
     vars ← getTVars
 
     when (x == "_") $
-      throwError "the translation of underscore variables is not implemented"
+      throwE "the translation of underscore variables is not implemented"
 
     let index ∷ Nat
         index = fromMaybe (__IMPOSSIBLE__) $ elemIndex x vars
@@ -239,8 +238,8 @@ removeProofTerm ty (x, typeVar) = do
     El (Type (Max [])) someTerm → do
       reportSLn "removePT" 20 $
                 "The term someTerm is: " ++ show someTerm
-      throwError $ "the translation failed because we do not know how erase "
-                   ++ "the term\n" ++ show someTerm
+      throwE $ "the translation failed because we do not know how erase "
+               ++ "the term\n" ++ show someTerm
 
     -- The variable's type is @Set₁@,
     --

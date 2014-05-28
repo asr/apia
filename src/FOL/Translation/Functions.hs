@@ -23,8 +23,7 @@ module FOL.Translation.Functions ( fnToFormula ) where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad             ( liftM2, replicateM, replicateM_, when )
-import Control.Monad.Trans.Error ( throwError )
+import Control.Monad ( liftM2, replicateM, replicateM_, when )
 
 ------------------------------------------------------------------------------
 -- Agda library imports
@@ -79,6 +78,7 @@ import Monad.Base
   , popTVar
   , pushTNewVar
   , T
+  , throwE
   )
 
 import Monad.Reports ( reportSLn )
@@ -104,8 +104,8 @@ fnToFormula ∷ QName → Type → [Clause] → T FOLFormula
 fnToFormula _      _  []        = __IMPOSSIBLE__
 fnToFormula qName  ty (cl : []) = clauseToFormula qName ty cl
 fnToFormula qName  _  _         =
-  throwError $ "the translation of " ++ show qName
-               ++ " failed because its definition only can have a clause"
+  throwE $ "the translation of " ++ show qName
+           ++ " failed because its definition only can have a clause"
 
 -- A Clause is defined by (Agda.Syntax.Internal)
 -- data Clause = Clause
@@ -186,8 +186,8 @@ clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy) =
       return $ Implies f1 f2
 
     ExtendTel (Dom _ (El (Type (Max [])) (Pi _ _))) _ →
-      throwError $ "the translation of " ++ show qName
-                   ++ " failed because it is a higher-order definition"
+      throwE $ "the translation of " ++ show qName
+               ++ " failed because it is a higher-order definition"
 
     _ → do
         reportSLn "def2f" 20 $ "tel: " ++ show tel

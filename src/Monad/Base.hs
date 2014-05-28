@@ -15,6 +15,7 @@
 
 module Monad.Base
   ( askTOpt
+  , catchE
   , getTDefs
   , getTVars
   , isTPragmaOption
@@ -27,14 +28,26 @@ module Monad.Base
   , pushTVar
   , runT
   , T
+  , throwE
   , TState  -- Required by Haddock.
   ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Monad.Trans.Class  ( MonadTrans(lift) )
-import Control.Monad.Trans.Error  ( ErrorT(runErrorT) )
+import Control.Monad.Trans.Class ( MonadTrans(lift) )
+
+#if MIN_VERSION_transformers(0,4,1)
+import Control.Monad.Trans.Except ( catchE, ExceptT, throwE, runExceptT )
+#else
+import Control.Monad.Trans.Error
+  ( catchError
+  , Error
+  , ErrorT(runErrorT)
+  , throwError
+  )
+#endif
+
 import Control.Monad.Trans.Reader ( ask, ReaderT(runReaderT) )
 
 import Control.Monad.Trans.State
@@ -82,11 +95,19 @@ initTState = TState { tDefs          = HashMap.empty
                     }
 
 -- | The translation monad.
+#if MIN_VERSION_transformers(0,4,1)
+type T = ExceptT String (StateT TState (ReaderT Options IO))
+#else
 type T = ErrorT String (StateT TState (ReaderT Options IO))
+#endif
 
 -- | Running the translation monad.
 runT ∷ T a → IO (Either String a)
+#if MIN_VERSION_transformers(0,4,1)
+runT ta = env >>= runReaderT (evalStateT (runExceptT ta) initTState)
+#else
 runT ta = env >>= runReaderT (evalStateT (runErrorT ta) initTState)
+#endif
 
 -- | Return 'True' if the list of variables in the translation monad
 -- state is empty.
@@ -142,6 +163,17 @@ modifyDefs defs = lift $ modify $ \s → s { tDefs = defs }
 -- | Modify the 'OptionsPragma' in the translation monad state.
 modifyPragmaOptions ∷ OptionsPragma → T ()
 modifyPragmaOptions ps = lift $ modify $ \s → s { tPragmaOptions = ps }
+
+#if MIN_VERSION_transformers(0,4,1)
+#else
+-- | 'catchE' function using transformers 0.3*.
+catchE ∷ (Monad m, Error e) ⇒ ErrorT e m a → (e → ErrorT e m a) → ErrorT e m a
+catchE = catchError
+
+-- | 'throwE' function using transformers 0.3*.
+throwE ∷ (Monad m, Error e) ⇒ e → ErrorT e m a
+throwE = throwError
+#endif
 
 ------------------------------------------------------------------------------
 -- Note [@OptionsPragma@].

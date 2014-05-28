@@ -22,12 +22,11 @@ module ATPs
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Exception         ( evaluate )
-import Control.Concurrent        ( forkIO )
-import Control.Concurrent.MVar   ( MVar, newEmptyMVar, putMVar, takeMVar )
-import Control.Monad             ( when )
-import Control.Monad.IO.Class    ( MonadIO(liftIO) )
-import Control.Monad.Trans.Error ( throwError )
+import Control.Exception       ( evaluate )
+import Control.Concurrent      ( forkIO )
+import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
+import Control.Monad           ( when )
+import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
 import Data.List  ( isInfixOf )
 import Data.Maybe ( fromMaybe, isNothing )
@@ -67,7 +66,7 @@ import Agda.Utils.Monad      ( ifM )
 ------------------------------------------------------------------------------
 -- Local imports
 
-import Monad.Base    ( askTOpt, T )
+import Monad.Base    ( askTOpt, T, throwE )
 import Monad.Reports ( reportS )
 
 import Options ( Options(optATP, optTime, optUnprovenNoError, optVampireExec) )
@@ -99,7 +98,7 @@ optATP2ATP "ileancop" = return IleanCoP
 optATP2ATP "metis"    = return Metis
 optATP2ATP "spass"    = return SPASS
 optATP2ATP "vampire"  = return Vampire
-optATP2ATP other      = throwError $ "ATP " ++ other ++ " unknown"
+optATP2ATP other      = throwE $ "ATP " ++ other ++ " unknown"
 
 -- | Default ATPs.
 defaultATPs ∷ [String]
@@ -164,7 +163,7 @@ atpArgs E timeLimit file = do
                     , file
                     ]
         -- This message is not included in the error test.
-        else throwError $ "the ATP " ++ eVersion ++ " is not supported"
+        else throwE $ "the ATP " ++ eVersion ++ " is not supported"
 
 -- Equinox bug. Neither the option @--no-progress@ nor the option
 -- @--verbose 0@ reduce the output.
@@ -201,7 +200,7 @@ runATP atp outputMVar timeLimit file = do
   cmd ∷ String    ← atpExec atp
 
   e ← liftIO $ findExecutable cmd
-  when (isNothing e) $ throwError $
+  when (isNothing e) $ throwE $
     "the command " ++ cmd ++ " associated with " ++ show atp
     ++ " does not exist.\nYou can use the command-line option --atp=NAME "
     ++ "to avoid call some ATP"
@@ -238,7 +237,7 @@ atpsAnswer atps outputMVar atpsPH file n =
           msg = "the ATP(s) did not prove the conjecture in " ++ file
       ifM (askTOpt optUnprovenNoError)
           (liftIO $ putStrLn msg)
-          (throwError msg)
+          (throwE msg)
     else do
       output ← liftIO $ takeMVar outputMVar
       atpWithVersion ← atpVersion (snd output)

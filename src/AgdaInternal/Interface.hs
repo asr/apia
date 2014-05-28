@@ -40,7 +40,6 @@ module AgdaInternal.Interface
 import Control.Applicative       ( (<$>) )
 import Control.Monad.IO.Class    ( MonadIO(liftIO) )
 import Control.Monad.Trans.Class ( MonadTrans(lift) )
-import Control.Monad.Trans.Error ( throwError )
 import Control.Monad.Trans.State ( evalStateT, get, put, StateT )
 
 import Data.Int ( Int32 )
@@ -132,7 +131,7 @@ import qualified Agda.Utils.Trie as Trie ( singleton )
 ------------------------------------------------------------------------------
 -- Local imports
 
-import Monad.Base    ( askTOpt, getTDefs, T )
+import Monad.Base    ( askTOpt, getTDefs, T, throwE )
 import Monad.Reports ( reportSLn )
 import Options       ( Options(optIncludePath) )
 
@@ -199,14 +198,14 @@ readInterface file = do
   pFile ∷ FilePath ← liftIO $ fmap filePath (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive pFile)
-          (throwError $ "the file " ++ pFile ++ " does not exist")
+          (throwE $ "the file " ++ pFile ++ " does not exist")
 
   -- The physical Agda interface file.
   iFile ∷ FilePath ← liftIO $ fmap (filePath . toIFile) (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive iFile)
-          (throwError $ "the interface file " ++ iFile
-                        ++ " does not exist (use Agda to generate it)")
+          (throwE $ "the interface file " ++ iFile
+                    ++ " does not exist (use Agda to generate it)")
 
   r ∷ Either TCErr (Maybe Interface) ← liftIO $ runTCMTop $
     do setCommandLineOptions optsCommandLine
@@ -215,7 +214,7 @@ readInterface file = do
   case r of
     Right (Just i) → return i
     -- This message is not included in the errors test.
-    Right Nothing  → throwError $
+    Right Nothing  → throwE $
                        "The reading of the interface file "
                        ++ iFile ++ " failed. "
                        ++ "It is possible that you used a different version "

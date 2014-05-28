@@ -25,7 +25,6 @@ module Main
 import Control.Monad              ( when )
 import Control.Monad.IO.Class     ( MonadIO(liftIO) )
 import Control.Monad.Trans.Class  ( MonadTrans(lift) )
-import Control.Monad.Trans.Error  ( catchError, throwError )
 import Control.Monad.Trans.Reader ( ask )
 
 import qualified Data.HashMap.Strict as HashMap ( unions )
@@ -55,10 +54,12 @@ import CheckTPTP ( checkTPTP )
 import Dump ( dumpAgdai, dumpQNames )
 
 import Monad.Base
-  ( modifyDefs
+  ( catchE
+  , modifyDefs
   , modifyPragmaOptions
   , runT
   , T
+  , throwE
   )
 
 import Monad.Reports ( reportSLn )
@@ -120,7 +121,7 @@ runApia = do
       | otherwise       → do
 
         file ← case optInputFile opts of
-                 Nothing → throwError "missing input file (try --help)"
+                 Nothing → throwE "missing input file (try --help)"
                  Just f  → return f
 
         case () of
@@ -153,9 +154,9 @@ runApia = do
 main ∷ IO ()
 main = do
   -- Adapted from @Agda.Main.main@. Requires -XScopedTypeVariables.
-  r ∷ Either String () ← runT $ runApia `catchError` \err →
+  r ∷ Either String () ← runT $ runApia `catchE` \err →
     do liftIO $ failureMsg err
-       throwError err
+       throwE err
 
   case r of
     Right _ → exitSuccess

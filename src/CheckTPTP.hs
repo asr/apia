@@ -16,9 +16,8 @@ module CheckTPTP ( checkTPTP ) where
 
 -- Haskell imports
 
-import Control.Monad             ( when )
-import Control.Monad.IO.Class    ( MonadIO(liftIO) )
-import Control.Monad.Trans.Error ( throwError )
+import Control.Monad           ( when )
+import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
 import Data.List  ( isInfixOf )
 import Data.Maybe ( isNothing )
@@ -30,7 +29,7 @@ import System.Process   ( readProcessWithExitCode )
 ------------------------------------------------------------------------------
 -- Local imports
 
-import Monad.Base ( T )
+import Monad.Base ( T, throwE )
 
 -----------------------------------------------------------------------------
 
@@ -41,7 +40,7 @@ tptp4Xexec = "tptp4X"
 checkTPTP ∷ FilePath → T ()
 checkTPTP file = do
   e ← liftIO $ findExecutable tptp4Xexec
-  when (isNothing e) $ throwError $
+  when (isNothing e) $ throwE $
     "the " ++ tptp4Xexec ++ " command from the TPTP library does not exist"
 
   (exitCode, out, _) ←
@@ -50,11 +49,11 @@ checkTPTP file = do
                                      []
   case exitCode of
     ExitFailure _ →
-      throwError $ tptp4Xexec ++ " found an error in the file " ++ file
-                   ++ "\nPlease report this as a bug"
+      throwE $ tptp4Xexec ++ " found an error in the file " ++ file
+               ++ "\nPlease report this as a bug"
 
     -- TODO (11 December 2012). How add a test case for this case?
     ExitSuccess →
       when ("WARNING" `isInfixOf` out) $
-        throwError $ tptp4Xexec ++ " found a warning in the file " ++ file
-                     ++ "\nPlease report this as a bug"
+        throwE $ tptp4Xexec ++ " found a warning in the file " ++ file
+                 ++ "\nPlease report this as a bug"

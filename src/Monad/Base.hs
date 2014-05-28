@@ -164,8 +164,7 @@ modifyDefs defs = lift $ modify $ \s → s { tDefs = defs }
 modifyPragmaOptions ∷ OptionsPragma → T ()
 modifyPragmaOptions ps = lift $ modify $ \s → s { tPragmaOptions = ps }
 
-#if MIN_VERSION_transformers(0,4,1)
-#else
+#if !(MIN_VERSION_transformers(0,4,1))
 -- | 'catchE' function using transformers 0.3.*.
 catchE ∷ (Monad m, Error e) ⇒ ErrorT e m a → (e → ErrorT e m a) → ErrorT e m a
 catchE = catchError

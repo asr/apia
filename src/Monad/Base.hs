@@ -166,11 +166,11 @@ modifyPragmaOptions ps = lift $ modify $ \s → s { tPragmaOptions = ps }
 
 #if MIN_VERSION_transformers(0,4,1)
 #else
--- | 'catchE' function using transformers 0.3*.
+-- | 'catchE' function using transformers 0.3.*.
 catchE ∷ (Monad m, Error e) ⇒ ErrorT e m a → (e → ErrorT e m a) → ErrorT e m a
 catchE = catchError
 
--- | 'throwE' function using transformers 0.3*.
+-- | 'throwE' function using transformers 0.3.*.
 throwE ∷ (Monad m, Error e) ⇒ e → ErrorT e m a
 throwE = throwError
 #endif

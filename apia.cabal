@@ -36,7 +36,6 @@ executable apia
     , Cabal                >= 1.14.0 && < 1.21
     , directory            >= 1.0 && < 1.3
     , filepath             >= 1.1 && < 1.4
-    , ghc-prim             >= 0.2 && < 0.4
     , process              >= 1.0 && < 1.3
     , regex-compat         >= 0.95.1 && < 0.96
     -- tranformers 0.4.0.0 was deprecated.

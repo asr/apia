@@ -143,8 +143,7 @@ helpOpt ∷ MOptions
 helpOpt opts = Right opts { optHelp = True }
 
 includePathOpt ∷ FilePath → MOptions
-includePathOpt [] _ =
-  error "Option `--include-path' requires an argument DIR"
+includePathOpt [] _ = error "Option `--include-path' requires an argument DIR"
 includePathOpt dir opts =
   Right opts { optIncludePath = optIncludePath opts ++ [dir] }
 

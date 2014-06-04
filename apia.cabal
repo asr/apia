@@ -81,18 +81,57 @@ executable apia
   -- https://github.com/haskell/cabal/issues/223.
   extensions: CPP
 
-  if impl(ghc >= 7.6)
+  ghc-options: -w -Werror
+
+  if impl(ghc >= 7.6.3)
      ghc-options:
-       -Wall
+       -- The following warning isn't documented in GHC 7.6.3.
+       -fwarn-alternative-layout-rule-transitional
        -fwarn-auto-orphans
+       -fwarn-deprecated-flags
+       -fwarn-dodgy-exports
+       -fwarn-dodgy-foreign-imports
+       -fwarn-dodgy-imports
+       -fwarn-duplicate-exports
+       -fwarn-hi-shadowing
        -fwarn-identities
+       -fwarn-incomplete-patterns
        -fwarn-incomplete-record-updates
        -fwarn-incomplete-uni-patterns
+       -- The following warning is deprecated in GHC 7.8.1.
+       -- -fwarn-lazy-unlifted-bindings
+       -fwarn-missing-fields
        -fwarn-missing-import-lists
        -fwarn-missing-local-sigs
+       -fwarn-missing-methods
+       -fwarn-missing-signatures
        -fwarn-monomorphism-restriction
+       -fwarn-name-shadowing
+       -fwarn-orphans
+       -fwarn-overlapping-patterns
+       -fwarn-pointless-pragmas
        -fwarn-tabs
-       -Werror
+       -fwarn-type-defaults
+       -fwarn-unrecognised-pragmas
+       -fwarn-unused-do-bind
+       -fwarn-unused-binds
+       -fwarn-unused-imports
+       -fwarn-unused-matches
+       -fwarn-unsupported-calling-conventions
+       -fwarn-warnings-deprecations
+       -fwarn-wrong-do-bind
+
+  if impl(ghc >= 7.8)
+     ghc-options:
+       -fwarn-amp
+       -fwarn-duplicate-constraints
+       -fwarn-empty-enumerations
+       -- The following warning isn't documented in GHC 7.8.2.
+       -fwarn-inline-rule-shadowing
+       -fwarn-overflowed-literals
+       -fwarn-typed-holes
+       -fwarn-unrecognised-pragmas
+       -fwarn-unsupported-llvm-version
 
   -- From Agda.cabal: If someone installs Agda with the setuid bit
   -- set, then the presence of +RTS may be a security problem (see GHC

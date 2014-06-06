@@ -83,7 +83,7 @@ executable apia
 
   ghc-options: -w -Werror
 
-  if impl(ghc >= 7.6.3)
+  if impl(ghc >= 7.6)
      ghc-options:
        -- The following warning isn't documented in GHC 7.6.3.
        -fwarn-alternative-layout-rule-transitional

@@ -11,7 +11,7 @@
 * Modified version of Agda
 
   We have modified the development version of Agda in order to handle
-  the new built-in ATP pragma. This modified version of Agda is
+  the new built-in ATP-pragma. This modified version of Agda is
   required by the Apia program.
 
 * ATPs
@@ -29,9 +29,8 @@
 
 * The tptp4X program
 
-  Apia uses by default the tptp4X program from the [TPTP
-  library](http://www.cs.miami.edu/~tptp/). This program can be
-  avoided using the `--no-check` command-line option. The tested
+  The `--check` command-line option requires the tptp4X program from
+  the [TPTP library](http://www.cs.miami.edu/~tptp/). The tested
   version of tptp4X is from TPTP 6.0.0.
 
 # Installation
@@ -39,33 +38,28 @@
 1. Modified version of Agda
 
    You can download our modified version of Agda using
-   [darcs](http://darcs.net/) with the following command:
+   [Darcs](http://darcs.net/) with the following command:
 
    ````bash
    $ darcs get http://patch-tag.com/r/asr/magda
    ````
 
    This will create a directory called `magda`. Installing our
-   modified version is similar to the installation of Agda (see the
-   [Agda wiki](http://wiki.portal.chalmers.se/agda/pmwiki.php) for
-   more information). In our setup we run the first time the following
+   modified version is similar to the installation of Agda (see
+   [README.md](https://github.com/agda/agda/blob/master/README.md) for
+   more information). In our setup, we run the first time the following
    commands:
 
    ````bash
    $ cd magda
    $ autoconf
    $ ./configure
-   $ make install
-   ````
-   After pulling new patches, we run the following commands:
-
-   ````bash
-   $ cd magda
-   $ make compile-emacs-mode
+   $ make install-bin
+   $ agda-mode setup
    ````
 
    To test the installation of the modified version of Agda, type-check
-   a module which uses the new built-in ATP pragma, for example
+   a module which uses the new built-in ATP-pragma, for example
 
    ````Agda
    module Test where
@@ -83,12 +77,12 @@
    Observe that in order to avoid conflicts with other installed
    versions of Agda, we have added extra information to the version
    number of Agda, i.e. if the development version number is A.B.C,
-   our modified version number is A.B.C.D.
+   our modified version number is A.B.C.1.
 
 2. The Apia program
 
    You can download the Apia program using
-   [git](http://git-scm.com/). The program can be downloaded and
+   [Git](http://git-scm.com/). The program can be downloaded and
    installed with the following commands:
 
    ````bash
@@ -108,7 +102,7 @@
    E 1.8-001 Gopaldhara proved the conjecture
    ````
 
-   The program will call the installed ATPs and tell which of the ATPs
+   The program will call the default ATPs and tell which of the ATPs
    was able to first prove a certain conjecture. If none ATP could
    prove a conjecture after four minutes, the process of proving that
    particular conjecture is aborted and the ATPs try to prove the next

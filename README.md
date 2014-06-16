@@ -14,10 +14,10 @@
 
 # Prerequisites
 
-* Modified version of Agda
+* Extended version of Agda
 
-  We have modified the development version of Agda in order to handle
-  the new built-in ATP-pragma. This modified version of Agda is
+  We have extended the development version of Agda in order to handle
+  the new built-in ATP-pragma. This extended version of Agda is
   required by the Apia program.
 
 * ATPs
@@ -41,8 +41,8 @@
 
 # Installation
 
-1. Modified version of Agda (see
-   [README.md](https://github.com/asr/magda/blob/master/README.md))
+1. Extended version of Agda (see
+   [README.md](https://github.com/asr/eagda/blob/master/README.md))
 
 2. The Apia program
 
@@ -56,8 +56,8 @@
    $ cabal install
    ````
 
-   In order to test the installation of the program, once the modified
-   version of Agda and (some of)the ATPs have been installed, we can
+   In order to test the installation of the program, once the extended
+   version of Agda and (some of) the ATPs have been installed, we can
    try to automatically prove the conjecture in
 
    ````Agda

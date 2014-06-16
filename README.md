@@ -41,31 +41,24 @@
 
 # Installation
 
-1. Modified version of Agda
+1. Modified version of Agda (see
+   [README.md](https://github.com/asr/magda/blob/master/README.md)
 
-   You can download our modified version of Agda using
-   [Darcs](http://darcs.net/) with the following command:
+2. The Apia program
 
-   ````bash
-   $ darcs get http://patch-tag.com/r/asr/magda
-   ````
-
-   This will create a directory called `magda`. Installing our
-   modified version is similar to the installation of Agda (see
-   [README.md](https://github.com/agda/agda/blob/master/README.md) for
-   more information). In our setup, we run the first time the following
-   commands:
+   You can download the Apia program using
+   [Git](http://git-scm.com/). The program can be downloaded and
+   installed with the following commands:
 
    ````bash
-   $ cd magda
-   $ autoconf
-   $ ./configure
-   $ make install-bin
-   $ agda-mode setup
+   $ git clone https://github.com/asr/apia.git
+   $ cd apia
+   $ cabal install
    ````
 
-   To test the installation of the modified version of Agda, type-check
-   a module which uses the new built-in ATP-pragma, for example
+   In order to test the installation of the program, once the modified
+   version of Agda and (some of)the ATPs have been installed, we can
+   try to automatically prove the conjecture in
 
    ````Agda
    module Test where
@@ -80,29 +73,10 @@
    {-# ATP prove ∨-comm #-}
    ````
 
-   Observe that in order to avoid conflicts with other installed
-   versions of Agda, we have added extra information to the version
-   number of Agda, i.e. if the development version number is A.B.C,
-   our modified version number is A.B.C.1.
-
-2. The Apia program
-
-   You can download the Apia program using
-   [Git](http://git-scm.com/). The program can be downloaded and
-   installed with the following commands:
+   by running the following commands:
 
    ````bash
-   $ git clone git://github.com/asr/apia.git
-   $ cd apia
-   $ cabal install
-   ````
-
-   In order to test the installation of the program, once (some of)
-   the ATPs have been installed, we can try to automatically prove
-   all the conjectures in the file above by running the following
-   command:
-
-   ````bash
+   $ agda Test.agda
    $ apia Test.agda
    Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
    E 1.8-001 Gopaldhara proved the conjecture

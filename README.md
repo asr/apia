@@ -42,7 +42,7 @@
 # Installation
 
 1. Modified version of Agda (see
-   [README.md](https://github.com/asr/magda/blob/master/README.md)
+   [README.md](https://github.com/asr/magda/blob/master/README.md))
 
 2. The Apia program
 

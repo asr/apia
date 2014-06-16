@@ -6,6 +6,12 @@
   calling the ATPs, the Agda formulae are translated into
   [TPTP](http://www.cs.miami.edu/~tptp/) language.
 
+# Use of Apia
+
+  * Reasoning about Functional Programs by Combining Interactive and
+    Automatic Proofs
+    ([README.md](https://github.com/asr/fotc/blob/master/README.md)).
+
 # Prerequisites
 
 * Modified version of Agda

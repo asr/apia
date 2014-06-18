@@ -60,18 +60,18 @@
    version of Agda and (some of) the ATPs have been installed, we can
    try to automatically prove the conjecture in
 
-   ````Agda
-   module Test where
+    ````agda
+    module Test where
 
-   data _∨_ (A B : Set) : Set where
-     inj₁ : A → A ∨ B
-     inj₂ : B → A ∨ B
+    data _∨_ (A B : Set) : Set where
+      inj₁ : A → A ∨ B
+      inj₂ : B → A ∨ B
 
-   postulate
-     A B    : Set
-     ∨-comm : A ∨ B → B ∨ A
-   {-# ATP prove ∨-comm #-}
-   ````
+    postulate
+      A B    : Set
+      ∨-comm : A ∨ B → B ∨ A
+    {-# ATP prove ∨-comm #-}
+    ````
 
    by running the following commands:
 

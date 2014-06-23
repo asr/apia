@@ -10,10 +10,10 @@
 -- Functions on de Bruijn indexes.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE CPP                  #-}
+{-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE TypeSynonymInstances #-}
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE UnicodeSyntax        #-}
 
 -- There are various cases (e.g. eta-expansion, translation of
 -- symbols' definitions, elimination of quantification on variables

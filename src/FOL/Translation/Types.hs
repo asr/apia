@@ -10,7 +10,7 @@
 -- Translation of Agda internal types to first-order logic formulae.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module FOL.Translation.Types

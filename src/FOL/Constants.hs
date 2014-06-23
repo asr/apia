@@ -10,7 +10,7 @@
 -- The first-order logic constants.
 -----------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 -- Adapted from AgdaLight (Plugins.FOL.Constants).

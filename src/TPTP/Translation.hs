@@ -10,9 +10,9 @@
 -- Translation of ATP pragmas to TPTP formulae.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP                 #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE UnicodeSyntax       #-}
 
 module TPTP.Translation
   ( conjecturesToAFs

@@ -10,7 +10,7 @@
 -- Utilities related to 'Show'.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Utils.Show

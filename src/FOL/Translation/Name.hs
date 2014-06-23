@@ -10,7 +10,7 @@
 -- Translation of things about Agda concrete names.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module FOL.Translation.Name ( concatName ) where

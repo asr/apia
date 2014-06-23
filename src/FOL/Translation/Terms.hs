@@ -10,7 +10,7 @@
 -- Translation from Agda internal terms to first-order logic formulae.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module FOL.Translation.Terms

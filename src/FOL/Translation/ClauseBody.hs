@@ -11,7 +11,7 @@
 -- formulae and terms.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module FOL.Translation.ClauseBody

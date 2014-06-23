@@ -10,7 +10,7 @@
 -- Functions for initializing the translation monad environment.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Monad.Environment ( env ) where

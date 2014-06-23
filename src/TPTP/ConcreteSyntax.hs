@@ -10,10 +10,10 @@
 -- TPTP concrete syntax.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
-{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE CPP                  #-}
+{-# LANGUAGE FlexibleInstances    #-}
 {-# LANGUAGE TypeSynonymInstances #-}
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE UnicodeSyntax        #-}
 
 module TPTP.ConcreteSyntax
   ( ToTPTP(toTPTP)

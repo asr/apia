@@ -10,9 +10,9 @@
 -- Call the automatic theorem provers for first-order logic (ATPs).
 -----------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP                 #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE UnicodeSyntax       #-}
 
 module ATPs
   ( ATP  -- Required by Haddock.

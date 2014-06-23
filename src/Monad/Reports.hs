@@ -10,7 +10,7 @@
 -- Reports via the @--verbose@ option.
 -----------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Monad.Reports

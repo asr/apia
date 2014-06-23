@@ -13,7 +13,7 @@
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE UnicodeSyntax       #-}
 
 module Main
   ( main  -- Required by Haddock.

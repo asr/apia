@@ -10,7 +10,7 @@
 -- Snapshot test.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP #-}
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Snapshot ( snapshotTest ) where

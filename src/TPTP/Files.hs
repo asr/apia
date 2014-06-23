@@ -10,10 +10,9 @@
 -- Creation of the TPTP files.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP                  #-}
-{-# LANGUAGE FlexibleInstances    #-}
-{-# LANGUAGE TypeSynonymInstances #-}
-{-# LANGUAGE UnicodeSyntax        #-}
+{-# LANGUAGE CPP               #-}
+{-# LANGUAGE FlexibleInstances #-}  -- Implies TypeSynonymInstances.
+{-# LANGUAGE UnicodeSyntax     #-}
 
 module TPTP.Files ( createConjectureFile ) where
 

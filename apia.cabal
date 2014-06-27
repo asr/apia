@@ -42,6 +42,8 @@ executable apia
     , transformers         >= 0.3 && < 0.4 || >= 0.4.1.0 && < 0.5
     , unordered-containers >= 0.2.0.0 && < 0.3
 
+  build-tools: cpphs >= 1.18.4 && < 1.19
+
   other-modules:
     AgdaInternal.DeBruijn
     AgdaInternal.EtaExpansion
@@ -81,7 +83,10 @@ executable apia
   -- https://github.com/haskell/cabal/issues/223.
   other-extensions: CPP
 
-  ghc-options: -w -Werror
+  ghc-options:
+    -w -Werror
+    -- Using cpphs as the C preprocessor.
+    -pgmPcpphs -optP--cpp
 
   if impl(ghc >= 7.6)
      ghc-options:

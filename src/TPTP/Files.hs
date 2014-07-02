@@ -25,6 +25,8 @@ import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 import Data.Char ( chr, isAsciiUpper, isAsciiLower, isDigit, ord )
 import Data.List ( sort )
 
+import qualified Data.Text as T
+
 import System.Directory   ( createDirectoryIfMissing )
 import System.Environment ( getProgName )
 import System.FilePath    ( (</>), addExtension )
@@ -131,7 +133,7 @@ agdaOriginalTerm qName role =
 addRole ∷ AF → FilePath → IO ()
 addRole af@(AF qName afRole _) file = do
   appendFile file $ agdaOriginalTerm qName afRole
-  appendFile file $ toTPTP af
+  appendFile file $ T.unpack (toTPTP af)
 
 addRoles ∷ [AF] → FilePath → String → IO ()
 addRoles []  _    _   = return ()

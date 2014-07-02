@@ -12,6 +12,7 @@
 
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE FlexibleInstances #-}  -- Implies TypeSynonymInstances.
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE UnicodeSyntax     #-}
 
 module TPTP.ConcreteSyntax
@@ -30,6 +31,9 @@ import Data.Char
   , isUpper
   , ord
   )
+
+import Data.Text ( Text )
+import qualified Data.Text as T
 
 ------------------------------------------------------------------------------
 -- Agda library imports
@@ -63,14 +67,13 @@ import FOL.Types
 
 import TPTP.Types ( AF(AF) )
 
-import Utils.String ( toUpperFirst )
+import Utils.Text ( (+++), toUpperFirst )
 
 #include "../undefined.h"
 
 ------------------------------------------------------------------------------
-
 -- | TPTP type synonymous.
-type TPTP = String
+type TPTP = Text
 
 -- | Translation to TPTP concrete syntax.
 class ToTPTP a where
@@ -85,10 +88,12 @@ data CFP = C | F | P
 -- We prefixed the names with @n@ because TPTP does not accept names
 -- starting with digits or @_@.
 prefixLetter ∷ TPTP → TPTP
-prefixLetter [] = __IMPOSSIBLE__
-prefixLetter name@(x : _)
-  | isDigit x || x == '_' = 'n' : name
-  | otherwise             = name
+prefixLetter name =
+  case T.uncons name of
+    Just (x, _)
+      | isDigit x || x == '_' → T.cons 'n' name
+      | otherwise             → name
+    Nothing → __IMPOSSIBLE__
 
 -- From the technical manual of TPTP
 -- (http://www.cs.miami.edu/~tptp/TPTP/TR/TPTPTR.shtml)
@@ -100,7 +105,7 @@ prefixLetter name@(x : _)
 -- Constants, functions and predicates names to TPTP
 cfpNameToTPTP ∷ CFP → String → TPTP
 cfpNameToTPTP cfp name =
-  if isUpper (head nameTPTP) then symbol cfp : nameTPTP else nameTPTP
+  if isUpper (T.head nameTPTP) then T.cons (symbol cfp) nameTPTP else nameTPTP
   where
   symbol ∷ CFP → Char
   -- If a function is applied to zero arguments, then if the function
@@ -112,7 +117,7 @@ cfpNameToTPTP cfp name =
   -- If a predicate name start by an uppper case letter, we add a @'p'@.
   symbol P = 'p'
 
-  nameTPTP ∷ String
+  nameTPTP ∷ Text
   nameTPTP = toTPTP name
 
 -- If a variable name start by an lower case letter, we add a @'V'@.
@@ -145,11 +150,11 @@ instance ToTPTP Char where
     | c == '@'  = __IMPOSSIBLE__
     -- We use the character @_@ to separate the Agda NameId (see
     -- below).
-    | c == '_' = [c]
+    | c == '_' = T.singleton c
     -- The character is a subscript digit (i.e. ₀, ₁, ..., ₉).
-    | ord c `elem` [8320 .. 8329]                   = [chr (ord c - 8272)]
-    | isDigit c || isAsciiUpper c || isAsciiLower c = [c]
-    | otherwise                                     = show $ ord c
+    | ord c `elem` [8320 .. 8329]  = T.singleton $ chr (ord c - 8272)
+    | isDigit c || isAsciiUpper c || isAsciiLower c = T.singleton c
+    | otherwise  = T.pack $ show $ ord c
 
 ------------------------------------------------------------------------------
 -- Translation of Agda types to TPTP concrete syntax.
@@ -158,7 +163,10 @@ instance ToTPTP NameId where
   -- The @Show@ instance @Agda.Syntax.Abstract.Name@ separates the
   -- unique identifier of the top-level module (the second argument)
   -- with '@'. We use '_' because '@' is not TPTP valid.
-  toTPTP  (NameId x i)  = prefixLetter $ show x ++ "_" ++ show i
+  --
+  -- TODO (02 July 2014). Improve the implemention.
+  toTPTP (NameId x i) =
+    prefixLetter $ T.pack (show x) +++ "_" +++ T.pack (show i)
 
 instance ToTPTP QName where
   toTPTP (QName _ name) = toTPTP $ nameId name
@@ -172,54 +180,54 @@ instance ToTPTP QName where
 
 -- Requires @TypeSynonymInstances@.
 instance ToTPTP String where
-  toTPTP = prefixLetter . concatMap toTPTP
+  toTPTP = prefixLetter . T.concat . map toTPTP
 
 instance ToTPTP FOLTerm where
-  toTPTP (FOLFun name [])    = cfpNameToTPTP C name
-  toTPTP (FOLFun name terms) = cfpNameToTPTP F name
-                               ++ "(" ++ toTPTP terms ++ ")"
-  toTPTP (FOLVar name)       = toUpperFirst name
+  toTPTP (FOLFun name []) = cfpNameToTPTP C name
+  toTPTP (FOLFun name terms) =
+    cfpNameToTPTP F name +++ "(" +++ toTPTP terms +++ ")"
+  toTPTP (FOLVar name) = toUpperFirst $ T.pack name
 
 -- Requires @FlexibleInstances@.
 instance ToTPTP [FOLTerm] where
   toTPTP []       = __IMPOSSIBLE__
   toTPTP (a : []) = toTPTP a
-  toTPTP (a : as) = toTPTP a ++ "," ++ toTPTP as
+  toTPTP (a : as) = toTPTP a +++ "," +++ toTPTP as
 
 instance ToTPTP FOLFormula where
   -- We translate the hard-coded first-order logic predicate @equal_@
   -- as the predefined equality in the ATP.
   toTPTP (Predicate "equal_" [t1, t2] ) =
-    "( " ++ toTPTP t1 ++ " = " ++ toTPTP t2 ++ " )"
+    "( " +++ toTPTP t1 +++ " = " +++ toTPTP t2 +++ " )"
 
   toTPTP (Predicate "equal_" _) = __IMPOSSIBLE__
 
   -- If the predicate represents a propositional logic variable,
   -- following the TPTP syntax, we do not print the internal
   -- parenthesis.
-  toTPTP (Predicate name []) = "( " ++ cfpNameToTPTP P name ++ " )"
+  toTPTP (Predicate name []) = "( " +++ cfpNameToTPTP P name +++ " )"
 
   toTPTP (Predicate name terms) =
-    "( " ++ cfpNameToTPTP P name ++ "(" ++ toTPTP terms ++ ")" ++ " )"
+    "( " +++ cfpNameToTPTP P name +++ "(" +++ toTPTP terms +++ ")" +++ " )"
 
-  toTPTP (And f1 f2)     = "( " ++ toTPTP f1 ++ " & " ++ toTPTP f2 ++ " )"
-  toTPTP (Or f1 f2)      = "( " ++ toTPTP f1 ++ " | " ++ toTPTP f2 ++ " )"
-  toTPTP (Not f)         = "( " ++ '~' : toTPTP f ++ " )"
-  toTPTP (Implies f1 f2) = "( " ++ toTPTP f1 ++ " => " ++ toTPTP f2 ++ " )"
-  toTPTP (Equiv f1 f2)   = "( " ++ toTPTP f1 ++ " <=> " ++ toTPTP f2 ++ " )"
+  toTPTP (And f1 f2)     = "( " +++ toTPTP f1 +++ " & " +++ toTPTP f2 +++ " )"
+  toTPTP (Or f1 f2)      = "( " +++ toTPTP f1 +++ " | " +++ toTPTP f2 +++ " )"
+  toTPTP (Not f)         = "( " +++ T.cons '~' (toTPTP f) +++ " )"
+  toTPTP (Implies f1 f2) = "( " +++ toTPTP f1 +++ " => " +++ toTPTP f2 +++ " )"
+  toTPTP (Equiv f1 f2)   = "( " +++ toTPTP f1 +++ " <=> " +++ toTPTP f2 +++ " )"
 
   toTPTP (ForAll var f) =
-    "( ! [" ++ toUpperFirst var ++ "] : "
-    ++ toTPTP (f (FOLVar var))
-    ++ " )"
+    "( ! [" +++ toUpperFirst (T.pack var) +++ "] : "
+    +++ toTPTP (f (FOLVar var))
+    +++ " )"
 
   toTPTP (Exists var f) =
-    "( ? [" ++ toUpperFirst var ++ "] : "
-    ++ toTPTP (f (FOLVar var))
-    ++ " )"
+    "( ? [" +++ toUpperFirst (T.pack var) +++ "] : "
+    +++ toTPTP (f (FOLVar var))
+    +++ " )"
 
-  toTPTP TRUE  = "( " ++ "$true" ++ " )"
-  toTPTP FALSE = "( " ++ "$false" ++ " )"
+  toTPTP TRUE  = "( " +++ "$true" +++ " )"
+  toTPTP FALSE = "( " +++ "$false" +++ " )"
 
 ------------------------------------------------------------------------------
 -- Translation of annotated formulae to TPTP concrete syntax.
@@ -233,7 +241,7 @@ instance ToTPTP ATPRole where
 instance ToTPTP AF where
   toTPTP (AF qName atpRole formula) =
     "fof("
-    ++ toTPTP qName ++ ", "
-    ++ toTPTP atpRole ++ ", "
-    ++ toTPTP formula
-    ++ ")." ++ "\n\n"
+    +++ toTPTP qName +++ ", "
+    +++ toTPTP atpRole +++ ", "
+    +++ toTPTP formula
+    +++ ")." +++ "\n\n"

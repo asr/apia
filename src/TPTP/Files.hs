@@ -82,7 +82,6 @@ import TPTP.Types
   )
 
 import Utils.List    ( duplicate )
-import Utils.Show    ( showLn )
 import Utils.String  ( removeString )
 import Utils.Text    ( (+++), toUpperFirst )
 
@@ -127,17 +126,17 @@ conjectureHeader = do
 conjectureFooter ∷ Text
 conjectureFooter = commentLine +++ "% End TPTP file.\n"
 
-agdaOriginalTerm ∷ QName → ATPRole → String
+agdaOriginalTerm ∷ QName → ATPRole → Text
 agdaOriginalTerm qName role =
   "% The original Agda term was:\n"
-  ++ "% Name: " ++ showLn qName
-  ++ "% Role: " ++ showLn role
-  ++ "% ATP pragma line: " ++ showLn (qNameLine qName)
+  +++ "% Name: " +++ T.pack (show qName) +++ "\n"
+  +++ "% Role: " +++ T.pack (show role) +++ "\n"
+  +++ "% ATP pragma line: " +++ T.pack (show (qNameLine qName)) +++ "\n"
 
 addRole ∷ AF → FilePath → IO ()
 addRole af@(AF qName afRole _) file = do
-  appendFile file $ agdaOriginalTerm qName afRole
-  appendFile file $ T.unpack (toTPTP af)
+  T.appendFile file $ agdaOriginalTerm qName afRole
+  T.appendFile file $ toTPTP af
 
 addRoles ∷ [AF] → FilePath → Text → IO ()
 addRoles []  _    _   = return ()

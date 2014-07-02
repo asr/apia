@@ -12,6 +12,7 @@
 
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE FlexibleInstances #-}  -- Implies TypeSynonymInstances.
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE UnicodeSyntax     #-}
 
 module TPTP.Files ( createConjectureFile ) where
@@ -25,7 +26,9 @@ import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 import Data.Char ( chr, isAsciiUpper, isAsciiLower, isDigit, ord )
 import Data.List ( sort )
 
+import Data.Text ( Text )
 import qualified Data.Text as T
+import qualified Data.Text.IO as T
 
 import System.Directory   ( createDirectoryIfMissing )
 import System.Environment ( getProgName )
@@ -80,7 +83,8 @@ import TPTP.Types
 
 import Utils.List    ( duplicate )
 import Utils.Show    ( showLn )
-import Utils.String  ( removeString, toUpperFirst )
+import Utils.String  ( removeString )
+import Utils.Text    ( (+++), toUpperFirst )
 
 #include "../undefined.h"
 
@@ -105,23 +109,23 @@ instance AsciiName String where
 tptpExt ∷ String
 tptpExt = ".tptp"
 
-commentLine ∷ String
+commentLine ∷ Text
 commentLine = "%-----------------------------------------------------------------------------\n"
 
-commentLineLn ∷ String
-commentLineLn = commentLine ++ "\n"
+commentLineLn ∷ Text
+commentLineLn = commentLine +++ "\n"
 
-conjectureHeader ∷ IO String
+conjectureHeader ∷ IO Text
 conjectureHeader = do
-  progName ← fmap toUpperFirst getProgName
+  progName ← fmap (toUpperFirst . T.pack) getProgName
   return $
     commentLine
-    ++ "% This file was generated automatically by "
-    ++ progName ++ ".\n"
-    ++ commentLineLn
+    +++ "% This file was generated automatically by "
+    +++ progName +++ ".\n"
+    +++ commentLineLn
 
-conjectureFooter ∷ String
-conjectureFooter = commentLine ++ "% End TPTP file.\n"
+conjectureFooter ∷ Text
+conjectureFooter = commentLine +++ "% End TPTP file.\n"
 
 agdaOriginalTerm ∷ QName → ATPRole → String
 agdaOriginalTerm qName role =
@@ -135,16 +139,16 @@ addRole af@(AF qName afRole _) file = do
   appendFile file $ agdaOriginalTerm qName afRole
   appendFile file $ T.unpack (toTPTP af)
 
-addRoles ∷ [AF] → FilePath → String → IO ()
+addRoles ∷ [AF] → FilePath → Text → IO ()
 addRoles []  _    _   = return ()
 addRoles afs file str = do
-  let header, footer ∷ String
-      header = commentLine ++ "% The " ++ str ++ ".\n\n"
-      footer = "% End " ++ str ++ ".\n\n"
+  let header, footer ∷ Text
+      header = commentLine +++ "% The " +++ str +++ ".\n\n"
+      footer = "% End " +++ str +++ ".\n\n"
 
-  appendFile file header
+  T.appendFile file header
   mapM_ (`addRole` file) $ sort afs
-  appendFile file footer
+  T.appendFile file footer
 
 -- | The function 'createConjectureFile' creates a TPTP file with a
 -- conjecture.
@@ -217,7 +221,7 @@ createConjectureFile generalRoles conjectureSet = do
 
   liftIO $ do
     conjectureH ← conjectureHeader
-    writeFile file conjectureH
+    T.writeFile file conjectureH
     addRoles commonDefs file "common required definition(s)"
     addRoles (axioms newGeneralRoles) file "general axiom(s)"
     addRoles (defsAxioms newGeneralRoles) file
@@ -231,7 +235,7 @@ createConjectureFile generalRoles conjectureSet = do
     addRoles (defsConjecture newConjectureSet) file
              "required ATP definition(s) by the conjecture"
     addRoles [theConjecture newConjectureSet] file "conjecture"
-    appendFile file conjectureFooter
+    T.appendFile file conjectureFooter
 
   whenM (askTOpt optOnlyFiles) $ reportS "" 1 $ "Created " ++ file
 

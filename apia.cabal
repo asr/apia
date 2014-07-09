@@ -90,9 +90,10 @@ executable apia
     -- Using cpphs as the C preprocessor.
     -pgmPcpphs -optP--cpp
 
-  if impl(ghc >= 7.6)
+  if impl(ghc >= 7.2)
      ghc-options:
-       -- The following warning isn't documented in GHC 7.6.3.
+       -- The following warning isn't documented in GHC 7.2.2, 7.4.2,
+       -- 7.6.3 and 7.8.2.
        -fwarn-alternative-layout-rule-transitional
        -fwarn-auto-orphans
        -fwarn-deprecated-flags
@@ -116,17 +117,20 @@ executable apia
        -fwarn-name-shadowing
        -fwarn-orphans
        -fwarn-overlapping-patterns
-       -fwarn-pointless-pragmas
        -fwarn-tabs
        -fwarn-type-defaults
        -fwarn-unrecognised-pragmas
-       -fwarn-unused-do-bind
        -fwarn-unused-binds
+       -fwarn-unused-do-bind
        -fwarn-unused-imports
        -fwarn-unused-matches
-       -fwarn-unsupported-calling-conventions
        -fwarn-warnings-deprecations
        -fwarn-wrong-do-bind
+
+  if impl(ghc >= 7.6)
+     ghc-options:
+       -fwarn-pointless-pragmas
+       -fwarn-unsupported-calling-conventions
 
   if impl(ghc >= 7.8)
      ghc-options:

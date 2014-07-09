@@ -38,6 +38,7 @@ executable apia
     , filepath             >= 1.1 && < 1.4
     , process              >= 1.0 && < 1.3
     , regex-compat         >= 0.95.1 && < 0.96
+    , safe                 >= 0.3.5 && < 0.4
     , text                 >= 1.1.1.0 && < 1.2
     -- tranformers 0.4.0.0 was deprecated.
     , transformers         >= 0.3 && < 0.4 || >= 0.4.1.0 && < 0.5

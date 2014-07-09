@@ -19,7 +19,10 @@ module Snapshot ( snapshotTest ) where
 -- Haskell imports
 
 import Control.Monad.IO.Class ( MonadIO(liftIO) )
-import System.FilePath        ( combine, joinPath, splitPath )
+
+import Safe.Exact ( dropExact )
+
+import System.FilePath ( combine, joinPath, splitPath )
 
 ------------------------------------------------------------------------------
 -- Agda library imports
@@ -52,7 +55,7 @@ snapshotTest file = do
     else do
       -- The original file without the output directory.
       let auxFile ∷ FilePath
-          auxFile = joinPath $ drop (length $ splitPath outputDir) $ splitPath file
+          auxFile = joinPath $ dropExact (length $ splitPath outputDir) $ splitPath file
 
           snapshotFile ∷ FilePath
           snapshotFile = combine snapshotDir auxFile

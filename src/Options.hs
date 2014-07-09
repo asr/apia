@@ -48,6 +48,8 @@ module Options
 import Data.Char ( isDigit )
 import Data.List ( foldl' )
 
+import Safe ( initDef )
+
 import System.Console.GetOpt
   ( ArgDescr(NoArg, ReqArg)
   , ArgOrder(ReturnInOrder)
@@ -199,10 +201,10 @@ verboseOpt str opts =
   parseVerbose ∷ String → ([String], Int)
   parseVerbose s =
     case wordsBy (`elem` ":.") s of
-      []  → __IMPOSSIBLE__
-      ss  → let m ∷ Int
-                m = read $ last ss
-            in  (init ss, m)
+      [] → __IMPOSSIBLE__
+      ss → let m ∷ Int
+               m = read $ last ss
+           in  (init ss, m)
 
 versionOpt ∷ MOptions
 versionOpt opts = Right opts { optVersion = True }
@@ -273,7 +275,7 @@ processOptionsHelper ∷ [String] → (FilePath → MOptions) → MOptions
 processOptionsHelper argv f defaults =
   case getOpt (ReturnInOrder f) options argv of
     (o, _, [])   → foldl' (>>=) (return defaults) o
-    (_, _, errs) → Left $ init $ init $ unlines errs
+    (_, _, errs) → Left $ initDef (__IMPOSSIBLE__) $ init $ unlines errs
 
 -- | Processing the command-line 'Options'.
 processOptions ∷ [String] → Either String Options

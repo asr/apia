@@ -22,6 +22,7 @@ module ATPs
 ------------------------------------------------------------------------------
 -- Haskell imports
 
+import Control.Applicative     ( (<$>) )
 import Control.Exception       ( evaluate )
 import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
@@ -30,6 +31,8 @@ import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
 import Data.List  ( isInfixOf )
 import Data.Maybe ( fromMaybe, isNothing )
+
+import Safe ( initDef )
 
 import System.Directory ( findExecutable )
 import System.IO        ( hGetContents )
@@ -122,14 +125,15 @@ atpVersion ∷ ATP → T String
  -- No version option in Equinox.
 atpVersion Equinox = do
   exec ← atpExec Equinox
-  liftIO $ fmap (init . takeWhile (/= '\n')) (readProcess exec ["--help"] "")
+  liftIO $ fmap (initDef (__IMPOSSIBLE__) . takeWhile (/= '\n'))
+                (readProcess exec ["--help"] "")
 -- No version option in ileanCoP.
 atpVersion IleanCoP = return $ show IleanCoP
 -- No version option in SPASS.
 atpVersion SPASS = return $ show SPASS
 atpVersion atp = do
   exec ← atpExec atp
-  liftIO $ fmap init (readProcess exec ["--version"] "")
+  liftIO $ initDef (__IMPOSSIBLE__) <$> readProcess exec ["--version"] ""
 
 checkOutput ∷ ATP → String → Bool
 checkOutput atp output = atpOk atp `isInfixOf` output

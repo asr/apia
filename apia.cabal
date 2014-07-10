@@ -19,14 +19,14 @@ description:
   formulae to the TPTP format which is a standard for input and output
   for the ATPs <http://www.cs.miami.edu/~tptp/>.
 extra-source-files:
-        src/undefined.h
+        src/Apia/undefined.h
 
 source-repository head
   type:     git
   location: git://github.com/asr/apia.git
 
 executable apia
-  main-is:        Main.hs
+  main-is:        Apia/Main.hs
   hs-source-dirs: src
 
   build-depends:
@@ -47,39 +47,39 @@ executable apia
   build-tools: cpphs >= 1.18.4 && < 1.19
 
   other-modules:
-    AgdaInternal.DeBruijn
-    AgdaInternal.EtaExpansion
-    AgdaInternal.Interface
-    AgdaInternal.RemoveProofTerms
-    AgdaInternal.Vars
-    ATPs
-    CheckTPTP
-    Dump
-    FOL.Constants
-    FOL.Primitives
-    FOL.Translation.ClauseBody
-    FOL.Translation.Functions
-    FOL.Translation.Name
-    FOL.Translation.Terms
-    FOL.Translation.Types
-    FOL.Types
-    Monad.Base
-    Monad.Environment
-    Monad.Reports
-    Options
-    Snapshot
-    TPTP.ConcreteSyntax
-    TPTP.Files
-    TPTP.Translation
-    TPTP.Types
-    Utils.File
-    Utils.List
-    Utils.Monad
-    Utils.Names
-    Utils.Show
-    Utils.String
-    Utils.Text
-    Utils.Version
+    Apia.AgdaInternal.DeBruijn
+    Apia.AgdaInternal.EtaExpansion
+    Apia.AgdaInternal.Interface
+    Apia.AgdaInternal.RemoveProofTerms
+    Apia.AgdaInternal.Vars
+    Apia.ATPs
+    Apia.CheckTPTP
+    Apia.Dump
+    Apia.FOL.Constants
+    Apia.FOL.Primitives
+    Apia.FOL.Translation.ClauseBody
+    Apia.FOL.Translation.Functions
+    Apia.FOL.Translation.Name
+    Apia.FOL.Translation.Terms
+    Apia.FOL.Translation.Types
+    Apia.FOL.Types
+    Apia.Monad.Base
+    Apia.Monad.Environment
+    Apia.Monad.Reports
+    Apia.Options
+    Apia.Snapshot
+    Apia.TPTP.ConcreteSyntax
+    Apia.TPTP.Files
+    Apia.TPTP.Translation
+    Apia.TPTP.Types
+    Apia.Utils.File
+    Apia.Utils.List
+    Apia.Utils.Monad
+    Apia.Utils.Names
+    Apia.Utils.Show
+    Apia.Utils.String
+    Apia.Utils.Text
+    Apia.Utils.Version
 
   -- Required by cabal haddock (cabal-install version 1.20.0.3 using
   -- version 1.20.0.1 of the Cabal library). See

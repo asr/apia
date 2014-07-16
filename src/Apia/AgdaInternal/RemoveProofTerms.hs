@@ -94,8 +94,10 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.Monad.Base    ( getTVars, popTVar, pushTVar, T, throwE )
+import Apia.Monad.Base    ( getTVars, popTVar, pushTVar, T )
 import Apia.Monad.Reports ( reportSLn )
+
+import qualified Apia.Utils.Except as E
 
 #include "../undefined.h"
 
@@ -169,7 +171,7 @@ instance RemoveVar Elims where
     vars ← getTVars
 
     when (x == "_") $
-      throwE "the translation of underscore variables is not implemented"
+      E.throwE "the translation of underscore variables is not implemented"
 
     let index ∷ Nat
         index = fromMaybe (__IMPOSSIBLE__) $ elemIndex x vars
@@ -237,8 +239,8 @@ removeProofTerm ty (x, typeVar) = do
     El (Type (Max [])) someTerm → do
       reportSLn "removePT" 20 $
                 "The term someTerm is: " ++ show someTerm
-      throwE $ "the translation failed because we do not know how erase "
-               ++ "the term\n" ++ show someTerm
+      E.throwE $ "the translation failed because we do not know how erase "
+                 ++ "the term\n" ++ show someTerm
 
     -- The variable's type is @Set₁@,
     --

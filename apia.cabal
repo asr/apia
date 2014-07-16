@@ -72,6 +72,7 @@ executable apia
     Apia.TPTP.Files
     Apia.TPTP.Translation
     Apia.TPTP.Types
+    Apia.Utils.Except
     Apia.Utils.File
     Apia.Utils.List
     Apia.Utils.Monad

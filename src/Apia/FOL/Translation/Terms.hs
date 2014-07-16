@@ -103,12 +103,12 @@ import Apia.Monad.Base
   , popTVar
   , pushTNewVar
   , T
-  , throwE
   )
 
 import Apia.Monad.Reports ( reportSLn )
+import Apia.Options       ( Options(optWithFnConsts, optWithoutPConsts) )
 
-import Apia.Options ( Options(optWithFnConsts, optWithoutPConsts) )
+import qualified Apia.Utils.Except as E
 
 #include "../../undefined.h"
 
@@ -392,7 +392,7 @@ termToFormula (Pi domTy (Abs x absTy)) = do
 
       ifM (isTPragmaOption p)
           (return f)
-          (throwE $ universalQuantificationErrorMsg p)
+          (E.throwE $ universalQuantificationErrorMsg p)
 
     -- Non-FOL translation: First-order logic universal quantified
     -- propositional functions.
@@ -481,12 +481,12 @@ termToFormula term@(Var n elims) = do
 
       ifM (isTPragmaOption p)
           (ifM (askTOpt optWithoutPConsts)
-               (throwE $
+               (E.throwE $
                  "The options '--schematic-propositional-functions'"
                  ++ " and '--without-predicate-constants' are incompatible")
                (propositionalFunctionScheme vars n elims)
           )
-          (throwE $ universalQuantificationErrorMsg p)
+          (E.throwE $ universalQuantificationErrorMsg p)
 
 termToFormula term = do
   reportSLn "t2f" 20 $ "term: " ++ show term
@@ -600,12 +600,12 @@ termToFOLTerm term@(Var n args) = do
 
       ifM (isTPragmaOption p)
           -- TODO (24 March 2013). Implementation.
-          (throwE "the option '--schematic-functions' is not implemented")
+          (E.throwE "the option '--schematic-functions' is not implemented")
           -- (do termsFOL ← mapM argTermToFOLTerm varArgs
           --     ifM (askTOpt optAppF)
           --         (return $ foldl' app (FOLVar (vars !! n)) termsFOL)
           --         (return $ FOLFun (vars !! n) termsFOL))
-          (throwE $ universalQuantificationErrorMsg p)
+          (E.throwE $ universalQuantificationErrorMsg p)
 
 termToFOLTerm _ = __IMPOSSIBLE__
 

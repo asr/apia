@@ -29,7 +29,9 @@ import System.Process   ( readProcessWithExitCode )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.Monad.Base ( T, throwE )
+import Apia.Monad.Base ( T )
+
+import qualified Apia.Utils.Except as E
 
 -----------------------------------------------------------------------------
 
@@ -40,7 +42,7 @@ tptp4Xexec = "tptp4X"
 checkTPTP ∷ FilePath → T ()
 checkTPTP file = do
   e ← liftIO $ findExecutable tptp4Xexec
-  when (isNothing e) $ throwE $
+  when (isNothing e) $ E.throwE $
     "the " ++ tptp4Xexec ++ " command from the TPTP library does not exist"
 
   (exitCode, out, _) ←
@@ -49,11 +51,11 @@ checkTPTP file = do
                                      []
   case exitCode of
     ExitFailure _ →
-      throwE $ tptp4Xexec ++ " found an error in the file " ++ file
-               ++ "\nPlease report this as a bug"
+      E.throwE $ tptp4Xexec ++ " found an error in the file " ++ file
+                 ++ "\nPlease report this as a bug"
 
     -- TODO (11 December 2012). How add a test case for this case?
     ExitSuccess →
       when ("WARNING" `isInfixOf` out) $
-        throwE $ tptp4Xexec ++ " found a warning in the file " ++ file
-                 ++ "\nPlease report this as a bug"
+        E.throwE $ tptp4Xexec ++ " found a warning in the file " ++ file
+                   ++ "\nPlease report this as a bug"

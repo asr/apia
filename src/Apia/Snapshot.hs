@@ -33,11 +33,13 @@ import Agda.Utils.Monad    ( ifM, unlessM, whenM )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.Monad.Base ( askTOpt, T, throwE )
+import Apia.Monad.Base ( askTOpt, T )
 
 import Apia.Options
   ( Options(optOutputDir, optSnapshotDir, optSnapshotNoError)
   )
+
+import qualified Apia.Utils.Except as E
 
 import Apia.Utils.File ( notEqualFiles )
 
@@ -51,7 +53,7 @@ snapshotTest file = do
   snapshotDir ← askTOpt optSnapshotDir
 
   if outputDir == snapshotDir
-    then throwE "the options `--output-dir' and `--snapshot-dir' cannot be the same"
+    then E.throwE "the options `--output-dir' and `--snapshot-dir' cannot be the same"
     else do
       -- The original file without the output directory.
       let auxFile ∷ FilePath
@@ -60,7 +62,7 @@ snapshotTest file = do
           snapshotFile ∷ FilePath
           snapshotFile = combine snapshotDir auxFile
 
-      unlessM (liftIO $ doesFileExistCaseSensitive snapshotFile) $ throwE $
+      unlessM (liftIO $ doesFileExistCaseSensitive snapshotFile) $ E.throwE $
         "the file " ++ snapshotFile ++ " does not exist"
 
       whenM (liftIO $ notEqualFiles file snapshotFile) $ do
@@ -69,4 +71,4 @@ snapshotTest file = do
 
         ifM (askTOpt optSnapshotNoError)
             (liftIO $ putStrLn msg)
-            (throwE msg)
+            (E.throwE msg)

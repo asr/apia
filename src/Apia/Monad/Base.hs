@@ -15,7 +15,6 @@
 
 module Apia.Monad.Base
   ( askTOpt
-  , catchE
   , getTDefs
   , getTVars
   , isTPragmaOption
@@ -28,7 +27,6 @@ module Apia.Monad.Base
   , pushTVar
   , runT
   , T
-  , throwE
   , TState  -- Required by Haddock.
   ) where
 
@@ -36,17 +34,6 @@ module Apia.Monad.Base
 -- Haskell imports
 
 import Control.Monad.Trans.Class ( MonadTrans(lift) )
-
-#if MIN_VERSION_transformers(0,4,1)
-import Control.Monad.Trans.Except ( catchE, ExceptT, throwE, runExceptT )
-#else
-import Control.Monad.Trans.Error
-  ( catchError
-  , Error
-  , ErrorT(runErrorT)
-  , throwError
-  )
-#endif
 
 import Control.Monad.Trans.Reader ( ask, ReaderT(runReaderT) )
 
@@ -73,7 +60,10 @@ import Agda.Utils.Impossible        ( Impossible(Impossible), throwImpossible )
 
 import Apia.Monad.Environment ( env )
 import Apia.Options           ( Options )
-import Apia.Utils.Names       ( freshName )
+
+import qualified Apia.Utils.Except as E
+
+import Apia.Utils.Names ( freshName )
 
 #include "../undefined.h"
 
@@ -95,19 +85,11 @@ initTState = TState { tDefs          = HashMap.empty
                     }
 
 -- | The translation monad.
-#if MIN_VERSION_transformers(0,4,1)
-type T = ExceptT String (StateT TState (ReaderT Options IO))
-#else
-type T = ErrorT String (StateT TState (ReaderT Options IO))
-#endif
+type T = E.ExceptT String (StateT TState (ReaderT Options IO))
 
 -- | Running the translation monad.
 runT ∷ T a → IO (Either String a)
-#if MIN_VERSION_transformers(0,4,1)
-runT ta = env >>= runReaderT (evalStateT (runExceptT ta) initTState)
-#else
-runT ta = env >>= runReaderT (evalStateT (runErrorT ta) initTState)
-#endif
+runT ta = env >>= runReaderT (evalStateT (E.runExceptT ta) initTState)
 
 -- | Return 'True' if the list of variables in the translation monad
 -- state is empty.
@@ -163,16 +145,6 @@ modifyDefs defs = lift $ modify $ \s → s { tDefs = defs }
 -- | Modify the 'OptionsPragma' in the translation monad state.
 modifyPragmaOptions ∷ OptionsPragma → T ()
 modifyPragmaOptions ps = lift $ modify $ \s → s { tPragmaOptions = ps }
-
-#if !(MIN_VERSION_transformers(0,4,1))
--- | 'catchE' function using transformers 0.3.*.
-catchE ∷ (Monad m, Error e) ⇒ ErrorT e m a → (e → ErrorT e m a) → ErrorT e m a
-catchE = catchError
-
--- | 'throwE' function using transformers 0.3.*.
-throwE ∷ (Monad m, Error e) ⇒ e → ErrorT e m a
-throwE = throwError
-#endif
 
 ------------------------------------------------------------------------------
 -- Note [@OptionsPragma@].

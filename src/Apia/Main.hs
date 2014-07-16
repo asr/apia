@@ -54,12 +54,10 @@ import Apia.CheckTPTP ( checkTPTP )
 import Apia.Dump ( dumpAgdai, dumpQNames )
 
 import Apia.Monad.Base
-  ( catchE
-  , modifyDefs
+  ( modifyDefs
   , modifyPragmaOptions
   , runT
   , T
-  , throwE
   )
 
 import Apia.Monad.Reports ( reportSLn )
@@ -81,8 +79,11 @@ import Apia.Snapshot         ( snapshotTest )
 import Apia.TPTP.Files       ( createConjectureFile )
 import Apia.TPTP.Translation ( conjecturesToAFs, generalRolesToAFs )
 import Apia.TPTP.Types       ( ConjectureSet, GeneralRoles )
-import Apia.Utils.Monad      ( failureMsg, pair )
-import Apia.Utils.Version    ( progNameVersion )
+
+import qualified Apia.Utils.Except as E
+
+import Apia.Utils.Monad   ( failureMsg, pair )
+import Apia.Utils.Version ( progNameVersion )
 
 ------------------------------------------------------------------------------
 
@@ -121,7 +122,7 @@ runApia = do
       | otherwise       → do
 
         file ← case optInputFile opts of
-                 Nothing → throwE "missing input file (try --help)"
+                 Nothing → E.throwE "missing input file (try --help)"
                  Just f  → return f
 
         case () of
@@ -154,9 +155,9 @@ runApia = do
 main ∷ IO ()
 main = do
   -- Adapted from @Agda.Main.main@. Requires -XScopedTypeVariables.
-  r ∷ Either String () ← runT $ runApia `catchE` \err →
+  r ∷ Either String () ← runT $ runApia `E.catchE` \err →
     do liftIO $ failureMsg err
-       throwE err
+       E.throwE err
 
   case r of
     Right _ → exitSuccess

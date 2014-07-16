@@ -69,10 +69,12 @@ import Agda.Utils.Monad      ( ifM )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.Monad.Base    ( askTOpt, T, throwE )
+import Apia.Monad.Base    ( askTOpt, T )
 import Apia.Monad.Reports ( reportS )
 
 import Apia.Options ( Options(optATP, optTime, optUnprovenNoError, optVampireExec) )
+
+import qualified Apia.Utils.Except as E
 
 #include "undefined.h"
 
@@ -101,7 +103,7 @@ optATP2ATP "ileancop" = return IleanCoP
 optATP2ATP "metis"    = return Metis
 optATP2ATP "spass"    = return SPASS
 optATP2ATP "vampire"  = return Vampire
-optATP2ATP other      = throwE $ "ATP " ++ other ++ " unknown"
+optATP2ATP other      = E.throwE $ "ATP " ++ other ++ " unknown"
 
 -- | Default ATPs.
 defaultATPs ∷ [String]
@@ -167,7 +169,7 @@ atpArgs E timeLimit file = do
                     , file
                     ]
         -- This message is not included in the error test.
-        else throwE $ "the ATP " ++ eVersion ++ " is not supported"
+        else E.throwE $ "the ATP " ++ eVersion ++ " is not supported"
 
 -- Equinox bug. Neither the option @--no-progress@ nor the option
 -- @--verbose 0@ reduce the output.
@@ -204,7 +206,7 @@ runATP atp outputMVar timeLimit file = do
   cmd ∷ String    ← atpExec atp
 
   e ← liftIO $ findExecutable cmd
-  when (isNothing e) $ throwE $
+  when (isNothing e) $ E.throwE $
     "the command " ++ cmd ++ " associated with " ++ show atp
     ++ " does not exist.\nYou can use the command-line option --atp=NAME "
     ++ "to avoid call some ATP"
@@ -241,7 +243,7 @@ atpsAnswer atps outputMVar atpsPH file n =
           msg = "the ATP(s) did not prove the conjecture in " ++ file
       ifM (askTOpt optUnprovenNoError)
           (liftIO $ putStrLn msg)
-          (throwE msg)
+          (E.throwE msg)
     else do
       output ← liftIO $ takeMVar outputMVar
       atpWithVersion ← atpVersion (snd output)

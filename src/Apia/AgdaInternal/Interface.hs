@@ -130,9 +130,11 @@ import qualified Agda.Utils.Trie as Trie ( singleton )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.Monad.Base    ( askTOpt, getTDefs, T, throwE )
+import Apia.Monad.Base    ( askTOpt, getTDefs, T )
 import Apia.Monad.Reports ( reportSLn )
 import Apia.Options       ( Options(optIncludePath) )
+
+import qualified Apia.Utils.Except as E
 
 #include "../undefined.h"
 
@@ -197,14 +199,14 @@ readInterface file = do
   pFile ∷ FilePath ← liftIO $ fmap filePath (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive pFile)
-          (throwE $ "the file " ++ pFile ++ " does not exist")
+          (E.throwE $ "the file " ++ pFile ++ " does not exist")
 
   -- The physical Agda interface file.
   iFile ∷ FilePath ← liftIO $ fmap (filePath . toIFile) (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive iFile)
-          (throwE $ "the interface file " ++ iFile
-                    ++ " does not exist (use Agda to generate it)")
+          (E.throwE $ "the interface file " ++ iFile
+                      ++ " does not exist (use Agda to generate it)")
 
   r ∷ Either TCErr (Maybe Interface) ← liftIO $ runTCMTop $
     do setCommandLineOptions optsCommandLine
@@ -213,7 +215,7 @@ readInterface file = do
   case r of
     Right (Just i) → return i
     -- This message is not included in the errors test.
-    Right Nothing  → throwE $
+    Right Nothing  → E.throwE $
                        "The reading of the interface file "
                        ++ iFile ++ " failed. "
                        ++ "It is possible that you used a different version "

@@ -37,7 +37,7 @@
 
   The `--check` command-line option requires the tptp4X program from
   the [TPTP library](http://www.cs.miami.edu/~tptp/). The tested
-  version of tptp4X is from TPTP 6.0.0.
+  version of tptp4X is from TPTP 6.1.0.
 
 # Installation
 

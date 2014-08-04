@@ -161,6 +161,9 @@ errors : $(errors_files)
 
 ##############################################################################
 # Test suite: Haddock test
+#
+# Tested with cabal-install version 1.20.0.3 using version 1.20.0.2 of
+# the Cabal library.
 
 haddock_file = /tmp/haddock.tmp
 

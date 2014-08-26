@@ -22,7 +22,7 @@ haskell_files = $(shell find src/ -name '*.hs')
 
 AGDA = agda -v 0
 
-# The defaults ATPs are e, equinox, and vampire.
+# The defaults ATPs are E, Equinox and Vampire.
 APIA = dist/build/apia/apia --check
 # APIA = dist/build/apia/apia --check --atp=e
 # APIA = dist/build/apia/apia --check --atp=equinox

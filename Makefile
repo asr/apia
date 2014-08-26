@@ -20,7 +20,7 @@ notes_path = notes
 
 haskell_files = $(shell find src/ -name '*.hs')
 
-AGDA = agda -v 0 --universe-polymorphism --without-K
+AGDA = agda -v 0 --no-sized-types --universe-polymorphism --without-K
 
 # The defaults ATPs are E, Equinox and Vampire.
 APIA = dist/build/apia/apia --check

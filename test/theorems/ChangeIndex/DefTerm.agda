@@ -2,9 +2,6 @@
 -- Testing the class AgdaInternal.DeBruijn.ChangeIndex: (Def _ []) term
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module ChangeIndex.DefTerm where
 
 infixl 6 _+_

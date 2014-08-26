@@ -2,9 +2,6 @@
 -- Testing the translation of the propositional functions
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module PropositionalFunction1 where
 
 ------------------------------------------------------------------------------

@@ -2,9 +2,6 @@
 -- Testing the translation of definitions
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module Definition6 where
 
 postulate

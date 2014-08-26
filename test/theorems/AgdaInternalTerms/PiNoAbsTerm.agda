@@ -2,9 +2,6 @@
 -- Testing Agda internal term: @Pi _ (NoAbs _ _)@
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 -- After the patch
 --
 -- Wed Sep 21 04:50:43 COT 2011  ulfn@chalmers.se

@@ -2,9 +2,6 @@
 -- Testing the conjectures inside a @where@ clause
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module Where3 where
 
 infixl 6 _+_

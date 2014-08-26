@@ -1,0 +1,40 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The general axiom(s).
+
+% The original Agda term was:
+% Name: NestedAxioms.B.b≡c
+% Role: axiom
+% ATP pragma line: 14
+fof(n3_54399210, axiom, ( b = c )).
+
+% The original Agda term was:
+% Name: NestedAxioms.C.c≡d
+% Role: axiom
+% ATP pragma line: 25
+fof(n3_245270019, axiom, ( c = d )).
+
+% The original Agda term was:
+% Name: NestedAxioms.A.a≡b
+% Role: axiom
+% ATP pragma line: 16
+fof(n6_139132942, axiom, ( a = b )).
+
+% End general axiom(s).
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: NestedAxioms.C.foo
+% Role: prove
+% ATP pragma line: 28
+fof(n4_245270019, conjecture, ( d = a )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

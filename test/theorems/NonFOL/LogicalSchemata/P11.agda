@@ -2,9 +2,7 @@
 -- Testing the translation of logical schemata with 11-ary predicates symbols
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --schematic-propositional-functions #-}
-{-# OPTIONS --without-K #-}
 
 module NonFOL.LogicalSchemata.P11 where
 

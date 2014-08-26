@@ -2,9 +2,7 @@
 -- Testing the translation of universal quantified propositional functions
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --schematic-propositional-functions #-}
-{-# OPTIONS --without-K #-}
 
 module NonFOL.LogicalSchemata.PropositionalFunction where
 

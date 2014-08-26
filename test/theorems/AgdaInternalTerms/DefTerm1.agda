@@ -2,9 +2,6 @@
 -- Testing Agda internal term: @Def@
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module AgdaInternalTerms.DefTerm1 where
 
 ------------------------------------------------------------------------------

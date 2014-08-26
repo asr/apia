@@ -2,9 +2,6 @@
 -- Testing the translation of definitions
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module Definition9 where
 
 infixl 6 _+_

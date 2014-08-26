@@ -2,9 +2,6 @@
 -- Testing the existential quantifier
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module Existential1 where
 
 postulate

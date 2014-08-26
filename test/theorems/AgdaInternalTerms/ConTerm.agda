@@ -2,9 +2,6 @@
 -- Testing Agda internal term: @Con@
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 -- The following hint uses the internal Agda term @Con@.
 
 module AgdaInternalTerms.ConTerm where

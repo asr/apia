@@ -2,9 +2,6 @@
 -- Issue in the translation
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module Issue10 where
 
 postulate

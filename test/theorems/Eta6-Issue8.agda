@@ -2,9 +2,7 @@
 -- Testing the eta-expansion
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --schematic-propositional-functions #-}
-{-# OPTIONS --without-K #-}
 
 module Eta6-Issue8 where
 

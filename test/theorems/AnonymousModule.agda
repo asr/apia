@@ -2,9 +2,6 @@
 -- Testing anonymous module
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module _ where
 
 postulate

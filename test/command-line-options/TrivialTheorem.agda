@@ -2,9 +2,6 @@
 -- Trivial theorem used by the shelltestrunner test
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module TrivialTheorem where
 
 postulate

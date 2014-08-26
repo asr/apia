@@ -2,9 +2,6 @@
 -- Issue in the translation of definitions using λ-terms.
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module Issue2b where
 
 postulate

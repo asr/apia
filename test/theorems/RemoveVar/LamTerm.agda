@@ -2,9 +2,6 @@
 -- Testing the class AgdaInternal.RemoveProofTerms.RemoveVar: Lam term
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module RemoveVar.LamTerm where
 
 -- We add 3 to the fixities of the standard library.

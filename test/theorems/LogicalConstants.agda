@@ -2,9 +2,6 @@
 -- Testing the translation of the logical constants
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module LogicalConstants where
 
 infix  5 ¬_

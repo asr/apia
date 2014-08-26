@@ -2,9 +2,6 @@
 -- Testing the function FOL.Translation.Terms.termToFOLTerm: Con term
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module TermToFOLTerm.ConTerm where
 
 -- We add 3 to the fixities of the standard library.

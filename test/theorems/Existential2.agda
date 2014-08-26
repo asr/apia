@@ -2,9 +2,7 @@
 -- Testing the existential quantifier
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --schematic-propositional-functions #-}
-{-# OPTIONS --without-K #-}
 
 module Existential2 where
 

@@ -1,6 +1,3 @@
-{-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
-
 module Issue3b where
 
 module A where

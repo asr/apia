@@ -2,9 +2,7 @@
 -- Testing the translation of scheme's instances
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --schematic-propositional-functions #-}
-{-# OPTIONS --without-K #-}
 
 module NonFOL.LogicalSchemata.Instance where
 

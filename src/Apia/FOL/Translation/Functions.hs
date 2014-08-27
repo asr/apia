@@ -102,9 +102,9 @@ varsToElims n = Apply (Arg defaultArgInfo (var (n - 1))) : varsToElims (n - 1)
 -- | Translate an ATP definition to a first-order logic formula
 -- 'FOLFormula'.
 fnToFormula ∷ QName → Type → [Clause] → T FOLFormula
-fnToFormula _      _  []        = __IMPOSSIBLE__
-fnToFormula qName  ty (cl : []) = clauseToFormula qName ty cl
-fnToFormula qName  _  _         =
+fnToFormula _      _  []   = __IMPOSSIBLE__
+fnToFormula qName  ty [cl] = clauseToFormula qName ty cl
+fnToFormula qName  _  _    =
   E.throwE $ "the translation of " ++ show qName
              ++ " failed because its definition only can have a clause"
 
@@ -259,7 +259,7 @@ clauseToFormula qName ty (Clause _ _ _ [] cBody _) = do
             -- terms, they are related via the first-order logic equaliy.
             let helper ∷ [String] → FOLFormula
                 helper []       = __IMPOSSIBLE__
-                helper (x : []) = ForAll x $ \_ → equal tLHS tRHS
+                helper [x]      = ForAll x $ \_ → equal tLHS tRHS
                 helper (x : xs) = ForAll x $ \_ → helper xs
 
             return $ helper freshVars

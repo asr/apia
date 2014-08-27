@@ -191,7 +191,7 @@ instance ToTPTP FOLTerm where
 -- Requires @FlexibleInstances@.
 instance ToTPTP [FOLTerm] where
   toTPTP []       = __IMPOSSIBLE__
-  toTPTP (a : []) = toTPTP a
+  toTPTP [a]      = toTPTP a
   toTPTP (a : as) = toTPTP a +++ "," +++ toTPTP as
 
 instance ToTPTP FOLFormula where

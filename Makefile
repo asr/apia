@@ -231,7 +231,7 @@ apia_changed : clean
 # Hlint test
 
 hlint :
-	hlint --cpp-file=dist/build/autogen/cabal_macros.h src/
+	hlint --color=never --cpp-file=dist/build/autogen/cabal_macros.h src/
 	@echo "$@ succeeded!"
 
 ##############################################################################

@@ -1,0 +1,40 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The general axiom(s).
+
+% The original Agda term was:
+% Name: Record.P.is
+% Role: axiom
+% ATP pragma line: 20
+fof(n13_96484415, axiom, ( ! [A] : ( ! [B] : ( ( kp1_(cP1,A) ) => ( ( kp2_(cP2,A,B) ) => ( kp2_(cP,A,B) ) ) ) ) )).
+
+% The original Agda term was:
+% Name: Record.p₁
+% Role: axiom
+% ATP pragma line: 25
+fof(n15_96484415, axiom, ( ! [A] : ( kp1_(cP1,A) ) )).
+
+% The original Agda term was:
+% Name: Record.p₂
+% Role: axiom
+% ATP pragma line: 26
+fof(n18_96484415, axiom, ( ! [A] : ( ! [B] : ( kp2_(cP2,A,B) ) ) )).
+
+% End general axiom(s).
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: Record.thm₂
+% Role: prove
+% ATP pragma line: 32
+fof(n26_96484415, conjecture, ( ! [A] : ( ! [B] : ( kp2_(cP,A,B) ) ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

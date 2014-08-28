@@ -1,0 +1,45 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The general axiom(s).
+
+% The original Agda term was:
+% Name: Definition9.+-0x
+% Role: axiom
+% ATP pragma line: 34
+fof(n22_17022218, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
+
+% The original Agda term was:
+% Name: Definition9.+-Sx
+% Role: axiom
+% ATP pragma line: 34
+fof(n25_17022218, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
+
+% End general axiom(s).
+
+%-----------------------------------------------------------------------------
+% The required ATP definition(s) by the conjecture.
+
+% The original Agda term was:
+% Name: Definition9._.A
+% Role: definition
+% ATP pragma line: -1
+fof(n31_17022218, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cA_31_17022218,A,B) ) <=> ( n43(B,zero) = B ) ) ) ) )).
+
+% End required ATP definition(s) by the conjecture.
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: Definition9._.A0
+% Role: prove
+% ATP pragma line: 45
+fof(n33_17022218, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cA_31_17022218,A,zero) ) ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

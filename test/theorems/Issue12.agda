@@ -2,7 +2,9 @@
 -- Issue 12
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --schematic-propositional-functions #-}
+{-# OPTIONS --without-K #-}
 
 module Issue12 where
 

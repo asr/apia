@@ -2,6 +2,9 @@
 -- Testing the erasing of proof terms
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
 module ProofTerm3 where
 
 postulate

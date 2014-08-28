@@ -2,6 +2,9 @@
 -- Testing let expressions
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
 module Let where
 
 postulate

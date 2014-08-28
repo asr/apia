@@ -2,6 +2,9 @@
 -- Testing the erasing of the duplicate definitions required by a conjecture
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
 module DuplicateAgdaDefinitions1 where
 
 infix 7 _≈_

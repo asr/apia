@@ -2,6 +2,9 @@
 -- Testing records
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
 module Record where
 
 postulate

@@ -1,0 +1,28 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The required ATP definition(s) by the conjecture.
+
+% The original Agda term was:
+% Name: ProjectionLikeFunction._.P
+% Role: definition
+% ATP pragma line: -1
+fof(n10_90809832, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cP_10_90809832,A,B) ) <=> ( B = B ) ) ) ) )).
+
+% End required ATP definition(s) by the conjecture.
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: ProjectionLikeFunction._.bar
+% Role: prove
+% ATP pragma line: 43
+fof(n12_90809832, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cP_10_90809832,A,A) ) ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

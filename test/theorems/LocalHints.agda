@@ -2,6 +2,9 @@
 -- Testing the use of local hints
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
 module LocalHints where
 
 postulate

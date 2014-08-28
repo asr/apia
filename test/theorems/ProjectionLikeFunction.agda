@@ -2,6 +2,9 @@
 -- Translation of projection-like functions
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
 -- 2012-04-03: More information about what is a projection-like in the
 -- patch:
 --

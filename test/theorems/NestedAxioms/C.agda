@@ -2,6 +2,9 @@
 -- Testing nested axioms
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
 {-
 
 Processing this file should be generate a TPTP file with the following

@@ -1,3 +1,6 @@
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
 -- From the technical manual of TPTP
 -- (http://www.cs.miami.edu/~tptp/TPTP/TR/TPTPTR.shtml)
 

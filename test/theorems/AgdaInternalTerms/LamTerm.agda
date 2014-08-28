@@ -2,6 +2,9 @@
 -- Testing Agda internal term: @Lam@
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
 -- The following conjecture uses the internal Agda term @Lam@.
 
 module AgdaInternalTerms.LamTerm where

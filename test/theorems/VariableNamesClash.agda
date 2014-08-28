@@ -2,6 +2,9 @@
 -- Testing variable names clash
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
 module VariableNamesClash where
 
 postulate

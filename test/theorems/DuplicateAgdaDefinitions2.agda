@@ -2,6 +2,9 @@
 -- Testing the erasing of the duplicate definitions required by a conjecture
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --without-K #-}
+
 module DuplicateAgdaDefinitions2 where
 
 -- We add 4 to the fixities of the standard library.

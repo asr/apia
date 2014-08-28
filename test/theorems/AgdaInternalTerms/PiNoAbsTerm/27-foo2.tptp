@@ -1,0 +1,17 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: AgdaInternalTerms.PiNoAbsTerm.foo₂
+% Role: prove
+% ATP pragma line: 27
+fof(n8_188711488, conjecture, ( ( pA ) => ( ! [A] : ( pA ) ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

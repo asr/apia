@@ -30,7 +30,7 @@ executable apia
   hs-source-dirs: src
 
   build-depends:
-    Agda                   == 2.4.1.1
+    Agda                   == 2.4.3.1
     , base                 >= 4.2 && < 4.8
     , bytestring           >= 0.9.0.1 && < 0.11
     , directory            >= 1.0 && < 1.3

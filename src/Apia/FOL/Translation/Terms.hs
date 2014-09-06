@@ -506,7 +506,7 @@ appArgsF fn args = do
 -- 'FOLTerm'.
 termToFOLTerm ∷ Term → T FOLTerm
 
-termToFOLTerm term@(Con (ConHead (QName _ name) _) args) = do
+termToFOLTerm term@(Con (ConHead (QName _ name) _ _) args) = do
   reportSLn "t2t" 10 $ "termToFOLTerm Con:\n" ++ show term
 
   let cName ∷ C.Name

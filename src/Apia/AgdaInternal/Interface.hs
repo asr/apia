@@ -339,7 +339,7 @@ class QNamesIn a where
   qNamesIn ∷ a → [QName]
 
 instance QNamesIn Term where
-  qNamesIn (Con (ConHead qName _) args) = qName : qNamesIn args
+  qNamesIn (Con (ConHead qName _ _) args) = qName : qNamesIn args
   qNamesIn (Def qName args) = qName : qNamesIn args
   qNamesIn (Lam _ absTerm) = qNamesIn absTerm
   qNamesIn (Pi domTy absTy) = qNamesIn domTy ++ qNamesIn absTy

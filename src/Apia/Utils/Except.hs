@@ -42,14 +42,15 @@ import Control.Monad.Trans.Error
 type ExceptT = ErrorT
 
 -- | 'catchE' function using transformers 0.3.*.
-catchE ∷ (Monad m, Error e) ⇒ ErrorT e m a → (e → ErrorT e m a) → ErrorT e m a
+catchE ∷ (Monad m, Error e) ⇒
+         ExceptT e m a → (e → ExceptT e m a) → ExceptT e m a
 catchE = catchError
 
 -- | 'runExcept' function using transformers 0.3.*.
-runExceptT ∷  ErrorT e m a → m (Either e a)
+runExceptT ∷  ExceptT e m a → m (Either e a)
 runExceptT = runErrorT
 
 -- | 'throwE' function using transformers 0.3.*.
-throwE ∷ (Monad m, Error e) ⇒ e → ErrorT e m a
+throwE ∷ (Monad m, Error e) ⇒ e → ExceptT e m a
 throwE = throwError
 #endif

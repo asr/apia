@@ -2,9 +2,9 @@
 -- Testing the translation of higher-order functions
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --no-universe-polymorphism       #-}
 {-# OPTIONS --universal-quantified-functions #-}
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K                      #-}
 
 -- We can use the Agda pragma @--universal-quantified-functions@ to
 -- translate higher-order functions. The canonical examples are the

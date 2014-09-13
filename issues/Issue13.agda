@@ -1,5 +1,5 @@
 {-# OPTIONS --no-universe-polymorphism #-}
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K                #-}
 
 -- In the TPTP generated file, the line of the ATP definition @eq is
 -- -1. It should be 16.

@@ -2,9 +2,9 @@
 -- Example of lambda-lifting
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --no-universe-polymorphism       #-}
 {-# OPTIONS --universal-quantified-functions #-}
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K                      #-}
 
 module LambdaLifting where
 

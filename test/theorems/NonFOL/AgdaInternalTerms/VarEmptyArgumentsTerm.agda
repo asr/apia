@@ -2,9 +2,9 @@
 -- Testing Agda internal terms: @Var Nat Args@ when @Args = []@
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism #-}
+{-# OPTIONS --no-universe-polymorphism          #-}
 {-# OPTIONS --schematic-propositional-functions #-}
-{-# OPTIONS --without-K #-}
+{-# OPTIONS --without-K                         #-}
 
 module NonFOL.AgdaInternalTerms.VarEmptyArgumentsTerm where
 

@@ -129,9 +129,9 @@ conjectureFooter = commentLine +++ "% End TPTP file.\n"
 agdaOriginalTerm ∷ QName → ATPRole → Text
 agdaOriginalTerm qName role =
   "% The original Agda term was:\n"
-  +++ "% Name: " +++ T.pack (show qName) +++ "\n"
-  +++ "% Role: " +++ T.pack (show role) +++ "\n"
-  +++ "% ATP pragma line: " +++ T.pack (show (qNameLine qName)) +++ "\n"
+  +++ "% Name: " +++ (T.pack . show) qName +++ "\n"
+  +++ "% Role: " +++ (T.pack . show) role +++ "\n"
+  +++ "% ATP pragma line: " +++ (T.pack . show . qNameLine) qName +++ "\n"
 
 addRole ∷ AF → FilePath → IO ()
 addRole af@(AF qName afRole _) file = do
@@ -188,15 +188,15 @@ createConjectureFile generalRoles conjectureSet = do
   reportSLn "createConjectureFile" 20 $ "Final dir: " ++ finalDir
 
   reportSLn "createConjectureFile" 20 $
-    "Qname's concrete name range: " ++ show (qNameConcreteNameRange qName)
+    "Qname's concrete name range: " ++ (show . qNameConcreteNameRange) qName
 
   reportSLn "createConjectureFile" 20 $
     "Qname's nameBindingSite range: "
-    ++ show (qNameNameBindingSiteRange qName)
+    ++ (show . qNameNameBindingSiteRange) qName
 
   let f ∷ FilePath
       f = finalDir </>
-            show (qNameLine qName)
+            (show . qNameLine) qName
             ++ "-"
             ++ asciiName ((concat . nameStringParts . nameConcrete . qnameName) qName)
 

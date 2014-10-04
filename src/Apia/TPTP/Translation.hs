@@ -92,7 +92,7 @@ toAF role qName def = do
      "Translating QName: " ++ showLn qName
      ++ "Type:\n" ++ showLn ty
      ++ "Role: " ++ showLn role ++ "\n"
-     ++ "Position: " ++ showLn (qNameConcreteNameRange qName)
+     ++ "Position: " ++ (showLn . qNameConcreteNameRange) qName
 
   -- We eta-expand the type before the translation.
   tyEtaExpanded ← ifM isTVarsEmpty (etaExpand ty) (__IMPOSSIBLE__)
@@ -136,7 +136,7 @@ fnToAF qName def = do
   reportSLn "symbolToAF" 10 $
     "Symbol: " ++ showLn qName
     ++ "Type:\n" ++ showLn ty
-    ++ "Position: " ++ showLn (qNameConcreteNameRange qName)
+    ++ "Position: " ++ (showLn . qNameConcreteNameRange) qName
 
   -- We get the clauses that define the symbol (all the symbols must
   -- be functions).
@@ -164,7 +164,7 @@ localHintsToAFs def = do
       hints = getLocalHints def
 
   reportSLn "hintsToFOLs" 20 $
-    "The local hints for the conjecture " ++ show (defName def)
+    "The local hints for the conjecture " ++ (show . defName) def
     ++ " are:\n" ++ show hints
 
   mapM localHintToAF hints
@@ -220,7 +220,7 @@ conjecturesToAFs topLevelDefs = do
       conjecturesDefs = getATPConjectures topLevelDefs
 
   reportSLn "conjecturesToFOLs" 20 $
-    "Conjectures:\n" ++ show (HashMap.keys conjecturesDefs)
+    "Conjectures:\n" ++ (show . HashMap.keys) conjecturesDefs
 
   zipWithM conjectureToAF
            (HashMap.keys conjecturesDefs)

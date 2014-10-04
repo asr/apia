@@ -141,7 +141,7 @@ qName2String qName@(QName _ name) = do
       reportSLn "qName2String" 20 $ "qNameId : " ++ show qNameId
 
       case qNameId of
-        NameId x i → return $ show (nameConcrete name) ++ "_"
+        NameId x i → return $ (show . nameConcrete) name ++ "_"
                               ++ show x ++ "_"
                               ++ show i
     else return $ show $ nameConcrete name

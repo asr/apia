@@ -70,9 +70,9 @@ dumpQNameInformation (qName, def) = do
   liftIO $ putStrLn $ "Qname: " ++ (show . qnameToConcrete) qName
   liftIO $ putStrLn $ "Type: "  ++ show ty
   liftIO $ putStrLn $ "Concrete name range: "
-                      ++ show (qNameConcreteNameRange qName)
+                      ++ (show . qNameConcreteNameRange) qName
   liftIO $ putStrLn $ "nameBindingSite range: "
-                      ++ show (qNameNameBindingSiteRange qName) ++ "\n"
+                      ++ (show . qNameNameBindingSiteRange) qName ++ "\n"
 
 -- | Print 'QName's information to stdout.
 dumpQNames ∷ FilePath → T ()
@@ -87,4 +87,4 @@ dumpQNames file = do
 
 -- | Print the Agda interface file to stdout.
 dumpAgdai ∷ FilePath → T ()
-dumpAgdai file = readInterface file >>= liftIO . print
+dumpAgdai file =  liftIO . print =<< readInterface file

@@ -166,7 +166,7 @@ instance ToTPTP NameId where
   --
   -- TODO (02 July 2014). Improve the implemention.
   toTPTP (NameId x i) =
-    prefixLetter $ T.pack (show x) +++ "_" +++ T.pack (show i)
+    prefixLetter $ (T.pack . show) x +++ "_" +++ (T.pack . show) i
 
 instance ToTPTP QName where
   toTPTP (QName _ name) = toTPTP $ nameId name

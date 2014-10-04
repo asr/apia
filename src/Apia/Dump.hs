@@ -30,7 +30,7 @@ import Control.Monad.IO.Class ( MonadIO(liftIO) )
 ------------------------------------------------------------------------------
 -- Agda library imports
 
-import Agda.Syntax.Abstract.Name ( QName )
+import Agda.Syntax.Abstract.Name ( QName, qnameToConcrete )
 import Agda.Syntax.Internal      ( Type )
 
 import Agda.TypeChecking.Monad.Base
@@ -67,7 +67,7 @@ dumpQNameInformation (qName, def) = do
   let ty ∷ Type
       ty = defType def
 
-  liftIO $ putStrLn $ "Qname: " ++ show qName
+  liftIO $ putStrLn $ "Qname: " ++ (show . qnameToConcrete) qName
   liftIO $ putStrLn $ "Type: "  ++ show ty
   liftIO $ putStrLn $ "Concrete name range: "
                       ++ show (qNameConcreteNameRange qName)

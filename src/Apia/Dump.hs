@@ -41,6 +41,8 @@ import Agda.TypeChecking.Monad.Base
   , Signature(sigDefinitions)
   )
 
+import Agda.Utils.Pretty ( prettyShow )
+
 ------------------------------------------------------------------------------
 -- Apia imports
 
@@ -67,7 +69,7 @@ dumpQNameInformation (qName, def) = do
   let ty ∷ Type
       ty = defType def
 
-  liftIO $ putStrLn $ "Qname: " ++ (show . qnameToConcrete) qName
+  liftIO $ putStrLn $ "Qname: " ++ (prettyShow . qnameToConcrete) qName
   liftIO $ putStrLn $ "Type: "  ++ show ty
   liftIO $ putStrLn $ "Concrete name range: "
                       ++ (show . qNameConcreteNameRange) qName

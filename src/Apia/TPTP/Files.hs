@@ -54,6 +54,7 @@ import Agda.Syntax.Concrete.Name
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( whenM )
+import Agda.Utils.Pretty     ( prettyShow )
 
 ------------------------------------------------------------------------------
 -- Apia imports
@@ -130,7 +131,7 @@ conjectureFooter = commentLine +++ "% End TPTP file.\n"
 agdaOriginalTerm ∷ QName → ATPRole → Text
 agdaOriginalTerm qName role =
   "% The original Agda term was:\n"
-  +++ "% Name: " +++ (T.pack . show . qnameToConcrete) qName +++ "\n"
+  +++ "% Name: " +++ (T.pack . prettyShow . qnameToConcrete) qName +++ "\n"
   +++ "% Role: " +++ (T.pack . show) role +++ "\n"
   +++ "% ATP pragma line: " +++ (T.pack . show . qNameLine) qName +++ "\n"
 

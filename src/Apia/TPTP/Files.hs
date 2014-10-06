@@ -133,7 +133,7 @@ agdaOriginalTerm qName role =
   "% The original Agda term was:\n"
   +++ "% Name: " +++ (T.pack . prettyShow . qnameToConcrete) qName +++ "\n"
   +++ "% Role: " +++ (T.pack . show) role +++ "\n"
-  +++ "% ATP pragma line: " +++ (T.pack . show . qNameLine) qName +++ "\n"
+  +++ "% ATP pragma line: " +++ (T.pack . prettyShow . qNameLine) qName +++ "\n"
 
 addRole ∷ AF → FilePath → IO ()
 addRole af@(AF qName afRole _) file = do

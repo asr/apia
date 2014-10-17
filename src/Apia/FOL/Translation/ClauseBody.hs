@@ -43,7 +43,7 @@ import Apia.FOL.Types                  ( FOLFormula, FOLTerm )
 import Apia.Monad.Base                 ( T )
 import Apia.Monad.Reports              ( reportSLn )
 
-#include "../../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 -- | Translate an Agda internal 'ClauseBody' to a first-order logic

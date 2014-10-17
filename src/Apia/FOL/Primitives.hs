@@ -32,7 +32,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible) , throwImpossible )
 
 import Apia.FOL.Types ( FOLTerm(FOLFun), FOLFormula(Predicate) )
 
-#include "../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 

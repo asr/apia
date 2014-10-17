@@ -99,7 +99,7 @@ import Apia.Monad.Reports ( reportSLn )
 
 import qualified Apia.Utils.Except as E
 
-#include "../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 -- | Remove the reference to a variable (i.e. Var n elims) in an Agda entity.

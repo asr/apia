@@ -84,7 +84,7 @@ import Apia.Monad.Reports ( reportSLn )
 
 import qualified Apia.Utils.Except as E
 
-#include "../../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 -- Auxiliary functions

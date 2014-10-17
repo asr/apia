@@ -69,7 +69,7 @@ import Apia.TPTP.Types ( AF(AF) )
 
 import Apia.Utils.Text ( (+++), toUpperFirst )
 
-#include "../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 -- | TPTP type synonymous.

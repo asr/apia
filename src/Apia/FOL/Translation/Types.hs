@@ -46,7 +46,7 @@ import Apia.FOL.Types             ( FOLFormula )
 import Apia.Monad.Base            ( T )
 import Apia.Monad.Reports         ( reportSLn )
 
-#include "../../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 -- | Translate an Agda internal 'Dom' 'Type' to a first-order logic

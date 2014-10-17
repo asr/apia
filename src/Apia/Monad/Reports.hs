@@ -40,7 +40,7 @@ import Agda.Utils.List ( wordsBy )
 import Apia.Monad.Base ( askTOpt, T )
 import Apia.Options    ( Options(optVerbose) )
 
-#include "../undefined.h"
+#include "undefined.h"
 
 -----------------------------------------------------------------------------
 -- Nice way to report things via the @--verbose@ option. Adapted from

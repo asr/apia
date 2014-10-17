@@ -80,7 +80,7 @@ import Apia.TPTP.Types
 
 import Apia.Utils.Show ( showListLn, showLn )
 
-#include "../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 

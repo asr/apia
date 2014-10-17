@@ -136,7 +136,7 @@ import Apia.Options       ( Options(optIncludePath) )
 
 import qualified Apia.Utils.Except as E
 
-#include "../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 

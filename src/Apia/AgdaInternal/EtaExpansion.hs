@@ -63,7 +63,7 @@ import Apia.AgdaInternal.Interface ( isProjection, qNameType )
 import Apia.Monad.Base             ( newTVar, T )
 import Apia.Monad.Reports          ( reportSLn )
 
-#include "../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 

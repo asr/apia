@@ -28,6 +28,7 @@ source-repository head
 executable apia
   main-is:        Apia/Main.hs
   hs-source-dirs: src
+  include-dirs:   src/Apia
 
   build-depends:
     Agda                   == 2.4.3.1

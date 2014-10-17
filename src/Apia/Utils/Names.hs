@@ -28,7 +28,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-#include "../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 

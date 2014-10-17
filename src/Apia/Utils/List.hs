@@ -31,7 +31,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-#include "../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 -- | Return 'True' if the elements of a list occur in ascending order.

@@ -49,7 +49,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-#include "../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 -- | Total of bounded variables in an Agda entity.

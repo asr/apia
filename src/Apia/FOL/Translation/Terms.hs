@@ -110,7 +110,7 @@ import Apia.Options       ( Options(optWithFnConsts, optWithoutPConsts) )
 
 import qualified Apia.Utils.Except as E
 
-#include "../../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 

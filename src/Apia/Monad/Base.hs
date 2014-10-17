@@ -65,7 +65,7 @@ import qualified Apia.Utils.Except as E
 
 import Apia.Utils.Names ( freshName )
 
-#include "../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 -- | The translation monad state.

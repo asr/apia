@@ -60,7 +60,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-#include "../undefined.h"
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 -- | To increase by one the de Bruijn index of the variable in an Agda

@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: NonFOL.LogicalSchemata.Instance.schema
 % Role: hint
-% ATP pragma line: 23
+% ATP pragma line: -1
 fof(n7_248243700, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp1_(A,C) ) => ( kp1_(B,C) ) ) ) ) )).
 
 % End local hint(s).

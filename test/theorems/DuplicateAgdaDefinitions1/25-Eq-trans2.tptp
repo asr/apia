@@ -19,7 +19,7 @@ fof(n3_273427573, definition, ( ! [A] : ( ! [B] : ( ( kp2_(cEq_3_273427573,A,B) 
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions1.Eq-trans
 % Role: hint
-% ATP pragma line: 25
+% ATP pragma line: -1
 fof(n9_273427573, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp2_(cEq_3_273427573,A,B) ) => ( ( kp2_(cEq_3_273427573,B,C) ) => ( kp2_(cEq_3_273427573,A,C) ) ) ) ) ) )).
 
 % End local hint(s).

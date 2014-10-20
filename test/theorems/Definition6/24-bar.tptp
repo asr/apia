@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: Definition6.foo
 % Role: hint
-% ATP pragma line: 24
+% ATP pragma line: -1
 fof(n6_7009137, hypothesis, ( c = b )).
 
 % End local hint(s).

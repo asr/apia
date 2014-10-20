@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions2._≤_
 % Role: definition
-% ATP pragma line: 45
+% ATP pragma line: -1
 fof(n26_49333747, definition, ( ! [A] : ( ! [B] : ( n8804(A,B) = n60(A,succ(B)) ) ) )).
 
 % End common required definition(s).
@@ -36,7 +36,7 @@ fof(n16_49333747, axiom, ( kp1_(cBool,false) )).
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions2.Sx≰0
 % Role: hint
-% ATP pragma line: 55
+% ATP pragma line: -1
 fof(n33_49333747, hypothesis, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cNLE_29_49333747,succ(A),zero) ) ) )).
 
 % End local hint(s).

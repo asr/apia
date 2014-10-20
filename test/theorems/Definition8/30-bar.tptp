@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: Definition8._.c
 % Role: definition
-% ATP pragma line: 27
+% ATP pragma line: -1
 fof(n11_197420885, definition, ( ! [A] : ( ! [B] : ( ( kp1_(cP,B) ) => ( c(A,B) = A ) ) ) )).
 
 % The original Agda term was:

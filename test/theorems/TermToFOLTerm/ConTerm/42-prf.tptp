@@ -19,7 +19,7 @@ fof(n18_168101849, hypothesis, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A
 % The original Agda term was:
 % Name: TermToFOLTerm.ConTerm.x+Sy≡S[x+y]
 % Role: hint
-% ATP pragma line: 44
+% ATP pragma line: -1
 fof(n25_168101849, hypothesis, ( ! [A] : ( ! [B] : ( n43(A,succ(B)) = succ(n43(A,B)) ) ) )).
 
 % End local hint(s).

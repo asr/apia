@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: LocalHints.N.zN
 % Role: hint
-% ATP pragma line: 18
+% ATP pragma line: -1
 fof(n4_274736842, hypothesis, ( kp1_(cN,zero) )).
 
 % End local hint(s).

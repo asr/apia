@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: Definition5.b
 % Role: definition
-% ATP pragma line: 21
+% ATP pragma line: -1
 fof(n5_187407804, definition, ( b = a )).
 
 % The original Agda term was:

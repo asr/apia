@@ -125,7 +125,7 @@ fnToFormula qName  _  _    =
 clauseToFormula ∷ QName → Type → Clause → T FOLFormula
 
 -- There is at most one variable in the clause's pattern.
-clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy) =
+clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy cc) =
   case tel of
     -- The bounded variable is quantified on a @Set@,
     --
@@ -140,7 +140,7 @@ clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy) =
 
       freshVar ← pushTNewVar
       -- We process forward in the telescope and the pattern.
-      f ← clauseToFormula qName ty (Clause r tels perm pats cBody cTy)
+      f ← clauseToFormula qName ty (Clause r tels perm pats cBody cTy cc)
       popTVar
 
       return $ ForAll freshVar $ const f
@@ -180,7 +180,7 @@ clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy) =
       reportSLn "def2f" 20 $ "decTels: " ++ show decTels
 
       -- We process forward in the telescope and the pattern.
-      f2 ← clauseToFormula qName ty (Clause r decTels perm pats newBody cTy)
+      f2 ← clauseToFormula qName ty (Clause r decTels perm pats newBody cTy cc)
 
       reportSLn "def2f" 20 $ "f2: " ++ show f2
 
@@ -196,7 +196,7 @@ clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy) =
 
 -- The clause's patterns is empty, i.e. we have generated the required
 -- universal quantification, so we translate the LHS and the RHS.
-clauseToFormula qName ty (Clause _ _ _ [] cBody _) = do
+clauseToFormula qName ty (Clause _ _ _ [] cBody _ _) = do
   vars ← getTVars
   reportSLn "def2f" 20 $ "vars: " ++ show vars
 

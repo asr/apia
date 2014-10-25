@@ -364,7 +364,7 @@ instance QNamesIn ClauseBody where
   qNamesIn NoBody = __IMPOSSIBLE__
 
 instance QNamesIn Clause where
-  qNamesIn (Clause _ _ _ _ body _) = qNamesIn body
+  qNamesIn (Clause _ _ _ _ body _ _) = qNamesIn body
 
 instance QNamesIn Definition where
   qNamesIn def = qNamesIn $ defType def

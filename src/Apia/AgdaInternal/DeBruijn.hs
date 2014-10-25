@@ -47,9 +47,9 @@ import Agda.Syntax.Internal as I
   , Elim'(Apply, Proj)
   , Elims
   , Level(Max)
+  , Sort(Type)
   , Tele(EmptyTel, ExtendTel)
   , Term(Def, Lam, Var)
-  , Sort(Type)
   , Type
   , Type'(El)
   , var

@@ -25,7 +25,7 @@ module Apia.TPTP.Translation
 import Control.Applicative ( (<$>) )
 import Control.Monad       ( foldM, liftM2, liftM4, zipWithM )
 
-import Data.List    ( nub )
+import Data.List ( nub )
 
 import qualified Data.HashMap.Strict as HashMap ( elems, keys )
 

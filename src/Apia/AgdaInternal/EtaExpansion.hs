@@ -37,14 +37,14 @@ import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , Arg
   , arity
+  , Dom
   , Elim
   , Elim'(Apply, Proj)
   , Elims
-  , Dom
   , Level(Max)
   , PlusLevel(ClosedLevel)
-  , Term(Con, Def, Lam, Pi, Sort, Var)
   , Sort(Type)
+  , Term(Con, Def, Lam, Pi, Sort, Var)
   , Type
   , Type'(El)
   , var

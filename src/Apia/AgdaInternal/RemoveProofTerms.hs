@@ -82,8 +82,8 @@ import Agda.Syntax.Internal as I
   , Elims
   , Level(Max)
   , PlusLevel(ClosedLevel)
-  , Term(Def, Lam, Pi, Sort, Var)
   , Sort(Type)
+  , Term(Def, Lam, Pi, Sort, Var)
   , Type
   , Type'(El)
   , var

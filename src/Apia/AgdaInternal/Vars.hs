@@ -38,8 +38,8 @@ import Agda.Syntax.Internal as I
   , ClauseBodyF(Bind, Body, NoBody)
   , Elim
   , Elim'(Apply, Proj)
-  , Term(Con, Def, Lam, Pi, Var)
   , Sort(Type)
+  , Term(Con, Def, Lam, Pi, Var)
   , Type
   , Type'(El)
   )

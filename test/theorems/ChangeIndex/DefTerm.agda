@@ -2,6 +2,7 @@
 -- Testing the class AgdaInternal.DeBruijn.ChangeIndex: (Def _ []) term
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split              #-}
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 

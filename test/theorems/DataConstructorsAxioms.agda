@@ -2,6 +2,7 @@
 -- Testing the use of ATP axioms with data constructors
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split              #-}
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 

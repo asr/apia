@@ -2,6 +2,7 @@
 -- Issue in the translation of definitions using λ-terms.
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split              #-}
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 

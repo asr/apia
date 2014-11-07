@@ -2,6 +2,7 @@
 -- Testing the translation of logical schemata with 11-ary predicates symbols
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split                       #-}
 {-# OPTIONS --no-universe-polymorphism          #-}
 {-# OPTIONS --schematic-propositional-functions #-}
 {-# OPTIONS --without-K                         #-}

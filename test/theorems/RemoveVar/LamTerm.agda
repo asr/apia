@@ -2,6 +2,7 @@
 -- Testing the class AgdaInternal.RemoveProofTerms.RemoveVar: Lam term
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split              #-}
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 

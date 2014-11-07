@@ -2,6 +2,7 @@
 -- Testing the erasing of the duplicate definitions required by a conjecture
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split              #-}
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 

@@ -1,0 +1,28 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The general axiom(s).
+
+% The original Agda term was:
+% Name: Issue1.Functions.foo
+% Role: axiom
+% ATP pragma line: 20
+fof(n6_82241428, axiom, ( ! [A] : ( kp1_(cNAME,A) ) )).
+
+% End general axiom(s).
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: Issue1.Functions.bar
+% Role: prove
+% ATP pragma line: 24
+fof(n8_82241428, conjecture, ( ! [A] : ( kp1_(nAME,A) ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

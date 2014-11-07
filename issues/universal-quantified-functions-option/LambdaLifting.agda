@@ -2,6 +2,7 @@
 -- Example of lambda-lifting
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split                    #-}
 {-# OPTIONS --no-universe-polymorphism       #-}
 {-# OPTIONS --universal-quantified-functions #-}
 {-# OPTIONS --without-K                      #-}

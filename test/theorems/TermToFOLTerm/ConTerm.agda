@@ -2,6 +2,7 @@
 -- Testing the function FOL.Translation.Terms.termToFOLTerm: Con term
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split              #-}
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 

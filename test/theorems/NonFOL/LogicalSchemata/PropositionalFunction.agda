@@ -2,6 +2,7 @@
 -- Testing the translation of universal quantified propositional functions
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split                       #-}
 {-# OPTIONS --no-universe-polymorphism          #-}
 {-# OPTIONS --schematic-propositional-functions #-}
 {-# OPTIONS --without-K                         #-}

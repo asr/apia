@@ -1,0 +1,34 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The general axiom(s).
+
+% The original Agda term was:
+% Name: Where3.+-0x
+% Role: axiom
+% ATP pragma line: 35
+fof(n22_188531139, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
+
+% The original Agda term was:
+% Name: Where3.+-Sx
+% Role: axiom
+% ATP pragma line: 35
+fof(n25_188531139, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
+
+% End general axiom(s).
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: Where3.Helper.is
+% Role: prove
+% ATP pragma line: 47
+fof(n34_188531139, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( n43(B,zero) = B ) => ( n43(succ(B),zero) = succ(B) ) ) ) ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

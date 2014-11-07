@@ -2,6 +2,7 @@
 -- Testing the translation of 11-ary predicates symbols
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split              #-}
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 

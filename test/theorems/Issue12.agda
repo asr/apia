@@ -2,6 +2,7 @@
 -- Issue 12
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split                       #-}
 {-# OPTIONS --no-universe-polymorphism          #-}
 {-# OPTIONS --schematic-propositional-functions #-}
 {-# OPTIONS --without-K                         #-}

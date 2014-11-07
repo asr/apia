@@ -2,6 +2,7 @@
 -- Testing the Agda pragma --schematic-propositional-symbols
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split              #-}
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 

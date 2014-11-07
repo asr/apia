@@ -1,0 +1,39 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The general hint(s).
+
+% The original Agda term was:
+% Name: TermToFOLTerm.ConTerm.+-Sx
+% Role: hint
+% ATP pragma line: 33
+fof(n18_168101849, hypothesis, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
+
+% End general hint(s).
+
+%-----------------------------------------------------------------------------
+% The local hint(s).
+
+% The original Agda term was:
+% Name: TermToFOLTerm.ConTerm.x+Sy≡S[x+y]
+% Role: hint
+% ATP pragma line: -1
+fof(n25_168101849, hypothesis, ( ! [A] : ( ! [B] : ( n43(A,succ(B)) = succ(n43(A,B)) ) ) )).
+
+% End local hint(s).
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: TermToFOLTerm.ConTerm._.prf
+% Role: prove
+% ATP pragma line: 43
+fof(n34_168101849, conjecture, ( ! [A] : ( ! [B] : ( ( n43(A,B) = n43(B,A) ) => ( n43(succ(A),B) = n43(B,succ(A)) ) ) ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

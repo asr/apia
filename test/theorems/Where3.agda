@@ -2,6 +2,7 @@
 -- Testing the conjectures inside a @where@ clause
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split              #-}
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 

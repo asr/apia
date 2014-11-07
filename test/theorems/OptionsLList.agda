@@ -2,7 +2,8 @@
 -- Testing the use of various options using only an OPTIONS pragma
 ------------------------------------------------------------------------------
 
-{-# OPTIONS --no-universe-polymorphism
+{-# OPTIONS --exact-split
+            --no-universe-polymorphism
             --schematic-propositional-functions
             --without-K
 #-}

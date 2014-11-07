@@ -2,6 +2,7 @@
 -- Testing the Agda pragma --schematic-functions
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split              #-}
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 

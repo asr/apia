@@ -2,6 +2,7 @@
 -- Testing Agda internal term: @Pi _ (NoAbs _ _)@
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split              #-}
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 

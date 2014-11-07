@@ -1,0 +1,28 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The general hint(s).
+
+% The original Agda term was:
+% Name: AgdaInternalTerms.ConTerm.+-0x
+% Role: hint
+% ATP pragma line: 32
+fof(n14_142221408, hypothesis, ( ! [A] : ( n43(zero,A) = A ) )).
+
+% End general hint(s).
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: AgdaInternalTerms.ConTerm.foo
+% Role: prove
+% ATP pragma line: 35
+fof(n17_142221408, conjecture, ( ! [A] : ( n43(zero,A) = A ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

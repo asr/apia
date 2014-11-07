@@ -1,0 +1,17 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: NonFOL.LogicalSchemata.PropositionalSymbol.id
+% Role: prove
+% ATP pragma line: 15
+fof(n5_89660145, conjecture, ( ( a ) => ( a ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

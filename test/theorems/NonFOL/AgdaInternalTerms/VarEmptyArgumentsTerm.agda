@@ -2,6 +2,7 @@
 -- Testing Agda internal terms: @Var Nat Args@ when @Args = []@
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split                       #-}
 {-# OPTIONS --no-universe-polymorphism          #-}
 {-# OPTIONS --schematic-propositional-functions #-}
 {-# OPTIONS --without-K                         #-}

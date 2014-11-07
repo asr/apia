@@ -2,6 +2,7 @@
 -- Testing the translation of higher-order functions
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split                    #-}
 {-# OPTIONS --no-universe-polymorphism       #-}
 {-# OPTIONS --universal-quantified-functions #-}
 {-# OPTIONS --without-K                      #-}

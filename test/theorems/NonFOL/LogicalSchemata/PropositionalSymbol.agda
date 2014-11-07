@@ -2,6 +2,7 @@
 -- Testing the translation of the universal quantified propositional symbols
 ------------------------------------------------------------------------------
 
+{-# OPTIONS --exact-split                     #-}
 {-# OPTIONS --no-universe-polymorphism        #-}
 {-# OPTIONS --schematic-propositional-symbols #-}
 {-# OPTIONS --without-K                       #-}

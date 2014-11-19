@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.AgdaLib.EtaExpansion
+-- Module      : Apia.Utils.AgdaAPI.EtaExpansion
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2014
 -- License     : See the file LICENSE.
 --
@@ -15,7 +15,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
-module Apia.AgdaInternal.EtaExpansion ( EtaExpandible(etaExpand) ) where
+module Apia.Utils.AgdaAPI.EtaExpansion ( EtaExpandible(etaExpand) ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports
@@ -58,10 +58,10 @@ import Agda.Utils.Maybe      ( whenJustM )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.AgdaInternal.DeBruijn  ( IncIndex(incIndex) )
-import Apia.AgdaInternal.Interface ( isProjection, qNameType )
-import Apia.Monad.Base             ( newTVar, T )
-import Apia.Monad.Reports          ( reportSLn )
+import Apia.Monad.Base              ( newTVar, T )
+import Apia.Monad.Reports           ( reportSLn )
+import Apia.Utils.AgdaAPI.DeBruijn  ( IncIndex(incIndex) )
+import Apia.Utils.AgdaAPI.Interface ( isProjection, qNameType )
 
 #include "undefined.h"
 

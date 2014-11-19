@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.AgdaInternal.Vars
+-- Module      : Apia.Utils.AgdaAPI.Vars
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2014
 -- License     : See the file LICENSE.
 --
@@ -16,7 +16,7 @@
 {-# LANGUAGE UnicodeSyntax        #-}
 
 ------------------------------------------------------------------------------
-module Apia.AgdaInternal.Vars
+module Apia.Utils.AgdaAPI.Vars
   ( BoundedVars(boundedVars)
   , BoundedVarsType(boundedVarsType)
   ) where

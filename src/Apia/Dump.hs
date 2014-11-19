@@ -46,14 +46,14 @@ import Agda.Utils.Pretty ( prettyShow )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.AgdaInternal.Interface
+import Apia.Monad.Base ( T )
+
+import Apia.Utils.AgdaAPI.Interface
   ( qNameConcreteNameRange
   , qNameLine
   , qNameNameBindingSiteRange
   , readInterface
   )
-
-import Apia.Monad.Base ( T )
 
 ------------------------------------------------------------------------------
 -- We sort the 'QName's by its position in the Agda module.

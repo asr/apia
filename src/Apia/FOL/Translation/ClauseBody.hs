@@ -36,12 +36,12 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.AgdaInternal.DeBruijn      ( ChangeIndex(changeIndex), varToIndex )
-import Apia.AgdaInternal.EtaExpansion  ( EtaExpandible(etaExpand) )
 import Apia.FOL.Translation.Terms      ( termToFormula, termToFOLTerm )
 import Apia.FOL.Types                  ( FOLFormula, FOLTerm )
 import Apia.Monad.Base                 ( T )
 import Apia.Monad.Reports              ( reportSLn )
+import Apia.Utils.AgdaAPI.DeBruijn     ( ChangeIndex(changeIndex), varToIndex )
+import Apia.Utils.AgdaAPI.EtaExpansion ( EtaExpandible(etaExpand) )
 
 #include "undefined.h"
 

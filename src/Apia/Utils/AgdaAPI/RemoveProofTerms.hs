@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.AgdaInternal.RemoveProofTerms
+-- Module      : Apia.Utils.AgdaAPI.RemoveProofTerms
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2014
 -- License     : See the file LICENSE.
 --
@@ -59,7 +59,7 @@
 -- End general description.
 
 ------------------------------------------------------------------------------
-module Apia.AgdaInternal.RemoveProofTerms ( removeProofTerm ) where
+module Apia.Utils.AgdaAPI.RemoveProofTerms ( removeProofTerm ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports

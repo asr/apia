@@ -46,12 +46,9 @@ import Agda.Utils.Impossible ( catchImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.AgdaInternal.Interface ( getImportedInterfaces, readInterface )
-import Apia.ATPs                   ( callATPs )
-
+import Apia.ATPs      ( callATPs )
 import Apia.CheckTPTP ( checkTPTP )
-
-import Apia.Dump ( dumpAgdai, dumpQNames )
+import Apia.Dump      ( dumpAgdai, dumpQNames )
 
 import Apia.Monad.Base
   ( modifyDefs
@@ -79,6 +76,8 @@ import Apia.Snapshot         ( snapshotTest )
 import Apia.TPTP.Files       ( createConjectureFile )
 import Apia.TPTP.Translation ( conjecturesToAFs, generalRolesToAFs )
 import Apia.TPTP.Types       ( ConjectureSet, GeneralRoles )
+
+import Apia.Utils.AgdaAPI.Interface ( getImportedInterfaces, readInterface )
 
 import qualified Apia.Utils.Except as E
 

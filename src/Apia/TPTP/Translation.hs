@@ -50,23 +50,6 @@ import Agda.Utils.Monad      ( ifM )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.AgdaInternal.RemoveProofTerms ( removeProofTerm )
-import Apia.AgdaInternal.Vars             ( BoundedVarsType(boundedVarsType) )
-
-import Apia.AgdaInternal.EtaExpansion ( EtaExpandible(etaExpand) )
-
-import Apia.AgdaInternal.Interface
-  ( getATPAxioms
-  , getATPConjectures
-  , getATPHints
-  , getClauses
-  , getLocalHints
-  , isATPDefinition
-  , qNameDefinition
-  , QNamesIn(qNamesIn)
-  , qNameConcreteNameRange
-  )
-
 import Apia.FOL.Translation.Functions ( fnToFormula )
 import Apia.FOL.Translation.Types     ( typeToFormula )
 import Apia.Monad.Base                ( getTDefs, isTVarsEmpty, T)
@@ -76,6 +59,22 @@ import Apia.TPTP.Types
   ( AF(AF)
   , ConjectureSet(ConjectureSet)
   , GeneralRoles(GeneralRoles)
+  )
+
+import Apia.Utils.AgdaAPI.EtaExpansion     ( EtaExpandible(etaExpand) )
+import Apia.Utils.AgdaAPI.RemoveProofTerms ( removeProofTerm )
+import Apia.Utils.AgdaAPI.Vars             ( BoundedVarsType(boundedVarsType) )
+
+import Apia.Utils.AgdaAPI.Interface
+  ( getATPAxioms
+  , getATPConjectures
+  , getATPHints
+  , getClauses
+  , getLocalHints
+  , isATPDefinition
+  , qNameDefinition
+  , QNamesIn(qNamesIn)
+  , qNameConcreteNameRange
   )
 
 import Apia.Utils.Show ( showListLn, showLn )

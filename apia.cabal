@@ -47,11 +47,6 @@ executable apia
   build-tools: cpphs >= 1.18.5 && < 1.19
 
   other-modules:
-    Apia.AgdaInternal.DeBruijn
-    Apia.AgdaInternal.EtaExpansion
-    Apia.AgdaInternal.Interface
-    Apia.AgdaInternal.RemoveProofTerms
-    Apia.AgdaInternal.Vars
     Apia.ATPs
     Apia.CheckTPTP
     Apia.Dump
@@ -72,6 +67,11 @@ executable apia
     Apia.TPTP.Files
     Apia.TPTP.Translation
     Apia.TPTP.Types
+    Apia.Utils.AgdaAPI.DeBruijn
+    Apia.Utils.AgdaAPI.EtaExpansion
+    Apia.Utils.AgdaAPI.Interface
+    Apia.Utils.AgdaAPI.RemoveProofTerms
+    Apia.Utils.AgdaAPI.Vars
     Apia.Utils.Except
     Apia.Utils.File
     Apia.Utils.List

@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.AgdaInternal.DeBruijn
+-- Module      : Apia.Utils.AgdaAPI.DeBruijn
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2014
 -- License     : See the file LICENSE.
 --
@@ -20,7 +20,7 @@
 -- in the Agda internal terms, i.e. it is necessary to modify the
 -- Bruijn index in the variable.
 
-module Apia.AgdaInternal.DeBruijn
+module Apia.Utils.AgdaAPI.DeBruijn
   ( ChangeIndex(changeIndex)
   , DecIndex(decIndex)
   , IncIndex(incIndex)

@@ -66,8 +66,6 @@ import Agda.Utils.Monad      ( ifM )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.AgdaInternal.Interface ( isATPDefinition, qNameDefinition )
-
 import Apia.FOL.Constants
   ( folTrue
   , folFalse
@@ -107,6 +105,8 @@ import Apia.Monad.Base
 
 import Apia.Monad.Reports ( reportSLn )
 import Apia.Options       ( Options(optWithFnConsts, optWithoutPConsts) )
+
+import Apia.Utils.AgdaAPI.Interface ( isATPDefinition, qNameDefinition )
 
 import qualified Apia.Utils.Except as E
 

@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.AgdaInternal.Interface
+-- Module      : Apia.Utils.AgdaAPI.Interface
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2014
 -- License     : See the file LICENSE.
 --
@@ -15,7 +15,7 @@
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
-module Apia.AgdaInternal.Interface
+module Apia.Utils.AgdaAPI.Interface
   ( getATPAxioms
   , getATPConjectures
   , getATPHints

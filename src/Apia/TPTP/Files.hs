@@ -59,12 +59,6 @@ import Agda.Utils.Pretty     ( prettyShow )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.AgdaInternal.Interface
- ( qNameConcreteNameRange
- , qNameLine
- , qNameNameBindingSiteRange
- )
-
 import Apia.Monad.Base          ( askTOpt, T )
 import Apia.Monad.Reports       ( reportS, reportSLn )
 import Apia.Options             ( Options(optOnlyFiles, optOutputDir) )
@@ -83,9 +77,15 @@ import Apia.TPTP.Types
   , GeneralRoles(axioms, defsAxioms, defsHints, hints)
   )
 
-import Apia.Utils.List    ( duplicate )
-import Apia.Utils.String  ( removeString )
-import Apia.Utils.Text    ( (+++), toUpperFirst )
+import Apia.Utils.AgdaAPI.Interface
+ ( qNameConcreteNameRange
+ , qNameLine
+ , qNameNameBindingSiteRange
+ )
+
+import Apia.Utils.List   ( duplicate )
+import Apia.Utils.String ( removeString )
+import Apia.Utils.Text   ( (+++), toUpperFirst )
 
 #include "undefined.h"
 

@@ -59,9 +59,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.AgdaInternal.DeBruijn ( DecIndex(decIndex) )
-import Apia.AgdaInternal.Vars     (BoundedVars(boundedVars))
-import Apia.FOL.Primitives        ( equal )
+import Apia.FOL.Primitives ( equal )
 
 import Apia.FOL.Translation.ClauseBody
   ( cBodyToFormula
@@ -81,6 +79,9 @@ import Apia.Monad.Base
   )
 
 import Apia.Monad.Reports ( reportSLn )
+
+import Apia.Utils.AgdaAPI.DeBruijn ( DecIndex(decIndex) )
+import Apia.Utils.AgdaAPI.Vars     ( BoundedVars(boundedVars) )
 
 import qualified Apia.Utils.Except as E
 

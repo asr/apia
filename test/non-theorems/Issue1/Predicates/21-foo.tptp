@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: Issue1.Predicates.foo
 % Role: prove
-% ATP pragma line: 20
+% ATP pragma line: 21
 fof(n5_88039882, conjecture, ( ( a ) => ( pA ) )).
 
 % End conjecture.

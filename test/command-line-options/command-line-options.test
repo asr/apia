@@ -36,7 +36,7 @@ Usage: apia [OPTIONS] FILE
 dist/build/apia/apia -itest/command-line-options --only-files test/command-line-options/TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/TrivialTheorem/20-foo.tptp
+Created /tmp/TrivialTheorem/21-foo.tptp
 >>>2
 >>>= 0
 
@@ -44,7 +44,7 @@ Created /tmp/TrivialTheorem/20-foo.tptp
 dist/build/apia/apia -itest/command-line-options -v1 --only-files test/command-line-options/TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/TrivialTheorem/20-foo.tptp
+Created /tmp/TrivialTheorem/21-foo.tptp
 >>>2
 >>>= 0
 
@@ -60,20 +60,20 @@ Apia version 0.9.1
 dist/build/apia/apia -itest/command-line-options --atp=e --unproven-conjecture-no-error test/command-line-options/NoTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/NoTheorem/17-foo.tptp
+Proving the conjecture in /tmp/NoTheorem/18-foo.tptp
 E 1.8-001 Gopaldhara *did not* prove the conjecture
-the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.tptp
+the ATP(s) did not prove the conjecture in /tmp/NoTheorem/18-foo.tptp
 >>>2
 >>>= 0
 
 #6. --snapshot-no-error
-dist/build/apia/apia -itest/command-line-options --only-files --output-dir=/tmp/snapshot test/command-line-options/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.tptp && dist/build/apia/apia -itest/command-line-options --snapshot-no-error --snapshot-dir=/tmp/snapshot test/command-line-options/TrivialTheorem.agda
+dist/build/apia/apia -itest/command-line-options --only-files --output-dir=/tmp/snapshot test/command-line-options/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/21-foo.tptp && dist/build/apia/apia -itest/command-line-options --snapshot-no-error --snapshot-dir=/tmp/snapshot test/command-line-options/TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/snapshot/TrivialTheorem/20-foo.tptp
+Created /tmp/snapshot/TrivialTheorem/21-foo.tptp
 the files are different:
-/tmp/TrivialTheorem/20-foo.tptp
-/tmp/snapshot/TrivialTheorem/20-foo.tptp
+/tmp/TrivialTheorem/21-foo.tptp
+/tmp/snapshot/TrivialTheorem/21-foo.tptp
 >>>2
 >>>= 0
 
@@ -81,7 +81,7 @@ the files are different:
 dist/build/apia/apia -itest/command-line-options --dump-agdai test/command-line-options/Foo.agda
 <<<
 >>>
-Interface {iSourceHash = 7430135977531638957, iImportedModules = [], iModuleName = Foo, iScope = fromList [(Foo,* scope Foo
+Interface {iSourceHash = 16987302680121282013, iImportedModules = [], iModuleName = Foo, iScope = fromList [(Foo,* scope Foo
   public
     names
       foo --> [Foo.foo]
@@ -90,7 +90,7 @@ Interface {iSourceHash = 7430135977531638957, iImportedModules = [], iModuleName
   context = TopCtx
   modules
     * scope 
-, iSignature = Sig {sigSections = fromList [(Foo,Section {secTelescope = EmptyTel, secFreeVars = 0})], sigDefinitions = fromList [(Foo.foo,Defn {defArgInfo = ArgInfo {argInfoHiding = NotHidden, argInfoRelevance = Relevant, argInfoColors = []}, defName = Foo.foo, defType = El {getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}, defPolarity = [], defArgOccurrences = [], defDisplay = [], defMutual = MutId 0, defCompiledRep = CompiledRep {compiledHaskell = Nothing, exportHaskell = Nothing, compiledEpic = Nothing, compiledJS = Nothing}, defRewriteRules = [], defInstance = Nothing, theDef = Axiom {axATPRole = Nothing, axATPHints = []}})]}, iBuiltin = fromList [], iHaskellImports = fromList [], iHighlighting = CompressedFile {ranges = [(Range {from = 1, to = 79},Aspects {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 80, to = 93},Aspects {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 94, to = 172},Aspects {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 174, to = 177},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 178, to = 185},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 213, to = 216},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 217, to = 220},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 221, to = 228},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 256, to = 259},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 260, to = 263},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 264, to = 271},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 299, to = 302},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 304, to = 310},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 311, to = 314},Aspects {aspect = Just (Name (Just Module) False), otherAspects = [], note = Nothing, definitionSite = Just (TopLevelModuleName {moduleNameParts = ["Foo"]},1)}),(Range {from = 315, to = 320},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 322, to = 331},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 332, to = 335},Aspects {aspect = Just (Name (Just Postulate) False), otherAspects = [], note = Nothing, definitionSite = Just (TopLevelModuleName {moduleNameParts = ["Foo"]},332)}),(Range {from = 336, to = 337},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 338, to = 341},Aspects {aspect = Just PrimitiveType, otherAspects = [], note = Nothing, definitionSite = Nothing})]}, iPragmaOptions = [["--exact-split"],["--no-universe-polymorphism"],["--without-K"]], iPatternSyns = fromList []}
+, iSignature = Sig {sigSections = fromList [(Foo,Section {secTelescope = EmptyTel, secFreeVars = 0})], sigDefinitions = fromList [(Foo.foo,Defn {defArgInfo = ArgInfo {argInfoHiding = NotHidden, argInfoRelevance = Relevant, argInfoColors = []}, defName = Foo.foo, defType = El {getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}, defPolarity = [], defArgOccurrences = [], defDisplay = [], defMutual = MutId 0, defCompiledRep = CompiledRep {compiledHaskell = Nothing, exportHaskell = Nothing, compiledEpic = Nothing, compiledJS = Nothing}, defRewriteRules = [], defInstance = Nothing, theDef = Axiom {axATPRole = Nothing, axATPHints = []}})]}, iBuiltin = fromList [], iHaskellImports = fromList [], iHighlighting = CompressedFile {ranges = [(Range {from = 1, to = 79},Aspects {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 80, to = 93},Aspects {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 94, to = 172},Aspects {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 174, to = 177},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 178, to = 185},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 213, to = 216},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 217, to = 220},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 221, to = 228},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 256, to = 259},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 260, to = 263},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 264, to = 271},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 299, to = 302},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 303, to = 306},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 307, to = 314},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 342, to = 345},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 347, to = 353},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 354, to = 357},Aspects {aspect = Just (Name (Just Module) False), otherAspects = [], note = Nothing, definitionSite = Just (TopLevelModuleName {moduleNameParts = ["Foo"]},1)}),(Range {from = 358, to = 363},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 365, to = 374},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 375, to = 378},Aspects {aspect = Just (Name (Just Postulate) False), otherAspects = [], note = Nothing, definitionSite = Just (TopLevelModuleName {moduleNameParts = ["Foo"]},375)}),(Range {from = 379, to = 380},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 381, to = 384},Aspects {aspect = Just PrimitiveType, otherAspects = [], note = Nothing, definitionSite = Nothing})]}, iPragmaOptions = [["--exact-split"],["--no-sized-types"],["--no-universe-polymorphism"],["--without-K"]], iPatternSyns = fromList []}
 >>>2
 >>>= 0
 
@@ -100,8 +100,8 @@ dist/build/apia/apia -itest/command-line-options --dump-qnames test/command-line
 >>>
 Qname: Foo.foo
 Type: El {getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}
-Concrete name range: /home/asr/code/phd/repos/apia/test/command-line-options/Foo.agda:11,11-14
-nameBindingSite range: /home/asr/code/phd/repos/apia/test/command-line-options/Foo.agda:11,11-14
+Concrete name range: /home/asr/code/phd/repos/apia/test/command-line-options/Foo.agda:12,11-14
+nameBindingSite range: /home/asr/code/phd/repos/apia/test/command-line-options/Foo.agda:12,11-14
 
 >>>2
 >>>= 0

@@ -3,6 +3,7 @@
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split
+            --no-sized-types
             --no-universe-polymorphism
             --schematic-propositional-functions
             --without-K

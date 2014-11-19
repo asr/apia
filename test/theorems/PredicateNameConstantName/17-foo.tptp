@@ -1,0 +1,17 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: PredicateNameConstantName.foo
+% Role: prove
+% ATP pragma line: 17
+fof(n4_197099929, conjecture, ( ! [A] : ( ( kp1_(cP,A) ) => ( kp1_(cP,A) ) ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

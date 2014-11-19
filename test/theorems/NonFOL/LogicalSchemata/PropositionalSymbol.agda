@@ -3,6 +3,7 @@
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split                     #-}
+{-# OPTIONS --no-sized-types                  #-}
 {-# OPTIONS --no-universe-polymorphism        #-}
 {-# OPTIONS --schematic-propositional-symbols #-}
 {-# OPTIONS --without-K                       #-}

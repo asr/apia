@@ -96,8 +96,6 @@ instance EtaExpandible Term where
     let qNameArity ∷ Nat
         qNameArity = arity defTy
 
-    elimsEtaExpanded ← mapM etaExpand elims
-
     -- Although a term has the right number of arguments, it can be
     -- η-contracted. For example, given ∃ : (A : D → Set) → Set, the
     -- term ∃ A is η-contracted, so we should η-expand it to
@@ -112,9 +110,9 @@ instance EtaExpandible Term where
            case elims of
              [Apply (Arg _ term)] →
                case term of
-                 (Def _ _) → return $ Def qName elimsEtaExpanded
+                 (Def _ _) → Def qName <$> etaExpand elims
 
-                 (Lam _ _) → return $ Def qName elimsEtaExpanded
+                 (Lam _ _) → Def qName <$> etaExpand elims
 
                  (Var 0 []) → do
                    freshVar ← newTVar
@@ -134,7 +132,7 @@ instance EtaExpandible Term where
                reportSLn "etaExpansion" 20 $ "someElims: " ++ show someElims
                __IMPOSSIBLE__
 
-        _ → return $ Def qName elimsEtaExpanded
+        _ → Def qName <$> etaExpand elims
 
       else do
         -- The η-contraction can *only* reduces by 1 the number of
@@ -148,10 +146,9 @@ instance EtaExpandible Term where
         -- Because we are going to add a new abstraction, we need
         -- increase by one the numbers associated with the variables
         -- in the arguments.
-        let incVarsEtaExpanded ∷ Elims
-            incVarsEtaExpanded = map incIndex elimsEtaExpanded
+        incVarsEtaExpanded ∷ Elims ← map incIndex <$> etaExpand elims
 
-            newVar ∷ I.Arg Term
+        let newVar ∷ I.Arg Term
             newVar = Arg defaultArgInfo (var 0)
 
         freshVar ← newTVar
@@ -175,7 +172,7 @@ instance EtaExpandible Term where
 
   etaExpand (Sort sort) = Sort <$> etaExpand sort
 
-  etaExpand (Var n args) | n >= 0    = Var n <$> mapM etaExpand args
+  etaExpand (Var n args) | n >= 0    = Var n <$> etaExpand args
                          | otherwise = __IMPOSSIBLE__
 
   etaExpand term = do
@@ -189,3 +186,6 @@ instance EtaExpandible Elim where
 -- Requires TypeSynonymInstances and FlexibleInstances.
 instance EtaExpandible a ⇒ EtaExpandible (I.Dom a) where
   etaExpand (Dom info e) = Dom info <$> etaExpand e
+
+instance EtaExpandible a ⇒ EtaExpandible [a] where
+  etaExpand = mapM etaExpand

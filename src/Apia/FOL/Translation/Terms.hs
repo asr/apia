@@ -369,6 +369,23 @@ termToFormula (Pi domTy (Abs x absTy)) = do
       __IMPOSSIBLE__
 
     -- Non-FOL translation: First-order logic universal quantified
+    -- propositional functions.
+    --
+    -- The bounded variable is quantified on a @Set₁@,
+    --
+    -- e.g. the bounded variable is @A : D → D → Set@.
+    --
+    -- In this case we return a forall bind on the fresh variable. We
+    -- use this case for translate logic schemata such as
+    --
+    --   ∨-comm₂ : {A₂ B₂ : D → D → Set}{x y : D} →
+    --             A₂ x y ∨ B₂ x y → A₂ x y ∨ B₂ x y.
+
+    El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → do
+      reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
+      return $ ForAll freshVar $ const f
+
+    -- Non-FOL translation: First-order logic universal quantified
     -- propositional symbols.
     --
     -- The bounded variable is quantified on a @Set₁@,
@@ -393,23 +410,6 @@ termToFormula (Pi domTy (Abs x absTy)) = do
       ifM (isTPragmaOption p)
           (return f)
           (E.throwE $ universalQuantificationErrorMsg p)
-
-    -- Non-FOL translation: First-order logic universal quantified
-    -- propositional functions.
-    --
-    -- The bounded variable is quantified on a @Set₁@,
-    --
-    -- e.g. the bounded variable is @A : D → D → Set@.
-    --
-    -- In this case we return a forall bind on the fresh variable. We
-    -- use this case for translate logic schemata such as
-    --
-    --   ∨-comm₂ : {A₂ B₂ : D → D → Set}{x y : D} →
-    --             A₂ x y ∨ B₂ x y → A₂ x y ∨ B₂ x y.
-
-    El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → do
-      reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
-      return $ ForAll freshVar $ const f
 
     someType → do
       reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType

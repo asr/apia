@@ -242,13 +242,6 @@ removeProofTerm ty (x, typeVar) = do
       E.throwE $ "the translation failed because we do not know how erase "
                  ++ "the term\n" ++ show someTerm
 
-    -- The variable's type is @Set₁@,
-    --
-    -- e.g. the variable is @P : Set@.
-    --
-    -- Because the variable is not a proof term we don't do anything.
-    El (Type (Max [ClosedLevel 1])) (Sort _) → return ty
-
     -- N.B. The next case is just a generalization to various
     -- arguments of the previous case.
 
@@ -258,6 +251,13 @@ removeProofTerm ty (x, typeVar) = do
     --
     -- Because the variable is not a proof term we don't do anything.
     El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → return ty
+
+    -- The variable's type is @Set₁@,
+    --
+    -- e.g. the variable is @P : Set@.
+    --
+    -- Because the variable is not a proof term we don't do anything.
+    El (Type (Max [ClosedLevel 1])) (Sort _) → return ty
 
     someType → do
       reportSLn "removePT" 20 $

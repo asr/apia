@@ -90,8 +90,8 @@ toAF role qName def = do
       ty = defType def
   reportSLn "toAF" 10 $
      "Translating QName: " ++ showLn qName
-     ++ "Pretty type:\n" ++ prettyShow ty ++ "\n"
-     ++ "Show type:\n" ++ showLn ty
+     ++ "Pretty-printing the type:\n" ++ prettyShow ty ++ "\n"
+     ++ "Showing the type:\n" ++ showLn ty
      ++ "Role: " ++ showLn role ++ "\n"
      ++ "Position: " ++ (showLn . qNameConcreteNameRange) qName
 
@@ -100,8 +100,8 @@ toAF role qName def = do
 
   reportSLn "toAF" 10 $
     "The eta-expanded type is:\n"
-    ++ "Pretty type:\n" ++ prettyShow tyEtaExpanded ++ "\n"
-    ++ "Show type:\n" ++ showLn tyEtaExpanded
+    ++ "Pretty-printing type:\n" ++ prettyShow tyEtaExpanded ++ "\n"
+    ++ "Showing the type:\n" ++ showLn tyEtaExpanded
 
   reportSLn "toAF" 10 $
     if ty == tyEtaExpanded

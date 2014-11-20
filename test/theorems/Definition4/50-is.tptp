@@ -34,10 +34,10 @@ fof(n26_92201930, definition, ( ! [A] : ( ( kp1_(cA_26_92201930,A) ) <=> ( n43(z
 % The conjecture.
 
 % The original Agda term was:
-% Name: Definition4.A0
+% Name: Definition4.is
 % Role: prove
-% ATP pragma line: 45
-fof(n28_92201930, conjecture, ( kp1_(cA_26_92201930,zero) )).
+% ATP pragma line: 50
+fof(n30_92201930, conjecture, ( ! [A] : ( ( kp1_(cA_26_92201930,A) ) => ( kp1_(cA_26_92201930,succ(A)) ) ) )).
 
 % End conjecture.
 

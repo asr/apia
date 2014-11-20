@@ -49,6 +49,8 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
+import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
+
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
@@ -57,13 +59,16 @@ class BoundedVars a where
   boundedVars ∷ a → Int
 
 instance BoundedVars Term where
+  boundedVars term = case ignoreSharing term of
+    Def _ elims → boundedVars elims
 
-  boundedVars (Def _ elims) = boundedVars elims
-  boundedVars (Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ absTerm)) =
-    1 + boundedVars absTerm
-  boundedVars (Var n _) | n >= 0    = 0
-                        | otherwise = __IMPOSSIBLE__
-  boundedVars _ = __IMPOSSIBLE__
+    Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ absTerm) →
+      1 + boundedVars absTerm
+
+    Var n _ | n >= 0    → 0
+            | otherwise → __IMPOSSIBLE__
+
+    _ → __IMPOSSIBLE__
 
 instance BoundedVars Elim where
   boundedVars (Apply (Arg _ term)) = boundedVars term

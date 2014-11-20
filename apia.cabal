@@ -69,6 +69,7 @@ executable apia
     Apia.TPTP.Types
     Apia.Utils.AgdaAPI.DeBruijn
     Apia.Utils.AgdaAPI.EtaExpansion
+    Apia.Utils.AgdaAPI.IgnoreSharing
     Apia.Utils.AgdaAPI.Interface
     Apia.Utils.AgdaAPI.RemoveProofTerms
     Apia.Utils.AgdaAPI.Vars

@@ -106,7 +106,8 @@ import Apia.Monad.Base
 import Apia.Monad.Reports ( reportSLn )
 import Apia.Options       ( Options(optWithFnConsts, optWithoutPConsts) )
 
-import Apia.Utils.AgdaAPI.Interface ( isATPDefinition, qNameDefinition )
+import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
+import Apia.Utils.AgdaAPI.Interface     ( isATPDefinition, qNameDefinition )
 
 import qualified Apia.Utils.Except as E
 
@@ -505,109 +506,110 @@ appArgsF fn args = do
 -- | Translate an Agda internal 'Term' to a first-order logic term
 -- 'FOLTerm'.
 termToFOLTerm ∷ Term → T FOLTerm
+termToFOLTerm term = case ignoreSharing term of
 
-termToFOLTerm term@(Con (ConHead (QName _ name) _ _) args) = do
-  reportSLn "t2t" 10 $ "termToFOLTerm Con:\n" ++ show term
+  term'@(Con (ConHead (QName _ name) _ _) args) → do
+    reportSLn "t2t" 10 $ "termToFOLTerm Con:\n" ++ show term'
 
-  let cName ∷ C.Name
-      cName = nameConcrete name
+    let cName ∷ C.Name
+        cName = nameConcrete name
 
-  case cName of
-    C.NoName{}  → __IMPOSSIBLE__
+    case cName of
+      C.NoName{}  → __IMPOSSIBLE__
 
-    C.Name _ [] → __IMPOSSIBLE__
+      C.Name _ [] → __IMPOSSIBLE__
 
-    -- The term @Con@ doesn't have holes. It should be translated as a
-    -- first-order logic function.
-    C.Name _ [C.Id str] →
-     case args of
-       [] → return $ FOLFun str []
-       _  → appArgsF str args
+      -- The term @Con@ doesn't have holes. It should be translated as
+      -- a first-order logic function.
+      C.Name _ [C.Id str] →
+       case args of
+         [] → return $ FOLFun str []
+         _  → appArgsF str args
 
-    -- The term @Con@ has holes. It is translated as a first-order
-    -- logic function.
-    C.Name _ _ → __IMPOSSIBLE__
-    -- 2012-04-22: We do not have an example of it.
-    -- C.Name _ parts →
-    --   case args of
-    --     [] → __IMPOSSIBLE__
-    --     _  → appArgsFn (concatName parts) args
+      -- The term @Con@ has holes. It is translated as a first-order
+      -- logic function.
+      C.Name _ _ → __IMPOSSIBLE__
+      -- 2012-04-22: We do not have an example of it.
+      -- C.Name _ parts →
+      --   case args of
+      --     [] → __IMPOSSIBLE__
+      --     _  → appArgsFn (concatName parts) args
 
-termToFOLTerm term@(Def (QName _ name) elims) = do
-  reportSLn "t2t" 10 $ "termToFOLTerm Def:\n" ++ show term
+  term'@(Def (QName _ name) elims) → do
+    reportSLn "t2t" 10 $ "termToFOLTerm Def:\n" ++ show term'
 
-  let cName ∷ C.Name
-      cName = nameConcrete name
+    let cName ∷ C.Name
+        cName = nameConcrete name
 
-  case cName of
-    C.NoName{}  → __IMPOSSIBLE__
+    case cName of
+      C.NoName{}  → __IMPOSSIBLE__
 
-    C.Name _ [] → __IMPOSSIBLE__
+      C.Name _ [] → __IMPOSSIBLE__
 
-    -- The term @Def@ doesn't have holes. It is translated as a
-    -- first-order logic function.
-    C.Name _ [C.Id str] →
-     case allApplyElims elims of
-       Nothing    → __IMPOSSIBLE__
-       Just []    → return $ FOLFun str []
-       Just args  → appArgsF str args
+      -- The term @Def@ doesn't have holes. It is translated as a
+      -- first-order logic function.
+      C.Name _ [C.Id str] →
+       case allApplyElims elims of
+         Nothing    → __IMPOSSIBLE__
+         Just []    → return $ FOLFun str []
+         Just args  → appArgsF str args
 
-    -- The term @Def@ has holes. It is translated as a first-order
-    -- logic function.
-    C.Name _ parts →
-      case allApplyElims elims of
-        Nothing    → __IMPOSSIBLE__
-        Just []    → __IMPOSSIBLE__
-        Just args  → appArgsF (concatName parts) args
+      -- The term @Def@ has holes. It is translated as a first-order
+      -- logic function.
+      C.Name _ parts →
+        case allApplyElims elims of
+          Nothing    → __IMPOSSIBLE__
+          Just []    → __IMPOSSIBLE__
+          Just args  → appArgsF (concatName parts) args
 
-termToFOLTerm term@(Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ termLam)) = do
-  reportSLn "t2f" 10 $ "termToFOLTerm Lam:\n" ++ show term
+  term'@(Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ termLam)) → do
+    reportSLn "t2f" 10 $ "termToFOLTerm Lam:\n" ++ show term'
 
-  _ ← pushTNewVar
-  f ← termToFOLTerm termLam
-  popTVar
+    _ ← pushTNewVar
+    f ← termToFOLTerm termLam
+    popTVar
 
-  return f
+    return f
 
-termToFOLTerm term@(Var n args) = do
-  reportSLn "t2t" 10 $ "termToFOLTerm Var:\n" ++ show term
+  term'@(Var n args) → do
+    reportSLn "t2t" 10 $ "termToFOLTerm Var:\n" ++ show term'
 
-  when (n < 0) (__IMPOSSIBLE__)
-  vars ← getTVars
-  when (length vars <= n) (__IMPOSSIBLE__)
+    when (n < 0) (__IMPOSSIBLE__)
+    vars ← getTVars
+    when (length vars <= n) (__IMPOSSIBLE__)
 
-  case args of
-    [] → return $ FOLVar (vars !! n)
+    case args of
+      [] → return $ FOLVar (vars !! n)
 
-    -- Non-FOL translation: First-order logic universal quantified
-    -- functions term.
+      -- Non-FOL translation: First-order logic universal quantified
+      -- functions term.
 
-    -- If we have a bounded variable quantified on a function of a Set
-    -- to a Set, for example, the variable/function @f@ in
-    --
-    -- @(f : D → D) → (a : D) → (lam f) ∙ a ≡ f a@
-    --
-    -- we are quantifying on this variable/function
-    --
-    -- (see @termToFormula (Pi domTy (Abs _ absTy))@),
-    --
-    -- therefore we need to apply this variable/function to the others
-    -- variables. See an example in
-    -- Test.Succeed.AgdaInternalTerms.Var2.agda
-    _varArgs → do
-      let p ∷ String
-          p = "--schematic-functions"
+      -- If we have a bounded variable quantified on a function of a
+      -- Set to a Set, for example, the variable/function @f@ in
+      --
+      -- @(f : D → D) → (a : D) → (lam f) ∙ a ≡ f a@
+      --
+      -- we are quantifying on this variable/function
+      --
+      -- (see @termToFormula (Pi domTy (Abs _ absTy))@),
+      --
+      -- therefore we need to apply this variable/function to the
+      -- others variables. See an example in
+      -- Test.Succeed.AgdaInternalTerms.Var2.agda
+      _varArgs → do
+        let p ∷ String
+            p = "--schematic-functions"
 
-      ifM (isTPragmaOption p)
-          -- TODO (24 March 2013). Implementation.
-          (E.throwE "the option '--schematic-functions' is not implemented")
-          -- (do termsFOL ← mapM argTermToFOLTerm varArgs
-          --     ifM (askTOpt optAppF)
-          --         (return $ foldl' app (FOLVar (vars !! n)) termsFOL)
-          --         (return $ FOLFun (vars !! n) termsFOL))
-          (E.throwE $ universalQuantificationErrorMsg p)
+        ifM (isTPragmaOption p)
+            -- TODO (24 March 2013). Implementation.
+            (E.throwE "the option '--schematic-functions' is not implemented")
+            -- (do termsFOL ← mapM argTermToFOLTerm varArgs
+            --     ifM (askTOpt optAppF)
+            --         (return $ foldl' app (FOLVar (vars !! n)) termsFOL)
+            --         (return $ FOLFun (vars !! n) termsFOL))
+            (E.throwE $ universalQuantificationErrorMsg p)
 
-termToFOLTerm _ = __IMPOSSIBLE__
+  _ → __IMPOSSIBLE__
 
 ------------------------------------------------------------------------------
 -- Note [Non-dependent functions]

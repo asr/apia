@@ -60,6 +60,8 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
+import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
+
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
@@ -129,17 +131,20 @@ class VarNames a where
   varNames ∷ a → [String]
 
 instance VarNames Term where
-  varNames (Def _ elims) = varNames elims
+  varNames term = case ignoreSharing term of
+    Def _ elims → varNames elims
 
-  varNames (Lam _ (Abs x term)) = varNames term ++ [x]
+    Lam _ (Abs x term') → varNames term' ++ [x]
 
-  varNames (Var n []) | n >= 0    = []
-                      | otherwise = __IMPOSSIBLE__
-  -- 31 May 2012. We don't have an example of this case.
-  --
-  -- varNames (Var _ args) = varNames args
-  varNames (Var _ _) = __IMPOSSIBLE__
-  varNames _         = __IMPOSSIBLE__
+    Var n [] | n >= 0    → []
+             | otherwise → __IMPOSSIBLE__
+
+    -- 31 May 2012. We don't have an example of this case.
+    --
+    -- Var _ args → varNames args
+    Var _ _  → __IMPOSSIBLE__
+
+    _ → __IMPOSSIBLE__
 
 instance VarNames Elim where
   varNames (Apply (Arg _ term)) = varNames term
@@ -176,26 +181,27 @@ class ChangeIndex a where
   changeIndex ∷ a → Nat → a
 
 instance ChangeIndex Term where
-  changeIndex term@(Def _ []) _ = term
+  changeIndex term index = case ignoreSharing term of
+    term'@(Def _ []) → term'
 
-  changeIndex (Def qName elims) index = Def qName $ changeIndex elims index
+    (Def qName elims) → Def qName $ changeIndex elims index
 
-  changeIndex (Lam h (Abs x term)) index = Lam h (Abs x (changeIndex term index))
+    (Lam h (Abs x term')) → Lam h (Abs x (changeIndex term' index))
 
-  -- When the variable is part of an argument, it was processed in the
-  -- Args instance.
-  changeIndex (Var n []) index
-    | n < 0 = __IMPOSSIBLE__
-    -- The variable was after than the quantified variable, we need
-    -- "unbound" the quantified variable.
-    | n > index = var (n - 1)
+    -- When the variable is part of an argument, it was processed in
+    -- the Args instance.
+    (Var n [])
+      | n < 0 → __IMPOSSIBLE__
+      -- The variable was after than the quantified variable, we need
+      -- "unbound" the quantified variable.
+      | n > index → var (n - 1)
 
-    -- In the case @n < index@ the variable was before than the
-    -- quantified variable, therefore we shouldn't do nothing, i.e. we
-    -- should return the term.
-    | otherwise = __IMPOSSIBLE__
+      -- In the case @n < index@ the variable was before than the
+      -- quantified variable, therefore we shouldn't do nothing,
+      -- i.e. we should return the term.
+      | otherwise → __IMPOSSIBLE__
 
-  changeIndex _ _ = __IMPOSSIBLE__
+    _ → __IMPOSSIBLE__
 
 -- In the Agda source code (Agda.Syntax.Internal) we have
 -- type Elims = [Elim], however we cannot create the instance of Elims

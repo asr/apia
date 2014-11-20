@@ -95,8 +95,23 @@ toAF role qName def = do
      ++ "Role: " ++ showLn role ++ "\n"
      ++ "Position: " ++ (showLn . qNameConcreteNameRange) qName
 
+  -- We ignore sharing before the translation.
+  -- let tyIgnoredSharing ∷ Type
+  --     tyIgnoredSharing = ignoreSharing ty
+
+  -- Based on the equality on types, the type and the type ignoring
+  -- sharing must be equals.
+  -- when (ty /= tyIgnoredSharing) (__IMPOSSIBLE__)
+
+  -- reportSLn "toAF" 10 $
+  --   "The type ignoring sharing is:\n"
+  --   ++ "The type (pretty-printer):\n" ++ prettyShow tyIgnoredSharing ++ "\n"
+  --   ++ "The type (show):\n" ++ showLn tyIgnoredSharing
+
   -- We eta-expand the type before the translation.
-  tyEtaExpanded ← ifM isTVarsEmpty (etaExpand ty) (__IMPOSSIBLE__)
+  tyEtaExpanded ← ifM isTVarsEmpty
+                      (etaExpand ty)
+                      (__IMPOSSIBLE__)
 
   reportSLn "toAF" 10 $
     "The eta-expanded type is:\n"

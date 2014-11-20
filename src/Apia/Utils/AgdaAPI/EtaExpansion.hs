@@ -58,10 +58,11 @@ import Agda.Utils.Maybe      ( whenJustM )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.Monad.Base              ( newTVar, T )
-import Apia.Monad.Reports           ( reportSLn )
-import Apia.Utils.AgdaAPI.DeBruijn  ( IncIndex(incIndex) )
-import Apia.Utils.AgdaAPI.Interface ( isProjection, qNameType )
+import Apia.Monad.Base                  ( newTVar, T )
+import Apia.Monad.Reports               ( reportSLn )
+import Apia.Utils.AgdaAPI.DeBruijn      ( IncIndex(incIndex) )
+import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
+import Apia.Utils.AgdaAPI.Interface     ( isProjection, qNameType )
 
 #include "undefined.h"
 
@@ -88,97 +89,99 @@ instance EtaExpandible Type where
   etaExpand _ = __IMPOSSIBLE__
 
 instance EtaExpandible Term where
-  etaExpand (Def qName elims) = do
-    whenJustM (isProjection qName) (__IMPOSSIBLE__)
+  etaExpand term = case ignoreSharing term of
 
-    defTy ∷ Type ← qNameType qName
+    Def qName elims → do
+      whenJustM (isProjection qName) (__IMPOSSIBLE__)
 
-    let qNameArity ∷ Nat
-        qNameArity = arity defTy
+      defTy ∷ Type ← qNameType qName
 
-    -- Although a term has the right number of arguments, it can be
-    -- η-contracted. For example, given ∃ : (A : D → Set) → Set, the
-    -- term ∃ A is η-contracted, so we should η-expand it to
-    -- ∃ (λ x → A x).
-    if qNameArity == length elims
-      then case defTy of
-        El (Type (Max [ClosedLevel 1]))
-           (Pi (Dom _ (El (Type (Max [ClosedLevel 1]))
-                           (Pi (Dom _ (El (Type (Max [])) _))
-                               (NoAbs _ (El (Type (Max [ClosedLevel 1]))
-                                        (Sort (Type (Max [])))))))) _)  →
-           case elims of
-             [Apply (Arg _ term)] →
-               case term of
-                 (Def _ _) → Def qName <$> etaExpand elims
+      let qNameArity ∷ Nat
+          qNameArity = arity defTy
 
-                 (Lam _ _) → Def qName <$> etaExpand elims
+      -- Although a term has the right number of arguments, it can be
+      -- η-contracted. For example, given ∃ : (A : D → Set) → Set, the
+      -- term ∃ A is η-contracted, so we should η-expand it to
+      -- ∃ (λ x → A x).
+      if qNameArity == length elims
+        then case defTy of
+          El (Type (Max [ClosedLevel 1]))
+             (Pi (Dom _ (El (Type (Max [ClosedLevel 1]))
+                            (Pi (Dom _ (El (Type (Max [])) _))
+                                (NoAbs _ (El (Type (Max [ClosedLevel 1]))
+                                         (Sort (Type (Max [])))))))) _)  →
+             case elims of
+               [Apply (Arg _ term')] →
+                 case term' of
+                   (Def _ _) → Def qName <$> etaExpand elims
 
-                 (Var 0 []) → do
-                   freshVar ← newTVar
+                   (Lam _ _) → Def qName <$> etaExpand elims
 
-                   let newArg ∷ I.Arg Term
-                       newArg = Arg defaultArgInfo
-                                  (Lam defaultArgInfo
-                                  (Abs freshVar (Var 1 [Apply (Arg defaultArgInfo (var 0))])))
+                   (Var 0 []) → do
+                     freshVar ← newTVar
 
-                   return $ Def qName [Apply newArg]
+                     let newArg ∷ I.Arg Term
+                         newArg = Arg defaultArgInfo
+                                    (Lam defaultArgInfo
+                                    (Abs freshVar (Var 1 [Apply (Arg defaultArgInfo (var 0))])))
 
-                 someTerm → do
-                   reportSLn "etaExpansion" 20 $ "someTerm: " ++ show someTerm
-                   __IMPOSSIBLE__
+                     return $ Def qName [Apply newArg]
 
-             someElims → do
-               reportSLn "etaExpansion" 20 $ "someElims: " ++ show someElims
-               __IMPOSSIBLE__
+                   someTerm → do
+                     reportSLn "etaExpansion" 20 $ "someTerm: " ++ show someTerm
+                     __IMPOSSIBLE__
 
-        _ → Def qName <$> etaExpand elims
+               someElims → do
+                 reportSLn "etaExpansion" 20 $ "someElims: " ++ show someElims
+                 __IMPOSSIBLE__
 
-      else do
-        -- The η-contraction can *only* reduces by 1 the number of
-        -- arguments of a term, for example: Given P : D → Set,
-        -- λ x → P x η-contracts to P or given _≡_ : D → D → Set,
-        -- (x : D) → (λ y → x ≡ y) η-contracts to (x : D) → _≡_ x.
+          _ → Def qName <$> etaExpand elims
 
-        -- We applied the η-expansion in this case.
-        when (qNameArity - 1 /= length elims) (__IMPOSSIBLE__)
+        else do
+          -- The η-contraction can *only* reduces by 1 the number of
+          -- arguments of a term, for example: Given P : D → Set,
+          -- λ x → P x η-contracts to P or given _≡_ : D → D → Set,
+          -- (x : D) → (λ y → x ≡ y) η-contracts to (x : D) → _≡_ x.
 
-        -- Because we are going to add a new abstraction, we need
-        -- increase by one the numbers associated with the variables
-        -- in the arguments.
-        incVarsEtaExpanded ∷ Elims ← map incIndex <$> etaExpand elims
+          -- We applied the η-expansion in this case.
+          when (qNameArity - 1 /= length elims) (__IMPOSSIBLE__)
 
-        let newVar ∷ I.Arg Term
-            newVar = Arg defaultArgInfo (var 0)
+          -- Because we are going to add a new abstraction, we need
+          -- increase by one the numbers associated with the variables
+          -- in the arguments.
+          incVarsEtaExpanded ∷ Elims ← map incIndex <$> etaExpand elims
 
-        freshVar ← newTVar
+          let newVar ∷ I.Arg Term
+              newVar = Arg defaultArgInfo (var 0)
 
-        return $ Lam defaultArgInfo
-                     (Abs freshVar (Def qName incVarsEtaExpanded `apply` [newVar]))
+          freshVar ← newTVar
 
-  -- We don't know an example of eta-contraction with Con, therefore
-  -- we don't do anything.
-  etaExpand term@(Con _ _) = return term
+          return $ Lam defaultArgInfo
+                       (Abs freshVar (Def qName incVarsEtaExpanded `apply` [newVar]))
 
-  etaExpand (Lam h (Abs x termAbs)) = Lam h . Abs x <$> etaExpand termAbs
+    -- We don't know an example of eta-contraction with Con, therefore
+    -- we don't do anything.
+    term'@(Con _ _) → return term'
 
-  etaExpand (Pi domTy (NoAbs x absTy)) = do
-    tDom ← etaExpand domTy
-    tAbs ← etaExpand absTy
-    return $ Pi tDom (NoAbs x tAbs)
+    Lam h (Abs x termAbs) → Lam h . Abs x <$> etaExpand termAbs
 
-  -- It seems it is not necessary to eta-expand the domTy in the case
-  -- of Pi _ (Abs _ _).
-  etaExpand (Pi domTy (Abs x absTy)) = Pi domTy . Abs x <$> etaExpand absTy
+    Pi domTy (NoAbs x absTy) → do
+      tDom ← etaExpand domTy
+      tAbs ← etaExpand absTy
+      return $ Pi tDom (NoAbs x tAbs)
 
-  etaExpand (Sort sort) = Sort <$> etaExpand sort
+    -- It seems it is not necessary to eta-expand the domTy in the
+    -- case of Pi _ (Abs _ _).
+    Pi domTy (Abs x absTy) → Pi domTy . Abs x <$> etaExpand absTy
 
-  etaExpand (Var n args) | n >= 0    = Var n <$> etaExpand args
-                         | otherwise = __IMPOSSIBLE__
+    Sort sort → Sort <$> etaExpand sort
 
-  etaExpand term = do
-    reportSLn "etaExpansion" 20 $ "term: " ++ show term
-    __IMPOSSIBLE__
+    Var n args | n >= 0    → Var n <$> etaExpand args
+               | otherwise → __IMPOSSIBLE__
+
+    term' → do
+      reportSLn "etaExpansion" 20 $ "term': " ++ show term'
+      __IMPOSSIBLE__
 
 instance EtaExpandible Elim where
   etaExpand (Apply (Arg color term)) = Apply . Arg color <$> etaExpand term

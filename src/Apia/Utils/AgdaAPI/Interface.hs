@@ -134,6 +134,8 @@ import Apia.Monad.Base    ( askTOpt, getTDefs, T )
 import Apia.Monad.Reports ( reportSLn )
 import Apia.Options       ( Options(optIncludePath) )
 
+import Apia.Utils.AgdaAPI.IgnoreSharing ( ignoreSharing )
+
 import qualified Apia.Utils.Except as E
 
 #include "undefined.h"
@@ -305,9 +307,9 @@ qNameDefinition qName = do
   allDefs ← getTDefs
   return $ fromMaybe (__IMPOSSIBLE__) $ HashMap.lookup qName allDefs
 
--- | Return the 'Type' of a 'QName'.
+-- | Return the 'Type' of a 'QName' ignoring sharing.
 qNameType ∷ QName → T Type
-qNameType qName = defType <$> qNameDefinition qName
+qNameType qName = ignoreSharing . defType <$> qNameDefinition qName
 
 -- | Return the line where a 'QName' is defined.
 qNameLine ∷ QName → Int32
@@ -339,14 +341,21 @@ class QNamesIn a where
   qNamesIn ∷ a → [QName]
 
 instance QNamesIn Term where
-  qNamesIn (Con (ConHead qName _ _) args) = qName : qNamesIn args
-  qNamesIn (Def qName args) = qName : qNamesIn args
-  qNamesIn (Lam _ absTerm) = qNamesIn absTerm
-  qNamesIn (Pi domTy absTy) = qNamesIn domTy ++ qNamesIn absTy
-  qNamesIn (Sort _) = []
-  qNamesIn (Var n args) | n >= 0    = qNamesIn args
-                        | otherwise = __IMPOSSIBLE__
-  qNamesIn _ = __IMPOSSIBLE__
+  qNamesIn term = case ignoreSharing term of
+    Con (ConHead qName _ _) args → qName : qNamesIn args
+
+    Def qName args → qName : qNamesIn args
+
+    Lam _ absTerm → qNamesIn absTerm
+
+    Pi domTy absTy → qNamesIn domTy ++ qNamesIn absTy
+
+    Sort _  → []
+
+    Var n args | n >= 0    → qNamesIn args
+               | otherwise → __IMPOSSIBLE__
+
+    _ → __IMPOSSIBLE__
 
 instance QNamesIn Type where
   qNamesIn (El _ term) = qNamesIn term

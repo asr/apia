@@ -41,6 +41,8 @@ A : D → Set
 A i = zero + i ≡ i
 {-# ATP definition A #-}
 
+-- ASR (20 November 2014). After Agda added sharing, the definition of
+-- @A@ is not used in this proof.
 postulate A0 : A zero
 {-# ATP prove A0 #-}
 

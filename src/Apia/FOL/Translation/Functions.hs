@@ -85,6 +85,8 @@ import Apia.Utils.AgdaAPI.Vars     ( BoundedVars(boundedVars) )
 
 import qualified Apia.Utils.Except as E
 
+import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
+
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
@@ -127,7 +129,7 @@ clauseToFormula ∷ QName → Type → Clause → T FOLFormula
 
 -- There is at most one variable in the clause's pattern.
 clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy cc) =
-  case tel of
+  case ignoreSharing tel of
     -- The bounded variable is quantified on a @Set@,
     --
     -- e.g. the bounded variable is @d : D@ where @D : Set@,
@@ -192,7 +194,7 @@ clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy cc) =
                  ++ " failed because it is a higher-order definition"
 
     _ → do
-        reportSLn "def2f" 20 $ "tel: " ++ show tel
+        reportSLn "def2f" 20 $ "tel: " ++ show (ignoreSharing tel)
         __IMPOSSIBLE__
 
 -- The clause's patterns is empty, i.e. we have generated the required

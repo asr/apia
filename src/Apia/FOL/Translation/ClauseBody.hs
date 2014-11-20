@@ -56,7 +56,7 @@ cBodyToFormula _                    = __IMPOSSIBLE__
 -- | Translate an Agda internal 'ClauseBody' to a first-order logic
 -- term 'FOLTerm'.
 cBodyToFOLTerm ∷ ClauseBody → T FOLTerm
--- 16 July 2012. N.B. We don't eta-expand the term before the
+-- 16 July 2012. N.B. We don't η-expand the term before the
 -- translation (we don't have a test case where it is neeed).
 cBodyToFOLTerm (Body term)          = termToFOLTerm term
 cBodyToFOLTerm (Bind (Abs _ cBody)) = cBodyToFOLTerm cBody

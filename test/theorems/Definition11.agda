@@ -17,7 +17,7 @@ postulate
 data ∃ (A : D → Set) : Set where
   _,_ : (witness : D) → A witness → ∃ A
 
--- We test the translation of a definition which Agda eta-reduces.
+-- We test the translation of a definition which Agda η-reduces.
 foo : ∀ {n} → N n → D
 foo {n} Nn = n
   where

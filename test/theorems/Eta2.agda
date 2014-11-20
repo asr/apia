@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing the eta-expansion
+-- Testing the η-expansion
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}
@@ -14,8 +14,8 @@ postulate
   ∃   : (A : D → Set) → Set
   _≡_ : D → D → Set
 
--- Due to eta-contraction the Agda internal representation of foo and
--- bar are the same. We eta-expand the internal types before the
+-- Due to η-contraction the Agda internal representation of foo and
+-- bar are the same. We η-expand the internal types before the
 -- translation to FOL.
 
 postulate

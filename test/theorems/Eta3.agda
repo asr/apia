@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing the eta-expansion
+-- Testing the η-expansion
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}
@@ -16,12 +16,12 @@ postulate
 data ∃ (A : D → Set) : Set where
   _,_ : (t : D) → A t → ∃ A
 
--- Because Agda eta-reduces the equations, the internal representation
+-- Because Agda η-reduces the equations, the internal representation
 -- of P corresponds to the predicate
 --
 -- P xs = ∃ (P² xs)
 --
--- We eta-expand the definition of P before the translation to FOL.
+-- We η-expand the definition of P before the translation to FOL.
 
 P : D → Set
 P xs = ∃ λ ys → P² xs ys

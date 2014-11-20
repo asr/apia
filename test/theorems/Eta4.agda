@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing the eta-expansion
+-- Testing the η-expansion
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}
@@ -22,7 +22,7 @@ postulate
   *-helper₂ : D → D → D
 
 
--- We don't eta-expand the definition of _*_ before the translation,
+-- We don't η-expand the definition of _*_ before the translation,
 -- because we cannot translate the λ-abstraction generated from
 -- *-helper₂ n to FOL terms.
 _*_ : D → D → D

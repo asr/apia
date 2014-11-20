@@ -159,7 +159,7 @@ instance EtaExpandible Term where
           return $ Lam defaultArgInfo
                        (Abs freshVar (Def qName incVarsEtaExpanded `apply` [newVar]))
 
-    -- We don't know an example of eta-contraction with Con, therefore
+    -- We don't know an example of η-contraction with Con, therefore
     -- we don't do anything.
     term'@(Con _ _) → return term'
 
@@ -170,8 +170,8 @@ instance EtaExpandible Term where
       tAbs ← etaExpand absTy
       return $ Pi tDom (NoAbs x tAbs)
 
-    -- It seems it is not necessary to eta-expand the domTy in the
-    -- case of Pi _ (Abs _ _).
+    -- It seems it is not necessary to η-expand the domTy in the case
+    -- of Pi _ (Abs _ _).
     Pi domTy (Abs x absTy) → Pi domTy . Abs x <$> etaExpand absTy
 
     Sort sort → Sort <$> etaExpand sort

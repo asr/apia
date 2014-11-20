@@ -14,11 +14,11 @@
 {-# LANGUAGE FlexibleInstances #-}  -- Implies TypeSynonymInstances.
 {-# LANGUAGE UnicodeSyntax     #-}
 
--- There are various cases (e.g. eta-expansion, translation of
--- symbols' definitions, elimination of quantification on variables
--- which are proof terms) where it is necessary modify the variables
--- in the Agda internal terms, i.e. it is necessary to modify the
--- Bruijn index in the variable.
+-- There are various cases (e.g. η-expansion, translation of symbols'
+-- definitions, elimination of quantification on variables which are
+-- proof terms) where it is necessary modify the variables in the Agda
+-- internal terms, i.e. it is necessary to modify the Bruijn index in
+-- the variable.
 
 module Apia.Utils.AgdaAPI.DeBruijn
   ( ChangeIndex(changeIndex)

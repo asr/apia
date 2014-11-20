@@ -108,20 +108,20 @@ toAF role qName def = do
   --   ++ "The type (pretty-printer):\n" ++ prettyShow tyIgnoredSharing ++ "\n"
   --   ++ "The type (show):\n" ++ showLn tyIgnoredSharing
 
-  -- We eta-expand the type before the translation.
+  -- We η-expand the type before the translation.
   tyEtaExpanded ← ifM isTVarsEmpty
                       (etaExpand ty)
                       (__IMPOSSIBLE__)
 
   reportSLn "toAF" 10 $
-    "The eta-expanded type is:\n"
+    "The η-expanded type is:\n"
     ++ "The type (pretty-printer):\n" ++ prettyShow tyEtaExpanded ++ "\n"
     ++ "The type (show):\n" ++ showLn tyEtaExpanded
 
   reportSLn "toAF" 10 $
     if ty == tyEtaExpanded
-    then "The type and the eta-expanded type: equals"
-    else "The type and the eta-expanded type: different"
+    then "The type and the η-expanded type: equals"
+    else "The type and the η-expanded type: different"
 
   let boundedVarsTy ∷ [(String, Type)]
       boundedVarsTy = boundedVarsType tyEtaExpanded

@@ -163,11 +163,12 @@ instance EtaExpandible Term where
   etaExpand (Lam h (Abs x termAbs)) = Lam h . Abs x <$> etaExpand termAbs
 
   etaExpand (Pi domTy (NoAbs x absTy)) = do
-     tDom ← etaExpand domTy
-     tAbs ← etaExpand absTy
-     return $ Pi tDom (NoAbs x tAbs)
-  -- It seems it is not necessary to eta-expand the domTy like in the
-  -- case of Pi _ (NoAbs _ _).
+    tDom ← etaExpand domTy
+    tAbs ← etaExpand absTy
+    return $ Pi tDom (NoAbs x tAbs)
+
+  -- It seems it is not necessary to eta-expand the domTy in the case
+  -- of Pi _ (Abs _ _).
   etaExpand (Pi domTy (Abs x absTy)) = Pi domTy . Abs x <$> etaExpand absTy
 
   etaExpand (Sort sort) = Sort <$> etaExpand sort
@@ -176,8 +177,8 @@ instance EtaExpandible Term where
                          | otherwise = __IMPOSSIBLE__
 
   etaExpand term = do
-   reportSLn "etaExpansion" 20 $ "term: " ++ show term
-   __IMPOSSIBLE__
+    reportSLn "etaExpansion" 20 $ "term: " ++ show term
+    __IMPOSSIBLE__
 
 instance EtaExpandible Elim where
   etaExpand (Apply (Arg color term)) = Apply . Arg color <$> etaExpand term

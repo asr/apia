@@ -46,6 +46,7 @@ import Agda.TypeChecking.Monad.Base
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( ifM )
+import Agda.Utils.Pretty     ( prettyShow )
 
 ------------------------------------------------------------------------------
 -- Apia imports
@@ -89,14 +90,18 @@ toAF role qName def = do
       ty = defType def
   reportSLn "toAF" 10 $
      "Translating QName: " ++ showLn qName
-     ++ "Type:\n" ++ showLn ty
+     ++ "Pretty type:\n" ++ prettyShow ty ++ "\n"
+     ++ "Show type:\n" ++ showLn ty
      ++ "Role: " ++ showLn role ++ "\n"
      ++ "Position: " ++ (showLn . qNameConcreteNameRange) qName
 
   -- We eta-expand the type before the translation.
   tyEtaExpanded ← ifM isTVarsEmpty (etaExpand ty) (__IMPOSSIBLE__)
 
-  reportSLn "toAF" 10 $ "The eta-expanded type is:\n" ++ show tyEtaExpanded
+  reportSLn "toAF" 10 $
+    "The eta-expanded type is:\n"
+    ++ "Pretty type:\n" ++ prettyShow tyEtaExpanded ++ "\n"
+    ++ "Show type:\n" ++ showLn tyEtaExpanded
 
   reportSLn "toAF" 10 $
     if ty == tyEtaExpanded

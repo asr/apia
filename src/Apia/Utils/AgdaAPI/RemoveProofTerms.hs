@@ -126,12 +126,6 @@ instance RemoveVar Term where
 
     return $ Lam h (Abs y auxTerm)
 
-  -- N.B. The variables *are* removed from the (Arg Type).
-  removeVar (Pi domTy (NoAbs y absTy)) x = do
-    newArgTy ← removeVar domTy x
-    newAbsTy ← removeVar absTy x
-    return $ Pi newArgTy (NoAbs y newAbsTy)
-
   -- N.B. The variables *are not* removed from the (Arg Type), they
   -- are only removed from the (Abs Type).
   removeVar (Pi domTy (Abs y absTy)) x = do
@@ -150,6 +144,12 @@ instance RemoveVar Term where
     popTVar
     reportSLn "removePT" 20 $ "Pop variable " ++ show y
     return newTerm
+
+  -- N.B. The variables *are* removed from the (Arg Type).
+  removeVar (Pi domTy (NoAbs y absTy)) x = do
+    newArgTy ← removeVar domTy x
+    newAbsTy ← removeVar absTy x
+    return $ Pi newArgTy (NoAbs y newAbsTy)
 
   removeVar term _ = do
     reportSLn "removeVar" 20 $ "The term is: " ++ show term

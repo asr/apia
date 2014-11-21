@@ -165,14 +165,14 @@ instance EtaExpandible Term where
 
     Lam h (Abs x termAbs) → Lam h . Abs x <$> etaExpand termAbs
 
+    -- It seems it is not necessary to η-expand the domTy in the case
+    -- of Pi _ (Abs _ _).
+    Pi domTy (Abs x absTy) → Pi domTy . Abs x <$> etaExpand absTy
+
     Pi domTy (NoAbs x absTy) → do
       tDom ← etaExpand domTy
       tAbs ← etaExpand absTy
       return $ Pi tDom (NoAbs x tAbs)
-
-    -- It seems it is not necessary to η-expand the domTy in the case
-    -- of Pi _ (Abs _ _).
-    Pi domTy (Abs x absTy) → Pi domTy . Abs x <$> etaExpand absTy
 
     Sort sort → Sort <$> etaExpand sort
 

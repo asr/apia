@@ -197,301 +197,304 @@ propositionalFunctionScheme vars n elims = do
 -- | Translate an Agda internal 'Term' to a first-order logic formula
 -- 'FOLFormula'.
 termToFormula ∷ Term → T FOLFormula
-termToFormula term@(Def qName@(QName _ name) elims) = do
-  reportSLn "t2f" 10 $ "termToFormula Def:\n" ++ show term
+termToFormula term = case ignoreSharing term of
 
-  let cName ∷ C.Name
-      cName = nameConcrete name
+  term'@(Def qName@(QName _ name) elims) → do
+    reportSLn "t2f" 10 $ "termToFormula Def:\n" ++ show term'
 
-  case cName of
-    C.NoName{} → __IMPOSSIBLE__
+    let cName ∷ C.Name
+        cName = nameConcrete name
 
-    C.Name _ [] → __IMPOSSIBLE__
+    case cName of
+      C.NoName{} → __IMPOSSIBLE__
 
-    C.Name{} →
-     case allApplyElims elims of
-       Nothing → __IMPOSSIBLE__
+      C.Name _ [] → __IMPOSSIBLE__
 
-       Just [] | isCNameFOLConst folTrue  → return TRUE
+      C.Name{} →
+       case allApplyElims elims of
+         Nothing → __IMPOSSIBLE__
 
-               | isCNameFOLConst folFalse → return FALSE
+         Just [] | isCNameFOLConst folTrue  → return TRUE
 
-               | otherwise → do
-                 -- In this guard we translate 0-ary predicates, i.e.
-                 -- propositional functions, for example, A : Set.
-                 folName ← qName2String qName
-                 return $ Predicate folName []
+                 | isCNameFOLConst folFalse → return FALSE
 
-       Just [a]
-         | isCNameFOLConstHoleRight folNot → fmap Not (argTermToFormula a)
+                 | otherwise → do
+                   -- In this guard we translate 0-ary predicates, i.e.
+                   -- propositional functions, for example, A : Set.
+                   folName ← qName2String qName
+                   return $ Predicate folName []
 
-         | isCNameFOLConst folExists ||
-           isCNameFOLConst folForAll → do
-             fm ← argTermToFormula a
+         Just [a]
+           | isCNameFOLConstHoleRight folNot → fmap Not (argTermToFormula a)
 
-             freshVar ← newTVar
+           | isCNameFOLConst folExists ||
+             isCNameFOLConst folForAll → do
+               fm ← argTermToFormula a
 
-             return $ if isCNameFOLConst folExists
-                      then Exists freshVar $ const fm
-                      else ForAll freshVar $ const fm
+               freshVar ← newTVar
 
-         | otherwise → predicate qName elims
+               return $ if isCNameFOLConst folExists
+                        then Exists freshVar $ const fm
+                        else ForAll freshVar $ const fm
 
-       Just [a1, a2]
-         | isCNameFOLConstTwoHoles folAnd → binConst And a1 a2
+           | otherwise → predicate qName elims
 
-         | isCNameFOLConstTwoHoles folOr → binConst Or a1 a2
+         Just [a1, a2]
+           | isCNameFOLConstTwoHoles folAnd → binConst And a1 a2
 
-         | isCNameFOLConstTwoHoles folCond → binConst Implies a1 a2
+           | isCNameFOLConstTwoHoles folOr → binConst Or a1 a2
 
-         | isCNameFOLConstTwoHoles folBicond1
-           || isCNameFOLConstTwoHoles folBicond2 → binConst Equiv a1 a2
+           | isCNameFOLConstTwoHoles folCond → binConst Implies a1 a2
 
-         | isCNameFOLConstTwoHoles folEquals → do
-             reportSLn "t2f" 20 "Processing equals"
-             liftM2 equal (argTermToFOLTerm a1) (argTermToFOLTerm a2)
+           | isCNameFOLConstTwoHoles folBicond1
+             || isCNameFOLConstTwoHoles folBicond2 → binConst Equiv a1 a2
 
-         | otherwise → predicate qName elims
+           | isCNameFOLConstTwoHoles folEquals → do
+               reportSLn "t2f" 20 "Processing equals"
+               liftM2 equal (argTermToFOLTerm a1) (argTermToFOLTerm a2)
 
-       _ → predicate qName elims
+           | otherwise → predicate qName elims
 
-       where
-       isCNameFOLConst ∷ String → Bool
-       isCNameFOLConst constFOL =
-         -- The equality on the data type @C.Name@ is defined to ignore
-         -- ranges, so we use @noRange@.
-         cName == C.Name noRange [C.Id constFOL]
+         _ → predicate qName elims
 
-       isCNameFOLConstHoleRight ∷ String → Bool
-       isCNameFOLConstHoleRight constFOL =
-         -- The operators are represented by a list with @Hole@'s.  See
-         -- the documentation for @C.Name@.
-         cName == C.Name noRange [C.Id constFOL, C.Hole]
+         where
+         isCNameFOLConst ∷ String → Bool
+         isCNameFOLConst constFOL =
+           -- The equality on the data type @C.Name@ is defined to
+           -- ignore ranges, so we use @noRange@.
+           cName == C.Name noRange [C.Id constFOL]
 
-       isCNameFOLConstTwoHoles ∷ String → Bool
-       isCNameFOLConstTwoHoles constFOL =
-         -- The operators are represented by a list with @Hole@'s.  See
-         -- the documentation for @C.Name@.
-         cName == C.Name noRange [C.Hole, C.Id constFOL, C.Hole]
+         isCNameFOLConstHoleRight ∷ String → Bool
+         isCNameFOLConstHoleRight constFOL =
+           -- The operators are represented by a list with @Hole@'s.
+           -- See the documentation for @C.Name@.
+           cName == C.Name noRange [C.Id constFOL, C.Hole]
 
-termToFormula term@(Lam _ (Abs _ termLam)) = do
-  reportSLn "t2f" 10 $ "termToFormula Lam:\n" ++ show term
+         isCNameFOLConstTwoHoles ∷ String → Bool
+         isCNameFOLConstTwoHoles constFOL =
+           -- The operators are represented by a list with @Hole@'s.  See
+           -- the documentation for @C.Name@.
+           cName == C.Name noRange [C.Hole, C.Id constFOL, C.Hole]
 
-  _ ← pushTNewVar
-  f ← termToFormula termLam
-  popTVar
+  term'@(Lam _ (Abs _ termLam)) → do
+    reportSLn "t2f" 10 $ "termToFormula Lam:\n" ++ show term'
 
-  return f
+    _ ← pushTNewVar
+    f ← termToFormula termLam
+    popTVar
 
-termToFormula (Pi domTy (Abs x absTy)) = do
-  reportSLn "t2f" 10 $
-    "termToFormula Pi _ (Abs _ _):\n"
-    ++ "domTy: " ++ show domTy ++ "\n"
-    ++ "absTy: " ++ show (Abs x absTy)
+    return f
 
-  freshVar ← pushTNewVar
+  Pi domTy (Abs x absTy) → do
+    reportSLn "t2f" 10 $
+      "termToFormula Pi _ (Abs _ _):\n"
+      ++ "domTy: " ++ show domTy ++ "\n"
+      ++ "absTy: " ++ show (Abs x absTy)
 
-  reportSLn "t2f" 20 $
-    "Starting processing in local environment with fresh variable "
-    ++ show freshVar ++ " and type:\n" ++ show absTy
+    freshVar ← pushTNewVar
 
-  f ← typeToFormula absTy
-  popTVar
+    reportSLn "t2f" 20 $
+      "Starting processing in local environment with fresh variable "
+      ++ show freshVar ++ " and type:\n" ++ show absTy
 
-  reportSLn "t2f" 20 $
-    "Finalized processing in local environment with fresh variable "
-    ++ show freshVar ++ " and type:\n" ++ show absTy
+    f ← typeToFormula absTy
+    popTVar
 
-  reportSLn "t2f" 20 $ "The formula f is: " ++ show f
+    reportSLn "t2f" 20 $
+      "Finalized processing in local environment with fresh variable "
+      ++ show freshVar ++ " and type:\n" ++ show absTy
 
-  case unDom domTy of
-    -- The bounded variable is quantified on a @Set@,
-    --
-    -- e.g. the bounded variable is @d : D@ where @D : Set@,
-    --
-    -- so we can create a fresh variable and quantify on it without
-    -- any problem.
-    --
-    -- N.B. the pattern matching on @(Def _ [])@.
-    El (Type (Max [])) (Def _ []) → do
-      reportSLn "t2f" 20 $
-        "Adding universal quantification on variable " ++ show freshVar
-      return $ ForAll freshVar $ const f
+    reportSLn "t2f" 20 $ "The formula f is: " ++ show f
 
-    -- The bounded variable is quantified on a proof. Due to we have
-    -- drop the quantification on proofs terms, this case is
-    -- impossible.
-    El (Type (Max [])) (Def _ _) → __IMPOSSIBLE__
-
-    -- Non-FOL translation: First-order logic universal quantified
-    -- functions term.
-    --
-    -- The bounded variable is quantified on a function of a @Set@ to
-    -- a @Set@,
-    --
-    -- e.g. the bounded variable is @f : D → D@, where @D : Set@.
-    --
-    -- In this case we handle the bounded variable/function as a FOL
-    -- variable in @termToFOLTerm (Var n args)@, which is processed
-    -- first due to lazyness. We quantified on this variable.
-    El (Type (Max []))
-       (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
-           (NoAbs _ (El (Type (Max [])) (Def _ [])))) → do
-      reportSLn "t2f" 20
-        "Removing a quantification on a function of a Set to a Set"
-      return $ ForAll freshVar $ const f
-
-    -- N.B. The next case is just a generalization to various
-    -- arguments of the previous case.
-
-    -- Non-FOL translation: First-order logic universal quantified
-    -- functions term.
-    --
-    -- The bounded variable is quantified on a function of a @Set@ to
-    -- a @Set@,
-    --
-    -- e.g. the bounded variable is @f : D → D → D@, where @D : Set@.
-    --
-    -- In this case we handle the bounded variable/function as a FOL
-    -- variable in @termToFOLTerm (Var n args)@, which is processed
-    -- first due to lazyness. We quantified on this variable.
-    El (Type (Max []))
-       (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
-           (NoAbs _ (El (Type (Max [])) (Pi _ (NoAbs _ _))))) → do
-      reportSLn "t2f" 20
-        "Removing a quantification on a function of a Set to a Set"
-      -- 31 May 2012. We don't have an example of this case.
+    case unDom domTy of
+      -- The bounded variable is quantified on a @Set@,
       --
-      -- return $ ForAll freshVar (\_ → f)
-      __IMPOSSIBLE__
+      -- e.g. the bounded variable is @d : D@ where @D : Set@,
+      --
+      -- so we can create a fresh variable and quantify on it without
+      -- any problem.
+      --
+      -- N.B. the pattern matching on @(Def _ [])@.
+      El (Type (Max [])) (Def _ []) → do
+        reportSLn "t2f" 20 $
+          "Adding universal quantification on variable " ++ show freshVar
+        return $ ForAll freshVar $ const f
 
-    El (Type (Max [])) someTerm → do
-      reportSLn "t2f" 20 $ "The term someterm is: " ++ show someTerm
-      __IMPOSSIBLE__
+      -- The bounded variable is quantified on a proof. Due to we have
+      -- drop the quantification on proofs terms, this case is
+      -- impossible.
+      El (Type (Max [])) (Def _ _) → __IMPOSSIBLE__
 
-    -- Non-FOL translation: First-order logic universal quantified
-    -- propositional functions.
-    --
-    -- The bounded variable is quantified on a @Set₁@,
-    --
-    -- e.g. the bounded variable is @A : D → D → Set@.
-    --
-    -- In this case we return a forall bind on the fresh variable. We
-    -- use this case for translate logic schemata such as
-    --
-    --   ∨-comm₂ : {A₂ B₂ : D → D → Set}{x y : D} →
-    --             A₂ x y ∨ B₂ x y → A₂ x y ∨ B₂ x y.
+      -- Non-FOL translation: First-order logic universal quantified
+      -- functions term.
+      --
+      -- The bounded variable is quantified on a function of a @Set@
+      -- to a @Set@,
+      --
+      -- e.g. the bounded variable is @f : D → D@, where @D : Set@.
+      --
+      -- In this case we handle the bounded variable/function as a FOL
+      -- variable in @termToFOLTerm (Var n args)@, which is processed
+      -- first due to lazyness. We quantified on this variable.
+      El (Type (Max []))
+         (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
+             (NoAbs _ (El (Type (Max [])) (Def _ [])))) → do
+        reportSLn "t2f" 20
+          "Removing a quantification on a function of a Set to a Set"
+        return $ ForAll freshVar $ const f
 
-    El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → do
-      reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
-      return $ ForAll freshVar $ const f
+      -- N.B. The next case is just a generalization to various
+      -- arguments of the previous case.
 
-    -- Non-FOL translation: First-order logic universal quantified
-    -- propositional symbols.
-    --
-    -- The bounded variable is quantified on a @Set₁@,
-    --
-    -- e.g. the bounded variable is @A : Set@,
-    --
-    -- so we just return the consequent. We use this case for
-    -- translating logical schemata such
-    --
-    -- @∨-comm  : {A B : Set} → A ∨ B → B ∨ A@.
-    --
-    -- In this case we handle the bounded variable/function in
-    -- @termToFormula (Var n args)@, which is processed first due to
-    -- lazyness.
+      -- Non-FOL translation: First-order logic universal quantified
+      -- functions term.
+      --
+      -- The bounded variable is quantified on a function of a @Set@
+      -- to a @Set@,
+      --
+      -- e.g. the bounded variable is @f : D → D → D@, where
+      -- @D : Set@.
+      --
+      -- In this case we handle the bounded variable/function as a FOL
+      -- variable in @termToFOLTerm (Var n args)@, which is processed
+      -- first due to lazyness. We quantified on this variable.
+      El (Type (Max []))
+         (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
+             (NoAbs _ (El (Type (Max [])) (Pi _ (NoAbs _ _))))) → do
+        reportSLn "t2f" 20
+          "Removing a quantification on a function of a Set to a Set"
+        -- 31 May 2012. We don't have an example of this case.
+        --
+        -- return $ ForAll freshVar (\_ → f)
+        __IMPOSSIBLE__
 
-    El (Type (Max [ClosedLevel 1])) (Sort _) → do
-      reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
+      El (Type (Max [])) someTerm → do
+        reportSLn "t2f" 20 $ "The term someterm is: " ++ show someTerm
+        __IMPOSSIBLE__
 
-      let p ∷ String
-          p = "--schematic-propositional-symbols"
+      -- Non-FOL translation: First-order logic universal quantified
+      -- propositional functions.
+      --
+      -- The bounded variable is quantified on a @Set₁@,
+      --
+      -- e.g. the bounded variable is @A : D → D → Set@.
+      --
+      -- In this case we return a forall bind on the fresh variable. We
+      -- use this case for translate logic schemata such as
+      --
+      --   ∨-comm₂ : {A₂ B₂ : D → D → Set}{x y : D} →
+      --             A₂ x y ∨ B₂ x y → A₂ x y ∨ B₂ x y.
 
-      ifM (isTPragmaOption p)
-          (return f)
-          (E.throwE $ universalQuantificationErrorMsg p)
+      El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → do
+        reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
+        return $ ForAll freshVar $ const f
 
-    someType → do
-      reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
-      __IMPOSSIBLE__
+      -- Non-FOL translation: First-order logic universal quantified
+      -- propositional symbols.
+      --
+      -- The bounded variable is quantified on a @Set₁@,
+      --
+      -- e.g. the bounded variable is @A : Set@,
+      --
+      -- so we just return the consequent. We use this case for
+      -- translating logical schemata such
+      --
+      -- @∨-comm  : {A B : Set} → A ∨ B → B ∨ A@.
+      --
+      -- In this case we handle the bounded variable/function in
+      -- @termToFormula (Var n args)@, which is processed first due to
+      -- lazyness.
 
-termToFormula (Pi domTy (NoAbs x absTy)) = do
-  reportSLn "t2f" 10 $
-    "termToFormula Pi _ (NoAbs _ _):\n"
-    ++ "domTy: " ++ show domTy ++ "\n"
-    ++ "absTy: " ++ show (NoAbs x absTy)
-  f2 ← typeToFormula absTy
+      El (Type (Max [ClosedLevel 1])) (Sort _) → do
+        reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
 
-  if x /= "_"
-    then
-      case unDom domTy of
-        -- The variable @x@ is an universal quantified variable not
-        -- used, thefefore we generate a quantified first-order logic
-        -- formula.
-        El (Type (Max [])) (Def _ []) → do
-          freshVar ← newTVar
-          return $ ForAll freshVar $ const f2
+        let p ∷ String
+            p = "--schematic-propositional-symbols"
 
-        -- The variable @x@ is a proof term, therefore we erase the
-        -- quantification on it.
-        El (Type (Max [])) (Def _ _) → do
-          f1 ← domTypeToFormula domTy
-          return $ Implies f1 f2
+        ifM (isTPragmaOption p)
+            (return f)
+            (E.throwE $ universalQuantificationErrorMsg p)
 
-        -- The variable in @domTy@ has type @Set₁@ (e.g. A : D → Set)
-        -- and it isn't used, so we omit it.
-        El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → return f2
+      someType → do
+        reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
+        __IMPOSSIBLE__
 
-        someType → do
-          reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
-          __IMPOSSIBLE__
+  Pi domTy (NoAbs x absTy) → do
+    reportSLn "t2f" 10 $
+      "termToFormula Pi _ (NoAbs _ _):\n"
+      ++ "domTy: " ++ show domTy ++ "\n"
+      ++ "absTy: " ++ show (NoAbs x absTy)
+    f2 ← typeToFormula absTy
 
-    else do
-      f1 ← domTypeToFormula domTy
-      return $ Implies f1 f2
+    if x /= "_"
+      then
+        case unDom domTy of
+          -- The variable @x@ is an universal quantified variable not
+          -- used, thefefore we generate a quantified first-order
+          -- logic formula.
+          El (Type (Max [])) (Def _ []) → do
+            freshVar ← newTVar
+            return $ ForAll freshVar $ const f2
 
-termToFormula term@(Var n elims) = do
-  reportSLn "t2f" 10 $ "termToFormula Var: " ++ show term
+          -- The variable @x@ is a proof term, therefore we erase the
+          -- quantification on it.
+          El (Type (Max [])) (Def _ _) → do
+            f1 ← domTypeToFormula domTy
+            return $ Implies f1 f2
 
-  when (n < 0) (__IMPOSSIBLE__)
-  vars ← getTVars
-  when (length vars <= n) (__IMPOSSIBLE__)
+          -- The variable in @domTy@ has type @Set₁@
+          -- (e.g. A : D → Set) and it isn't used, so we omit it.
+          El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → return f2
 
-  case elims of
-    -- N.B. In this case we *don't* use Koen's approach.
-    [] → return $ Predicate (vars !! n) []
+          someType → do
+            reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
+            __IMPOSSIBLE__
 
-    -- Non-FOL translation: First-order logic universal quantified
-    -- propositional functions.
+      else do
+        f1 ← domTypeToFormula domTy
+        return $ Implies f1 f2
 
-    -- If we have a bounded variable quantified on a function of a
-    -- @Set@ to a @Set₁@, for example, the variable/function @A@ in
-    --
-    -- @(A : D → Set) → (x : D) → A x → A x@
-    --
-    -- we are quantifying on this variable/function
-    --
-    -- (see @termToFormula (Pi domTy (Abs _ absTy))@),
-    --
-    -- therefore we need to apply this variable/function to the others
-    -- variables.
-    _ → do
-      let p ∷ String
-          p = "--schematic-propositional-functions"
+  term'@(Var n elims) → do
+    reportSLn "t2f" 10 $ "termToFormula Var: " ++ show term'
 
-      ifM (isTPragmaOption p)
-          (ifM (askTOpt optWithoutPConsts)
-               (E.throwE $
-                 "The options '--schematic-propositional-functions'"
-                 ++ " and '--without-predicate-constants' are incompatible")
-               (propositionalFunctionScheme vars n elims)
-          )
-          (E.throwE $ universalQuantificationErrorMsg p)
+    when (n < 0) (__IMPOSSIBLE__)
+    vars ← getTVars
+    when (length vars <= n) (__IMPOSSIBLE__)
 
-termToFormula term = do
-  reportSLn "t2f" 20 $ "term: " ++ show term
-  __IMPOSSIBLE__
+    case elims of
+      -- N.B. In this case we *don't* use Koen's approach.
+      [] → return $ Predicate (vars !! n) []
+
+      -- Non-FOL translation: First-order logic universal quantified
+      -- propositional functions.
+
+      -- If we have a bounded variable quantified on a function of a
+      -- @Set@ to a @Set₁@, for example, the variable/function @A@ in
+      --
+      -- @(A : D → Set) → (x : D) → A x → A x@
+      --
+      -- we are quantifying on this variable/function
+      --
+      -- (see @termToFormula (Pi domTy (Abs _ absTy))@),
+      --
+      -- therefore we need to apply this variable/function to the
+      -- others variables.
+      _ → do
+        let p ∷ String
+            p = "--schematic-propositional-functions"
+
+        ifM (isTPragmaOption p)
+            (ifM (askTOpt optWithoutPConsts)
+                 (E.throwE $
+                   "The options '--schematic-propositional-functions'"
+                   ++ " and '--without-predicate-constants' are incompatible")
+                 (propositionalFunctionScheme vars n elims)
+            )
+            (E.throwE $ universalQuantificationErrorMsg p)
+
+  term' → do
+    reportSLn "t2f" 20 $ "term: " ++ show term'
+    __IMPOSSIBLE__
 
 -- Translate the function @foo x1 ... xn@.
 appArgsF ∷ String → Args → T FOLTerm

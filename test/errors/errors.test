@@ -292,12 +292,12 @@ dist/build/apia/apia -itest/errors --check test/errors/TPTP4XError.agda
 <<<
 >>>
 >>>2
-apia: tptp4X found an error in the file /tmp/TPTP4XError/18-foo.tptp
+apia: tptp4X found an error in the file /tmp/TPTP4XError/23-foo.tptp
 Please report this as a bug
 >>>= 1
 
-#37. Terms.hs: incompatible options --schematic-propositional-functions and --without-predicate-constants
-dist/build/apia/apia --without-predicate-constants -itest/errors test/errors/SchematicPropositionalFunctions-WithoutPredicateSymbols.agda
+#37. Terms.hs: The Agda --schematic-propositional-functions option and the Apia --without-predicate-constants option are incompatible
+dist/build/apia/apia --without-predicate-constants -itest/errors test/errors/SchematicPropositionalFunctionsWithoutPredicateSymbols.agda
 <<<
 >>>
 >>>2

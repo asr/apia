@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: Issue15.Conat-out
 % Role: axiom
-% ATP pragma line: 32
+% ATP pragma line: 37
 fof(n30_142322921, axiom, ( ! [A] : ( ( kp1_(cConat,A) ) => ( ( A = zero ) | ( ? [B] : ( ( A = succ(B) ) & ( kp1_(cConat,B) ) ) ) ) ) )).
 
 % End general axiom(s).
@@ -30,7 +30,7 @@ fof(n42_142322921, definition, ( ! [A] : ( ( ( A = zero ) | ( ? [B] : ( ( A = su
 % The original Agda term was:
 % Name: Issue15._.h'
 % Role: prove
-% ATP pragma line: 51
+% ATP pragma line: 56
 fof(n47_142322921, conjecture, ( ! [A] : ( ( ( A = zero ) | ( ? [B] : ( ( A = succ(B) ) & ( kp1_(cConat,B) ) ) ) ) => ( ! [B] : ( ( kp2_(cA_42_142322921,A,B) ) => ( ( B = zero ) | ( ? [C] : ( ( B = succ(C) ) & ( kp2_(cA_42_142322921,A,C) ) ) ) ) ) ) ) )).
 
 % End conjecture.

@@ -27,8 +27,8 @@ thm n Nn h = prf
 
   --  ∀ (n : D) (Nn : N n) (h : ∀ k → k ≤ k) → ...
 
-  -- The program apia can erase the proof term Nn, but it cannot erase
-  -- the proof term h.
+  -- Apia can erase the proof term Nn, but it cannot erase the proof
+  -- term h.
 
   postulate prf : n ≡ n
   {-# ATP prove prf #-}

@@ -3,7 +3,7 @@ extra-source-files:
         CHANGES.txt
 
 
-Change log for apia
+Change log for Apia
 
 0.9.1 XXX
 
@@ -17,7 +17,7 @@ Change log for apia
         --universal-quantified-formulae and
         --universal-quantified-propositional-functions
 
-        for this purpose. The apia program is handling these
+        for this purpose. The Apia program is handling these
         pragmas.
 
       * Added command-line option --unproven-conjecture-no-error.

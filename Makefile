@@ -219,6 +219,7 @@ apia_changed : clean
 # cabal clean should be unnecessary. See issue
 # https://github.com/haskell/cabal/issues/1844
 	cabal clean
+	cabal install --only-dependencies
 	cabal configure
 	cabal build
 	make generated_conjectures

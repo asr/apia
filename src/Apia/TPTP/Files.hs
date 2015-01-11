@@ -97,7 +97,7 @@ class AsciiName a where
 instance AsciiName Char where
   asciiName c
     | c == '-' = [c]
-    | c `elem` "._" = __IMPOSSIBLE__
+    | c `elem` ("._" :: String) = __IMPOSSIBLE__
     -- The character is a subscript digit (i.e. ₀, ₁, ..., ₉).
     | ord c `elem` [8320 .. 8329] = [chr (ord c - 8272)]
     | isDigit c || isAsciiUpper c || isAsciiLower c = [c]

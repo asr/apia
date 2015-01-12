@@ -92,7 +92,7 @@ executable apia
 
   if impl(ghc >= 7.2)
      ghc-options:
-       -- The following warning isn't documented in GHC 7.2.2, 7.4.2,
+       -- The following flag isn't documented in GHC 7.2.2, 7.4.2,
        -- 7.6.3 and 7.8.4.
        -fwarn-alternative-layout-rule-transitional
        -fwarn-auto-orphans
@@ -106,10 +106,10 @@ executable apia
        -fwarn-incomplete-patterns
        -fwarn-incomplete-record-updates
        -fwarn-incomplete-uni-patterns
-       -- The following warning is deprecated in GHC 7.8.1.
+       -- The following flag is deprecated in GHC 7.8.1.
        -- -fwarn-lazy-unlifted-bindings
        -fwarn-missing-fields
-       -- 18 July 2014. We cannot enable this warning because we are
+       -- 18 July 2014. We cannot enable this flag because we are
        -- using the Paths_apia module.
        -- -fwarn-missing-import-lists
        -fwarn-missing-local-sigs
@@ -138,7 +138,7 @@ executable apia
      ghc-options:
        -fwarn-duplicate-constraints
        -fwarn-empty-enumerations
-       -- The following warning isn't documented in GHC 7.8.4.
+       -- The following flag isn't documented in GHC 7.8.4.
        -fwarn-inline-rule-shadowing
        -fwarn-overflowed-literals
        -fwarn-typed-holes

@@ -95,7 +95,9 @@ executable apia
        -- The following flag isn't documented in GHC 7.2.2, 7.4.2,
        -- 7.6.3 and 7.8.4.
        -fwarn-alternative-layout-rule-transitional
-       -fwarn-auto-orphans
+       -- TODO (12 January 2015). The following flag generates warnings
+       -- with GHC\_7.10\_RC1.
+       -- -fwarn-auto-orphans
        -fwarn-deprecated-flags
        -fwarn-dodgy-exports
        -fwarn-dodgy-foreign-imports

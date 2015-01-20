@@ -1,7 +1,7 @@
 ------------------------------------------------------------------------------
 -- |
 -- Module      : Apia.Utils.Show
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2014
+-- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>

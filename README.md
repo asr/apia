@@ -22,16 +22,16 @@
 
 * ATPs
 
-  Apia requires at least one of the following ATPs:
-  [E](http://www4.informatik.tu-muenchen.de/~schulz/WORK/eprover.html),
-  [Equinox](http://www.cse.chalmers.se/~koen/code/),
-  [ileanCoP](http://www.leancop.de/ileancop/index.html),
-  [Metis](http://www.gilith.com/software/metis/),
-  [SPASS](http://www.spass-prover.org/) or
-  [Vampire](http://www.vprover.org/). The tested versions of the ATPs
-  are: E 1.8-001 Gopaldhara, Equinox 5.0alpha (2010-06-29), ileanCoP
-  1.3beta1, Metis 2.3 (release 20141206), SPASS 3.7 and Vampire 0.6
-  (revision 903).
+  Apia requires at least one ATPs. The current supported ATPs are:
+
+  ATP | Tested version
+  --- | --------------------
+  [E](http://www4.informatik.tu-muenchen.de/~schulz/WORK/eprover.html) | E 1.8-001 Gopaldhara
+  [Equinox](http://www.cse.chalmers.se/~koen/code/) | Equinox 5.0alpha (2010-06-29)
+  [ileanCoP](http://www.leancop.de/ileancop/index.html) | ileanCoP 1.3beta1
+  [Metis](http://www.gilith.com/software/metis/) | Metis 2.3 (release 20141206)
+  [SPASS](http://www.spass-prover.org/) | SPASS 3.7
+  [Vampire](http://www.vprover.org/) | Vampire 0.6 (revision 903)
 
 * The tptp4X program
 

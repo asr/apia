@@ -22,7 +22,7 @@
 
 * ATPs
 
-  Apia requires at least one ATPs. The current supported ATPs are:
+  Apia requires at least one ATP. The current supported ATPs are:
 
   ATP | Tested version
   --- | --------------------

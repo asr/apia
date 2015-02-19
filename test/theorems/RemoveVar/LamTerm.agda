@@ -37,21 +37,21 @@ data _≡_ (x : D) : D → Set where
 postulate
   Stream-gfp₂ : (P : D → Set) →
                 -- P is post-fixed point of StreamF.
-                (∀ {xs} → P xs → ∃[ x' ] ∃[ xs' ] P xs' ∧ xs ≡ x' ∷ xs') →
+                (∀ {xs} → P xs → ∃[ x' ] ∃[ xs' ] (P xs' ∧ xs ≡ x' ∷ xs')) →
                 -- Stream is greater than P.
                 ∀ {xs} → P xs → Stream xs
 
 postulate
   ≈-gfp₁ : ∀ {xs ys} → xs ≈ ys →
-           ∃[ x' ] ∃[ xs' ] ∃[ ys' ] xs' ≈ ys' ∧ xs ≡ x' ∷ xs' ∧ ys ≡ x' ∷ ys'
+           ∃[ x' ] ∃[ xs' ] ∃[ ys' ] (xs' ≈ ys' ∧ xs ≡ x' ∷ xs' ∧ ys ≡ x' ∷ ys')
 {-# ATP axiom ≈-gfp₁ #-}
 
 ≈→Stream : ∀ {xs ys} → xs ≈ ys → Stream xs
 ≈→Stream {xs} {ys} xs≈ys = Stream-gfp₂ P helper (ys , xs≈ys)
   where
   P : D → Set
-  P ws = ∃[ zs ] ws ≈ zs
+  P ws = ∃[ zs ] (ws ≈ zs)
   {-# ATP definition P #-}
 
-  postulate helper : ∀ {ws} → P ws → ∃[ w' ] ∃[ ws' ] P ws' ∧ ws ≡ w' ∷ ws'
+  postulate helper : ∀ {ws} → P ws → ∃[ w' ] ∃[ ws' ] (P ws' ∧ ws ≡ w' ∷ ws')
   {-# ATP prove helper #-}

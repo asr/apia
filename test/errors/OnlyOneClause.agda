@@ -9,7 +9,8 @@
 
 module OnlyOneClause where
 
-infix 7 _≡_
+infixl 9 _+_
+infix  7 _≡_
 
 data ℕ : Set where
   zero :     ℕ

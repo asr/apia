@@ -6,10 +6,10 @@
 % The general axiom(s).
 
 % The original Agda term was:
-% Name: Issue15.Conat-out
+% Name: RemoveVar.LamTerm.≈-gfp₁
 % Role: axiom
-% ATP pragma line: 37
-fof(n30_142322921, axiom, ( ! [A] : ( ( kp1_(cConat,A) ) => ( ( A = zero ) | ( ? [B] : ( ( A = succ(B) ) & ( kp1_(cConat,B) ) ) ) ) ) )).
+% ATP pragma line: 48
+fof(n32_227209975, axiom, ( ! [A] : ( ! [B] : ( ( kp2_(n_8776_,A,B) ) => ( ? [C] : ( ? [D] : ( ? [E] : ( ( kp2_(n_8776_,D,E) ) & ( ( A = n8759(C,D) ) & ( B = n8759(C,E) ) ) ) ) ) ) ) ) )).
 
 % End general axiom(s).
 
@@ -17,10 +17,10 @@ fof(n30_142322921, axiom, ( ! [A] : ( ( kp1_(cConat,A) ) => ( ( A = zero ) | ( ?
 % The required ATP definition(s) by the conjecture.
 
 % The original Agda term was:
-% Name: Issue15._.A
+% Name: RemoveVar.LamTerm._.P
 % Role: definition
 % ATP pragma line: -1
-fof(n42_142322921, definition, ( ! [A] : ( ( ( A = zero ) | ( ? [B] : ( ( A = succ(B) ) & ( kp1_(cConat,B) ) ) ) ) => ( ! [B] : ( ( kp2_(cA_42_142322921,A,B) ) <=> ( ( B = zero ) | ( ? [C] : ( ( B = succ(C) ) & ( kp1_(cConat,C) ) ) ) ) ) ) ) )).
+fof(n41_227209975, definition, ( ! [A] : ( ! [B] : ( ( kp2_(n_8776_,A,B) ) => ( ! [C] : ( ( kp3_(cP_41_227209975,A,B,C) ) <=> ( ? [D] : ( kp2_(n_8776_,C,D) ) ) ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -28,10 +28,10 @@ fof(n42_142322921, definition, ( ! [A] : ( ( ( A = zero ) | ( ? [B] : ( ( A = su
 % The conjecture.
 
 % The original Agda term was:
-% Name: Issue15._.h'
+% Name: RemoveVar.LamTerm._.helper
 % Role: prove
-% ATP pragma line: 56
-fof(n47_142322921, conjecture, ( ! [A] : ( ( ( A = zero ) | ( ? [B] : ( ( A = succ(B) ) & ( kp1_(cConat,B) ) ) ) ) => ( ! [B] : ( ( kp2_(cA_42_142322921,A,B) ) => ( ( B = zero ) | ( ? [C] : ( ( B = succ(C) ) & ( kp2_(cA_42_142322921,A,C) ) ) ) ) ) ) ) )).
+% ATP pragma line: 57
+fof(n47_227209975, conjecture, ( ! [A] : ( ! [B] : ( ( kp2_(n_8776_,A,B) ) => ( ! [C] : ( ( kp3_(cP_41_227209975,A,B,C) ) => ( ? [D] : ( ? [E] : ( ( kp3_(cP_41_227209975,A,B,E) ) & ( C = n8759(D,E) ) ) ) ) ) ) ) ) )).
 
 % End conjecture.
 

@@ -7,6 +7,7 @@ module Issue15 where
 
 infix  7 _≡_
 infixr 5 _∧_
+infix  5 ∃
 infixr 4 _∨_
 
 data _∨_ (A B : Set) : Set where
@@ -33,25 +34,25 @@ data _≡_ (x : D) : D → Set where
 postulate Conat : D → Set
 
 postulate
-  Conat-out : ∀ {n} → Conat n → n ≡ zero ∨ (∃[ n' ] (n ≡ succ n' ∧ Conat n'))
+  Conat-out : ∀ {n} → Conat n → n ≡ zero ∨ (∃[ n' ] n ≡ succ n' ∧ Conat n')
 {-# ATP axiom Conat-out #-}
 
 postulate
   Conat-coind :
     (A : D → Set) →
     -- A is post-fixed point of NatF.
-    (∀ {n} → A n → n ≡ zero ∨ (∃[ n' ] (n ≡ succ n' ∧ A n'))) →
+    (∀ {n} → A n → n ≡ zero ∨ (∃[ n' ] n ≡ succ n' ∧ A n')) →
     -- Conat is greater than A.
     ∀ {n} → A n → Conat n
 
 Conat-in : ∀ {n} →
-           n ≡ zero ∨ (∃[ n' ] (n ≡ succ n' ∧ Conat n')) →
+           n ≡ zero ∨ (∃[ n' ] n ≡ succ n' ∧ Conat n') →
            Conat n
 Conat-in h = Conat-coind A h' h
   where
   A : D → Set
-  A n = n ≡ zero ∨ (∃[ n' ] (n ≡ succ n' ∧ Conat n'))
+  A n = n ≡ zero ∨ (∃[ n' ] n ≡ succ n' ∧ Conat n')
   {-# ATP definition A #-}
 
-  postulate h' : ∀ {n} → A n → n ≡ zero ∨ (∃[ n' ] (n ≡ succ n' ∧ A n'))
+  postulate h' : ∀ {n} → A n → n ≡ zero ∨ (∃[ n' ] n ≡ succ n' ∧ A n')
   {-# ATP prove h' #-}

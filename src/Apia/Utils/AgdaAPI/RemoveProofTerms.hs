@@ -64,8 +64,11 @@ module Apia.Utils.AgdaAPI.RemoveProofTerms ( removeProofTerm ) where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
+#if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ( (<$>) )
-import Control.Monad       ( liftM2, when )
+#endif
+
+import Control.Monad ( liftM2, when )
 
 import Data.List  ( elemIndex )
 import Data.Maybe ( fromMaybe )

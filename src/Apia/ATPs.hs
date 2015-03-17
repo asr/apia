@@ -22,7 +22,10 @@ module Apia.ATPs
 ------------------------------------------------------------------------------
 -- Haskell imports
 
-import Control.Applicative     ( (<$>) )
+#if !MIN_VERSION_base(4,8,0)
+import Control.Applicative ( (<$>) )
+#endif
+
 import Control.Exception       ( evaluate )
 import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )

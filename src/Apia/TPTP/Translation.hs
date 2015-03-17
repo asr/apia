@@ -22,8 +22,11 @@ module Apia.TPTP.Translation
 ------------------------------------------------------------------------------
 -- Haskell imports
 
+#if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ( (<$>) )
-import Control.Monad       ( foldM, liftM2, liftM4, zipWithM )
+#endif
+
+import Control.Monad ( foldM, liftM2, liftM4, zipWithM )
 
 import Data.List ( nub )
 

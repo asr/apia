@@ -20,8 +20,11 @@ module Apia.Utils.AgdaAPI.EtaExpansion ( EtaExpandible(etaExpand) ) where
 ------------------------------------------------------------------------------
 -- Haskell imports
 
+#if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ( (<$>) )
-import Control.Monad       ( when )
+#endif
+
+import Control.Monad ( when )
 
 ------------------------------------------------------------------------------
 -- Agda library imports

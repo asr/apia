@@ -1,0 +1,4 @@
+* 20 March 2015.
+
+Would be it useful to add a flag for Harrop formulae (Harrop 1956) and
+or geometrical open formula (Abel, Coquand and Norell 2005)?

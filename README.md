@@ -29,7 +29,7 @@
   [E](http://www4.informatik.tu-muenchen.de/~schulz/WORK/eprover.html) | E 1.8-001 Gopaldhara
   [Equinox](http://www.cse.chalmers.se/~koen/code/) | Equinox 5.0alpha (2010-06-29)
   [ileanCoP](http://www.leancop.de/ileancop/index.html) | ileanCoP 1.3beta1
-  [Metis](http://www.gilith.com/software/metis/) | Metis 2.3 (release 20141206)
+  [Metis](http://www.gilith.com/software/metis/) | Metis 2.3 (release 20150303)
   [SPASS](http://www.spass-prover.org/) | SPASS 3.7
   [Vampire](http://www.vprover.org/) | Vampire 0.6 (revision 903)
 

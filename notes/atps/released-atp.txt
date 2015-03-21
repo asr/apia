@@ -1,12 +1,28 @@
 When there is a new release of an ATP, we should follow the following
 procedure:
 
-* In Apia, to update src/Apia/ATP.hs with the new version.
+In Apia
+========
 
-* In Apia, to test all the proved conjectures and notes.
+* Update src/Apia/ATP.hs.
+
+* Test all the proved conjectures and notes.
 
     make prove_theorems
     make prove_notes
+
+* Test apia/notes/atps/test/equality/.
+
+* Test apia/notes/tptp.
+
+* Search for comments using the old version, i.e. something like
+
+    find -name '*' | xargs grep -I 'old version' | sort
+
+* Update README.md.
+
+In FOTC
+=======
 
 * In fotc/src/fot, to test all the proved conjectures if the ATP is a
   default one.
@@ -22,13 +38,6 @@ procedure:
 
     find -name '*.agda' | xargs grep 'The ATPs could not'
 
-* Test apia/notes/atps/equality/.
-
-* Test apia/notes/tptp.
-
-* In Apia and FOTC, to search for comments using the old version,
-  i.e. something like
+* Search for comments using the old version, i.e. something like
 
     find -name '*' | xargs grep -I 'old version' | sort
-
-* In Apia, update README.md.

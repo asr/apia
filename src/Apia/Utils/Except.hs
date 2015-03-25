@@ -36,8 +36,7 @@ import Control.Monad.Trans.Error
 
 ------------------------------------------------------------------------------
 
-#if !(MIN_VERSION_transformers(0,4,1))
-
+#if !MIN_VERSION_transformers(0,4,1)
 -- | 'ExcepT' type using transformers 0.3.*.
 type ExceptT = ErrorT
 

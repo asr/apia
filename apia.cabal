@@ -10,7 +10,7 @@ category:      Dependent types
 homepage:      https://github.com/asr/apia
 bug-reports:   https://github.com/asr/apia/issues/
 synopsis:      Program for proving first-order formulae written in Agda using ATPs
-tested-with:   GHC == 7.8.4
+tested-with:   GHC == 7.10.1
 description:
   This package provides a program for proving first-order
   theorems written in the dependently typed language Agda
@@ -92,8 +92,7 @@ executable apia
 
   if impl(ghc >= 7.4)
      ghc-options:
-       -- The following flag isn't documented in GHC 7.4.2, 7.6.3 nor
-       -- 7.8.4.
+       -- The following flag isn't documented in GHC 7.10.1.
        -fwarn-alternative-layout-rule-transitional
        -fwarn-deprecated-flags
        -fwarn-dodgy-exports
@@ -135,21 +134,21 @@ executable apia
      ghc-options:
        -fwarn-duplicate-constraints
        -fwarn-empty-enumerations
-       -- The following flag isn't documented in GHC 7.8.4.
        -fwarn-inline-rule-shadowing
        -fwarn-overflowed-literals
        -fwarn-typed-holes
        -fwarn-unrecognised-pragmas
        -fwarn-unsupported-llvm-version
 
-  -- TODO (12 January 2015). The following flag generates warnings
-  -- with GHC\_7.10.1\_RC1.
+  -- The following flag generates warnings with GHC 7.10.1.
   if impl(ghc < 7.10)
-    ghc-options: -fwarn-auto-orphans
+     ghc-options: -fwarn-auto-orphans
 
-  -- The -fwarn-amp flag will be deprected in GHC 7.10.1.
-  if impl(ghc >= 7.8) && impl(ghc < 7.10)
-    ghc-options: -fwarn-amp
+  if impl(ghc >= 7.10)
+     ghc-options:
+       -fwarn-deriving-typeable
+       -fwarn-context-quantification
+       -fwarn-unticked-promoted-constructors
 
   -- From Agda.cabal: If someone installs Agda with the setuid bit
   -- set, then the presence of +RTS may be a security problem (see GHC

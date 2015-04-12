@@ -1,18 +1,21 @@
-# Description
+Apia
+====
 
-  Apia is a Haskell program for proving first-order theorems written
-  in [Agda](http://wiki.portal.chalmers.se/agda/pmwiki.php) using
-  automatic theorem provers for first-order logic (ATPs). Before
-  calling the ATPs, the Agda formulae are translated into
-  [TPTP](http://www.cs.miami.edu/~tptp/) language.
+Description
+-----------
 
-# Use of Apia
+Apia is a Haskell program for proving first-order theorems written in
+[Agda](http://wiki.portal.chalmers.se/agda/pmwiki.php) using automatic
+theorem provers for first-order logic (ATPs). Before calling the ATPs,
+the Agda formulae are translated into
+[TPTP](http://www.cs.miami.edu/~tptp/) language.
 
-  * Reasoning about Functional Programs by Combining Interactive and
-    Automatic Proofs
-    ([README.md](https://github.com/asr/fotc/blob/master/README.md)).
+Apia is used for reasoning about functional programs by combining
+interactive and automatic proofs (see
+[README.md](https://github.com/asr/fotc/blob/master/README.md)).
 
-# Prerequisites
+Prerequisites
+--------------
 
 * Extended version of Agda
 
@@ -39,7 +42,8 @@
   the [TPTP library](http://www.cs.miami.edu/~tptp/). The tested
   version of tptp4X is from TPTP 6.1.0.
 
-# Installation
+Installation
+------------
 
 1. Extended version of Agda (see
    [README.md](https://github.com/asr/eagda/blob/master/README.md))
@@ -97,7 +101,8 @@
    Equinox, version 5.0alpha, 2010-06-29 proved the conjecture
    ````
 
-# Known limitations
+Known limitations
+-----------------
 
 * Logical symbols
 

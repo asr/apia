@@ -9,13 +9,13 @@
 % Name: DataConstructorsAxioms.N.zN
 % Role: axiom
 % ATP pragma line: 20
-fof(n5_16080198, axiom, ( kp1_(cN,zero) )).
+fof(n10_16080198, axiom, ( kp1_(cN,zero) )).
 
 % The original Agda term was:
 % Name: DataConstructorsAxioms.N.sN
 % Role: axiom
 % ATP pragma line: 20
-fof(n7_16080198, axiom, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp1_(cN,succ(A)) ) ) )).
+fof(n14_16080198, axiom, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp1_(cN,succ(A)) ) ) )).
 
 % End general axiom(s).
 
@@ -26,7 +26,7 @@ fof(n7_16080198, axiom, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp1_(cN,succ(A)) ) ) )).
 % Name: DataConstructorsAxioms.1-N
 % Role: prove
 % ATP pragma line: 26
-fof(n9_16080198, conjecture, ( kp1_(cN,succ(zero)) )).
+fof(n18_16080198, conjecture, ( kp1_(cN,succ(zero)) )).
 
 % End conjecture.
 

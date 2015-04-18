@@ -9,7 +9,7 @@
 % Name: LogicalConstants.⊥E
 % Role: prove
 % ATP pragma line: 61
-fof(n21_143722291, conjecture, ( ( $false ) => ( pA ) )).
+fof(n42_143722291, conjecture, ( ( $false ) => ( pA ) )).
 
 % End conjecture.
 

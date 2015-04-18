@@ -9,7 +9,7 @@
 % Name: Definition11._.P
 % Role: definition
 % ATP pragma line: -1
-fof(n15_90119102, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cP_15_90119102,A,B) ) <=> ( ? [C] : ( B = C ) ) ) ) ) )).
+fof(n30_90119102, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cP_30_90119102,A,B) ) <=> ( ? [C] : ( B = C ) ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n15_90119102, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(c
 % Name: Definition11._.bar
 % Role: prove
 % ATP pragma line: 28
-fof(n20_90119102, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cP_15_90119102,A,B) ) => ( ? [C] : ( C = B ) ) ) ) ) )).
+fof(n40_90119102, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cP_30_90119102,A,B) ) => ( ? [C] : ( C = B ) ) ) ) ) )).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: Let.bar
 % Role: prove
 % ATP pragma line: 20
-fof(n6_244693702, conjecture, ( ! [A] : ( ! [B] : ( ( A = B ) => ( B = A ) ) ) )).
+fof(n12_244693702, conjecture, ( ! [A] : ( ! [B] : ( ( A = B ) => ( B = A ) ) ) )).
 
 % End conjecture.
 

@@ -9,13 +9,13 @@
 % Name: Where1.+-0x
 % Role: axiom
 % ATP pragma line: 36
-fof(n22_130982534, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
+fof(n44_130982534, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
 
 % The original Agda term was:
 % Name: Where1.+-Sx
 % Role: axiom
 % ATP pragma line: 36
-fof(n25_130982534, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
+fof(n50_130982534, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
 
 % End general axiom(s).
 
@@ -26,7 +26,7 @@ fof(n25_130982534, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) 
 % Name: Where1._.A0
 % Role: prove
 % ATP pragma line: 44
-fof(n33_130982534, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( n43(zero,zero) = zero ) ) )).
+fof(n66_130982534, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( n43(zero,zero) = zero ) ) )).
 
 % End conjecture.
 

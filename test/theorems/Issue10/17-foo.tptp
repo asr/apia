@@ -9,7 +9,7 @@
 % Name: Issue10.foo
 % Role: prove
 % ATP pragma line: 17
-fof(n4_52097770, conjecture, ( ! [A] : ( ( kp1_(cP39,A) ) => ( kp1_(cP39,A) ) ) )).
+fof(n8_52097770, conjecture, ( ! [A] : ( ( kp1_(cP39,A) ) => ( kp1_(cP39,A) ) ) )).
 
 % End conjecture.
 

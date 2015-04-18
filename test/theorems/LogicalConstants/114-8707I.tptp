@@ -9,7 +9,7 @@
 % Name: LogicalConstants.∃I
 % Role: prove
 % ATP pragma line: 114
-fof(n49_143722291, conjecture, ( ! [A] : ( ( kp1_(cA185,A) ) => ( ? [B] : ( kp1_(cA185,B) ) ) ) )).
+fof(n98_143722291, conjecture, ( ! [A] : ( ( kp1_(cA185,A) ) => ( ? [B] : ( kp1_(cA185,B) ) ) ) )).
 
 % End conjecture.
 

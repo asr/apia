@@ -9,7 +9,7 @@
 % Name: Eta2.bar
 % Role: prove
 % ATP pragma line: 25
-fof(n9_86855083, conjecture, ( ! [A] : ( ? [B] : ( A = B ) ) )).
+fof(n18_86855083, conjecture, ( ! [A] : ( ? [B] : ( A = B ) ) )).
 
 % End conjecture.
 

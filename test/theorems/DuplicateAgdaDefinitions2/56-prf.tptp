@@ -9,7 +9,7 @@
 % Name: DuplicateAgdaDefinitions2._≤_
 % Role: definition
 % ATP pragma line: -1
-fof(n26_49333747, definition, ( ! [A] : ( ! [B] : ( n8804(A,B) = n60(A,succ(B)) ) ) )).
+fof(n52_49333747, definition, ( ! [A] : ( ! [B] : ( n8804(A,B) = n60(A,succ(B)) ) ) )).
 
 % End common required definition(s).
 
@@ -20,13 +20,13 @@ fof(n26_49333747, definition, ( ! [A] : ( ! [B] : ( n8804(A,B) = n60(A,succ(B)) 
 % Name: DuplicateAgdaDefinitions2.Bool.tB
 % Role: axiom
 % ATP pragma line: 33
-fof(n15_49333747, axiom, ( kp1_(cBool,true) )).
+fof(n30_49333747, axiom, ( kp1_(cBool,true) )).
 
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions2.Bool.fB
 % Role: axiom
 % ATP pragma line: 33
-fof(n16_49333747, axiom, ( kp1_(cBool,false) )).
+fof(n32_49333747, axiom, ( kp1_(cBool,false) )).
 
 % End general axiom(s).
 
@@ -37,7 +37,7 @@ fof(n16_49333747, axiom, ( kp1_(cBool,false) )).
 % Name: DuplicateAgdaDefinitions2.Sx≰0
 % Role: hint
 % ATP pragma line: -1
-fof(n33_49333747, hypothesis, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cNLE_29_49333747,succ(A),zero) ) ) )).
+fof(n66_49333747, hypothesis, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cNLE_58_49333747,succ(A),zero) ) ) )).
 
 % End local hint(s).
 
@@ -48,7 +48,7 @@ fof(n33_49333747, hypothesis, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cNLE_29_49333
 % Name: DuplicateAgdaDefinitions2.NLE
 % Role: definition
 % ATP pragma line: -1
-fof(n29_49333747, definition, ( ! [A] : ( ! [B] : ( ( kp2_(cNLE_29_49333747,A,B) ) <=> ( n8804(A,B) = false ) ) ) )).
+fof(n58_49333747, definition, ( ! [A] : ( ! [B] : ( ( kp2_(cNLE_58_49333747,A,B) ) <=> ( n8804(A,B) = false ) ) ) )).
 
 % End required ATP definition(s) by the local hint(s).
 
@@ -59,7 +59,7 @@ fof(n29_49333747, definition, ( ! [A] : ( ! [B] : ( ( kp2_(cNLE_29_49333747,A,B)
 % Name: DuplicateAgdaDefinitions2._.prf
 % Role: prove
 % ATP pragma line: 56
-fof(n46_49333747, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp1_(cBool,n8804(succ(A),zero)) ) ) )).
+fof(n92_49333747, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp1_(cBool,n8804(succ(A),zero)) ) ) )).
 
 % End conjecture.
 

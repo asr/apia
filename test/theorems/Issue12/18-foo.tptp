@@ -9,7 +9,7 @@
 % Name: Issue12.foo
 % Role: prove
 % ATP pragma line: 18
-fof(n6_253550555, conjecture, ( ! [A] : ( ( ? [B] : ( kp1_(A,B) ) ) => ( ? [B] : ( kp1_(A,B) ) ) ) )).
+fof(n12_253550555, conjecture, ( ! [A] : ( ( ? [B] : ( kp1_(A,B) ) ) => ( ? [B] : ( kp1_(A,B) ) ) ) )).
 
 % End conjecture.
 

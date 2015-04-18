@@ -9,7 +9,7 @@
 % Name: Existential2.foo
 % Role: prove
 % ATP pragma line: 18
-fof(n5_27298079, conjecture, ( ! [A] : ( ( ? [B] : ( kp1_(A,B) ) ) => ( ? [B] : ( kp1_(A,B) ) ) ) )).
+fof(n10_27298079, conjecture, ( ! [A] : ( ( ? [B] : ( kp1_(A,B) ) ) => ( ? [B] : ( kp1_(A,B) ) ) ) )).
 
 % End conjecture.
 

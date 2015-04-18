@@ -9,7 +9,7 @@
 % Name: VariableNamesClash.a≡b
 % Role: axiom
 % ATP pragma line: 18
-fof(n5_167217889, axiom, ( a = b )).
+fof(n10_167217889, axiom, ( a = b )).
 
 % End general axiom(s).
 
@@ -20,7 +20,7 @@ fof(n5_167217889, axiom, ( a = b )).
 % Name: VariableNamesClash._.prf
 % Role: prove
 % ATP pragma line: 25
-fof(n12_167217889, conjecture, ( ! [A] : ( ! [B] : ( a = b ) ) )).
+fof(n24_167217889, conjecture, ( ! [A] : ( ! [B] : ( a = b ) ) )).
 
 % End conjecture.
 

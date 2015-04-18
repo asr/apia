@@ -9,7 +9,7 @@
 % Name: ImplicitArguments.a≡b
 % Role: axiom
 % ATP pragma line: 23
-fof(n8_60938615, axiom, ( a = b )).
+fof(n16_60938615, axiom, ( a = b )).
 
 % End general axiom(s).
 
@@ -20,7 +20,7 @@ fof(n8_60938615, axiom, ( a = b )).
 % Name: ImplicitArguments._.prf
 % Role: prove
 % ATP pragma line: 28
-fof(n13_60938615, conjecture, ( ! [A] : ( b = a ) )).
+fof(n26_60938615, conjecture, ( ! [A] : ( b = a ) )).
 
 % End conjecture.
 

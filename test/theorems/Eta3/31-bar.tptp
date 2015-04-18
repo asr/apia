@@ -9,7 +9,7 @@
 % Name: Eta3.P
 % Role: definition
 % ATP pragma line: -1
-fof(n8_156166027, definition, ( ! [A] : ( ( kp1_(cP_8_156166027,A) ) <=> ( ? [B] : ( kp2_(cP178,A,B) ) ) ) )).
+fof(n16_156166027, definition, ( ! [A] : ( ( kp1_(cP_16_156166027,A) ) <=> ( ? [B] : ( kp2_(cP178,A,B) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n8_156166027, definition, ( ! [A] : ( ( kp1_(cP_8_156166027,A) ) <=> ( ? [B]
 % Name: Eta3.bar
 % Role: prove
 % ATP pragma line: 31
-fof(n13_156166027, conjecture, ( ! [A] : ( ( kp1_(cP_8_156166027,A) ) => ( ? [B] : ( kp2_(cP178,A,B) ) ) ) )).
+fof(n26_156166027, conjecture, ( ! [A] : ( ( kp1_(cP_16_156166027,A) ) => ( ? [B] : ( kp2_(cP178,A,B) ) ) ) )).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: LogicalConstants.A→A
 % Role: prove
 % ATP pragma line: 38
-fof(n12_143722291, conjecture, ( ( pA ) => ( pA ) )).
+fof(n24_143722291, conjecture, ( ( pA ) => ( pA ) )).
 
 % End conjecture.
 

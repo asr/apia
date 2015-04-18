@@ -9,7 +9,7 @@
 % Name: NonFOL.LogicalSchemata.PropositionalFunction.id₂
 % Role: prove
 % ATP pragma line: 19
-fof(n10_228337908, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp2_(A,B,C) ) => ( kp2_(A,B,C) ) ) ) ) )).
+fof(n20_228337908, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp2_(A,B,C) ) => ( kp2_(A,B,C) ) ) ) ) )).
 
 % End conjecture.
 

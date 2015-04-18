@@ -9,7 +9,7 @@
 % Name: AgdaInternalTerms.LamTerm.∃-intro
 % Role: prove
 % ATP pragma line: 20
-fof(n6_194085439, conjecture, ( ! [A] : ( ( kp1_(cA,A) ) => ( ? [B] : ( kp1_(cA,B) ) ) ) )).
+fof(n12_194085439, conjecture, ( ! [A] : ( ( kp1_(cA,A) ) => ( ? [B] : ( kp1_(cA,B) ) ) ) )).
 
 % End conjecture.
 

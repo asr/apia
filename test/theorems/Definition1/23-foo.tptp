@@ -9,7 +9,7 @@
 % Name: Definition1.e
 % Role: definition
 % ATP pragma line: -1
-fof(n4_82188849, definition, ( e = d )).
+fof(n8_82188849, definition, ( e = d )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n4_82188849, definition, ( e = d )).
 % Name: Definition1.foo
 % Role: prove
 % ATP pragma line: 23
-fof(n5_82188849, conjecture, ( e = d )).
+fof(n10_82188849, conjecture, ( e = d )).
 
 % End conjecture.
 

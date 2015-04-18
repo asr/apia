@@ -9,7 +9,7 @@
 % Name: Issue2b.foo₂
 % Role: definition
 % ATP pragma line: -1
-fof(n5_18507689, definition, ( ! [A] : ( ! [B] : ( foo2(A,B) = A ) ) )).
+fof(n10_18507689, definition, ( ! [A] : ( ! [B] : ( foo2(A,B) = A ) ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n5_18507689, definition, ( ! [A] : ( ! [B] : ( foo2(A,B) = A ) ) )).
 % Name: Issue2b.bar₂
 % Role: prove
 % ATP pragma line: 29
-fof(n13_18507689, conjecture, ( ! [A] : ( ! [B] : ( A = foo2(A,B) ) ) )).
+fof(n26_18507689, conjecture, ( ! [A] : ( ! [B] : ( A = foo2(A,B) ) ) )).
 
 % End conjecture.
 

@@ -9,19 +9,19 @@
 % Name: NestedAxioms.B.b≡c
 % Role: axiom
 % ATP pragma line: 19
-fof(n3_54399210, axiom, ( b = c )).
+fof(n6_54399210, axiom, ( b = c )).
 
 % The original Agda term was:
 % Name: NestedAxioms.C.c≡d
 % Role: axiom
 % ATP pragma line: 30
-fof(n3_245270019, axiom, ( c = d )).
+fof(n6_245270019, axiom, ( c = d )).
 
 % The original Agda term was:
 % Name: NestedAxioms.A.a≡b
 % Role: axiom
 % ATP pragma line: 21
-fof(n6_139132942, axiom, ( a = b )).
+fof(n12_139132942, axiom, ( a = b )).
 
 % End general axiom(s).
 
@@ -32,7 +32,7 @@ fof(n6_139132942, axiom, ( a = b )).
 % Name: NestedAxioms.C.foo
 % Role: prove
 % ATP pragma line: 33
-fof(n4_245270019, conjecture, ( d = a )).
+fof(n8_245270019, conjecture, ( d = a )).
 
 % End conjecture.
 

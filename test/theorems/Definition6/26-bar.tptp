@@ -9,7 +9,7 @@
 % Name: Definition6.foo
 % Role: hint
 % ATP pragma line: -1
-fof(n6_7009137, hypothesis, ( c = b )).
+fof(n12_7009137, hypothesis, ( c = b )).
 
 % End local hint(s).
 
@@ -20,7 +20,7 @@ fof(n6_7009137, hypothesis, ( c = b )).
 % Name: Definition6.b
 % Role: definition
 % ATP pragma line: -1
-fof(n5_7009137, definition, ( b = a )).
+fof(n10_7009137, definition, ( b = a )).
 
 % End required ATP definition(s) by the local hint(s).
 
@@ -31,7 +31,7 @@ fof(n5_7009137, definition, ( b = a )).
 % Name: Definition6.bar
 % Role: prove
 % ATP pragma line: 26
-fof(n7_7009137, conjecture, ( c = a )).
+fof(n14_7009137, conjecture, ( c = a )).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: LogicalConstants.∧E₂
 % Role: prove
 % ATP pragma line: 57
-fof(n17_143722291, conjecture, ( ( ( pA ) & ( pB ) ) => ( pB ) )).
+fof(n34_143722291, conjecture, ( ( ( pA ) & ( pB ) ) => ( pB ) )).
 
 % End conjecture.
 

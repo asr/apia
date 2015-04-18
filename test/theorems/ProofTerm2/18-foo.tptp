@@ -9,7 +9,7 @@
 % Name: ProofTerm2.foo
 % Role: prove
 % ATP pragma line: 18
-fof(n8_116113058, conjecture, ( ! [A] : ( ! [B] : ( ( kp1_(cN,A) ) => ( ( kp1_(cN,B) ) => ( A = A ) ) ) ) )).
+fof(n16_116113058, conjecture, ( ! [A] : ( ! [B] : ( ( kp1_(cN,A) ) => ( ( kp1_(cN,B) ) => ( A = A ) ) ) ) )).
 
 % End conjecture.
 

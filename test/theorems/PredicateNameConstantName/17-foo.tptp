@@ -9,7 +9,7 @@
 % Name: PredicateNameConstantName.foo
 % Role: prove
 % ATP pragma line: 17
-fof(n4_197099929, conjecture, ( ! [A] : ( ( kp1_(cP,A) ) => ( kp1_(cP,A) ) ) )).
+fof(n8_197099929, conjecture, ( ! [A] : ( ( kp1_(cP,A) ) => ( kp1_(cP,A) ) ) )).
 
 % End conjecture.
 

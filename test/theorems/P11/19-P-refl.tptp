@@ -9,7 +9,7 @@
 % Name: P11.P-refl
 % Role: prove
 % ATP pragma line: 19
-fof(n14_233316177, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : ( ! [E] : ( ! [F] : ( ! [G] : ( ! [H] : ( ! [I] : ( ! [J] : ( ! [K] : ( ( kp11_(cP,A,B,C,D,E,F,G,H,I,J,K) ) => ( kp11_(cP,A,B,C,D,E,F,G,H,I,J,K) ) ) ) ) ) ) ) ) ) ) ) ) )).
+fof(n28_233316177, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : ( ! [E] : ( ! [F] : ( ! [G] : ( ! [H] : ( ! [I] : ( ! [J] : ( ! [K] : ( ( kp11_(cP,A,B,C,D,E,F,G,H,I,J,K) ) => ( kp11_(cP,A,B,C,D,E,F,G,H,I,J,K) ) ) ) ) ) ) ) ) ) ) ) ) )).
 
 % End conjecture.
 

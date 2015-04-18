@@ -9,7 +9,7 @@
 % Name: ProjectionLikeFunction._.P
 % Role: definition
 % ATP pragma line: -1
-fof(n10_90809832, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cP_10_90809832,A,B) ) <=> ( B = B ) ) ) ) )).
+fof(n20_90809832, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cP_20_90809832,A,B) ) <=> ( B = B ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n10_90809832, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(c
 % Name: ProjectionLikeFunction._.bar
 % Role: prove
 % ATP pragma line: 45
-fof(n12_90809832, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cP_10_90809832,A,A) ) ) )).
+fof(n24_90809832, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cP_20_90809832,A,A) ) ) )).
 
 % End conjecture.
 

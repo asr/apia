@@ -9,7 +9,7 @@
 % Name: NonFOL.LogicalSchemata.P11.P-refl
 % Role: prove
 % ATP pragma line: 19
-fof(n16_235377916, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : ( ! [E] : ( ! [F] : ( ! [G] : ( ! [H] : ( ! [I] : ( ! [J] : ( ! [K] : ( ! [L] : ( ( kp11_(A,B,C,D,E,F,G,H,I,J,K,L) ) => ( kp11_(A,B,C,D,E,F,G,H,I,J,K,L) ) ) ) ) ) ) ) ) ) ) ) ) ) )).
+fof(n32_235377916, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : ( ! [E] : ( ! [F] : ( ! [G] : ( ! [H] : ( ! [I] : ( ! [J] : ( ! [K] : ( ! [L] : ( ( kp11_(A,B,C,D,E,F,G,H,I,J,K,L) ) => ( kp11_(A,B,C,D,E,F,G,H,I,J,K,L) ) ) ) ) ) ) ) ) ) ) ) ) ) )).
 
 % End conjecture.
 

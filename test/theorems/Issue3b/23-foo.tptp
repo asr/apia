@@ -9,7 +9,7 @@
 % Name: Issue3b.A.p
 % Role: axiom
 % ATP pragma line: 18
-fof(n6_185084262, axiom, ( a = b )).
+fof(n12_185084262, axiom, ( a = b )).
 
 % End general axiom(s).
 
@@ -20,7 +20,7 @@ fof(n6_185084262, axiom, ( a = b )).
 % Name: Issue3b.foo
 % Role: prove
 % ATP pragma line: 23
-fof(n8_185084262, conjecture, ( a = b )).
+fof(n16_185084262, conjecture, ( a = b )).
 
 % End conjecture.
 

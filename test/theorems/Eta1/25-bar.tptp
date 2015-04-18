@@ -9,7 +9,7 @@
 % Name: Eta1.bar
 % Role: prove
 % ATP pragma line: 25
-fof(n9_17544139, conjecture, ( ! [A] : ( ( kp1_(cA,A) ) => ( ? [B] : ( kp1_(cA,B) ) ) ) )).
+fof(n18_17544139, conjecture, ( ! [A] : ( ( kp1_(cA,A) ) => ( ? [B] : ( kp1_(cA,B) ) ) ) )).
 
 % End conjecture.
 

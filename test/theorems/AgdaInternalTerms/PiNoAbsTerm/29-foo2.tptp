@@ -9,7 +9,7 @@
 % Name: AgdaInternalTerms.PiNoAbsTerm.foo₂
 % Role: prove
 % ATP pragma line: 29
-fof(n8_188711488, conjecture, ( ( pA ) => ( ! [A] : ( pA ) ) )).
+fof(n16_188711488, conjecture, ( ( pA ) => ( ! [A] : ( pA ) ) )).
 
 % End conjecture.
 

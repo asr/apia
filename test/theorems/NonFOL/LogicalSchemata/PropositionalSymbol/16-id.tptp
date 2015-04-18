@@ -9,7 +9,7 @@
 % Name: NonFOL.LogicalSchemata.PropositionalSymbol.id
 % Role: prove
 % ATP pragma line: 16
-fof(n5_89660145, conjecture, ( ( a ) => ( a ) )).
+fof(n10_89660145, conjecture, ( ( a ) => ( a ) )).
 
 % End conjecture.
 

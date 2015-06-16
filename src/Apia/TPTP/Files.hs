@@ -235,7 +235,7 @@ createConjectureFile generalRoles conjectureSet = do
              "required ATP definition(s) by the local hint(s)"
     addRoles (defsConjecture newConjectureSet) file
              "required ATP definition(s) by the conjecture"
-    addRoles [theConjecture newConjectureSet] file "conjecture"
+    addRoles [ theConjecture newConjectureSet ] file "conjecture"
     T.appendFile file conjectureFooter
 
   whenM (askTOpt optOnlyFiles) $ reportS "" 1 $ "Created " ++ file

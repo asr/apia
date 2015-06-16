@@ -250,7 +250,7 @@ git_pre_commit :
 ##############################################################################
 # Apia install
 
-install :
+install-bin :
 # cabal clean should be unnecessary. See issue
 # https://github.com/haskell/cabal/issues/1844
 	cabal clean

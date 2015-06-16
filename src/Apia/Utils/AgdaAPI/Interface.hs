@@ -317,7 +317,7 @@ qNameType qName = ignoreSharing . defType <$> qNameDefinition qName
 -- | Return the line where a 'QName' is defined.
 qNameLine ∷ QName → Int32
 qNameLine qName =
-  -- See issue 13.
+  -- See Issue 13.
   case rangeToInterval $ qNameConcreteNameRange qName of
     Nothing              → -1 -- __IMPOSSIBLE__
     Just (Interval s _)  → posLine s

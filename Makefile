@@ -286,7 +286,9 @@ hpc_clean :
 
 .PHONY : TAGS
 TAGS :
-	hasktags -e $(haskell_files)
+	hTags -I src/Apia/ \
+              -i dist/build/autogen/cabal_macros.h \
+              -e $(haskell_files)
 
 TODO :
 	find . -type d \( -path './.git' -o -path './dist' \) -prune -o -print \

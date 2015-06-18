@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: Eta1.foo
 % Role: prove
-% ATP pragma line: 22
+% Line: 22
 fof(n14_17544139, conjecture, ( ! [A] : ( ( kp1_(cA,A) ) => ( ? [B] : ( kp1_(cA,B) ) ) ) )).
 
 % End conjecture.

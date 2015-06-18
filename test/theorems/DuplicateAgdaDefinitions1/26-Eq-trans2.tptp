@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions1.Eq
 % Role: definition
-% ATP pragma line: 20
+% Line: 20
 fof(n6_273427573, definition, ( ! [A] : ( ! [B] : ( ( kp2_(cEq_6_273427573,A,B) ) <=> ( kp2_(n_8776_,A,B) ) ) ) )).
 
 % End common required definition(s).
@@ -19,7 +19,7 @@ fof(n6_273427573, definition, ( ! [A] : ( ! [B] : ( ( kp2_(cEq_6_273427573,A,B) 
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions1.Eq-trans
 % Role: hint
-% ATP pragma line: 24
+% Line: 24
 fof(n18_273427573, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp2_(cEq_6_273427573,A,B) ) => ( ( kp2_(cEq_6_273427573,B,C) ) => ( kp2_(cEq_6_273427573,A,C) ) ) ) ) ) )).
 
 % End local hint(s).
@@ -30,7 +30,7 @@ fof(n18_273427573, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp2_(cEq_6_2734
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions1.Eq-trans₂
 % Role: prove
-% ATP pragma line: 26
+% Line: 26
 fof(n28_273427573, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : ( ( kp2_(cEq_6_273427573,A,B) ) => ( ( kp2_(cEq_6_273427573,B,C) ) => ( ( kp2_(cEq_6_273427573,C,D) ) => ( kp2_(cEq_6_273427573,A,D) ) ) ) ) ) ) ) )).
 
 % End conjecture.

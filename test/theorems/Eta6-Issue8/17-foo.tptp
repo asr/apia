@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: Eta6-Issue8.foo
 % Role: prove
-% ATP pragma line: 17
+% Line: 17
 fof(n10_247799157, conjecture, ( ! [A] : ( ( ? [B] : ( kp1_(A,B) ) ) => ( ? [B] : ( kp1_(A,B) ) ) ) )).
 
 % End conjecture.

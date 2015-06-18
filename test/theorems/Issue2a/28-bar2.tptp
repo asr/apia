@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: Issue2a.foo₂
 % Role: definition
-% ATP pragma line: 21
+% Line: 21
 fof(n10_55583567, definition, ( ! [A] : ( foo2(A) = A ) )).
 
 % End required ATP definition(s) by the conjecture.
@@ -19,7 +19,7 @@ fof(n10_55583567, definition, ( ! [A] : ( foo2(A) = A ) )).
 % The original Agda term was:
 % Name: Issue2a.bar₂
 % Role: prove
-% ATP pragma line: 28
+% Line: 28
 fof(n20_55583567, conjecture, ( ! [A] : ( A = foo2(A) ) )).
 
 % End conjecture.

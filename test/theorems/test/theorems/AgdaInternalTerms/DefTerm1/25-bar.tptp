@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: AgdaInternalTerms.DefTerm1.foo
 % Role: axiom
-% ATP pragma line: 21
+% Line: 21
 fof(n12_100727391, axiom, ( kp1_(cP,a) )).
 
 % End general axiom(s).
@@ -19,7 +19,7 @@ fof(n12_100727391, axiom, ( kp1_(cP,a) )).
 % The original Agda term was:
 % Name: AgdaInternalTerms.DefTerm1.bar
 % Role: prove
-% ATP pragma line: 25
+% Line: 25
 fof(n16_100727391, conjecture, ( ! [A] : ( A = A ) )).
 
 % End conjecture.

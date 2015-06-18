@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: AgdaInternalTerms.PiNoAbsTerm.foo₂
 % Role: prove
-% ATP pragma line: 28
+% Line: 28
 fof(n16_188711488, conjecture, ( ( pA ) => ( ! [A] : ( pA ) ) )).
 
 % End conjecture.

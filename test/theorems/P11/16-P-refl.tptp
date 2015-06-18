@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: P11.P-refl
 % Role: prove
-% ATP pragma line: 16
+% Line: 16
 fof(n28_233316177, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : ( ! [E] : ( ! [F] : ( ! [G] : ( ! [H] : ( ! [I] : ( ! [J] : ( ! [K] : ( ( kp11_(cP,A,B,C,D,E,F,G,H,I,J,K) ) => ( kp11_(cP,A,B,C,D,E,F,G,H,I,J,K) ) ) ) ) ) ) ) ) ) ) ) ) )).
 
 % End conjecture.

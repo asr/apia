@@ -8,13 +8,13 @@
 % The original Agda term was:
 % Name: ChangeIndex.DefTerm.+-0x
 % Role: axiom
-% ATP pragma line: 39
+% Line: 39
 fof(n52_176481003, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
 
 % The original Agda term was:
 % Name: ChangeIndex.DefTerm.+-Sx
 % Role: axiom
-% ATP pragma line: 40
+% Line: 40
 fof(n58_176481003, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
 
 % End general axiom(s).
@@ -25,7 +25,7 @@ fof(n58_176481003, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) 
 % The original Agda term was:
 % Name: ChangeIndex.DefTerm._.A
 % Role: definition
-% ATP pragma line: 46
+% Line: 46
 fof(n70_176481003, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cA_70_176481003,A,B) ) <=> ( n43(B,zero) = B ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
@@ -36,7 +36,7 @@ fof(n70_176481003, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(
 % The original Agda term was:
 % Name: ChangeIndex.DefTerm._.is
 % Role: prove
-% ATP pragma line: 53
+% Line: 53
 fof(n78_176481003, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cA_70_176481003,A,B) ) => ( kp2_(cA_70_176481003,A,succ(B)) ) ) ) ) )).
 
 % End conjecture.

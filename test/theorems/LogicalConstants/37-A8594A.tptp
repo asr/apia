@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: LogicalConstants.A→A
 % Role: prove
-% ATP pragma line: 37
+% Line: 37
 fof(n24_143722291, conjecture, ( ( pA ) => ( pA ) )).
 
 % End conjecture.

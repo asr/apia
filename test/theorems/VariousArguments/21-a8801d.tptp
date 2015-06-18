@@ -8,19 +8,19 @@
 % The original Agda term was:
 % Name: VariousArguments.a≡b
 % Role: axiom
-% ATP pragma line: 16
+% Line: 16
 fof(n14_144333317, axiom, ( a = b )).
 
 % The original Agda term was:
 % Name: VariousArguments.b≡c
 % Role: axiom
-% ATP pragma line: 17
+% Line: 17
 fof(n16_144333317, axiom, ( b = c )).
 
 % The original Agda term was:
 % Name: VariousArguments.c≡d
 % Role: axiom
-% ATP pragma line: 18
+% Line: 18
 fof(n18_144333317, axiom, ( c = d )).
 
 % End general axiom(s).
@@ -31,7 +31,7 @@ fof(n18_144333317, axiom, ( c = d )).
 % The original Agda term was:
 % Name: VariousArguments.a≡d
 % Role: prove
-% ATP pragma line: 21
+% Line: 21
 fof(n20_144333317, conjecture, ( a = d )).
 
 % End conjecture.

@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: Let.bar
 % Role: prove
-% ATP pragma line: 19
+% Line: 19
 fof(n12_244693702, conjecture, ( ! [A] : ( ! [B] : ( ( A = B ) => ( B = A ) ) ) )).
 
 % End conjecture.

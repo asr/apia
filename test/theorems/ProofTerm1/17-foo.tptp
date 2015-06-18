@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: ProofTerm1.foo
 % Role: prove
-% ATP pragma line: 17
+% Line: 17
 fof(n12_72203517, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( A = A ) ) )).
 
 % End conjecture.

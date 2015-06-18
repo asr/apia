@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions2._≤_
 % Role: definition
-% ATP pragma line: 42
+% Line: 42
 fof(n52_49333747, definition, ( ! [A] : ( ! [B] : ( n8804(A,B) = n60(A,succ(B)) ) ) )).
 
 % End common required definition(s).
@@ -19,13 +19,13 @@ fof(n52_49333747, definition, ( ! [A] : ( ! [B] : ( n8804(A,B) = n60(A,succ(B)) 
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions2.Bool.tB
 % Role: axiom
-% ATP pragma line: 31
+% Line: 31
 fof(n30_49333747, axiom, ( kp1_(cBool,true) )).
 
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions2.Bool.fB
 % Role: axiom
-% ATP pragma line: 32
+% Line: 32
 fof(n32_49333747, axiom, ( kp1_(cBool,false) )).
 
 % End general axiom(s).
@@ -36,7 +36,7 @@ fof(n32_49333747, axiom, ( kp1_(cBool,false) )).
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions2.Sx≰0
 % Role: hint
-% ATP pragma line: 50
+% Line: 50
 fof(n66_49333747, hypothesis, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cNLE_58_49333747,succ(A),zero) ) ) )).
 
 % End local hint(s).
@@ -47,7 +47,7 @@ fof(n66_49333747, hypothesis, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cNLE_58_49333
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions2.NLE
 % Role: definition
-% ATP pragma line: 46
+% Line: 46
 fof(n58_49333747, definition, ( ! [A] : ( ! [B] : ( ( kp2_(cNLE_58_49333747,A,B) ) <=> ( n8804(A,B) = false ) ) ) )).
 
 % End required ATP definition(s) by the local hint(s).
@@ -58,7 +58,7 @@ fof(n58_49333747, definition, ( ! [A] : ( ! [B] : ( ( kp2_(cNLE_58_49333747,A,B)
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions2._.prf
 % Role: prove
-% ATP pragma line: 56
+% Line: 56
 fof(n92_49333747, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp1_(cBool,n8804(succ(A),zero)) ) ) )).
 
 % End conjecture.

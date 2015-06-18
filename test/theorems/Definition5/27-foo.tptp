@@ -8,13 +8,13 @@
 % The original Agda term was:
 % Name: Definition5.b
 % Role: definition
-% ATP pragma line: 18
+% Line: 18
 fof(n10_187407804, definition, ( b = a )).
 
 % The original Agda term was:
 % Name: Definition5.c
 % Role: definition
-% ATP pragma line: 22
+% Line: 22
 fof(n12_187407804, definition, ( c = op(b) )).
 
 % End required ATP definition(s) by the conjecture.
@@ -25,7 +25,7 @@ fof(n12_187407804, definition, ( c = op(b) )).
 % The original Agda term was:
 % Name: Definition5.foo
 % Role: prove
-% ATP pragma line: 27
+% Line: 27
 fof(n14_187407804, conjecture, ( c = op(a) )).
 
 % End conjecture.

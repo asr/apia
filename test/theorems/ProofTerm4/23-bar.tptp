@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: ProofTerm4._.bar
 % Role: prove
-% ATP pragma line: 23
+% Line: 23
 fof(n34_203932140, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : ( ( kp4_(cA,A,B,C,D) ) => ( ! [E] : ( E = E ) ) ) ) ) ) )).
 
 % End conjecture.

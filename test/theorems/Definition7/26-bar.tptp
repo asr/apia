@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: Definition7._.c
 % Role: definition
-% ATP pragma line: 22
+% Line: 22
 fof(n26_102215011, definition, ( ! [A] : ( ! [B] : ( ( kp1_(cP,A) ) => ( ( kp1_(cP,B) ) => ( c(A,B) = A ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
@@ -19,7 +19,7 @@ fof(n26_102215011, definition, ( ! [A] : ( ! [B] : ( ( kp1_(cP,A) ) => ( ( kp1_(
 % The original Agda term was:
 % Name: Definition7._.bar
 % Role: prove
-% ATP pragma line: 26
+% Line: 26
 fof(n28_102215011, conjecture, ( ! [A] : ( ! [B] : ( ( kp1_(cP,A) ) => ( ( kp1_(cP,B) ) => ( c(A,B) = A ) ) ) ) )).
 
 % End conjecture.

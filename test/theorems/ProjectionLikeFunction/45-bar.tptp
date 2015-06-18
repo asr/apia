@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: ProjectionLikeFunction._.P
 % Role: definition
-% ATP pragma line: 41
+% Line: 41
 fof(n20_90809832, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cP_20_90809832,A,B) ) <=> ( B = B ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.
@@ -19,7 +19,7 @@ fof(n20_90809832, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(c
 % The original Agda term was:
 % Name: ProjectionLikeFunction._.bar
 % Role: prove
-% ATP pragma line: 45
+% Line: 45
 fof(n24_90809832, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cP_20_90809832,A,A) ) ) )).
 
 % End conjecture.

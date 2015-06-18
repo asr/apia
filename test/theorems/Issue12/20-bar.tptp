@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: Issue12.bar
 % Role: prove
-% ATP pragma line: 20
+% Line: 20
 fof(n18_253550555, conjecture, ( ! [A] : ( ( ? [B] : ( kp1_(A,B) ) ) => ( ? [B] : ( kp1_(A,B) ) ) ) )).
 
 % End conjecture.

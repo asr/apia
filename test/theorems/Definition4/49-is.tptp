@@ -8,13 +8,13 @@
 % The original Agda term was:
 % Name: Definition4.+-0x
 % Role: axiom
-% ATP pragma line: 34
+% Line: 34
 fof(n44_92201930, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
 
 % The original Agda term was:
 % Name: Definition4.+-Sx
 % Role: axiom
-% ATP pragma line: 35
+% Line: 35
 fof(n50_92201930, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
 
 % End general axiom(s).
@@ -25,7 +25,7 @@ fof(n50_92201930, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) )
 % The original Agda term was:
 % Name: Definition4.A
 % Role: definition
-% ATP pragma line: 40
+% Line: 40
 fof(n52_92201930, definition, ( ! [A] : ( ( kp1_(cA_52_92201930,A) ) <=> ( n43(zero,A) = A ) ) )).
 
 % End required ATP definition(s) by the conjecture.
@@ -36,7 +36,7 @@ fof(n52_92201930, definition, ( ! [A] : ( ( kp1_(cA_52_92201930,A) ) <=> ( n43(z
 % The original Agda term was:
 % Name: Definition4.is
 % Role: prove
-% ATP pragma line: 49
+% Line: 49
 fof(n60_92201930, conjecture, ( ! [A] : ( ( kp1_(cA_52_92201930,A) ) => ( kp1_(cA_52_92201930,succ(A)) ) ) )).
 
 % End conjecture.

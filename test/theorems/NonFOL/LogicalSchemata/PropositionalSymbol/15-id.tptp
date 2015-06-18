@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: NonFOL.LogicalSchemata.PropositionalSymbol.id
 % Role: prove
-% ATP pragma line: 15
+% Line: 15
 fof(n10_89660145, conjecture, ( ( a ) => ( a ) )).
 
 % End conjecture.

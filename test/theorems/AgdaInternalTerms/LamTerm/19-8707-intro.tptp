@@ -8,7 +8,7 @@
 % The original Agda term was:
 % Name: AgdaInternalTerms.LamTerm.∃-intro
 % Role: prove
-% ATP pragma line: 19
+% Line: 19
 fof(n12_194085439, conjecture, ( ! [A] : ( ( kp1_(cA,A) ) => ( ? [B] : ( kp1_(cA,B) ) ) ) )).
 
 % End conjecture.

@@ -1,0 +1,28 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The required ATP definition(s) by the conjecture.
+
+% The original Agda term was:
+% Name: Definition3.foo
+% Role: definition
+% ATP pragma line: 17
+fof(n6_272600597, definition, ( ! [A] : ( ! [B] : ( foo(A,B) = A ) ) )).
+
+% End required ATP definition(s) by the conjecture.
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: Definition3.bar
+% Role: prove
+% ATP pragma line: 21
+fof(n16_272600597, conjecture, ( ! [A] : ( ! [B] : ( A = foo(A,B) ) ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

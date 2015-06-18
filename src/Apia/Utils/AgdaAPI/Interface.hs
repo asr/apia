@@ -318,8 +318,9 @@ qNameType qName = ignoreSharing . defType <$> qNameDefinition qName
 qNameLine ∷ QName → Int32
 qNameLine qName =
   -- See Issue 13.
+  -- TODO (18 June 2015): Remove 9999.
   case rangeToInterval $ qNameConcreteNameRange qName of
-    Nothing              → -1 -- __IMPOSSIBLE__
+    Nothing              → 9999 -- __IMPOSSIBLE__
     Just (Interval s _)  → posLine s
 
 -- | Return the 'Range' of the concrete name of a 'QName'.

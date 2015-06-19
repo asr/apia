@@ -8,7 +8,7 @@
 {-# OPTIONS --schematic-propositional-symbols #-}
 {-# OPTIONS --without-K                       #-}
 
-module NonFOL.LogicalSchemata.PropositionalSymbol where
+module LogicalSchemata.PropositionalSymbol where
 
 postulate D : Set
 

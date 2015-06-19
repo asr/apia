@@ -6,10 +6,10 @@
 % The local hint(s).
 
 % The original Agda term was:
-% Name: NonFOL.LogicalSchemata.Instance.schema
+% Name: LogicalSchemata.Instance.schema
 % Role: hint
 % Line: 17
-fof(n14_248243700, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp1_(A,C) ) => ( kp1_(B,C) ) ) ) ) )).
+fof(n12_41853490, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp1_(A,C) ) => ( kp1_(B,C) ) ) ) ) )).
 
 % End local hint(s).
 
@@ -17,10 +17,10 @@ fof(n14_248243700, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp1_(A,C) ) => 
 % The conjecture.
 
 % The original Agda term was:
-% Name: NonFOL.LogicalSchemata.Instance.instanceC
+% Name: LogicalSchemata.Instance.instanceC
 % Role: prove
 % Line: 24
-fof(n22_248243700, conjecture, ( ( kp1_(cA,d) ) => ( kp1_(cB,d) ) )).
+fof(n20_41853490, conjecture, ( ( kp1_(cA,d) ) => ( kp1_(cB,d) ) )).
 
 % End conjecture.
 

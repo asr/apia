@@ -8,7 +8,7 @@
 {-# OPTIONS --schematic-propositional-functions #-}
 {-# OPTIONS --without-K                         #-}
 
-module NonFOL.LogicalSchemata.P11 where
+module LogicalSchemata.P11 where
 
 postulate
   D      : Set

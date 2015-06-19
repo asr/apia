@@ -7,7 +7,8 @@ SHELL := /bin/bash
 errors_path               = test/errors
 non_theorems_path         = test/non-theorems
 command_line_options_path = test/command-line-options
-theorems_path             = test/theorems
+fol_theorems_path         = test/succeed/fol-theorems
+non_fol_theorems_path     = test/succeed/non-fol-theorems
 
 # Output directory for the TPTP files.
 output_dir = /tmp/apia
@@ -44,15 +45,26 @@ my_pathsubst = $(patsubst %.agda, %.$(1), \
 
 # Tests
 
-generated_theorems_files = \
-  $(call my_pathsubst,generated_theorems,$(theorems_path))
+generated_fol_theorems_files = \
+  $(call my_pathsubst,generated_fol_theorems,$(fol_theorems_path))
+
+generated_non_fol_theorems_files = \
+  $(call my_pathsubst,generated_non_fol_theorems,$(non_fol_theorems_path))
 
 generated_non_theorems_files = \
   $(call my_pathsubst,generated_non_theorems,$(non_theorems_path))
 
-only_theorems_files = $(call my_pathsubst,only_theorems,$(theorems_path))
+only_fol_theorems_files = \
+  $(call my_pathsubst,only_fol_theorems,$(fol_theorems_path))
 
-prove_theorems_files = $(call my_pathsubst,prove_theorems,$(theorems_path))
+only_non_fol_theorems_files = \
+  $(call my_pathsubst,only_fol_theorems,$(fol_theorems_path))
+
+prove_fol_theorems_files = \
+  $(call my_pathsubst,prove_fol_theorems,$(fol_theorems_path))
+
+prove_non_fol_theorems_files = \
+  $(call my_pathsubst,prove_non_fol_theorems,$(non_fol_theorems_path))
 
 refute_theorems_files = \
   $(call my_pathsubst,refute_theorems,$(non_theorems_path))
@@ -72,54 +84,124 @@ type_check_notes_files = \
 prove_notes_files = $(call my_pathsubst,prove_notes,$(notes_path))
 
 ##############################################################################
-# Test suite: Generated conjectures
+# Test suite: Generated FOL theorem
 
-flags_gt = -i$(theorems_path) --only-files \
-	   --output-dir=$(output_dir)/$(theorems_path) \
+flags_generated_fol_theorems = \
+  -i$(fol_theorems_path) --only-files \
+  --output-dir=$(output_dir)/$(fol_theorems_path)
 
-%.generated_theorems :
+%.generated_fol_theorems :
 	@echo "Comparing $*.agda"
-	@$(AGDA) -i$(theorems_path) $*.agda
-	@$(APIA) -v 0 $(flags_gt) $*.agda
+	@$(AGDA) -i$(fol_theorems_path) $*.agda
+	@$(APIA) -v 0 $(flags_generated_fol_theorems) $*.agda
 	@diff -r $* $(output_dir)/$*
 
-flags_ngt = -i$(non_theorems_path) --only-files \
-	   --output-dir=$(output_dir)/$(non_theorems_path) \
+generated_fol_theorems_aux : $(generated_fol_theorems_files)
+
+generated_fol_theorems :
+	rm -r -f $(output_dir)
+	make generated_fol_theorems_aux
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Test suite: Generated non-FOL theorems
+
+flags_generated_non_fol_theorems = \
+  -i$(non_fol_theorems_path) --only-files \
+  --output-dir=$(output_dir)/$(non_fol_theorems_path)
+
+%.generated_non_fol_theorems :
+	@echo "Comparing $*.agda"
+	@$(AGDA) -i$(non_fol_theorems_path) $*.agda
+	@$(APIA) -v 0 $(flags_generated_non_fol_theorems) $*.agda
+	@diff -r $* $(output_dir)/$*
+
+generated_non_fol_theorems_aux : $(generated_non_fol_theorems_files)
+
+generated_non_fol_theorems : $(generated_non_fol_theorems_files)
+	rm -r -f $(output_dir)
+	make generated_non_fol_theorems_aux
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Test suite: Generated non-theorems
+
+flags_genetared-non-theorems = \
+  -i$(non_theorems_path) --only-files \
+  --output-dir=$(output_dir)/$(non_theorems_path)
 
 %.generated_non_theorems :
 	@echo "Comparing $*.agda"
 	@$(AGDA) -i$(non_theorems_path) $*.agda
-	@$(APIA) -v 0 $(flags_ngt) $*.agda
+	@$(APIA) -v 0 $(flags_genetared-non-theorems) $*.agda
 	@diff -r $* $(output_dir)/$*
 
-generated_conjectures_aux : $(generated_theorems_files) \
-	                    $(generated_non_theorems_files)
+generated_non_theorems_aux : $(generated_non_theorems_files)
 
-generated_conjectures :
+generated_non_theorems : $(generated_non_theorems_files)
 	rm -r -f $(output_dir)
-	make generated_conjectures_aux
+	make generated_non_theorems_aux
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test suite: Only files
+# Test suite: Generated TPTP files
 
-%.only_theorems :
-	$(AGDA) -i$(theorems_path) $*.agda
-	$(APIA) -i$(theorems_path) --only-files --output-dir=$(output_dir) \
+generated_all :
+	make generated_fol_theorems
+	make generated_non_fol_theorems
+	make generated_non_theorems
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Test suite: Only FOL theorems files
+
+%.only_fol_theorems :
+	$(AGDA) -i$(fol_theorems_path) $*.agda
+	$(APIA) -i$(fol_theorems_path) --only-files --output-dir=$(output_dir) \
                 $*.agda
 
-only_theorems : $(only_theorems_files)
+only_fol_theorems : $(only_fol_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test suite: Prove theorems
+# Test suite: Only non-FOL theorems files
 
-%.prove_theorems :
-	$(AGDA) -i$(theorems_path) $*.agda
-	$(APIA) -i$(theorems_path) --output-dir=$(output_dir) \
+%.only_non_fol_theorems :
+	$(AGDA) -i$(non_fol_theorems_path) $*.agda
+	$(APIA) -i$(non_fol_theorems_path) --only-files --output-dir=$(output_dir) \
+                $*.agda
+
+only_non_fol_theorems : $(only_non_fol_theorems_files)
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Test suite: Prove FOL theorems
+
+%.prove_fol_theorems :
+	$(AGDA) -i$(fol_theorems_path) $*.agda
+	$(APIA) -i$(fol_theorems_path) --output-dir=$(output_dir) \
 	         --time=10 $*.agda
 
-prove_theorems : $(prove_theorems_files)
+prove_fol_theorems : $(prove_fol_theorems_files)
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Test suite: Prove non-FOL theorems
+
+%.prove_non_fol_theorems :
+	$(AGDA) -i$(non_fol_theorems_path) $*.agda
+	$(APIA) -i$(non_fol_theorems_path) --output-dir=$(output_dir) \
+	         --time=10 $*.agda
+
+prove_non_fol_theorems : $(prove_non_fol_theorems_files)
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Test suite: Prove all theorems
+
+prove_all_theorems :
+	make prove_fol_theorems
+	make prove_non_fol_theorems
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -221,7 +303,7 @@ apia_changed : clean
 # https://github.com/haskell/cabal/issues/1844.
 	cabal configure --ghc-option=-fforce-recomp
 	cabal build
-	make generated_conjectures
+	make generated_all
 	make errors
 	make command_line_options
 	make prove_notes
@@ -263,7 +345,7 @@ hpc_html_dir = $(apia_path)/hpc
 
 hpc : hpc_clean
 	cd $(apia_path) && cabal clean && cabal install --ghc-option=-fhpc
-	make prove_theorems
+	make prove_all_theorem
 	make refute_theorems
 	make errors
 	make command_line_options

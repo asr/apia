@@ -6,10 +6,10 @@
 % The conjecture.
 
 % The original Agda term was:
-% Name: NonFOL.LogicalSchemata.P11.P-refl
+% Name: LogicalSchemata.PropositionalFunction.id₂
 % Role: prove
-% Line: 15
-fof(n32_235377916, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : ( ! [E] : ( ! [F] : ( ! [G] : ( ! [H] : ( ! [I] : ( ! [J] : ( ! [K] : ( ! [L] : ( ( kp11_(A,B,C,D,E,F,G,H,I,J,K,L) ) => ( kp11_(A,B,C,D,E,F,G,H,I,J,K,L) ) ) ) ) ) ) ) ) ) ) ) ) ) )).
+% Line: 18
+fof(n18_78581525, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp2_(A,B,C) ) => ( kp2_(A,B,C) ) ) ) ) )).
 
 % End conjecture.
 

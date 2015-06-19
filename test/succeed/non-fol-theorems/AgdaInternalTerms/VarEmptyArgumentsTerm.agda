@@ -8,7 +8,7 @@
 {-# OPTIONS --schematic-propositional-functions #-}
 {-# OPTIONS --without-K                         #-}
 
-module NonFOL.AgdaInternalTerms.VarEmptyArgumentsTerm where
+module AgdaInternalTerms.VarEmptyArgumentsTerm where
 
 postulate D : Set
 

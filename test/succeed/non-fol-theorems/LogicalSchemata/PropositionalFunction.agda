@@ -8,7 +8,7 @@
 {-# OPTIONS --schematic-propositional-functions #-}
 {-# OPTIONS --without-K                         #-}
 
-module NonFOL.LogicalSchemata.PropositionalFunction where
+module LogicalSchemata.PropositionalFunction where
 
 postulate D : Set
 

@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Incompatible options
+-- Testing the existential quantifier
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}
@@ -7,12 +7,11 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
--- The @--schematic-propositional-functions@ and
--- @--without-predicate-symbols@ options are incompatible.
+module Existential where
 
-module SchematicPropositionalFunctionsWithoutPredicateSymbols where
+postulate
+  D : Set
+  ∃ : (A : D → Set) → Set
 
-postulate D : Set
-
-postulate id : {P : D → Set}{x : D} → P x → P x
-{-# ATP prove id #-}
+postulate foo : (B : D → Set) → ∃ B → ∃ B
+{-# ATP prove foo #-}

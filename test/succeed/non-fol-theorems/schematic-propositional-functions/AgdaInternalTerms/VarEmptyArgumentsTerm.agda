@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Incompatible options
+-- Testing Agda internal terms: @Var Nat Args@ when @Args = []@
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}
@@ -7,12 +7,9 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
--- The @--schematic-propositional-functions@ and
--- @--without-predicate-symbols@ options are incompatible.
-
-module SchematicPropositionalFunctionsWithoutPredicateSymbols where
+module AgdaInternalTerms.VarEmptyArgumentsTerm where
 
 postulate D : Set
 
-postulate id : {P : D → Set}{x : D} → P x → P x
+postulate id : (P : D → Set)(x : D) → P x → P x
 {-# ATP prove id #-}

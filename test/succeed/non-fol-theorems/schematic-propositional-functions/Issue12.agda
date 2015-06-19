@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Incompatible options
+-- Issue 12
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}
@@ -7,12 +7,14 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
--- The @--schematic-propositional-functions@ and
--- @--without-predicate-symbols@ options are incompatible.
+module Issue12 where
 
-module SchematicPropositionalFunctionsWithoutPredicateSymbols where
+postulate
+  D : Set
+  ∃ : (A : D → Set) → Set
 
-postulate D : Set
+postulate foo : (B C : D → Set) → ∃ C → ∃ C
+{-# ATP prove foo #-}
 
-postulate id : {P : D → Set}{x : D} → P x → P x
-{-# ATP prove id #-}
+postulate bar : (B C : D → Set) → ∃ B → ∃ B
+{-# ATP prove bar #-}

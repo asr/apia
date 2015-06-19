@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Incompatible options
+-- Testing the --schematic-propositional-symbols option
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}
@@ -7,12 +7,11 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
--- The @--schematic-propositional-functions@ and
--- @--without-predicate-symbols@ options are incompatible.
+-- Fails because requires the above option.
 
-module SchematicPropositionalFunctionsWithoutPredicateSymbols where
+module RequiredOption.SchematicPropositionalSymbols where
 
 postulate D : Set
 
-postulate id : {P : D → Set}{x : D} → P x → P x
+postulate id : (P : Set) → P → P
 {-# ATP prove id #-}

@@ -104,7 +104,15 @@ import Apia.Monad.Base
   )
 
 import Apia.Monad.Reports ( reportSLn )
-import Apia.Options       ( Options(optWithFnConsts, optWithoutPConsts) )
+
+import Apia.Options
+  ( Options ( optSchematicFunctions
+            , optSchematicPropositionalFunctions
+            , optSchematicPropositionalSymbols
+            , optWithFnConsts
+            , optWithoutPConsts
+            )
+  )
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
 import Apia.Utils.AgdaAPI.Interface     ( isATPDefinition, qNameDefinition )
@@ -117,8 +125,8 @@ import qualified Apia.Utils.Except as E
 
 universalQuantificationErrorMsg ∷ String → String
 universalQuantificationErrorMsg p =
-  "use the Agda option " ++ "`" ++ p ++ "'" ++ " in your Agda file "
-  ++ "for the translation of first-order logic universal quantified "
+  "use the " ++ "`" ++ p ++ "' "
+  ++ "option for the translation of first-order logic universal quantified "
   ++ entities
   where
     entities ∷ String
@@ -411,7 +419,7 @@ termToFormula term = case ignoreSharing term of
         let p ∷ String
             p = "--schematic-propositional-symbols"
 
-        ifM (isTPragmaOption p)
+        ifM (askTOpt optSchematicPropositionalSymbols)
             (return f)
             (E.throwE $ universalQuantificationErrorMsg p)
 
@@ -483,7 +491,7 @@ termToFormula term = case ignoreSharing term of
         let p ∷ String
             p = "--schematic-propositional-functions"
 
-        ifM (isTPragmaOption p)
+        ifM (askTOpt optSchematicPropositionalFunctions)
             (ifM (askTOpt optWithoutPConsts)
                  (E.throwE $
                    "The options '--schematic-propositional-functions'"
@@ -603,7 +611,7 @@ termToFOLTerm term = case ignoreSharing term of
         let p ∷ String
             p = "--schematic-functions"
 
-        ifM (isTPragmaOption p)
+        ifM (askTOpt optSchematicFunction)
             -- TODO (24 March 2013). Implementation.
             (E.throwE "the option '--schematic-functions' is not implemented")
             -- (do termsFOL ← mapM argTermToFOLTerm varArgs

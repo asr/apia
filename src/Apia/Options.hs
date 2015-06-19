@@ -27,6 +27,9 @@ module Apia.Options
            , optIncludePath
            , optOnlyFiles
            , optOutputDir
+           , optSchematicFunctions
+           , optSchematicPropositionalFunctions
+           , optSchematicPropositionalSymbols
            , optSnapshotDir
            , optSnapshotNoError
            , optSnapshotTest
@@ -78,25 +81,28 @@ import qualified Agda.Utils.Trie as Trie ( insert, singleton )
 
 -- | Program command-line options.
 data Options = Options
-  { optATP             ∷ [String]
-  , optCheck           ∷ Bool
-  , optDumpAgdai       ∷ Bool
-  , optDumpQNames      ∷ Bool
-  , optHelp            ∷ Bool
-  , optIncludePath     ∷ [FilePath]
-  , optInputFile       ∷ Maybe FilePath
-  , optOnlyFiles       ∷ Bool
-  , optOutputDir       ∷ FilePath
-  , optSnapshotDir     ∷ FilePath
-  , optSnapshotNoError ∷ Bool
-  , optSnapshotTest    ∷ Bool
-  , optTime            ∷ Int
-  , optUnprovenNoError ∷ Bool
-  , optVampireExec     ∷ String
-  , optVerbose         ∷ Verbosity
-  , optVersion         ∷ Bool
-  , optWithFnConsts    ∷ Bool
-  , optWithoutPConsts  ∷ Bool
+  { optATP                             ∷ [String]
+  , optCheck                           ∷ Bool
+  , optDumpAgdai                       ∷ Bool
+  , optDumpQNames                      ∷ Bool
+  , optHelp                            ∷ Bool
+  , optIncludePath                     ∷ [FilePath]
+  , optInputFile                       ∷ Maybe FilePath
+  , optOnlyFiles                       ∷ Bool
+  , optOutputDir                       ∷ FilePath
+  , optSchematicFunctions              ∷ Bool
+  , optSchematicPropositionalFunctions ∷ Bool
+  , optSchematicPropositionalSymbols   ∷ Bool
+  , optSnapshotDir                     ∷ FilePath
+  , optSnapshotNoError                 ∷ Bool
+  , optSnapshotTest                    ∷ Bool
+  , optTime                            ∷ Int
+  , optUnprovenNoError                 ∷ Bool
+  , optVampireExec                     ∷ String
+  , optVerbose                         ∷ Verbosity
+  , optVersion                         ∷ Bool
+  , optWithFnConsts                    ∷ Bool
+  , optWithoutPConsts                  ∷ Bool
   }
 
 -- N.B. The default ATPs are handled by @ATP.callATPs@.
@@ -104,25 +110,28 @@ data Options = Options
 -- | Default options use by the program.
 defaultOptions ∷ Options
 defaultOptions = Options
-  { optATP             = []
-  , optCheck           = False
-  , optDumpAgdai       = False
-  , optDumpQNames      = False
-  , optHelp            = False
-  , optIncludePath     = []
-  , optInputFile       = Nothing
-  , optOnlyFiles       = False
-  , optOutputDir       = "/tmp"
-  , optSnapshotDir     = "snapshot"
-  , optSnapshotNoError = False
-  , optSnapshotTest    = False
-  , optTime            = 240
-  , optUnprovenNoError = False
-  , optVampireExec     = "vampire_lin64"
-  , optVerbose         = Trie.singleton [] 1
-  , optVersion         = False
-  , optWithFnConsts    = False
-  , optWithoutPConsts  = False
+  { optATP                             = []
+  , optCheck                           = False
+  , optDumpAgdai                       = False
+  , optDumpQNames                      = False
+  , optHelp                            = False
+  , optIncludePath                     = []
+  , optInputFile                       = Nothing
+  , optOnlyFiles                       = False
+  , optOutputDir                       = "/tmp"
+  , optSchematicFunctions              = False
+  , optSchematicPropositionalFunctions = False
+  , optSchematicPropositionalSymbols   = False
+  , optSnapshotDir                     = "snapshot"
+  , optSnapshotNoError                 = False
+  , optSnapshotTest                    = False
+  , optTime                            = 240
+  , optUnprovenNoError                 = False
+  , optVampireExec                     = "vampire_lin64"
+  , optVerbose                         = Trie.singleton [] 1
+  , optVersion                         = False
+  , optWithFnConsts                    = False
+  , optWithoutPConsts                  = False
   }
 
 -- | 'Options' monad.
@@ -161,6 +170,17 @@ onlyFilesOpt opts = Right opts { optOnlyFiles = True }
 outputDirOpt ∷ FilePath → MOptions
 outputDirOpt []  _    = Left "Option `--output-dir' requires an argument DIR"
 outputDirOpt dir opts = Right opts { optOutputDir = dir }
+
+schematicFunctionsOpt :: MOptions
+schematicFunctionsOpt opts = Right opts { optSchematicFunctions = True }
+
+schematicPropositionalFunctionsOpt :: MOptions
+schematicPropositionalFunctionsOpt opts =
+  Right opts { optSchematicPropositionalFunctions = True }
+
+schematicPropositionalSymbolsOpt :: MOptions
+schematicPropositionalSymbolsOpt opts =
+  Right opts { optSchematicPropositionalSymbols = True }
 
 snapshotDirOpt ∷ FilePath → MOptions
 snapshotDirOpt []  _    = Left "Option `--snapshot-dir' requires an argument DIR"
@@ -236,6 +256,12 @@ options =
                "Do not call the ATPs, only to create the TPTP files."
   , Option []  ["output-dir"] (ReqArg outputDirOpt "DIR")
                "Directory in which the TPTP files are placed (default: /tmp)."
+  , Option []  ["schematic-propositional-functions"]
+               (NoArg schematicPropositionalFunctionsOpt)
+               "Enable translation of universal quantified FOL propositional functions"
+  , Option []  ["schematic-propositional-symbols"]
+               (NoArg schematicPropositionalSymbolsOpt)
+               "Enable translation of universal quantified FOL propositional symbols"
   , Option []  ["snapshot-dir"] (ReqArg snapshotDirOpt "DIR") $
                "Directory where is the snapshot of the TPTP files\n"
                ++ "(default: snapshot)."

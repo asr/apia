@@ -4,10 +4,13 @@ SHELL := /bin/bash
 # Paths
 
 # Tests paths.
-fol_theorems_path         = test/succeed/fol-theorems
-non_fol_theorems_path     = test/succeed/non-fol-theorems
-non_theorems_path         = test/fail/non-theorems
-errors_path               = test/fail/errors
+fol_theorems_path  = test/succeed/fol-theorems
+schematic_propositional_functions_path = \
+  test/succeed/non-fol-theorems/schematic-propositional-functions
+schematic_propositional_symbols_path = \
+  test/succeed/non-fol-theorems/schematic-propositional-symbols
+non_theorems_path = test/fail/non-theorems
+errors_path = test/fail/errors
 command_line_options_path = test/command-line-options
 
 # Output directory for the TPTP files.
@@ -48,8 +51,13 @@ my_pathsubst = $(patsubst %.agda, %.$(1), \
 generated_fol_theorems_files = \
   $(call my_pathsubst,generated_fol_theorems,$(fol_theorems_path))
 
-generated_non_fol_theorems_files = \
-  $(call my_pathsubst,generated_non_fol_theorems,$(non_fol_theorems_path))
+generated_schematic_propositional_functions_files = \
+  $(call my_pathsubst,generated_schematic_propositional_functions,\
+         $(schematic_propositional_functions_path))
+
+generated_schematic_propositional_symbols_files = \
+  $(call my_pathsubst,generated_schematic_propositional_symbols,\
+         $(schematic_propositional_symbols_path))
 
 generated_non_theorems_files = \
   $(call my_pathsubst,generated_non_theorems,$(non_theorems_path))
@@ -57,14 +65,24 @@ generated_non_theorems_files = \
 only_fol_theorems_files = \
   $(call my_pathsubst,only_fol_theorems,$(fol_theorems_path))
 
-only_non_fol_theorems_files = \
-  $(call my_pathsubst,only_fol_theorems,$(fol_theorems_path))
+only_schematic_propositional_functions_files = \
+  $(call my_pathsubst,only_schematic_propositional_functions,\
+         $(schematic_propositional_functions_path))
+
+only_schematic_propositional_symbols_files = \
+  $(call my_pathsubst,only_schematic_propositional_symbols,\
+         $(schematic_propositional_symbols_path))
 
 prove_fol_theorems_files = \
   $(call my_pathsubst,prove_fol_theorems,$(fol_theorems_path))
 
-prove_non_fol_theorems_files = \
-  $(call my_pathsubst,prove_non_fol_theorems,$(non_fol_theorems_path))
+prove_schematic_propositional_functions_files = \
+  $(call my_pathsubst,prove_schematic_propositional_functions,\
+         $(schematic_propositional_functions_path))
+
+prove_schematic_propositional_symbols_files = \
+  $(call my_pathsubst,prove_schematic_propositional_symbols,\
+         $(schematic_propositional_symbols_path))
 
 refute_theorems_files = \
   $(call my_pathsubst,refute_theorems,$(non_theorems_path))
@@ -84,7 +102,7 @@ type_check_notes_files = \
 prove_notes_files = $(call my_pathsubst,prove_notes,$(notes_path))
 
 ##############################################################################
-# Test suite: Generated FOL theorem
+# Test suite: Generated FOL theorems
 
 flags_generated_fol_theorems = \
   -i$(fol_theorems_path) --only-files \
@@ -104,30 +122,63 @@ generated_fol_theorems :
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test suite: Generated non-FOL theorems
+# Test suite: Generated non-FOL theorems using schematic propositional
+# functions
 
-flags_generated_non_fol_theorems = \
-  -i$(non_fol_theorems_path) --only-files \
-  --output-dir=$(output_dir)/$(non_fol_theorems_path)
+flags_generated_schematic_propositional_functions = \
+  -i$(schematic_propositional_functions_path) \
+  --only-files \
+  --output-dir=$(output_dir)/$(schematic_propositional_functions_path)
 
-%.generated_non_fol_theorems :
+%.generated_schematic_propositional_functions :
 	@echo "Comparing $*.agda"
-	@$(AGDA) -i$(non_fol_theorems_path) $*.agda
-	@$(APIA) -v 0 $(flags_generated_non_fol_theorems) $*.agda
+	@$(AGDA) -i$(schematic_propositional_functions_path) $*.agda
+	@$(APIA) -v 0\
+	         $(flags_generated_schematic_propositional_functions) \
+	         --schematic-propositional-functions \
+	         $*.agda
 	@diff -r $* $(output_dir)/$*
 
-generated_non_fol_theorems_aux : $(generated_non_fol_theorems_files)
+generated_schematic_propositional_functions_aux : \
+  $(generated_schematic_propositional_functions_files)
 
-generated_non_fol_theorems : $(generated_non_fol_theorems_files)
+generated_schematic_propositional_functions :
 	rm -r -f $(output_dir)
-	make generated_non_fol_theorems_aux
+	make generated_schematic_propositional_functions_aux
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Test suite: Generated non-FOL theorems using schematic propositional
+# symbols
+
+flags_generated_schematic_propositional_symbols = \
+  -i$(schematic_propositional_symbols_path) \
+  --only-files \
+  --output-dir=$(output_dir)/$(schematic_propositional_symbols_path)
+
+%.generated_schematic_propositional_symbols :
+	@echo "Comparing $*.agda"
+	@$(AGDA) -i$(schematic_propositional_symbols_path) $*.agda
+	@$(APIA) -v 0\
+	         $(flags_generated_schematic_propositional_symbols) \
+	         --schematic-propositional-symbols \
+	         $*.agda
+	@diff -r $* $(output_dir)/$*
+
+generated_schematic_propositional_symbols_aux : \
+  $(generated_schematic_propositional_symbols_files)
+
+generated_schematic_propositional_symbols :
+	rm -r -f $(output_dir)
+	make generated_schematic_propositional_symbols_aux
 	@echo "$@ succeeded!"
 
 ##############################################################################
 # Test suite: Generated non-theorems
 
 flags_genetared-non-theorems = \
-  -i$(non_theorems_path) --only-files \
+  -i$(non_theorems_path) \
+  --only-files \
   --output-dir=$(output_dir)/$(non_theorems_path)
 
 %.generated_non_theorems :
@@ -148,7 +199,8 @@ generated_non_theorems : $(generated_non_theorems_files)
 
 generated_all :
 	make generated_fol_theorems
-	make generated_non_fol_theorems
+	make generated_schematic_propositional_functions
+	make generated_schematic_propositional_symbols
 	make generated_non_theorems
 	@echo "$@ succeeded!"
 
@@ -157,21 +209,44 @@ generated_all :
 
 %.only_fol_theorems :
 	$(AGDA) -i$(fol_theorems_path) $*.agda
-	$(APIA) -i$(fol_theorems_path) --only-files --output-dir=$(output_dir) \
+	$(APIA) -i$(fol_theorems_path) \
+                --only-files \
+                --output-dir=$(output_dir) \
                 $*.agda
 
 only_fol_theorems : $(only_fol_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test suite: Only non-FOL theorems files
+# Test suite: Only non-FOL theorems files using schematic
+# propositional functions
 
-%.only_non_fol_theorems :
-	$(AGDA) -i$(non_fol_theorems_path) $*.agda
-	$(APIA) -i$(non_fol_theorems_path) --only-files --output-dir=$(output_dir) \
+%.only_schematic_propositional_functions :
+	$(AGDA) -i$(schematic_propositional_functions_path) $*.agda
+	$(APIA) -i$(schematic_propositional_functions_path) \
+	        --only-files \
+	        --output-dir=$(output_dir) \
+	        --schematic-propositional-functions \
                 $*.agda
 
-only_non_fol_theorems : $(only_non_fol_theorems_files)
+only_schematic_propositional_functions : \
+  $(only_schematic_propositional_functions_files)
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Test suite: Only non-FOL theorems files using schematic
+# propositional symbols
+
+%.only_schematic_propositional_symbols :
+	$(AGDA) -i$(schematic_propositional_symbols_path) $*.agda
+	$(APIA) -i$(schematic_propositional_symbols_path) \
+	        --only-files \
+	        --output-dir=$(output_dir) \
+	        --schematic-propositional-symbols \
+                $*.agda
+
+only_schematic_propositional_symbols : \
+  $(only_schematic_propositional_symbols_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -179,21 +254,44 @@ only_non_fol_theorems : $(only_non_fol_theorems_files)
 
 %.prove_fol_theorems :
 	$(AGDA) -i$(fol_theorems_path) $*.agda
-	$(APIA) -i$(fol_theorems_path) --output-dir=$(output_dir) \
-	         --time=10 $*.agda
+	$(APIA) -i$(fol_theorems_path) \
+	        --output-dir=$(output_dir) \
+	        --time=10 \
+                $*.agda
 
 prove_fol_theorems : $(prove_fol_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test suite: Prove non-FOL theorems
+# Test suite: Prove non-FOL theorems using schematic propositional
+# functions
 
-%.prove_non_fol_theorems :
-	$(AGDA) -i$(non_fol_theorems_path) $*.agda
-	$(APIA) -i$(non_fol_theorems_path) --output-dir=$(output_dir) \
-	         --time=10 $*.agda
+%.prove_schematic_propositional_functions :
+	$(AGDA) -i$(schematic_propositional_functions_path) $*.agda
+	$(APIA) -i$(schematic_propositional_functions_path) \
+	        --output-dir=$(output_dir) \
+	        --time=10 \
+	        --schematic-propositional-functions \
+		$*.agda
 
-prove_non_fol_theorems : $(prove_non_fol_theorems_files)
+prove_schematic_propositional_functions : \
+  $(prove_schematic_propositional_functions_files)
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Test suite: Prove non-FOL theorems using schematic propositional
+# symbols
+
+%.prove_schematic_propositional_symbols :
+	$(AGDA) -i$(schematic_propositional_symbols_path) $*.agda
+	$(APIA) -i$(schematic_propositional_symbols_path) \
+	        --output-dir=$(output_dir) \
+	        --time=10 \
+	        --schematic-propositional-symbols \
+		$*.agda
+
+prove_schematic_propositional_symbols : \
+  $(prove_schematic_propositional_symbols_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -201,7 +299,8 @@ prove_non_fol_theorems : $(prove_non_fol_theorems_files)
 
 prove_all_theorems :
 	make prove_fol_theorems
-	make prove_non_fol_theorems
+	make prove_schematic_propositional_functions
+	make prove_schematic_propositional_symbols
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -281,7 +380,10 @@ prove_notes_path = -i$(notes_path) \
 %.prove_notes :
 	echo $(prove_notes_files)
 	$(AGDA) $(prove_notes_path) $*.agda
-	$(APIA) $(prove_notes_path) --output-dir=$(output_dir) --time=10 $*.agda
+	$(APIA) $(prove_notes_path) \
+	        --output-dir=$(output_dir) \
+	        --time=10 \
+	        $*.agda
 
 prove_notes : $(prove_notes_files)
 	@echo "$@ succeeded!"

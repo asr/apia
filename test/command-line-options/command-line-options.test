@@ -4,30 +4,32 @@ dist/build/apia/apia --help
 >>>
 Usage: apia [OPTIONS] FILE
 
-          --atp=NAME                      Set the ATP (e, equinox, ileancop, metis, spass, vampire)
-                                          (default: e, equinox, and vampire).
-          --check                         Check the syntax of the generated TPTP files using the
-                                          tptp4X program from the TPTP library.
-          --dump-agdai                    Dump the Agda interface file to stdout.
-          --dump-qnames                   Dump Agda QNames information to stdout.
-          --help                          Show this help.
-  -i DIR  --include-path=DIR              Look for imports in DIR.
-          --only-files                    Do not call the ATPs, only to create the TPTP files.
-          --output-dir=DIR                Directory in which the TPTP files are placed (default: /tmp).
-          --snapshot-dir=DIR              Directory where is the snapshot of the TPTP files
-                                          (default: snapshot).
-          --snapshot-no-error             A difference in the snapshot-test does not generate an error
-                                          (implies --snapshot-test).
-          --snapshot-test                 Compare the generated TPTP files against a snapshot of them.
-          --time=NUM                      Set timeout for the ATPs in seconds (default: 240).
-          --unproven-conjecture-no-error  An unproven TPTP conjecture does not generate an error.
-          --vampire-exec=COMMAND          Set the Vampire executable (default: vampire_lin64).
-  -v N    --verbose=N                     Set verbosity level to N.
-          --version                       Show version number.
-          --with-function-constants       Use a hard-coded binary function symbol for the translation
-                                          of functions (required for handling currying).
-          --without-predicate-constants   Do not use hard-coded (n+1)-ary predicate symbols for the
-                                          translation of n-ary predicates.
+          --atp=NAME                           Set the ATP (e, equinox, ileancop, metis, spass, vampire)
+                                               (default: e, equinox, and vampire).
+          --check                              Check the syntax of the generated TPTP files using the
+                                               tptp4X program from the TPTP library.
+          --dump-agdai                         Dump the Agda interface file to stdout.
+          --dump-qnames                        Dump Agda QNames information to stdout.
+          --help                               Show this help.
+  -i DIR  --include-path=DIR                   Look for imports in DIR.
+          --only-files                         Do not call the ATPs, only to create the TPTP files.
+          --output-dir=DIR                     Directory in which the TPTP files are placed (default: /tmp).
+          --schematic-propositional-functions  Enable translation of universal quantified FOL propositional functions
+          --schematic-propositional-symbols    Enable translation of universal quantified FOL propositional symbols
+          --snapshot-dir=DIR                   Directory where is the snapshot of the TPTP files
+                                               (default: snapshot).
+          --snapshot-no-error                  A difference in the snapshot-test does not generate an error
+                                               (implies --snapshot-test).
+          --snapshot-test                      Compare the generated TPTP files against a snapshot of them.
+          --time=NUM                           Set timeout for the ATPs in seconds (default: 240).
+          --unproven-conjecture-no-error       An unproven TPTP conjecture does not generate an error.
+          --vampire-exec=COMMAND               Set the Vampire executable (default: vampire_lin64).
+  -v N    --verbose=N                          Set verbosity level to N.
+          --version                            Show version number.
+          --with-function-constants            Use a hard-coded binary function symbol for the translation
+                                               of functions (required for handling currying).
+          --without-predicate-constants        Do not use hard-coded (n+1)-ary predicate symbols for the
+                                               translation of n-ary predicates.
 
 >>>2
 >>>= 0

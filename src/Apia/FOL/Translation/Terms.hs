@@ -96,7 +96,6 @@ import Apia.FOL.Types
 import Apia.Monad.Base
   ( askTOpt
   , getTVars
-  , isTPragmaOption
   , newTVar
   , popTVar
   , pushTNewVar
@@ -611,7 +610,7 @@ termToFOLTerm term = case ignoreSharing term of
         let p ∷ String
             p = "--schematic-functions"
 
-        ifM (askTOpt optSchematicFunction)
+        ifM (askTOpt optSchematicFunctions)
             -- TODO (24 March 2013). Implementation.
             (E.throwE "the option '--schematic-functions' is not implemented")
             -- (do termsFOL ← mapM argTermToFOLTerm varArgs

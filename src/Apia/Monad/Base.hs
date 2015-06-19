@@ -17,10 +17,8 @@ module Apia.Monad.Base
   ( askTOpt
   , getTDefs
   , getTVars
-  , isTPragmaOption
   , isTVarsEmpty
   , modifyDefs
-  , modifyPragmaOptions
   , newTVar
   , popTVar
   , pushTNewVar
@@ -51,7 +49,6 @@ import qualified Data.HashMap.Strict as HashMap ( empty )
 ------------------------------------------------------------------------------
 -- Agda library imports
 
-import Agda.Interaction.Options     ( OptionsPragma )
 import Agda.TypeChecking.Monad.Base ( Definitions )
 import Agda.Utils.Impossible        ( Impossible(Impossible), throwImpossible )
 
@@ -74,14 +71,12 @@ import Apia.Utils.Names ( freshName )
 data TState = TState
   { tDefs          ∷ Definitions    -- ^ Agda definitions.
   , tVars          ∷ [String]       -- ^ Variables names.
-  , tPragmaOptions ∷ OptionsPragma  -- ^ Pragma options.
   }
 
 -- The initial state.
 initTState ∷ TState
 initTState = TState { tDefs          = HashMap.empty
                     , tVars          = []
-                    , tPragmaOptions = []
                     }
 
 -- | The translation monad.
@@ -95,13 +90,6 @@ runT ta = env >>= runReaderT (evalStateT (E.runExceptT ta) initTState)
 -- state is empty.
 isTVarsEmpty ∷ T Bool
 isTVarsEmpty = lift $ fmap (null . tVars) get
-
--- | @isTPragmaOption p@ returns 'True' if the pragma option @p@ is
--- set.
-isTPragmaOption ∷ String → T Bool
-isTPragmaOption p = do
-  state ← lift get
-  return (p `elem` tPragmaOptions state)
 
 -- | Fresh variable.
 newTVar ∷ T String
@@ -141,14 +129,3 @@ getTVars = lift $ fmap tVars get
 -- | Modify the Agda 'Definitions' in the translation monad state.
 modifyDefs ∷ Definitions → T ()
 modifyDefs defs = lift $ modify $ \s → s { tDefs = defs }
-
--- | Modify the 'OptionsPragma' in the translation monad state.
-modifyPragmaOptions ∷ OptionsPragma → T ()
-modifyPragmaOptions ps = lift $ modify $ \s → s { tPragmaOptions = ps }
-
-------------------------------------------------------------------------------
--- Note [@OptionsPragma@].
---
--- Agda uses the type @[OptionsPragma]@ instead of the type
--- @OptionPragma@ for the pragma options, but it doesn't seem
--- necessary in our case.

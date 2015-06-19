@@ -171,9 +171,6 @@ outputDirOpt ∷ FilePath → MOptions
 outputDirOpt []  _    = Left "Option `--output-dir' requires an argument DIR"
 outputDirOpt dir opts = Right opts { optOutputDir = dir }
 
-schematicFunctionsOpt :: MOptions
-schematicFunctionsOpt opts = Right opts { optSchematicFunctions = True }
-
 schematicPropositionalFunctionsOpt :: MOptions
 schematicPropositionalFunctionsOpt opts =
   Right opts { optSchematicPropositionalFunctions = True }

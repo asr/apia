@@ -4,11 +4,11 @@ SHELL := /bin/bash
 # Paths
 
 # Tests paths.
-errors_path               = test/errors
-non_theorems_path         = test/non-theorems
-command_line_options_path = test/command-line-options
 fol_theorems_path         = test/succeed/fol-theorems
 non_fol_theorems_path     = test/succeed/non-fol-theorems
+non_theorems_path         = test/fail/non-theorems
+errors_path               = test/fail/errors
+command_line_options_path = test/command-line-options
 
 # Output directory for the TPTP files.
 output_dir = /tmp/apia

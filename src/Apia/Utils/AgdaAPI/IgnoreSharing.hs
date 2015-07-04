@@ -10,6 +10,7 @@
 -- Ignoring sharing
 ------------------------------------------------------------------------------
 
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) ) where
@@ -31,7 +32,13 @@ import Agda.Syntax.Internal as I
   , Type'(El)
   )
 
-import Agda.Utils.Pointer ( derefPtr )
+import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
+-- import Agda.Utils.Pointer ( derefPtr )
+
+------------------------------------------------------------------------------
+-- Apia imports
+
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 
@@ -51,7 +58,8 @@ instance IgnoreSharing Term where
   ignoreSharing (Pi domTy (NoAbs x absTy)) =
     Pi (ignoreSharing domTy) (NoAbs x (ignoreSharing absTy))
 
-  ignoreSharing (Shared ptr) = ignoreSharing $ derefPtr ptr
+  -- ignoreSharing (Shared ptr) = ignoreSharing $ derefPtr ptr
+  ignoreSharing (Shared _) = __IMPOSSIBLE__
 
   ignoreSharing term = term
 

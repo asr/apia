@@ -21,7 +21,7 @@ notes_path = notes
 
 haskell_files = $(shell find src/ -name '*.hs')
 
-AGDA = agda -v 0
+AGDA = agda -v 0 --sharing
 
 # The defaults ATPs are E, Equinox and Vampire.
 APIA = dist/build/apia/apia --check

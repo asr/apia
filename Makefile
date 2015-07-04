@@ -330,16 +330,11 @@ errors : $(errors_files)
 # Tested with cabal-install version 1.20.0.3 using version 1.20.0.2 of
 # the Cabal library.
 
-haddock_file = /tmp/haddock.tmp
-
 doc :
 	cabal configure
 	cabal haddock --executables \
 	              --haddock-option=--use-unicode \
-	              --hyperlink-source > $(haddock_file)
-	cat $(haddock_file)
-	diff <(find src/ -name '*.hs' | wc -l) \
-	     <(grep 100% $(haddock_file) | wc -l)
+	              --hyperlink-source
 	@echo "$@ succeeded!"
 
 ##############################################################################

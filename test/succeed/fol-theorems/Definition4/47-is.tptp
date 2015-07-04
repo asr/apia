@@ -36,7 +36,7 @@ fof(n52_92201930, definition, ( ! [A] : ( ( kp1_(cA_52_92201930,A) ) <=> ( n43(z
 % The original Agda term was:
 % Name: Definition4.is
 % Role: prove
-% Line: 49
+% Line: 47
 fof(n60_92201930, conjecture, ( ! [A] : ( ( kp1_(cA_52_92201930,A) ) => ( kp1_(cA_52_92201930,succ(A)) ) ) )).
 
 % End conjecture.

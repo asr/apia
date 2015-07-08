@@ -459,9 +459,9 @@ TODO :
 	| sort
 
 clean :
-	find -name '*.agdai' | xargs rm -f
-	find -name '*.hi' | xargs rm -f
-	find -name '*.o' | xargs rm -f
-	find -name 'apia.tix' | xargs rm -f
-	find -name 'model' | xargs rm -f
+	find . -type f -name '*.agdai' -delete
+	find . -type f -name '*.hi' -delete
+	find . -type f -name '*.o' -delete
+	find . -type f -name 'apia.tix' -delete
+	find . -type f -name 'model' -delete
 	rm -f -r $(output_dir)

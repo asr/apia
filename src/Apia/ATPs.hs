@@ -26,6 +26,8 @@ module Apia.ATPs
 import Control.Applicative ( (<$>) )
 #endif
 
+import Control.Exception.Base  ( catch, IOException )
+-- TODO (09 July 2015): Use @evaluate@ from Control.Exception.Base.
 import Control.Exception       ( evaluate )
 import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
@@ -38,10 +40,12 @@ import Data.Maybe ( fromMaybe, isNothing )
 import Safe ( initDef )
 
 import System.Directory ( findExecutable )
+import System.FilePath  ( dropFileName, replaceExtension )
 import System.IO        ( hGetContents )
 
 import System.Process
-  ( CmdSpec(RawCommand)
+  ( callProcess
+  , CmdSpec(RawCommand)
   , createProcess
   , CreateProcess
     ( close_fds
@@ -89,6 +93,7 @@ data ATP = E
          | Metis
          | SPASS
          | Vampire
+         | Z3
            deriving Show
 
 atpExec ∷ ATP → T String
@@ -98,6 +103,7 @@ atpExec IleanCoP = return "ileancop.sh"
 atpExec Metis    = return "metis"
 atpExec SPASS    = return "SPASS"
 atpExec Vampire  = askTOpt optVampireExec
+atpExec Z3       = return "z3"
 
 optATP2ATP ∷ String → T ATP
 optATP2ATP "e"        = return E
@@ -106,6 +112,7 @@ optATP2ATP "ileancop" = return IleanCoP
 optATP2ATP "metis"    = return Metis
 optATP2ATP "spass"    = return SPASS
 optATP2ATP "vampire"  = return Vampire
+optATP2ATP "z3"       = return Z3
 optATP2ATP other      = E.throwE $ "ATP " ++ other ++ " unknown"
 
 -- | Default ATPs.
@@ -125,6 +132,8 @@ atpOk Metis = "SZS status Theorem"
 atpOk SPASS = "Proof found"
 -- Vampire 0.6 (revision 903).
 atpOk Vampire = "Termination reason: Refutation\n"
+-- Z3 4.4.0.
+atpOk Z3 = "unsat"
 
 atpVersion ∷ ATP → T String
  -- No version option in Equinox.
@@ -203,10 +212,43 @@ atpArgs Vampire timeLimit file = return [ "--mode", "casc"
                                         , "--input_file", file
                                         ]
 
+atpArgs Z3 _ file = return [ file ]
+
+tptp2X ∷ String
+tptp2X = "tptp2X"
+
+-- tptp2X from TPTP 6.1.0 is returing exit status 1 instead of 0
+-- (bug), so we need to handle the exception raised.
+createSMT2file ∷ FilePath → T ()
+createSMT2file file = do
+
+  e ← liftIO $ findExecutable tptp2X
+  when (isNothing e) $ E.throwE $
+    "the " ++ tptp2X ++ " command from the TPTP library does not exist " ++
+    "and it is required for using Z3 as an first-order ATP"
+
+  let dir ∷ String
+      dir = dropFileName file
+
+  liftIO $
+    callProcess tptp2X [ "-q2", "-fsmt2", "-d", dir, file ]
+      `catch` (\(_ ∷ IOException) → return ())
+
+smt2Ext ∷ String
+smt2Ext = ".smt2"
+
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
-runATP atp outputMVar timeLimit file = do
+runATP atp outputMVar timeLimit fileTPTP = do
+
+  file ← case atp of
+           Z3 → do
+             createSMT2file fileTPTP
+             return (replaceExtension fileTPTP smt2Ext)
+
+           _  → return fileTPTP
+
   args ∷ [String] ← atpArgs atp timeLimit file
-  cmd ∷ String    ← atpExec atp
+  cmd  ∷ String   ← atpExec atp
 
   e ← liftIO $ findExecutable cmd
   when (isNothing e) $ E.throwE $

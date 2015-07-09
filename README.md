@@ -35,6 +35,14 @@ Prerequisites
   [Metis](http://www.gilith.com/software/metis/) | Metis 2.3 (release 20150303)
   [SPASS](http://www.spass-prover.org/) | SPASS 3.7
   [Vampire](http://www.vprover.org/) | Vampire 0.6 (revision 903)
+  [Z3](https://github.com/Z3Prover/z3/wiki) | Z3 4.4.0
+
+* The tptp2X program
+
+  The tptp2X program from the
+  [TPTP library](http://www.cs.miami.edu/~tptp/) is required for using
+  Z3 as a first-order ATP. The tested version of tptp42 is from
+  TPTP 6.1.0.
 
 * The tptp4X program
 

@@ -31,6 +31,7 @@ APIA = dist/build/apia/apia --check
 # APIA = dist/build/apia/apia --check --atp=metis
 # APIA = dist/build/apia/apia --check --atp=spass
 # APIA = dist/build/apia/apia --check --atp=vampire
+# APIA = dist/build/apia/apia --check --atp=z3
 
 ##############################################################################
 # Auxiliary functions

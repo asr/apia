@@ -212,7 +212,9 @@ atpArgs Vampire timeLimit file = return [ "--mode", "casc"
                                         , "--input_file", file
                                         ]
 
-atpArgs Z3 _ file = return [ file ]
+atpArgs Z3 timeLimit file = return [ "-T:" ++ show timeLimit
+                                   , file
+                                   ]
 
 tptp2X ∷ String
 tptp2X = "tptp2X"

@@ -236,7 +236,7 @@ withoutPConstsOpt opts = Right opts { optWithoutPConsts = True }
 options ∷ [OptDescr MOptions]
 options =
   [ Option []  ["atp"] (ReqArg atpOpt "NAME") $
-               "Set the ATP (e, equinox, ileancop, metis, spass, vampire)\n"
+               "Set the ATP (e, equinox, ileancop, metis, spass, vampire, z3)\n"
                ++ "(default: e, equinox, and vampire)."
   , Option []  ["check"] (NoArg checkOpt) $
                "Check the syntax of the generated TPTP files using the\n"

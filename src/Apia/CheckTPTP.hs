@@ -35,27 +35,27 @@ import qualified Apia.Utils.Except as E
 
 -----------------------------------------------------------------------------
 
-tptp4Xexec ∷ String
-tptp4Xexec = "tptp4X"
+tptp4X ∷ String
+tptp4X = "tptp4X"
 
 -- | Check the generated TPTP file using the @tptp4X@ program.
 checkTPTP ∷ FilePath → T ()
 checkTPTP file = do
-  e ← liftIO $ findExecutable tptp4Xexec
+  e ← liftIO $ findExecutable tptp4X
   when (isNothing e) $ E.throwE $
-    "the " ++ tptp4Xexec ++ " command from the TPTP library does not exist"
+    "the " ++ tptp4X ++ " command from the TPTP library does not exist"
 
   (exitCode, out, _) ←
-    liftIO $ readProcessWithExitCode tptp4Xexec
+    liftIO $ readProcessWithExitCode tptp4X
                                      ["-ftptp", "-umachine" , "-w", file]
                                      []
   case exitCode of
     ExitFailure _ →
-      E.throwE $ tptp4Xexec ++ " found an error in the file " ++ file
+      E.throwE $ tptp4X ++ " found an error in the file " ++ file
                  ++ "\nPlease report this as a bug"
 
     -- TODO (11 December 2012). How add a test case for this case?
     ExitSuccess →
       when ("WARNING" `isInfixOf` out) $
-        E.throwE $ tptp4Xexec ++ " found a warning in the file " ++ file
+        E.throwE $ tptp4X ++ " found a warning in the file " ++ file
                    ++ "\nPlease report this as a bug"

@@ -41,7 +41,7 @@ Prerequisites
 
   The tptp2X program from the
   [TPTP library](http://www.cs.miami.edu/~tptp/) is required for using
-  Z3 as a first-order ATP. The tested version of tptp42 is from
+  Z3 as a first-order ATP. The tested version of tptp2X is from
   TPTP 6.1.0.
 
 * The tptp4X program

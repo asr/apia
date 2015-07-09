@@ -153,14 +153,14 @@ checkOutput ∷ ATP → String → Bool
 checkOutput atp output = atpOk atp `isInfixOf` output
 
 atpArgs ∷ ATP → Int → FilePath → T [String]
-atpArgs E timeLimit file = do
+atpArgs E timeout file = do
   eVersion ← atpVersion E
   if eVersion `elem` [ "E 1.2 Badamtam"
                      , "E 1.3 Ringtong"
                      , "E 1.4 Namring"
                      , "E 1.5 Pussimbing"
                      ]
-    then return [ "--cpu-limit=" ++ show timeLimit
+    then return [ "--cpu-limit=" ++ show timeout
                 , "--expert-heuristic=Auto"
                 , "--memory-limit=Auto"
                 , "--output-level=0"
@@ -174,7 +174,7 @@ atpArgs E timeLimit file = do
                          , "E 1.8-001 Gopaldhara"
                          ]
         then return [ "--auto"
-                    , "--cpu-limit=" ++ show timeLimit
+                    , "--cpu-limit=" ++ show timeout
                     , "--memory-limit=Auto"
                     , "--output-level=0"
                     , "--tstp-format"
@@ -185,36 +185,36 @@ atpArgs E timeLimit file = do
 
 -- Equinox bug. Neither the option @--no-progress@ nor the option
 -- @--verbose 0@ reduce the output.
-atpArgs Equinox timeLimit file = return [ "--time", show timeLimit
-                                        , file
-                                        ]
+atpArgs Equinox timeout file = return [ "--time", show timeout
+                                      , file
+                                      ]
 
 -- N.B. The order of the ileanCoP arguments is fixed.
-atpArgs IleanCoP timeLimit file = return [ file
-                                         , show timeLimit
-                                         ]
+atpArgs IleanCoP timeout file = return [ file
+                                       , show timeout
+                                       ]
 
-atpArgs Metis timeLimit file = return [ "--time-limit", show timeLimit
-                                      , file
-                                      ]
+atpArgs Metis timeout file = return [ "--time-limit", show timeout
+                                    , file
+                                    ]
 
-atpArgs SPASS timeLimit file = return [ "-PProblem=0"
-                                      , "-PStatistic=0"
-                                      , "-TimeLimit=" ++ show timeLimit
-                                      , "-TPTP=1"
-                                      , file
-                                      ]
+atpArgs SPASS timeout file = return [ "-PProblem=0"
+                                    , "-PStatistic=0"
+                                    , "-TimeLimit=" ++ show timeout
+                                    , "-TPTP=1"
+                                    , file
+                                    ]
 
 -- 25 July 2012. We don't know if Vampire has an option to reduce the
 -- output.
-atpArgs Vampire timeLimit file = return [ "--mode", "casc"
-                                        , "-t", show timeLimit
-                                        , "--input_file", file
-                                        ]
+atpArgs Vampire timeout file = return [ "--mode", "casc"
+                                      , "-t", show timeout
+                                      , "--input_file", file
+                                      ]
 
-atpArgs Z3 timeLimit file = return [ "-T:" ++ show timeLimit
-                                   , file
-                                   ]
+atpArgs Z3 timeout file = return [ "-T:" ++ show timeout
+                                 , file
+                                 ]
 
 tptp2X ∷ String
 tptp2X = "tptp2X"
@@ -240,7 +240,7 @@ smt2Ext ∷ String
 smt2Ext = ".smt2"
 
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
-runATP atp outputMVar timeLimit fileTPTP = do
+runATP atp outputMVar timeout fileTPTP = do
 
   file ← case atp of
            Z3 → do
@@ -249,7 +249,7 @@ runATP atp outputMVar timeLimit fileTPTP = do
 
            _  → return fileTPTP
 
-  args ∷ [String] ← atpArgs atp timeLimit file
+  args ∷ [String] ← atpArgs atp timeout file
   cmd  ∷ String   ← atpExec atp
 
   e ← liftIO $ findExecutable cmd
@@ -305,9 +305,9 @@ atpsAnswer atps outputMVar atpsPH file n =
 -- | The function 'callATPs' calls the selected 'ATP's on a TPTP conjecture.
 callATPs ∷ FilePath → T ()
 callATPs file = do
-  atpsAux       ← askTOpt optATP
-  timeLimitAux  ← askTOpt optTime
-  outputMVar    ← liftIO (newEmptyMVar ∷ IO (MVar (Bool, ATP)))
+  atpsAux     ← askTOpt optATP
+  timeoutAux  ← askTOpt optTime
+  outputMVar  ← liftIO (newEmptyMVar ∷ IO (MVar (Bool, ATP)))
 
   let atps ∷ [String]
       atps = if null atpsAux then defaultATPs else atpsAux
@@ -316,11 +316,11 @@ callATPs file = do
   reportS "" 20 $ "ATPs to be used: " ++ show atps
 
   -- See note [Timeout increse].
-  let timeLimit ∷ Int
-      timeLimit = round (fromIntegral timeLimitAux * (1.1 ∷ Float))
+  let timeout ∷ Int
+      timeout = round (fromIntegral timeoutAux * (1.1 ∷ Float))
 
   atpsPH ∷ [ProcessHandle] ←
-    mapM optATP2ATP atps >>= mapM (\atp → runATP atp outputMVar timeLimit file)
+    mapM optATP2ATP atps >>= mapM (\atp → runATP atp outputMVar timeout file)
 
   atpsAnswer atps outputMVar atpsPH file 0
 

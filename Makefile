@@ -90,14 +90,15 @@ prove_notes_files = $(call my_pathsubst,prove_notes,$(notes_path))
 ##############################################################################
 # Test suite: Generated FOL theorems
 
-flags_generated_fol_theorems = \
+GENERATED_FOL_THEOREMS_FLAGS = \
+  -v 0\
   -i$(fol_theorems_path) --only-files \
   --output-dir=$(output_dir)/$(fol_theorems_path)
 
 %.generated_fol_theorems :
 	@echo "Comparing $*.agda"
 	@$(AGDA) -i$(fol_theorems_path) $*.agda
-	@$(APIA) -v 0 $(flags_generated_fol_theorems) $*.agda
+	@$(APIA) $(GENERATED_FOL_THEOREMS_FLAGS) $*.agda
 	@diff -r $* $(output_dir)/$*
 
 generated_fol_theorems_aux : $(generated_fol_theorems_files)
@@ -110,7 +111,8 @@ generated_fol_theorems :
 ##############################################################################
 # Test suite: Generated non-FOL theorems
 
-flags_generated_non_fol_theorems = \
+GENERATED_NON_FOL_THEOREMS_FLAGS = \
+  -v 0 \
   -i$(non_fol_theorems_path) \
   --only-files \
   --output-dir=$(output_dir)/$(non_fol_theorems_path)
@@ -127,14 +129,12 @@ flags_generated_non_fol_theorems = \
           "${non_fol_theorems_path}/OptionsLList.agda" | \
           "${non_fol_theorems_path}/P11.agda" | \
           "${non_fol_theorems_path}/PropositionalFunction.agda") \
-	    $(APIA) -v 0\
-	            $(flags_generated_non_fol_theorems) \
+	    $(APIA) $(GENERATED_NON_FOL_THEOREMS_FLAGS) \
 	            --schematic-propositional-functions \
 	            $*.agda \
             ;; \
           "${non_fol_theorems_path}/PropositionalSymbol.agda") \
-	    $(APIA) -v 0\
-	            $(flags_generated_non_fol_theorems) \
+	    $(APIA) $(GENERATED_NON_FOL_THEOREMS_FLAGS) \
 	            --schematic-propositional-symbols \
 	            $*.agda \
             ;; \
@@ -155,7 +155,8 @@ generated_non_fol_theorems :
 ##############################################################################
 # Test suite: Generated non-theorems
 
-flags_genetared-non-theorems = \
+GENERATED_NON_THEOREMS_FLAGS = \
+  -v 0 \
   -i$(non_theorems_path) \
   --only-files \
   --output-dir=$(output_dir)/$(non_theorems_path)
@@ -163,7 +164,7 @@ flags_genetared-non-theorems = \
 %.generated_non_theorems :
 	@echo "Comparing $*.agda"
 	@$(AGDA) -i$(non_theorems_path) $*.agda
-	@$(APIA) -v 0 $(flags_genetared-non-theorems) $*.agda
+	@$(APIA) $(GENERATED_NON_THEOREMS_FLAGS) $*.agda
 	@diff -r $* $(output_dir)/$*
 
 generated_non_theorems_aux : $(generated_non_theorems_files)
@@ -198,6 +199,11 @@ only_fol_theorems : $(only_fol_theorems_files)
 ##############################################################################
 # Test suite: Only non-FOL
 
+ONLY_NON_FOL_THEOREMS_FLAGS = \
+  -i$(non_fol_theorems_path) \
+  --only-files \
+  --output-dir=$(output_dir)
+
 %.only_non_fol_theorems :
 	$(AGDA) -i$(non_fol_theorems_path) $*.agda
 	case $*.agda in \
@@ -209,16 +215,12 @@ only_fol_theorems : $(only_fol_theorems_files)
           "${non_fol_theorems_path}/OptionsLList.agda" | \
           "${non_fol_theorems_path}/P11.agda" | \
           "${non_fol_theorems_path}/PropositionalFunction.agda") \
-	    $(APIA) -i$(non_fol_theorems_path) \
-	            --only-files \
-	            --output-dir=$(output_dir) \
+	    $(APIA) ${ONLY_NON_FOL_THEOREMS_FLAGS} \
 	            --schematic-propositional-functions \
                     $*.agda \
             ;; \
           "${non_fol_theorems_path}/PropositionalSymbol.agda") \
-	    $(APIA) -i$(non_fol_theorems_path) \
-	            --only-files \
-	            --output-dir=$(output_dir) \
+	    $(APIA) ${ONLY_NON_FOL_THEOREMS_FLAGS} \
 	            --schematic-propositional-symbols \
                     $*.agda \
             ;; \
@@ -247,6 +249,11 @@ prove_fol_theorems : $(prove_fol_theorems_files)
 ##############################################################################
 # Test suite: Prove non-FOL theorems
 
+PROVE_NON_FOL_THEOREMS_FLAGS = \
+  -i$(non_fol_theorems_path) \
+  --output-dir=$(output_dir) \
+  --time=10
+
 %.prove_non_fol_theorems :
 	$(AGDA) -i$(non_fol_theorems_path) $*.agda
 	case $*.agda in \
@@ -258,16 +265,12 @@ prove_fol_theorems : $(prove_fol_theorems_files)
           "${non_fol_theorems_path}/OptionsLList.agda" | \
           "${non_fol_theorems_path}/P11.agda" | \
           "${non_fol_theorems_path}/PropositionalFunction.agda") \
-	    $(APIA) -i$(non_fol_theorems_path) \
-	            --output-dir=$(output_dir) \
-	            --time=10 \
+	    $(APIA) ${PROVE_NON_FOL_THEOREMS_FLAGS} \
                     --schematic-propositional-functions \
 		    $*.agda \
             ;; \
           "${non_fol_theorems_path}/PropositionalSymbol.agda") \
-	    $(APIA) -i$(non_fol_theorems_path) \
-	            --output-dir=$(output_dir) \
-	            --time=10 \
+	    $(APIA) ${PROVE_NON_FOL_THEOREMS_FLAGS} \
                     --schematic-propositional-symbols \
 		    $*.agda \
             ;; \

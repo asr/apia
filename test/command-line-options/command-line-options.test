@@ -12,6 +12,7 @@ Usage: apia [OPTIONS] FILE
           --dump-qnames                        Dump Agda QNames information to stdout.
           --help                               Show this help.
   -i DIR  --include-path=DIR                   Look for imports in DIR.
+          --no-internal-equality               Do not translate _≡_ to the ATPs equality.
           --only-files                         Do not call the ATPs, only to create the TPTP files.
           --output-dir=DIR                     Directory in which the TPTP files are placed (default: /tmp).
           --schematic-propositional-functions  Enable translation of universal quantified FOL propositional functions

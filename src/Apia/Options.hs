@@ -25,6 +25,7 @@ module Apia.Options
            , optHelp
            , optInputFile
            , optIncludePath
+           , optNoInternalEquality
            , optOnlyFiles
            , optOutputDir
            , optSchematicFunctions
@@ -88,6 +89,7 @@ data Options = Options
   , optHelp                            ∷ Bool
   , optIncludePath                     ∷ [FilePath]
   , optInputFile                       ∷ Maybe FilePath
+  , optNoInternalEquality              ∷ Bool
   , optOnlyFiles                       ∷ Bool
   , optOutputDir                       ∷ FilePath
   , optSchematicFunctions              ∷ Bool
@@ -117,6 +119,7 @@ defaultOptions = Options
   , optHelp                            = False
   , optIncludePath                     = []
   , optInputFile                       = Nothing
+  , optNoInternalEquality              = False
   , optOnlyFiles                       = False
   , optOutputDir                       = "/tmp"
   , optSchematicFunctions              = False
@@ -163,6 +166,9 @@ inputFileOpt file opts =
   case optInputFile opts of
     Nothing → Right opts { optInputFile = Just file }
     Just _  → Left "Only one input file allowed"
+
+noInternalEqualityOpt ∷ MOptions
+noInternalEqualityOpt opts = Right opts { optNoInternalEquality = True }
 
 onlyFilesOpt ∷ MOptions
 onlyFilesOpt opts = Right opts { optOnlyFiles = True }
@@ -249,6 +255,8 @@ options =
                "Show this help."
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")
                "Look for imports in DIR."
+  , Option []  ["no-internal-equality"] (NoArg noInternalEqualityOpt)
+               "Do not translate _≡_ to the ATPs equality."
   , Option []  ["only-files"] (NoArg onlyFilesOpt)
                "Do not call the ATPs, only to create the TPTP files."
   , Option []  ["output-dir"] (ReqArg outputDirOpt "DIR")

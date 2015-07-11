@@ -1,0 +1,28 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The general axiom(s).
+
+% The original Agda term was:
+% Name: NonInternalEquality._≡_.refl
+% Role: axiom
+% Line: 15
+fof(n10_50240794, axiom, ( ! [A] : ( kp2_(n_8801_,A,A) ) )).
+
+% End general axiom(s).
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The original Agda term was:
+% Name: NonInternalEquality.foo
+% Role: prove
+% Line: 18
+fof(n14_50240794, conjecture, ( ! [A] : ( kp2_(n_8801_,A,A) ) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

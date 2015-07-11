@@ -100,14 +100,24 @@ Installation
    particular conjecture is aborted and the ATPs try to prove the next
    conjecture.
 
-   If we want to just use a certain ATP, say Equinox, we can instead
-   run the following command:
+Command-line options
+--------------------
+
+* Choosing the ATPs
+
+  If we want to just use a certain ATP, say Equinox, we can run the
+  following command:
 
    ````bash
    $ apia --atp=equinox Test.agda
    Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
    Equinox, version 5.0alpha, 2010-06-29 proved the conjecture
    ````
+
+* No using the ATPs equality
+
+  The `_≡_` symbol is translated to the ATPs equality by default. For
+  reverting this behaviour use the `--no-internal-equality` option.
 
 Known limitations
 -----------------
@@ -118,8 +128,8 @@ Known limitations
   (falsehood), `⊤` (truth), `¬_` (negation), `_∧_` (conjunction),
   `_∨_` (disjunction), the Agda non-dependent function type `→`
   (implication), `_↔_` (equivalence), the Agda dependent function type
-  `(x : A) → B` (universal quantifier), `∃` (existential quantifier),
-  and `_≡_` (propositional equality).
+  `(x : A) → B` (universal quantifier) and `∃` (existential
+  quantifier).
 
 * Agda version
 

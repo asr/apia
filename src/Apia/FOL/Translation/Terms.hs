@@ -105,7 +105,8 @@ import Apia.Monad.Base
 import Apia.Monad.Reports ( reportSLn )
 
 import Apia.Options
-  ( Options ( optSchematicFunctions
+  ( Options ( optNoInternalEquality
+            , optSchematicFunctions
             , optSchematicPropositionalFunctions
             , optSchematicPropositionalSymbols
             , optWithFnConsts
@@ -258,7 +259,11 @@ termToFormula term = case ignoreSharing term of
 
            | isCNameFOLConstTwoHoles folEquals → do
                reportSLn "t2f" 20 "Processing equals"
-               liftM2 equal (argTermToFOLTerm a1) (argTermToFOLTerm a2)
+               ifM (askTOpt optNoInternalEquality)
+                   -- Not using the ATPs internal equality.
+                   (predicate qName elims)
+                   -- Using the ATPs internal equality.
+                   (liftM2 equal (argTermToFOLTerm a1) (argTermToFOLTerm a2))
 
            | otherwise → predicate qName elims
 

@@ -98,7 +98,16 @@ GENERATED_FOL_THEOREMS_FLAGS = \
 %.generated_fol_theorems :
 	@echo "Comparing $*.agda"
 	@$(AGDA) -i$(fol_theorems_path) $*.agda
-	@$(APIA) $(GENERATED_FOL_THEOREMS_FLAGS) $*.agda
+	@case $*.agda in \
+          "${fol_theorems_path}/NonInternalEquality.agda") \
+	    $(APIA) $(GENERATED_FOL_THEOREMS_FLAGS) \
+                     --no-internal-equality \
+                     $*.agda \
+            ;; \
+          *) $(APIA) $(GENERATED_FOL_THEOREMS_FLAGS) \
+                     $*.agda \
+             ;; \
+        esac
 	@diff -r $* $(output_dir)/$*
 
 generated_fol_theorems_aux : $(generated_fol_theorems_files)
@@ -138,9 +147,8 @@ GENERATED_NON_FOL_THEOREMS_FLAGS = \
 	            --schematic-propositional-symbols \
 	            $*.agda \
             ;; \
-          *) \
-	    exit 1 \
-            ;; \
+          *) exit 1 \
+             ;; \
         esac
 	@diff -r $* $(output_dir)/$*
 
@@ -186,12 +194,23 @@ generated_all :
 ##############################################################################
 # Test suite: Only FOL theorems files
 
+ONLY_FOL_THEOREMS_FLAGS = \
+  -i$(fol_theorems_path) \
+  --only-files \
+  --output-dir=$(output_dir)
+
 %.only_fol_theorems :
 	$(AGDA) -i$(fol_theorems_path) $*.agda
-	$(APIA) -i$(fol_theorems_path) \
-                --only-files \
-                --output-dir=$(output_dir) \
-                $*.agda
+	@case $*.agda in \
+          "${fol_theorems_path}/NonInternalEquality.agda") \
+	    $(APIA) ${ONLY_FOL_THEOREMS_FLAGS} \
+                    --no-internal-equality \
+                    $*.agda \
+            ;; \
+          *) $(APIA) ${ONLY_FOL_THEOREMS_FLAGS} \
+                     $*.agda \
+             ;; \
+         esac
 
 only_fol_theorems : $(only_fol_theorems_files)
 	@echo "$@ succeeded!"
@@ -206,7 +225,7 @@ ONLY_NON_FOL_THEOREMS_FLAGS = \
 
 %.only_non_fol_theorems :
 	$(AGDA) -i$(non_fol_theorems_path) $*.agda
-	case $*.agda in \
+	@case $*.agda in \
           "${non_fol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
           "${non_fol_theorems_path}/Eta-Issue8.agda" | \
           "${non_fol_theorems_path}/Existential.agda" | \
@@ -224,9 +243,8 @@ ONLY_NON_FOL_THEOREMS_FLAGS = \
 	            --schematic-propositional-symbols \
                     $*.agda \
             ;; \
-          *) \
-	    exit 1 \
-            ;; \
+          *) exit 1 \
+             ;; \
         esac
 
 only_non_fol_theorems : \
@@ -236,12 +254,23 @@ only_non_fol_theorems : \
 ##############################################################################
 # Test suite: Prove FOL theorems
 
+PROVE_FOL_THEOREMS_FLAGS = \
+  -i$(fol_theorems_path) \
+  --output-dir=$(output_dir) \
+  --time=10 \
+
 %.prove_fol_theorems :
 	$(AGDA) -i$(fol_theorems_path) $*.agda
-	$(APIA) -i$(fol_theorems_path) \
-	        --output-dir=$(output_dir) \
-	        --time=10 \
-                $*.agda
+	@case $*.agda in \
+          "${fol_theorems_path}/NonInternalEquality.agda") \
+	    $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
+                    --no-internal-equality \
+                    $*.agda \
+            ;; \
+          *) $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
+                     $*.agda \
+             ;; \
+        esac
 
 prove_fol_theorems : $(prove_fol_theorems_files)
 	@echo "$@ succeeded!"
@@ -256,7 +285,7 @@ PROVE_NON_FOL_THEOREMS_FLAGS = \
 
 %.prove_non_fol_theorems :
 	$(AGDA) -i$(non_fol_theorems_path) $*.agda
-	case $*.agda in \
+	@case $*.agda in \
           "${non_fol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
           "${non_fol_theorems_path}/Eta-Issue8.agda" | \
           "${non_fol_theorems_path}/Existential.agda" | \
@@ -274,9 +303,8 @@ PROVE_NON_FOL_THEOREMS_FLAGS = \
                     --schematic-propositional-symbols \
 		    $*.agda \
             ;; \
-          *) \
-	    exit 1 \
-            ;; \
+          *) exit 1 \
+             ;; \
         esac
 
 prove_non_fol_theorems : \

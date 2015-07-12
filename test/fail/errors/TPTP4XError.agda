@@ -17,7 +17,7 @@ postulate
 data Bool : D → Set where
   btrue  : Bool true
   bfalse : Bool false
-{-# ATP axiom btrue false #-}
+{-# ATP axioms btrue false #-}
 
 postulate foo : ∀ d → d ≡ d
 {-# ATP prove foo btrue #-}

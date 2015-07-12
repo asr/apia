@@ -16,7 +16,7 @@ postulate
   a≡b     : a ≡ b
   b≡c     : b ≡ c
   c≡d     : c ≡ d
-{-# ATP axiom a≡b b≡c c≡d #-}
+{-# ATP axioms a≡b b≡c c≡d #-}
 
 postulate a≡d : a ≡ d
 {-# ATP prove a≡d #-}

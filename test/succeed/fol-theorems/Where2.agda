@@ -33,7 +33,7 @@ postulate
   _+_  : D → D → D
   +-0x : ∀ n → zero + n     ≡ n
   +-Sx : ∀ m n → succ m + n ≡ succ (m + n)
-{-# ATP axiom +-0x +-Sx #-}
+{-# ATP axioms +-0x +-Sx #-}
 
 +-assoc : ∀ {m n o} → N m → N n → N o → m + n + o ≡ m + (n + o)
 +-assoc {n = n} {o} Nm Nn No = N-ind A A0 is Nm

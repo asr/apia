@@ -34,7 +34,7 @@ postulate
   _+_  : D → D → D
   +-0x : ∀ n → zero + n ≡ n
   +-Sx : ∀ m n → succ m + n ≡ succ (m + n)
-{-# ATP axiom +-0x +-Sx #-}
+{-# ATP axioms +-0x +-Sx #-}
 
 -- We test the translation of a definition where we need to erase
 -- proof terms.

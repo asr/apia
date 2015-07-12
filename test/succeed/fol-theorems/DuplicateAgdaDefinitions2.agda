@@ -30,7 +30,7 @@ data N : D → Set where
 data Bool : D → Set where
   tB : Bool true
   fB : Bool false
-{-# ATP axiom tB fB #-}
+{-# ATP axioms tB fB #-}
 
 postulate
   _<_  : D → D → D

@@ -1,13 +1,13 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.TPTP.ConcreteSyntax
+-- Module      : Apia.TPTP.ConcreteSyntax.Common
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- TPTP concrete syntax.
+-- Common TPTP concrete syntax to FOF and TFFO languages.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP               #-}
@@ -15,7 +15,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE UnicodeSyntax     #-}
 
-module Apia.TPTP.ConcreteSyntax
+module Apia.TPTP.ConcreteSyntax.Common
   ( ToTPTP(toTPTP)
   , TPTP  -- Required by Haddock.
   ) where
@@ -65,14 +65,12 @@ import Apia.FOL.Types
   , FOLTerm(FOLFun, FOLVar)
   )
 
-import Apia.TPTP.Types ( AF(AF) )
-
 import Apia.Utils.Text ( (+++), toUpperFirst )
 
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
--- | TPTP type synonymous.
+-- | TPTP type synonym
 type TPTP = Text
 
 -- | Translation to TPTP concrete syntax.
@@ -229,20 +227,9 @@ instance ToTPTP FOLFormula where
   toTPTP TRUE  = "( " +++ "$true" +++ " )"
   toTPTP FALSE = "( " +++ "$false" +++ " )"
 
-------------------------------------------------------------------------------
--- Translation of annotated formulae to TPTP concrete syntax.
-
 instance ToTPTP ATPRole where
   toTPTP ATPAxiom      = "axiom"
   toTPTP ATPConjecture = "conjecture"
   toTPTP ATPDefinition = "definition"
   toTPTP ATPHint       = "hypothesis"
   toTPTP _             = __IMPOSSIBLE__
-
-instance ToTPTP AF where
-  toTPTP (AF qName atpRole formula) =
-    "fof("
-    +++ toTPTP qName +++ ", "
-    +++ toTPTP atpRole +++ ", "
-    +++ toTPTP formula
-    +++ ")." +++ "\n\n"

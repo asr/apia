@@ -59,10 +59,10 @@ import Agda.Utils.Pretty     ( prettyShow )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.Monad.Base          ( askTOpt, T )
-import Apia.Monad.Reports       ( reportS, reportSLn )
-import Apia.Options             ( Options(optOnlyFiles, optOutputDir) )
-import Apia.TPTP.ConcreteSyntax ( ToTPTP(toTPTP) )
+import Apia.Monad.Base              ( askTOpt, T )
+import Apia.Monad.Reports           ( reportS, reportSLn )
+import Apia.Options                 ( Options(optOnlyFiles, optOutputDir) )
+import Apia.TPTP.ConcreteSyntax.FOF ( ToFOF(toFOF) )
 
 import Apia.TPTP.Types
   ( AF(AF)
@@ -138,7 +138,7 @@ agdaOriginalTerm qName role =
 addRole ∷ AF → FilePath → IO ()
 addRole af@(AF qName afRole _) file = do
   T.appendFile file $ agdaOriginalTerm qName afRole
-  T.appendFile file $ toTPTP af
+  T.appendFile file $ toFOF af
 
 addRoles ∷ [AF] → FilePath → Text → IO ()
 addRoles []  _    _   = return ()

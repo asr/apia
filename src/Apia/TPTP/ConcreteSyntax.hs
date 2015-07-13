@@ -237,6 +237,7 @@ instance ToTPTP ATPRole where
   toTPTP ATPConjecture = "conjecture"
   toTPTP ATPDefinition = "definition"
   toTPTP ATPHint       = "hypothesis"
+  toTPTP _             = __IMPOSSIBLE__
 
 instance ToTPTP AF where
   toTPTP (AF qName atpRole formula) =

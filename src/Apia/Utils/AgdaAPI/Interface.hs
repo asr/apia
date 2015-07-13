@@ -153,6 +153,7 @@ getATPRole ATPConjecture = HashMap.filter isATPConjecture
 -- getATPRole ATPDefinition = HashMap.filter isATPDefinition
 getATPRole ATPDefinition = __IMPOSSIBLE__
 getATPRole ATPHint       = HashMap.filter isATPHint
+getATPRole _             = __IMPOSSIBLE__
 
 -- | Return the ATP axioms from a set of Agda 'Definitions'.
 getATPAxioms ∷ Definitions → Definitions

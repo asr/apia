@@ -1,0 +1,50 @@
+% Testing conversion from FOF to SMT2 using tptp2x
+
+% Example from TPTP technical manual TPTP-v6.1.0:
+% http://www.cs.miami.edu/~tptp/TPTP/TR/TPTPTR.shtml (13 July 2015).
+
+%------------------------------------------------------------------------------
+%----Definition of a homomorphism
+fof(homomorphism1,axiom,
+    ( ! [X] :
+        ( group_member(X,f)
+       => group_member(phi(X),h) ) )).
+
+fof(homomorphism2,axiom,
+    ( ! [X,Y] :
+        ( ( group_member(X,f)
+          & group_member(Y,f) )
+       => multiply(h,phi(X),phi(Y)) = phi(multiply(f,X,Y)) ) )).
+
+fof(surjective,axiom,
+    ( ! [X] :
+        ( group_member(X,h)
+       => ? [Y] :
+            ( group_member(Y,f)
+            & phi(Y) = X ) ) )).
+
+%----Definition of left zero
+fof(left_zero,axiom,
+    ( ! [G,X] :
+        ( left_zero(G,X)
+      <=> ( group_member(X,G)
+          & ! [Y] :
+              ( group_member(Y,G)
+             => multiply(G,X,Y) = X ) ) ) )).
+
+%----The conjecture
+fof(left_zero_for_f,hypothesis,
+    ( left_zero(f,f_left_zero) )).
+
+fof(prove_left_zero_h,conjecture,
+    ( left_zero(h,phi(f_left_zero)) )).
+%-------------------------------------------------------------------------
+
+% Testing conversion from FOF to SMT2:
+%
+% $ tptp2X -fsmt2 -d/tmp fof-to-smt2.tptp
+% $ cd /tmp
+% $ z3 --version
+% Z3 version 4.4.0
+% $ z3 fof-to-smt2.smt2
+% unsat

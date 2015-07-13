@@ -1,5 +1,4 @@
-% Testing conversion from TFF0 to SMT2
-
+% Testing conversion from TFF0 to SMT2 using tptp2x
 
 % Example from TPTP technical manual TPTP-v6.1.0:
 % http://www.cs.miami.edu/~tptp/TPTP/TR/TPTPTR.shtml (13 July 2015).

@@ -19,7 +19,7 @@ fof(n64_227209975, axiom, ( ! [A] : ( ! [B] : ( ( kp2_(n_8776_,A,B) ) => ( ? [C]
 % The original Agda term was:
 % Name: RemoveVar.LamTerm._.P
 % Role: definition
-% Line: 9999
+% Line: 53
 fof(n82_227209975, definition, ( ! [A] : ( ! [B] : ( ( kp2_(n_8776_,A,B) ) => ( ! [C] : ( ( kp3_(cP_82_227209975,A,B,C) ) <=> ( ? [D] : ( kp2_(n_8776_,C,D) ) ) ) ) ) ) )).
 
 % End required ATP definition(s) by the conjecture.

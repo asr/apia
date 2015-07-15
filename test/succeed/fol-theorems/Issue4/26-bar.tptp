@@ -3,30 +3,24 @@
 %-----------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------
-% The general axiom(s).
+% The required ATP definition(s) by the conjecture.
 
 % The original Agda term was:
-% Name: Where1.+-0x
-% Role: axiom
-% Line: 34
-fof(n44_130982534, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
+% Name: Issue4._.c
+% Role: definition
+% Line: 22
+fof(n30_126633305, definition, ( ! [A] : ( ( kp1_(cP,A) ) => ( ! [B] : ( ( kp1_(cP,B) ) => ( c(A,B) = A ) ) ) ) )).
 
-% The original Agda term was:
-% Name: Where1.+-Sx
-% Role: axiom
-% Line: 35
-fof(n50_130982534, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
-
-% End general axiom(s).
+% End required ATP definition(s) by the conjecture.
 
 %-----------------------------------------------------------------------------
 % The conjecture.
 
 % The original Agda term was:
-% Name: Where1._.A0
+% Name: Issue4._.bar
 % Role: prove
-% Line: 9999
-fof(n66_130982534, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( n43(zero,zero) = zero ) ) )).
+% Line: 26
+fof(n32_126633305, conjecture, ( ! [A] : ( ( kp1_(cP,A) ) => ( ! [B] : ( ( kp1_(cP,B) ) => ( c(A,B) = A ) ) ) ) )).
 
 % End conjecture.
 

@@ -30,7 +30,7 @@ fof(n84_142322921, definition, ( ! [A] : ( ( ( A = zero ) | ( ? [B] : ( ( A = su
 % The original Agda term was:
 % Name: Issue15._.h'
 % Role: prove
-% Line: 9999
+% Line: 57
 fof(n94_142322921, conjecture, ( ! [A] : ( ( ( A = zero ) | ( ? [B] : ( ( A = succ(B) ) & ( kp1_(cConat,B) ) ) ) ) => ( ! [B] : ( ( kp2_(cA_84_142322921,A,B) ) => ( ( B = zero ) | ( ? [C] : ( ( B = succ(C) ) & ( kp2_(cA_84_142322921,A,C) ) ) ) ) ) ) ) )).
 
 % End conjecture.

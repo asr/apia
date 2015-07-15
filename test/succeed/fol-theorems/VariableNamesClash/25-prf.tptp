@@ -6,16 +6,10 @@
 % The general axiom(s).
 
 % The original Agda term was:
-% Name: Where2.+-0x
+% Name: VariableNamesClash.a≡b
 % Role: axiom
-% Line: 34
-fof(n44_21954566, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
-
-% The original Agda term was:
-% Name: Where2.+-Sx
-% Role: axiom
-% Line: 35
-fof(n50_21954566, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
+% Line: 17
+fof(n10_167217889, axiom, ( a = b )).
 
 % End general axiom(s).
 
@@ -23,10 +17,10 @@ fof(n50_21954566, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) )
 % The conjecture.
 
 % The original Agda term was:
-% Name: Where2._.is
+% Name: VariableNamesClash._.prf
 % Role: prove
-% Line: 9999
-fof(n82_21954566, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp1_(cN,A) ) => ( ( kp1_(cN,B) ) => ( ( kp1_(cN,C) ) => ( ! [D] : ( ( n43(n43(D,B),C) = n43(D,n43(B,C)) ) => ( n43(n43(succ(D),B),C) = n43(succ(D),n43(B,C)) ) ) ) ) ) ) ) ) )).
+% Line: 25
+fof(n24_167217889, conjecture, ( ! [A] : ( ! [B] : ( a = b ) ) )).
 
 % End conjecture.
 

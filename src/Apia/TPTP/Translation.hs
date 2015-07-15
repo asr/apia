@@ -38,7 +38,7 @@ import qualified Data.HashMap.Strict as HashMap ( elems, keys )
 import Agda.Syntax.Abstract.Name ( QName )
 
 import Agda.Syntax.Common
-  ( ATPRole(ATPAxiom, ATPConjecture, ATPDefinition, ATPHint) )
+  ( TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint) )
 
 import Agda.Syntax.Internal ( Clause, Type )
 
@@ -87,7 +87,7 @@ import Apia.Utils.Show ( showListLn, showLn )
 
 ------------------------------------------------------------------------------
 
-toAF ∷ ATPRole → QName → Definition → T AF
+toAF ∷ TPTPRole → QName → Definition → T AF
 toAF role qName def = do
   let ty ∷ Type
       ty = defType def
@@ -172,11 +172,11 @@ fnToAF qName def = do
   reportSLn "symbolToAF" 20 $
     "The FOL formula for " ++ show qName ++ " is:\n" ++ show for
 
-  return $ AF qName ATPDefinition for
+  return $ AF qName TPTPDefinition for
 
 -- We translate a local hint to an AF.
 localHintToAF ∷ QName → T AF
-localHintToAF qName = qNameDefinition qName >>= toAF ATPHint qName
+localHintToAF qName = qNameDefinition qName >>= toAF TPTPHint qName
 
 -- We translate the local hints of an ATP conjecture to AF's.
 -- Invariant: The 'Definition' must be an ATP conjecture.
@@ -229,7 +229,7 @@ requiredATPDefsByLocalHints def = do
 
 conjectureToAF ∷ QName → Definition → T ConjectureSet
 conjectureToAF qName def = liftM4 ConjectureSet
-                                  (toAF ATPConjecture qName def)
+                                  (toAF TPTPConjecture qName def)
                                   (requiredATPDefsByDefinition def)
                                   (localHintsToAFs def)
                                   (requiredATPDefsByLocalHints def)
@@ -253,7 +253,7 @@ axiomsToAFs ∷ T [AF]
 axiomsToAFs = do
   axDefs ∷ Definitions ← getATPAxioms <$> getTDefs
 
-  zipWithM (toAF ATPAxiom) (HashMap.keys axDefs) (HashMap.elems axDefs)
+  zipWithM (toAF TPTPAxiom) (HashMap.keys axDefs) (HashMap.elems axDefs)
 
 requiredATPDefsByDefinition ∷ Definition → T [AF]
 requiredATPDefsByDefinition def = do
@@ -274,7 +274,7 @@ generalHintsToAFs ∷ T [AF]
 generalHintsToAFs = do
   ghDefs ∷ Definitions ← getATPHints <$> getTDefs
 
-  zipWithM (toAF ATPHint) (HashMap.keys ghDefs) (HashMap.elems ghDefs)
+  zipWithM (toAF TPTPHint) (HashMap.keys ghDefs) (HashMap.elems ghDefs)
 
 requiredATPDefsByHints ∷ T [AF]
 requiredATPDefsByHints = do

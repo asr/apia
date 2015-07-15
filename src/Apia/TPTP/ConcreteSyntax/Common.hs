@@ -42,7 +42,7 @@ import Agda.Syntax.Abstract.Name ( Name(nameId), QName(QName) )
 
 import Agda.Syntax.Common
   ( NameId(NameId)
-  , ATPRole(ATPAxiom, ATPConjecture, ATPDefinition, ATPHint)
+  , TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint)
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
@@ -51,7 +51,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 -- Apia imports
 
 import Apia.FOL.Types
-  ( FOLFormula(And
+  ( FOLFormula( And
               , Equiv
               , Exists
               , FALSE
@@ -227,9 +227,9 @@ instance ToTPTP FOLFormula where
   toTPTP TRUE  = "( " +++ "$true" +++ " )"
   toTPTP FALSE = "( " +++ "$false" +++ " )"
 
-instance ToTPTP ATPRole where
-  toTPTP ATPAxiom      = "axiom"
-  toTPTP ATPConjecture = "conjecture"
-  toTPTP ATPDefinition = "definition"
-  toTPTP ATPHint       = "hypothesis"
-  toTPTP _             = __IMPOSSIBLE__
+instance ToTPTP TPTPRole where
+  toTPTP TPTPAxiom      = "axiom"
+  toTPTP TPTPConjecture = "conjecture"
+  toTPTP TPTPDefinition = "definition"
+  toTPTP TPTPHint       = "hypothesis"
+  toTPTP _              = __IMPOSSIBLE__

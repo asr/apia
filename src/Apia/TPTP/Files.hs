@@ -44,7 +44,7 @@ import Agda.Syntax.Abstract.Name
   , qnameToConcrete
   )
 
-import Agda.Syntax.Common ( ATPRole )
+import Agda.Syntax.Common ( TPTPRole )
 
 import Agda.Syntax.Concrete.Name
   ( moduleNameToFileName
@@ -128,7 +128,7 @@ conjectureHeader = do
 conjectureFooter ∷ Text
 conjectureFooter = commentLine +++ "% End TPTP file.\n"
 
-agdaOriginalTerm ∷ QName → ATPRole → Text
+agdaOriginalTerm ∷ QName → TPTPRole → Text
 agdaOriginalTerm qName role =
   "% The original Agda term was:\n"
   +++ "% Name: " +++ (T.pack . prettyShow . qnameToConcrete) qName +++ "\n"

@@ -73,7 +73,8 @@ import Agda.Syntax.Abstract.Name
 import Agda.Syntax.Common
   ( Arg(Arg)
   , Dom(Dom)
-  , ATPRole(ATPAxiom, ATPConjecture, ATPDefinition, ATPHint) )
+  , TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint)
+  )
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
@@ -99,13 +100,13 @@ import Agda.Syntax.Position
   )
 
 import Agda.TypeChecking.Monad.Base
-  ( Defn(Axiom
-        , axATPHints
-        , axATPRole
-        , conATPRole
+  ( Defn( Axiom
+        , axTPTPHints
+        , axTPTPRole
+        , conTPTPRole
         , Constructor
         , Function
-        , funATPRole
+        , funTPTPRole
         , funClauses
         , funProjection
         )
@@ -145,30 +146,30 @@ import qualified Apia.Utils.Except as E
 
 ------------------------------------------------------------------------------
 
-getATPRole ∷ ATPRole → Definitions → Definitions
-getATPRole ATPAxiom      = HashMap.filter isATPAxiom
-getATPRole ATPConjecture = HashMap.filter isATPConjecture
+getATPRole ∷ TPTPRole → Definitions → Definitions
+getATPRole TPTPAxiom      = HashMap.filter isATPAxiom
+getATPRole TPTPConjecture = HashMap.filter isATPConjecture
 -- 31 May 2012. We don't have an example of this case.
 --
--- getATPRole ATPDefinition = HashMap.filter isATPDefinition
-getATPRole ATPDefinition = __IMPOSSIBLE__
-getATPRole ATPHint       = HashMap.filter isATPHint
-getATPRole _             = __IMPOSSIBLE__
+-- getTPTPRole TPTPDefinition = HashMap.filter isATPDefinition
+getATPRole TPTPDefinition = __IMPOSSIBLE__
+getATPRole TPTPHint       = HashMap.filter isATPHint
+getATPRole _              = __IMPOSSIBLE__
 
 -- | Return the ATP axioms from a set of Agda 'Definitions'.
 getATPAxioms ∷ Definitions → Definitions
-getATPAxioms = getATPRole ATPAxiom
+getATPAxioms = getATPRole TPTPAxiom
 
 -- | Return the ATP conjectures from a set of Agda 'Definitions'.
 getATPConjectures ∷ Definitions → Definitions
-getATPConjectures = getATPRole ATPConjecture
+getATPConjectures = getATPRole TPTPConjecture
 
 -- getATPDefinitions ∷ Definitions → Definitions
 -- getATPDefinitions = getATPRole ATPDefinition
 
 -- | Return the ATP hints from a set of Agda 'Definitions'.
 getATPHints ∷ Definitions → Definitions
-getATPHints = getATPRole ATPHint
+getATPHints = getATPRole TPTPHint
 
 -- Invariant: The @Definition@ must correspond to an ATP conjecture.
 -- | Return the ATP local hints associated with an ATP conjecture.
@@ -177,7 +178,7 @@ getLocalHints def =
   let defn ∷ Defn
       defn = theDef def
   in case defn of
-       Axiom{} → axATPHints defn
+       Axiom{} → axTPTPHints defn
        _       → __IMPOSSIBLE__
 
 -- We do not want any verbosity from the Agda API.
@@ -247,16 +248,16 @@ isATPAxiom def =
   let defn ∷ Defn
       defn = theDef def
   in case defn of
-       Axiom{} → case axATPRole defn of
-                   Just ATPAxiom      → True
-                   Just ATPConjecture → False
-                   Just _             → __IMPOSSIBLE__
-                   Nothing            → False
+       Axiom{} → case axTPTPRole defn of
+                   Just TPTPAxiom      → True
+                   Just TPTPConjecture → False
+                   Just _              → __IMPOSSIBLE__
+                   Nothing             → False
 
-       Constructor{} → case conATPRole defn of
-                         Just ATPAxiom → True
-                         Just _        → __IMPOSSIBLE__
-                         Nothing       → False
+       Constructor{} → case conTPTPRole defn of
+                         Just TPTPAxiom → True
+                         Just _         → __IMPOSSIBLE__
+                         Nothing        → False
 
        _       → False
 
@@ -266,11 +267,11 @@ isATPConjecture def =
   let defn ∷ Defn
       defn = theDef def
   in case defn of
-       Axiom{} → case axATPRole defn of
-                   Just ATPAxiom      → False
-                   Just ATPConjecture → True
-                   Just _             → __IMPOSSIBLE__
-                   Nothing            → False
+       Axiom{} → case axTPTPRole defn of
+                   Just TPTPAxiom      → False
+                   Just TPTPConjecture → True
+                   Just _              → __IMPOSSIBLE__
+                   Nothing             → False
 
        _       → False
 
@@ -280,14 +281,14 @@ isATPDefinition def =
   let defn ∷ Defn
       defn = theDef def
   in case defn of
-       Function{} → case funATPRole defn of
-                      Just ATPDefinition → True
+       Function{} → case funTPTPRole defn of
+                      Just TPTPDefinition → True
                       -- 31 May 2012. We don't have an example of this
                       -- case.
                       --
-                      -- Just ATPHint       → False
-                      Just _       → __IMPOSSIBLE__
-                      Nothing      → False
+                      -- Just TPTPHint    → False
+                      Just _              → __IMPOSSIBLE__
+                      Nothing             → False
 
        _          → False
 
@@ -297,11 +298,11 @@ isATPHint def =
   let defn ∷ Defn
       defn = theDef def
   in case defn of
-       Function{} → case funATPRole defn of
-                      Just ATPDefinition → False
-                      Just ATPHint       → True
-                      Just _             → __IMPOSSIBLE__
-                      Nothing            → False
+       Function{} → case funTPTPRole defn of
+                      Just TPTPDefinition → False
+                      Just TPTPHint       → True
+                      Just _              → __IMPOSSIBLE__
+                      Nothing             → False
 
        _          → False
 

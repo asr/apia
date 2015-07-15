@@ -35,7 +35,7 @@ import Data.List ( (\\), sort )
 -- Agda library imports
 
 import Agda.Syntax.Abstract.Name ( QName )
-import Agda.Syntax.Common        ( ATPRole )
+import Agda.Syntax.Common        ( TPTPRole )
 
 ------------------------------------------------------------------------------
 -- Apia imports
@@ -48,10 +48,10 @@ import Apia.Utils.List ( duplicate, duplicatesElements )
 -- importation, therefore Haddock does not create a link for
 -- 'TPTP.ConcreteSyntax.ToTPTP'.
 
--- | The TPTP annotated formulae.
--- The annotated formulae are not in TPTP concrete syntax. We get this
--- syntax via 'TPTP.TPTP.ConcreteSyntax.ToTPTP'.
-data AF = AF QName ATPRole FOLFormula
+-- | Annotated formulae.
+--
+-- The annotated formulae are not in TPTP (FOF) concrete syntax.
+data AF = AF QName TPTPRole FOLFormula
 
 instance Eq AF where
   (AF qName1 _ _) == (AF qName2 _ _) = qName1 == qName2

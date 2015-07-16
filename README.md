@@ -29,7 +29,7 @@ Prerequisites
 
   ATP | Tested version
   --- | --------------------
-  [E](http://www4.informatik.tu-muenchen.de/~schulz/WORK/eprover.html) | E 1.8-001 Gopaldhara
+  [E](http://www4.informatik.tu-muenchen.de/~schulz/WORK/eprover.html) | E 1.9 Sourenee
   [Equinox](http://www.cse.chalmers.se/~koen/code/) | Equinox 5.0alpha (2010-06-29)
   [ileanCoP](http://www.leancop.de/ileancop/index.html) | ileanCoP 1.3beta1
   [Metis](http://www.gilith.com/software/metis/) | Metis 2.3 (release 20150303)
@@ -91,7 +91,7 @@ Installation
    $ agda Test.agda
    $ apia Test.agda
    Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
-   E 1.8-001 Gopaldhara proved the conjecture
+   E 1.9  Sourenee proved the conjecture
    ````
 
    The program will call the default ATPs and tell which of the ATPs

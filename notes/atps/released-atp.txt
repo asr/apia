@@ -4,22 +4,24 @@ procedure:
 In Apia
 ========
 
-* Update src/Apia/ATP.hs.
-
-* Test all the proved conjectures and notes.
-
-    make prove_theorems
-    make prove_notes
-
 * Test apia/notes/atps/test/equality/.
 
 * Test apia/notes/tptp.
 
-* Search for comments using the old version, i.e. something like
+* Update src/Apia/ATP.hs.
 
-    find -name '*' | xargs grep -I 'old version' | sort
+* Test all the proved conjectures and notes.
+
+    make prove_all_theorems
+    make prove_notes
+
+* Run test-suite
+
+    make apia_changed
 
 * Update README.md.
+
+* Search for comments using the old version.
 
 In FOTC
 =======

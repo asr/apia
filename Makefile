@@ -4,7 +4,7 @@ SHELL := /bin/bash
 # Paths
 
 # Tests paths.
-fol_theorems_path         =  test/succeed/fol-theorems
+fol_theorems_path         = test/succeed/fol-theorems
 non_fol_theorems_path     = test/succeed/non-fol-theorems
 non_theorems_path         = test/fail/non-theorems
 errors_path               = test/fail/errors
@@ -24,8 +24,8 @@ haskell_files = $(shell find src/ -name '*.hs')
 AGDA = agda -v 0 --no-sharing
 
 # The defaults ATPs are E, Equinox and Vampire.
-APIA = dist/build/apia/apia --check
-# APIA = dist/build/apia/apia --check --atp=e
+# APIA = dist/build/apia/apia --check
+APIA = dist/build/apia/apia --check --atp=e
 # APIA = dist/build/apia/apia --check --atp=equinox
 # APIA = dist/build/apia/apia --check --atp=ileancop
 # APIA = dist/build/apia/apia --check --atp=metis

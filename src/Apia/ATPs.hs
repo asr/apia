@@ -120,7 +120,7 @@ defaultATPs ∷ [String]
 defaultATPs = ["e", "equinox", "vampire"]
 
 atpOk ∷ ATP → String
--- E 1.2, E 1.3, E 1.4, E 1.5, E 1.6, E 1.7 and E 1.8.
+-- E 1.9.
 atpOk E = "Proof found!"
 -- Equinox 5.0alpha (2010-06-29).
 atpOk Equinox = "+++ RESULT: Theorem"
@@ -172,6 +172,7 @@ atpArgs E timeout file = do
       if eVersion `elem` [ "E 1.6 Tiger Hill"
                          , "E 1.7 Jun Chiabari"
                          , "E 1.8-001 Gopaldhara"
+                         , "E 1.9 Sourenee"
                          ]
         then return [ "--auto"
                     , "--cpu-limit=" ++ show timeout

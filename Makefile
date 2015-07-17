@@ -25,13 +25,10 @@ AGDA = agda -v 0 --no-sharing
 
 # The defaults ATPs are E, Equinox and Vampire.
 APIA = dist/build/apia/apia --check
-# APIA = dist/build/apia/apia --check --atp=e
-# APIA = dist/build/apia/apia --check --atp=equinox
-# APIA = dist/build/apia/apia --check --atp=ileancop
-# APIA = dist/build/apia/apia --check --atp=metis
-# APIA = dist/build/apia/apia --check --atp=spass
-# APIA = dist/build/apia/apia --check --atp=vampire
-# APIA = dist/build/apia/apia --check --atp=z3
+
+# Supported ATPs.
+# Missing ileancop
+ATPs = e equinox metis spass vampire z3
 
 ##############################################################################
 # Auxiliary functions
@@ -261,16 +258,20 @@ PROVE_FOL_THEOREMS_FLAGS = \
 
 %.prove_fol_theorems :
 	$(AGDA) -i$(fol_theorems_path) $*.agda
-	@case $*.agda in \
-          "${fol_theorems_path}/NonInternalEquality.agda") \
-	    $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
-                    --no-internal-equality \
-                    $*.agda \
+	@for atp in ${ATPs} ; do \
+	  case $*.agda in \
+            "${fol_theorems_path}/NonInternalEquality.agda") \
+              $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
+                      --atp=$$atp \
+                      --no-internal-equality \
+                      $*.agda ; \
             ;; \
-          *) $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
-                     $*.agda \
-             ;; \
-        esac
+            *) $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
+                       --atp=$$atp \
+                       $*.agda ; \
+               ;; \
+          esac ; \
+        done
 
 prove_fol_theorems : $(prove_fol_theorems_files)
 	@echo "$@ succeeded!"
@@ -285,27 +286,31 @@ PROVE_NON_FOL_THEOREMS_FLAGS = \
 
 %.prove_non_fol_theorems :
 	$(AGDA) -i$(non_fol_theorems_path) $*.agda
-	@case $*.agda in \
-          "${non_fol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
-          "${non_fol_theorems_path}/Eta-Issue8.agda" | \
-          "${non_fol_theorems_path}/Existential.agda" | \
-          "${non_fol_theorems_path}/Instance.agda" | \
-          "${non_fol_theorems_path}/Issue12.agda" | \
-          "${non_fol_theorems_path}/OptionsLList.agda" | \
-          "${non_fol_theorems_path}/P11.agda" | \
-          "${non_fol_theorems_path}/PropositionalFunction.agda") \
-	    $(APIA) ${PROVE_NON_FOL_THEOREMS_FLAGS} \
-                    --schematic-propositional-functions \
-		    $*.agda \
+	@for atp in ${ATPs} ; do \
+	  case $*.agda in \
+            "${non_fol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
+            "${non_fol_theorems_path}/Eta-Issue8.agda" | \
+            "${non_fol_theorems_path}/Existential.agda" | \
+            "${non_fol_theorems_path}/Instance.agda" | \
+            "${non_fol_theorems_path}/Issue12.agda" | \
+            "${non_fol_theorems_path}/OptionsLList.agda" | \
+            "${non_fol_theorems_path}/P11.agda" | \
+            "${non_fol_theorems_path}/PropositionalFunction.agda") \
+	      $(APIA) ${PROVE_NON_FOL_THEOREMS_FLAGS} \
+                      --atp=$$atp \
+                      --schematic-propositional-functions \
+		      $*.agda ; \
             ;; \
-          "${non_fol_theorems_path}/PropositionalSymbol.agda") \
-	    $(APIA) ${PROVE_NON_FOL_THEOREMS_FLAGS} \
-                    --schematic-propositional-symbols \
-		    $*.agda \
+            "${non_fol_theorems_path}/PropositionalSymbol.agda") \
+	      $(APIA) ${PROVE_NON_FOL_THEOREMS_FLAGS} \
+                      --atp=$$atp \
+                      --schematic-propositional-symbols \
+		      $*.agda ; \
             ;; \
-          *) exit 1 \
-             ;; \
-        esac
+            *) exit 1 \
+               ;; \
+          esac ; \
+        done
 
 prove_non_fol_theorems : \
   $(prove_non_fol_theorems_files)

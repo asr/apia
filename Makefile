@@ -424,6 +424,7 @@ apia_changed : clean
 	make generated_all
 	make errors
 	make command_line_options
+	make type_check_notes
 	make prove_notes
 	@echo "$@ succeeded!"
 

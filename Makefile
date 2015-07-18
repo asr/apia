@@ -396,10 +396,13 @@ prove_notes_path = -i$(notes_path) \
 %.prove_notes :
 	echo $(prove_notes_files)
 	$(AGDA) $(prove_notes_path) $*.agda
-	$(APIA) $(prove_notes_path) \
-	        --output-dir=$(output_dir) \
-	        --time=10 \
-	        $*.agda
+	@for atp in ${ATPs} ; do \
+          $(APIA) $(prove_notes_path) \
+                  --atp=$$atp \
+	          --output-dir=$(output_dir) \
+	          --time=10 \
+	          $*.agda ; \
+        done
 
 prove_notes : $(prove_notes_files)
 	@echo "$@ succeeded!"

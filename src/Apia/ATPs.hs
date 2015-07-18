@@ -17,6 +17,7 @@
 module Apia.ATPs
   ( ATP  -- Required by Haddock.
   , callATPs
+  , selectedATPs
   ) where
 
 ------------------------------------------------------------------------------
@@ -74,25 +75,19 @@ import Agda.Utils.Monad      ( ifM )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.Monad.Base    ( askTOpt, T )
+import Apia.Common ( ATP(E, Equinox, IleanCoP, Metis, SPASS, Vampire, Z3))
+
+import Apia.Monad.Base    ( askTOpt, getTATPs, modifyTATPs, T )
 import Apia.Monad.Reports ( reportS )
 
-import Apia.Options ( Options(optATP, optTime, optUnprovenNoError, optVampireExec) )
+import Apia.Options
+  ( Options(optATP, optTime, optUnprovenNoError, optVampireExec) )
 
 import qualified Apia.Utils.Except as E
 
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
--- | The ATPs.
-data ATP = E
-         | Equinox
-         | IleanCoP
-         | Metis
-         | SPASS
-         | Vampire
-         | Z3
-           deriving Show
 
 atpExec ∷ ATP → T String
 atpExec E        = return "eprover"
@@ -238,6 +233,15 @@ createSMT2file file = do
 smt2Ext ∷ String
 smt2Ext = ".smt2"
 
+selectedATPs ∷ T ()
+selectedATPs = do
+  atpsAux ← askTOpt optATP
+
+  let atps ∷ [String]
+      atps = if null atpsAux then defaultATPs else atpsAux
+
+  mapM optATP2ATP atps >>= modifyTATPs
+
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
 runATP atp outputMVar timeout fileTPTP = do
 
@@ -280,7 +284,7 @@ runATP atp outputMVar timeout fileTPTP = do
 
   return atpPH
 
-atpsAnswer ∷ [String] → MVar (Bool, ATP) → [ProcessHandle] → FilePath → Int →
+atpsAnswer ∷ [ATP] → MVar (Bool, ATP) → [ProcessHandle] → FilePath → Int →
              T ()
 atpsAnswer atps outputMVar atpsPH file n =
   if n == length atps
@@ -304,22 +308,19 @@ atpsAnswer atps outputMVar atpsPH file n =
 -- | The function 'callATPs' calls the selected 'ATP's on a TPTP conjecture.
 callATPs ∷ FilePath → T ()
 callATPs file = do
-  atpsAux     ← askTOpt optATP
   timeoutAux  ← askTOpt optTime
   outputMVar  ← liftIO (newEmptyMVar ∷ IO (MVar (Bool, ATP)))
 
-  let atps ∷ [String]
-      atps = if null atpsAux then defaultATPs else atpsAux
-
   reportS "" 1 $ "Proving the conjecture in " ++ file
-  reportS "" 20 $ "ATPs to be used: " ++ show atps
-
   -- See note [Timeout increse].
   let timeout ∷ Int
       timeout = round (fromIntegral timeoutAux * (1.1 ∷ Float))
 
+  atps ← getTATPs
+  reportS "" 20 $ "ATPs to be used: " ++ show atps
+
   atpsPH ∷ [ProcessHandle] ←
-    mapM optATP2ATP atps >>= mapM (\atp → runATP atp outputMVar timeout file)
+    mapM (\atp → runATP atp outputMVar timeout file) atps
 
   atpsAnswer atps outputMVar atpsPH file 0
 

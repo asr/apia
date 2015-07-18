@@ -46,12 +46,12 @@ import Agda.Utils.Impossible ( catchImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Apia.ATPs      ( callATPs )
+import Apia.ATPs      ( callATPs, selectedATPs )
 import Apia.CheckTPTP ( checkTPTP )
 import Apia.Dump      ( dumpAgdai, dumpQNames )
 
 import Apia.Monad.Base
-  ( modifyDefs
+  ( modifyTDefs
   , runT
   , T
   )
@@ -104,8 +104,8 @@ translation agdaFile = do
 
   reportSLn "translation" 20 $ show allDefs
 
-  -- We add @allDefs@ the state.
-  modifyDefs allDefs
+  -- We add @allDefs@ the translation monad state.
+  modifyTDefs allDefs
 
   pair generalRolesToAFs $ conjecturesToAFs topLevelDefs
 
@@ -129,8 +129,12 @@ runApia = do
               optDumpQNames opts → dumpQNames file
             | otherwise → do
 
-              -- The ATP pragmas are translated to TPTP annotated formulae.
+              -- The ATP pragmas are translated to annotated formulae.
               allAFs ← translation file
+
+              -- The selected ATPs are added to the translation monad
+              -- state.
+              selectedATPs
 
               -- Creation of the TPTP files.
               tptpFiles ← mapM (createConjectureFile (fst allAFs)) (snd allAFs)

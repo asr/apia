@@ -48,6 +48,7 @@ executable apia
   other-modules:
     Apia.ATPs
     Apia.CheckTPTP
+    Apia.Common
     Apia.Dump
     Apia.FOL.Constants
     Apia.FOL.Primitives

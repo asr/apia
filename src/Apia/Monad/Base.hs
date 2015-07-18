@@ -15,10 +15,12 @@
 
 module Apia.Monad.Base
   ( askTOpt
+  , getTATPs
   , getTDefs
   , getTVars
   , isTVarsEmpty
-  , modifyDefs
+  , modifyTATPs
+  , modifyTDefs
   , newTVar
   , popTVar
   , pushTNewVar
@@ -55,6 +57,7 @@ import Agda.Utils.Impossible        ( Impossible(Impossible), throwImpossible )
 ------------------------------------------------------------------------------
 -- Apia imports
 
+import Apia.Common ( ATP )
 import Apia.Monad.Environment ( env )
 import Apia.Options           ( Options )
 
@@ -69,14 +72,16 @@ import Apia.Utils.Names ( freshName )
 
 -- See note [@OptionsPragma@].
 data TState = TState
-  { tDefs          ∷ Definitions    -- ^ Agda definitions.
-  , tVars          ∷ [String]       -- ^ Variables names.
+  { tDefs ∷ Definitions -- ^ Agda definitions.
+  , tVars ∷ [String]    -- ^ Variables names.
+  , tATPs ∷ [ATP]       -- ^ Selected ATPs.
   }
 
 -- The initial state.
 initTState ∷ TState
-initTState = TState { tDefs          = HashMap.empty
-                    , tVars          = []
+initTState = TState { tDefs = HashMap.empty
+                    , tVars = []
+                    , tATPs = []
                     }
 
 -- | The translation monad.
@@ -113,6 +118,10 @@ pushTVar x = do
 pushTNewVar ∷ T String
 pushTNewVar = newTVar >>= \freshVar → pushTVar freshVar >> return freshVar
 
+-- | Get the ATPs from the translation monad state.
+getTATPs ∷ T [ATP]
+getTATPs = lift $ fmap tATPs get
+
 -- | Get the Agda 'Definitions' from the translation monad state.
 getTDefs ∷ T Definitions
 getTDefs = lift $ fmap tDefs get
@@ -126,6 +135,10 @@ askTOpt opt = lift $ lift $ fmap opt ask
 getTVars ∷ T [String]
 getTVars = lift $ fmap tVars get
 
+-- | Modify the ATPs in the translation monad state.
+modifyTATPs ∷ [ATP] → T ()
+modifyTATPs atps = lift $ modify $ \s → s { tATPs = atps }
+
 -- | Modify the Agda 'Definitions' in the translation monad state.
-modifyDefs ∷ Definitions → T ()
-modifyDefs defs = lift $ modify $ \s → s { tDefs = defs }
+modifyTDefs ∷ Definitions → T ()
+modifyTDefs defs = lift $ modify $ \s → s { tDefs = defs }

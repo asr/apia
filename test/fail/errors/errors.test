@@ -88,12 +88,11 @@ apia: the file no-dir/TrivialTheorem/20-foo.tptp does not exist
 >>>= 1
 
 #12. ATP.hs: ATP unknown
-dist/build/apia/apia -itest/fail/errors --atp=xxx test/fail/errors/TrivialTheorem.agda
+dist/build/apia/apia -itest/fail/errors --atp=foo test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/TrivialTheorem/20-foo.tptp
 >>>2
-apia: ATP xxx unknown
+apia: ATP foo unknown
 >>>= 1
 
 #13. ATP.hs: Bad ATP executable name

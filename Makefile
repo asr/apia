@@ -213,7 +213,7 @@ only_fol_theorems : $(only_fol_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test suite: Only non-FOL
+# Test suite: Only non-FOL theorems files
 
 ONLY_NON_FOL_THEOREMS_FLAGS = \
   -i$(non_fol_theorems_path) \

@@ -26,9 +26,7 @@ module Apia.ATPs
 import Control.Applicative ( (<$>) )
 #endif
 
-import Control.Exception.Base  ( catch, IOException )
--- TODO (09 July 2015): Use @evaluate@ from Control.Exception.Base.
-import Control.Exception       ( evaluate )
+import Control.Exception.Base  ( catch, evaluate, IOException )
 import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
 import Control.Monad           ( when )

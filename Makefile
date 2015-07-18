@@ -419,10 +419,9 @@ agda_changed :
 # Test used when there is a modification to Apia
 
 apia_changed : clean
+	cabal clean
 	cabal install --only-dependencies
-# For the use of `-fforce-recomp` see
-# https://github.com/haskell/cabal/issues/1844.
-	cabal configure --ghc-option=-fforce-recomp
+	cabal configure
 	cabal build
 	make generated_all
 	make errors
@@ -454,9 +453,7 @@ git_pre_commit :
 # Apia install
 
 install-bin :
-# For the use of `-fforce-recomp` see
-# https://github.com/haskell/cabal/issues/1844.
-	cabal install --disable-documentation --ghc-option=-fforce-recomp
+	cabal install --disable-documentation
 
 ##############################################################################
 # Haskell program coverage

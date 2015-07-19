@@ -84,7 +84,7 @@ dist/build/apia/apia -itest/fail/errors --snapshot-test --snapshot-dir=no-dir te
 <<<
 >>>
 >>>2
-apia: the file no-dir/TrivialTheorem/20-foo.tptp does not exist
+apia: the file no-dir/TrivialTheorem/20-foo.fof does not exist
 >>>= 1
 
 #12. ATP.hs: ATP unknown
@@ -99,7 +99,7 @@ apia: ATP foo unknown
 dist/build/apia/apia -itest/fail/errors --atp=vampire --vampire-exec=xxx test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/TrivialTheorem/20-foo.tptp
+Proving the conjecture in /tmp/TrivialTheorem/20-foo.fof
 >>>2
 apia: the command xxx associated with Vampire does not exist.
 You can use the command-line option --atp=NAME to avoid call some ATP
@@ -109,10 +109,10 @@ You can use the command-line option --atp=NAME to avoid call some ATP
 dist/build/apia/apia -itest/fail/errors --atp=e test/fail/errors/NoTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/NoTheorem/17-foo.tptp
+Proving the conjecture in /tmp/NoTheorem/17-foo.fof
 E 1.9 Sourenee *did not* prove the conjecture
 >>>2
-apia: the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.tptp
+apia: the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
 >>>= 1
 
 #15. Functions.hs : The definitions to be translated only can have one clause
@@ -132,14 +132,14 @@ apia: the interface file /tmp/A.agdai does not exist (use Agda to generate it)
 >>>= 1
 
 #17. Snapshot.hs: The snapshot and the generated conjecture are differents.
-dist/build/apia/apia -itest/fail/errors --only-files --output-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.tptp && dist/build/apia/apia -itest/fail/errors --snapshot-test --snapshot-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda
+dist/build/apia/apia -itest/fail/errors --only-files --output-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/fail/errors --snapshot-test --snapshot-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/snapshot/TrivialTheorem/20-foo.tptp
+Created /tmp/snapshot/TrivialTheorem/20-foo.fof
 >>>2
 apia: the files are different:
-/tmp/TrivialTheorem/20-foo.tptp
-/tmp/snapshot/TrivialTheorem/20-foo.tptp
+/tmp/TrivialTheorem/20-foo.fof
+/tmp/snapshot/TrivialTheorem/20-foo.fof
 >>>= 1
 
 #18. Options.hs (System.Console.GetOpt): -i
@@ -291,7 +291,7 @@ dist/build/apia/apia -itest/fail/errors --check test/fail/errors/TPTP4XError.agd
 <<<
 >>>
 >>>2
-apia: tptp4X found an error in the file /tmp/TPTP4XError/22-foo.tptp
+apia: tptp4X found an error in the file /tmp/TPTP4XError/22-foo.fof
 Please report this as a bug
 >>>= 1
 

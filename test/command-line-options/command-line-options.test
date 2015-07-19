@@ -39,7 +39,7 @@ Usage: apia [OPTIONS] FILE
 dist/build/apia/apia -itest/command-line-options --only-files test/command-line-options/TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/TrivialTheorem/20-foo.tptp
+Created /tmp/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 
@@ -47,7 +47,7 @@ Created /tmp/TrivialTheorem/20-foo.tptp
 dist/build/apia/apia -itest/command-line-options -v1 --only-files test/command-line-options/TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/TrivialTheorem/20-foo.tptp
+Created /tmp/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 
@@ -63,20 +63,20 @@ Apia version 0.9.1
 dist/build/apia/apia -itest/command-line-options --atp=e --unproven-conjecture-no-error test/command-line-options/NoTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/NoTheorem/17-foo.tptp
+Proving the conjecture in /tmp/NoTheorem/17-foo.fof
 E 1.9 Sourenee *did not* prove the conjecture
-the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.tptp
+the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
 >>>2
 >>>= 0
 
 #6. --snapshot-no-error
-dist/build/apia/apia -itest/command-line-options --only-files --output-dir=/tmp/snapshot test/command-line-options/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.tptp && dist/build/apia/apia -itest/command-line-options --snapshot-no-error --snapshot-dir=/tmp/snapshot test/command-line-options/TrivialTheorem.agda
+dist/build/apia/apia -itest/command-line-options --only-files --output-dir=/tmp/snapshot test/command-line-options/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/command-line-options --snapshot-no-error --snapshot-dir=/tmp/snapshot test/command-line-options/TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/snapshot/TrivialTheorem/20-foo.tptp
+Created /tmp/snapshot/TrivialTheorem/20-foo.fof
 the files are different:
-/tmp/TrivialTheorem/20-foo.tptp
-/tmp/snapshot/TrivialTheorem/20-foo.tptp
+/tmp/TrivialTheorem/20-foo.fof
+/tmp/snapshot/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 

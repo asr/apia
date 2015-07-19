@@ -107,8 +107,8 @@ instance AsciiName Char where
 instance AsciiName String where
   asciiName = concatMap asciiName
 
-tptpExt ∷ String
-tptpExt = ".tptp"
+fofExt ∷ String
+fofExt = ".fof"
 
 commentLine ∷ Text
 commentLine = "%-----------------------------------------------------------------------------\n"
@@ -238,7 +238,7 @@ tptpFileName conjectureSet = do
             ++ asciiName ((concat . nameStringParts . nameConcrete . qnameName) qName)
 
       file ∷ FilePath
-      file = addExtension f tptpExt
+      file = addExtension f fofExt
 
   reportSLn "tptpFileName" 20 $ "Creating " ++ show file
 

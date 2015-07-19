@@ -436,7 +436,7 @@ apia_changed : clean
 hlint :
 	hlint --color=never \
               --cpp-file=dist/build/autogen/cabal_macros.h \
-              --cpp-include=src/Apia/ \
+              --cpp-include=src/ \
               src/
 	@echo "$@ succeeded!"
 

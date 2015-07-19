@@ -72,7 +72,7 @@ import Apia.Options
   )
 
 import Apia.Snapshot         ( snapshotTest )
-import Apia.TPTP.Files       ( createConjectureFile )
+import Apia.TPTP.Files       ( createConjectureTPTPFile )
 import Apia.TPTP.Translation ( conjecturesToAFs, generalRolesToAFs )
 import Apia.TPTP.Types       ( ConjectureSet, GeneralRoles )
 
@@ -137,7 +137,8 @@ runApia = do
               selectedATPs
 
               -- Creation of the TPTP files.
-              tptpFiles ← mapM (createConjectureFile (fst allAFs)) (snd allAFs)
+              tptpFiles ←
+                mapM (createConjectureTPTPFile (fst allAFs)) (snd allAFs)
 
               -- Check the generated TPTP files using the tptp4X
               -- program from the TPTP library.

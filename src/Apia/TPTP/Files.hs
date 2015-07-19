@@ -15,7 +15,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE UnicodeSyntax     #-}
 
-module Apia.TPTP.Files ( createConjectureFile ) where
+module Apia.TPTP.Files ( createConjectureTPTPFile ) where
 
 ------------------------------------------------------------------------------
 -- Haskell imports
@@ -151,13 +151,8 @@ addRoles afs file str = do
   mapM_ (`addRole` file) $ sort afs
   T.appendFile file footer
 
--- | The function 'createConjectureFile' creates a TPTP file with a
--- conjecture.
-createConjectureFile ∷ GeneralRoles → ConjectureSet → T FilePath
-createConjectureFile generalRoles conjectureSet = do
-  -- To avoid clash names with the terms inside a where clause, we
-  -- added the line number where the term was defined to the file
-  -- name.
+createConjectureFile ∷ FilePath → GeneralRoles → ConjectureSet → T FilePath
+createConjectureFile file generalRoles conjectureSet = do
 
   when (duplicate (axioms generalRoles))     (__IMPOSSIBLE__)
   when (duplicate (defsAxioms generalRoles)) (__IMPOSSIBLE__)
@@ -167,45 +162,6 @@ createConjectureFile generalRoles conjectureSet = do
   when (duplicate (defsConjecture conjectureSet))       (__IMPOSSIBLE__)
   when (duplicate (localHintsConjecture conjectureSet)) (__IMPOSSIBLE__)
   when (duplicate (defsLocalHints conjectureSet))       (__IMPOSSIBLE__)
-
-  outputDir ← askTOpt optOutputDir
-
-  let qName ∷ QName
-      qName = case theConjecture conjectureSet of
-                AF _qName _ _ → _qName
-
-      moduleDir ∷ FilePath
-      moduleDir = ((`moduleNameToFileName` [])
-                   . toTopLevelModuleName
-                   . mnameToConcrete
-                   . qnameModule) qName
-
-      -- We removed the "/_"s in the module name produced by Agda when
-      -- the qName is inside a where clause.
-      finalDir ∷ FilePath
-      finalDir = outputDir </> removeString "/_" moduleDir
-
-  liftIO $ createDirectoryIfMissing True finalDir
-
-  reportSLn "createConjectureFile" 20 $ "Final dir: " ++ finalDir
-
-  reportSLn "createConjectureFile" 20 $
-    "Qname's concrete name range: " ++ (show . qNameConcreteNameRange) qName
-
-  reportSLn "createConjectureFile" 20 $
-    "Qname's nameBindingSite range: "
-    ++ (show . qNameNameBindingSiteRange) qName
-
-  let f ∷ FilePath
-      f = finalDir </>
-            (show . qNameLine) qName
-            ++ "-"
-            ++ asciiName ((concat . nameStringParts . nameConcrete . qnameName) qName)
-
-      file ∷ FilePath
-      file = addExtension f tptpExt
-
-  reportSLn "createConjectureFile" 20 $ "Creating " ++ show file
 
   let commonDefs ∷ [AF]
       commonDefs = commonRequiredDefs generalRoles conjectureSet
@@ -241,3 +197,56 @@ createConjectureFile generalRoles conjectureSet = do
   whenM (askTOpt optOnlyFiles) $ reportS "" 1 $ "Created " ++ file
 
   return file
+
+tptpFileName ∷ ConjectureSet → T FilePath
+tptpFileName conjectureSet = do
+  -- To avoid clash names with the terms inside a where clause, we
+  -- added the line number where the term was defined to the file
+  -- name.
+  outputDir ← askTOpt optOutputDir
+
+  let qName ∷ QName
+      qName = case theConjecture conjectureSet of
+                AF _qName _ _ → _qName
+
+      moduleDir ∷ FilePath
+      moduleDir = ((`moduleNameToFileName` [])
+                   . toTopLevelModuleName
+                   . mnameToConcrete
+                   . qnameModule) qName
+
+      -- We removed the "/_"s in the module name produced by Agda when
+      -- the qName is inside a where clause.
+      finalDir ∷ FilePath
+      finalDir = outputDir </> removeString "/_" moduleDir
+
+  liftIO $ createDirectoryIfMissing True finalDir
+
+  reportSLn "tptpFileName" 20 $ "Final dir: " ++ finalDir
+
+  reportSLn "tptpFileName" 20 $
+    "Qname's concrete name range: " ++ (show . qNameConcreteNameRange) qName
+
+  reportSLn "tptpFileName" 20 $
+    "Qname's nameBindingSite range: "
+    ++ (show . qNameNameBindingSiteRange) qName
+
+  let f ∷ FilePath
+      f = finalDir </>
+            (show . qNameLine) qName
+            ++ "-"
+            ++ asciiName ((concat . nameStringParts . nameConcrete . qnameName) qName)
+
+      file ∷ FilePath
+      file = addExtension f tptpExt
+
+  reportSLn "tptpFileName" 20 $ "Creating " ++ show file
+
+  return file
+
+-- | The 'createConjectureTPTPFile' function creates a TPTP file with a
+-- conjecture.
+createConjectureTPTPFile ∷ GeneralRoles → ConjectureSet → T FilePath
+createConjectureTPTPFile generalRoles conjectureSet = do
+  file ← tptpFileName conjectureSet
+  createConjectureFile file generalRoles conjectureSet

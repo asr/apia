@@ -59,10 +59,11 @@ import Agda.Utils.Pretty     ( prettyShow )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Monad.Base              ( askTOpt, T )
-import Monad.Reports           ( reportS, reportSLn )
-import Options                 ( Options(optOnlyFiles, optOutputDir) )
-import TPTP.ConcreteSyntax.FOF ( ToFOF(toFOF) )
+import Monad.Base               ( askTOpt, T )
+import Monad.Reports            ( reportS, reportSLn )
+import Options                  ( Options(optOnlyFiles, optOutputDir) )
+import TPTP.ConcreteSyntax.FOF  ( ToFOF(toFOF) )
+import TPTP.ConcreteSyntax.TFF0 ( ToTFF0(toTFF0) )
 
 import TPTP.Types
   ( AF(AF)
@@ -92,7 +93,8 @@ import Utils.Text   ( (+++), toUpperFirst )
 ------------------------------------------------------------------------------
 
 -- | TPTP languages.
-data Lang = FOF
+data Lang = FOF   -- First-order form.
+          | TFF0  -- Typed first-order form (without arithmetic).
 
 class AsciiName a where
   asciiName ∷ a → FilePath
@@ -112,6 +114,9 @@ instance AsciiName String where
 
 fofExt ∷ String
 fofExt = ".fof"
+
+tff0Ext ∷ String
+tff0Ext = ".tff0"
 
 commentLine ∷ Text
 commentLine = "%-----------------------------------------------------------------------------\n"
@@ -141,7 +146,9 @@ agdaOriginalTerm qName role =
 addRole ∷ Lang → FilePath → AF → IO ()
 addRole lang file af@(AF qName afRole _) = do
   T.appendFile file $ agdaOriginalTerm qName afRole
-  case lang of FOF → T.appendFile file $ toFOF af
+  case lang of
+   FOF  → T.appendFile file $ toFOF af
+   TFF0 → T.appendFile file $ toTFF0 af
 
 addRoles ∷ Lang → FilePath → [AF] → Text → IO ()
 addRoles _    _    []  _   = return ()
@@ -242,7 +249,9 @@ tptpFileName lang conjectureSet = do
             ++ asciiName ((concat . nameStringParts . nameConcrete . qnameName) qName)
 
       ext ∷ String
-      ext = case lang of FOF → fofExt
+      ext = case lang of
+              FOF  → fofExt
+              TFF0 → tff0Ext
 
       file ∷ FilePath
       file = addExtension f ext

@@ -65,6 +65,7 @@ executable apia
     Snapshot
     TPTP.ConcreteSyntax.Common
     TPTP.ConcreteSyntax.FOF
+    TPTP.ConcreteSyntax.TFF0
     TPTP.Files
     TPTP.Translation
     TPTP.Types

@@ -101,8 +101,7 @@ dist/build/apia/apia -itest/fail/errors --atp=vampire --vampire-exec=xxx test/fa
 >>>
 Proving the conjecture in /tmp/TrivialTheorem/20-foo.fof
 >>>2
-apia: the command xxx associated with Vampire does not exist.
-You can use the command-line option --atp=NAME to avoid call some ATP
+apia: the `xxx` command associated with Vampire does not exist
 >>>= 1
 
 #14. ATP.hs: No theorem

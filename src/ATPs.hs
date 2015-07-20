@@ -149,14 +149,14 @@ atpVersion CVC4 = do
                 . initDef (__IMPOSSIBLE__)
                 )
                 (readProcess exec ["--version"] "")
--- No version option in Equinox.
+-- No `--version` option in Equinox.
 atpVersion Equinox = do
   exec ← atpExec Equinox
   liftIO $ fmap (takeWhile (/= '\n') . initDef (__IMPOSSIBLE__))
                 (readProcess exec ["--help"] "")
--- No version option in ileanCoP.
+-- No `--version` option in ileanCoP.
 atpVersion IleanCoP = return $ show IleanCoP
--- No version option in SPASS.
+-- No `--version` option in SPASS.
 atpVersion SPASS = return $ show SPASS
 atpVersion atp = do
   exec ← atpExec atp
@@ -250,7 +250,7 @@ createSMT2file file = do
   e ← liftIO $ findExecutable tptp2X
   when (isNothing e) $ E.throwE $
     "the " ++ tptp2X ++ " command from the TPTP library does not exist " ++
-    "and it is required for using Z3 as an first-order ATP"
+    "and it is required for using " ++ show Z3 ++ " as an first-order ATP"
 
   let dir ∷ String
       dir = dropFileName file
@@ -286,9 +286,8 @@ runATP atp outputMVar timeout fileTPTP = do
 
   e ← liftIO $ findExecutable cmd
   when (isNothing e) $ E.throwE $
-    "the command " ++ cmd ++ " associated with " ++ show atp
-    ++ " does not exist.\nYou can use the command-line option --atp=NAME "
-    ++ "to avoid call some ATP"
+    "the `" ++ cmd ++ "` command associated with " ++ show atp
+    ++ " does not exist"
 
   -- To create the ATPs process we follow the ideas used by
   -- @System.Process.proc@.

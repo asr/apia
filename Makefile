@@ -28,7 +28,7 @@ APIA = dist/build/apia/apia --check
 
 # Supported ATPs.
 # Missing ileancop
-ATPs = e equinox metis spass vampire z3
+ATPs = cvc4 e equinox metis spass vampire z3
 
 ##############################################################################
 # Auxiliary functions

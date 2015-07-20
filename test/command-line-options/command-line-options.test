@@ -4,7 +4,7 @@ dist/build/apia/apia --help
 >>>
 Usage: apia [OPTIONS] FILE
 
-          --atp=NAME                           Set the ATP (e, equinox, ileancop, metis, spass, vampire, z3)
+          --atp=NAME                           Set the ATP (cvc4, e, equinox, ileancop, metis, spass, vampire, z3)
                                                (default: e, equinox, and vampire).
           --check                              Check the syntax of the generated TPTP files using the
                                                tptp4X program from the TPTP library.

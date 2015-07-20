@@ -75,7 +75,18 @@ import Agda.Utils.Monad      ( ifM )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Common        ( ATP(E, Equinox, IleanCoP, Metis, SPASS, Vampire, Z3))
+import Common
+  ( ATP( CVC4
+       , E
+       , Equinox
+       , IleanCoP
+       , Metis
+       , SPASS
+       , Vampire
+       , Z3
+       )
+  )
+
 import Monad.Base    ( askTOpt, getTATPs, modifyTATPs, T )
 import Monad.Reports ( reportS )
 
@@ -88,6 +99,7 @@ import qualified Utils.Except as E
 ------------------------------------------------------------------------------
 
 atpExec ∷ ATP → T String
+atpExec CVC4     = return "cvc4"
 atpExec E        = return "eprover"
 atpExec Equinox  = return "equinox"
 atpExec IleanCoP = return "ileancop.sh"
@@ -97,6 +109,7 @@ atpExec Vampire  = askTOpt optVampireExec
 atpExec Z3       = return "z3"
 
 optATP2ATP ∷ String → T ATP
+optATP2ATP "cvc4"     = return CVC4
 optATP2ATP "e"        = return E
 optATP2ATP "equinox"  = return Equinox
 optATP2ATP "ileancop" = return IleanCoP
@@ -111,6 +124,8 @@ defaultATPs ∷ [String]
 defaultATPs = ["e", "equinox", "vampire"]
 
 atpOk ∷ ATP → String
+-- CVC4 1.4.
+atpOk CVC4 = "SZS status Theorem"
 -- E 1.9.
 atpOk E = "Proof found!"
 -- Equinox 5.0alpha (2010-06-29).
@@ -127,10 +142,17 @@ atpOk Vampire = "Termination reason: Refutation\n"
 atpOk Z3 = "unsat"
 
 atpVersion ∷ ATP → T String
- -- No version option in Equinox.
+atpVersion CVC4 = do
+  exec ← atpExec CVC4
+  liftIO $ fmap ( drop (length "This is ")
+                . takeWhile (/= '\n')
+                . initDef (__IMPOSSIBLE__)
+                )
+                (readProcess exec ["--version"] "")
+-- No version option in Equinox.
 atpVersion Equinox = do
   exec ← atpExec Equinox
-  liftIO $ fmap (initDef (__IMPOSSIBLE__) . takeWhile (/= '\n'))
+  liftIO $ fmap (takeWhile (/= '\n') . initDef (__IMPOSSIBLE__))
                 (readProcess exec ["--help"] "")
 -- No version option in ileanCoP.
 atpVersion IleanCoP = return $ show IleanCoP
@@ -144,6 +166,15 @@ checkOutput ∷ ATP → String → Bool
 checkOutput atp output = atpOk atp `isInfixOf` output
 
 atpArgs ∷ ATP → Int → FilePath → T [String]
+
+-- TODO (20 July 2015). The timeout is not working with precision.
+atpArgs CVC4 timeout file =
+  return [ "--lang=tptp"
+         , "--strict-parsing"
+         , "--tlimit=" ++ show (timeout * 1000)
+         , file
+         ]
+
 atpArgs E timeout file = do
   eVersion ← atpVersion E
   if eVersion `elem` [ "E 1.2 Badamtam"

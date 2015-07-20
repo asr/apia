@@ -29,6 +29,7 @@ Prerequisites
 
   ATP | Tested version
   --- | --------------------
+  [CVC4](http://cvc4.cs.nyu.edu/web/) | CVC 1.4
   [E](http://www4.informatik.tu-muenchen.de/~schulz/WORK/eprover.html) | E 1.9 Sourenee
   [Equinox](http://www.cse.chalmers.se/~koen/code/) | Equinox 5.0alpha (2010-06-29)
   [ileanCoP](http://www.leancop.de/ileancop/index.html) | ileanCoP 1.3beta1

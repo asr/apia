@@ -11,12 +11,13 @@
 -----------------------------------------------------------------------------
 
 module Common
-  ( ATP(E, Equinox, IleanCoP, Metis, SPASS, Vampire, Z3))
+  ( ATP(CVC4, E, Equinox, IleanCoP, Metis, SPASS, Vampire, Z3))
   where
 
 ------------------------------------------------------------------------------
 -- | The ATPs (first-order ATPs and SMT solvers).
-data ATP = E
+data ATP = CVC4
+         | E
          | Equinox
          | IleanCoP
          | Metis

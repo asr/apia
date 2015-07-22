@@ -37,9 +37,8 @@ import Data.Maybe ( fromMaybe )
 
 import Safe ( initDef )
 
-import System.Directory ( findExecutable )
-import System.FilePath  ( dropFileName, replaceExtension )
-import System.IO        ( hGetContents )
+import System.FilePath ( dropFileName, replaceExtension )
+import System.IO       ( hGetContents )
 
 import System.Process
   ( callProcess
@@ -69,7 +68,6 @@ import System.Process
 -- Agda library imports
 
 import Agda.Utils.Impossible ( Impossible(Impossible) , throwImpossible )
-import Agda.Utils.Maybe      ( caseMaybeM )
 import Agda.Utils.Monad      ( ifM )
 
 ------------------------------------------------------------------------------
@@ -91,6 +89,8 @@ import Monad.Base    ( askTOpt, getTATPs, modifyTATPs, T )
 import Monad.Reports ( reportS )
 
 import Options ( Options(optATP, optTime, optUnprovenNoError, optWithVampire) )
+
+import Utils.Directory ( checkExecutable )
 
 import qualified Utils.Except as E
 
@@ -247,12 +247,12 @@ tptp2X = "tptp2X"
 createSMT2file ∷ FilePath → T ()
 createSMT2file file = do
 
-  caseMaybeM (liftIO $ findExecutable tptp2X)
-             (E.throwE $
-               "the " ++ tptp2X ++ " command from the TPTP library "
-               ++ "does not exist and it is required for using "
-               ++ show Z3 ++ " as an first-order ATP")
-             (\_ → return ())
+  let msgError ∷ String
+      msgError = "the " ++ tptp2X ++ " command from the TPTP library "
+                 ++ "does not exist and it is required for using "
+                 ++ show Z3 ++ " as an first-order ATP"
+
+  checkExecutable tptp2X msgError
 
   let dir ∷ String
       dir = dropFileName file
@@ -286,11 +286,11 @@ runATP atp outputMVar timeout fileTPTP = do
   args ∷ [String] ← atpArgs atp timeout file
   cmd  ∷ String   ← atpExec atp
 
-  caseMaybeM (liftIO $ findExecutable cmd)
-             (E.throwE $
-               "the `" ++ cmd ++ "` command associated with " ++ show atp
-               ++ " does not exist")
-             (\_ → return ())
+  let msgError ∷ String
+      msgError = "the `" ++ cmd ++ "` command associated with " ++ show atp
+                  ++ " does not exist"
+
+  checkExecutable cmd msgError
 
   -- To create the ATPs process we follow the ideas used by
   -- @System.Process.proc@.

@@ -1,19 +1,20 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Utils.File
+-- Module      : Utils.Directory
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- Utilities on files.
+-- Utilities on directory manipulation.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Utils.File
-  ( equalFiles
+module Utils.Directory
+  ( checkExecutable
+  , equalFiles
   , notEqualFiles
   ) where
 
@@ -22,9 +23,30 @@ module Utils.File
 
 import qualified Data.ByteString.Lazy as BL ( readFile )
 
-import Control.Monad ( liftM2 )
+import Control.Monad          ( liftM2 )
+import Control.Monad.IO.Class ( MonadIO(liftIO) )
+
+import System.Directory ( findExecutable )
 
 ------------------------------------------------------------------------------
+-- Apia imports
+
+import qualified Utils.Except as E
+
+------------------------------------------------------------------------------
+-- Agda library imports
+
+import Agda.Utils.Maybe ( caseMaybeM )
+
+------------------------------------------------------------------------------
+
+-- | @checkExecutable file msg@ throws an exception with message @msg@
+-- if the executable @file@ is missing.
+checkExecutable ∷ MonadIO m ⇒ FilePath → String → E.ExceptT String m ()
+checkExecutable file msg =
+  caseMaybeM (liftIO $ findExecutable file)
+             (E.throwE msg)
+             (\_ → return ())
 
 -- | Return 'True' if the files are equals, otherwise the function
 -- returns 'False'.

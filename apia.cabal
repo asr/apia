@@ -75,8 +75,8 @@ executable apia
     Utils.AgdaAPI.Interface
     Utils.AgdaAPI.RemoveProofTerms
     Utils.AgdaAPI.Vars
+    Utils.Directory
     Utils.Except
-    Utils.File
     Utils.List
     Utils.Monad
     Utils.Names

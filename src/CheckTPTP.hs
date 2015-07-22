@@ -21,21 +21,17 @@ import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
 import Data.List ( isInfixOf )
 
-import System.Directory ( findExecutable )
-import System.Exit      ( ExitCode(ExitSuccess, ExitFailure) )
-import System.Process   ( readProcessWithExitCode )
+import System.Exit    ( ExitCode(ExitSuccess, ExitFailure) )
+import System.Process ( readProcessWithExitCode )
 
 ------------------------------------------------------------------------------
 -- Apia imports
 
 import Monad.Base ( T )
 
+import Utils.Directory ( checkExecutable )
+
 import qualified Utils.Except as E
-
-------------------------------------------------------------------------------
--- Agda library imports
-
-import Agda.Utils.Maybe ( caseMaybeM )
 
 -----------------------------------------------------------------------------
 
@@ -46,11 +42,11 @@ tptp4X = "tptp4X"
 checkTPTP ∷ FilePath → T ()
 checkTPTP file = do
 
-  caseMaybeM (liftIO $ findExecutable tptp4X)
-             (E.throwE $
-               "the " ++ tptp4X ++ " command from the TPTP library "
-               ++ "does not exist")
-             (\_ → return ())
+  let msgError ∷ String
+      msgError = "the " ++ tptp4X ++ " command from the TPTP library "
+                 ++ "does not exist"
+
+  checkExecutable tptp4X msgError
 
   (exitCode, out, _) ←
     liftIO $ readProcessWithExitCode tptp4X

@@ -39,9 +39,9 @@ import Options
   ( Options(optOutputDir, optSnapshotDir, optSnapshotNoError)
   )
 
-import qualified Utils.Except as E
+import Utils.Directory ( notEqualFiles )
 
-import Utils.File ( notEqualFiles )
+import qualified Utils.Except as E
 
 ------------------------------------------------------------------------------
 

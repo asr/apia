@@ -19,8 +19,7 @@ module CheckTPTP ( checkTPTP ) where
 import Control.Monad           ( when )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
-import Data.List  ( isInfixOf )
-import Data.Maybe ( isNothing )
+import Data.List ( isInfixOf )
 
 import System.Directory ( findExecutable )
 import System.Exit      ( ExitCode(ExitSuccess, ExitFailure) )
@@ -33,6 +32,11 @@ import Monad.Base ( T )
 
 import qualified Utils.Except as E
 
+------------------------------------------------------------------------------
+-- Agda library imports
+
+import Agda.Utils.Maybe ( caseMaybeM )
+
 -----------------------------------------------------------------------------
 
 tptp4X ∷ String
@@ -41,9 +45,12 @@ tptp4X = "tptp4X"
 -- | Check the generated TPTP file using the @tptp4X@ program.
 checkTPTP ∷ FilePath → T ()
 checkTPTP file = do
-  e ← liftIO $ findExecutable tptp4X
-  when (isNothing e) $ E.throwE $
-    "the " ++ tptp4X ++ " command from the TPTP library does not exist"
+
+  caseMaybeM (liftIO $ findExecutable tptp4X)
+             (E.throwE $
+               "the " ++ tptp4X ++ " command from the TPTP library "
+               ++ "does not exist")
+             (\_ → return ())
 
   (exitCode, out, _) ←
     liftIO $ readProcessWithExitCode tptp4X

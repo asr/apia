@@ -30,11 +30,10 @@ import Control.Applicative ( (<$>) )
 import Control.Exception.Base  ( catch, evaluate, IOException )
 import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
-import Control.Monad           ( when )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
 import Data.List  ( isInfixOf )
-import Data.Maybe ( fromMaybe, isNothing )
+import Data.Maybe ( fromMaybe )
 
 import Safe ( initDef )
 
@@ -70,6 +69,7 @@ import System.Process
 -- Agda library imports
 
 import Agda.Utils.Impossible ( Impossible(Impossible) , throwImpossible )
+import Agda.Utils.Maybe      ( caseMaybeM )
 import Agda.Utils.Monad      ( ifM )
 
 ------------------------------------------------------------------------------
@@ -247,10 +247,12 @@ tptp2X = "tptp2X"
 createSMT2file ∷ FilePath → T ()
 createSMT2file file = do
 
-  e ← liftIO $ findExecutable tptp2X
-  when (isNothing e) $ E.throwE $
-    "the " ++ tptp2X ++ " command from the TPTP library does not exist " ++
-    "and it is required for using " ++ show Z3 ++ " as an first-order ATP"
+  caseMaybeM (liftIO $ findExecutable tptp2X)
+             (E.throwE $
+               "the " ++ tptp2X ++ " command from the TPTP library "
+               ++ "does not exist and it is required for using "
+               ++ show Z3 ++ " as an first-order ATP")
+             (\_ → return ())
 
   let dir ∷ String
       dir = dropFileName file
@@ -284,10 +286,11 @@ runATP atp outputMVar timeout fileTPTP = do
   args ∷ [String] ← atpArgs atp timeout file
   cmd  ∷ String   ← atpExec atp
 
-  e ← liftIO $ findExecutable cmd
-  when (isNothing e) $ E.throwE $
-    "the `" ++ cmd ++ "` command associated with " ++ show atp
-    ++ " does not exist"
+  caseMaybeM (liftIO $ findExecutable cmd)
+             (E.throwE $
+               "the `" ++ cmd ++ "` command associated with " ++ show atp
+               ++ " does not exist")
+             (\_ → return ())
 
   -- To create the ATPs process we follow the ideas used by
   -- @System.Process.proc@.

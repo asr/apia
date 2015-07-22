@@ -30,7 +30,7 @@ Usage: apia [OPTIONS] FILE
           --unproven-conjecture-no-error       An unproven TPTP conjecture does not generate an error.
   -v N    --verbose=N                          Set verbosity level to N.
           --version                            Show version number.
-          --with-vampire=COMMAND               Set the Vampire executable (default: vampire_lin64).
+          --with-vampire=PATH                  Give the path to Vampire.
 
 >>>2
 >>>= 0

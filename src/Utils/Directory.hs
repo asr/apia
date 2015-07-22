@@ -26,7 +26,7 @@ import qualified Data.ByteString.Lazy as BL ( readFile )
 import Control.Monad          ( liftM2 )
 import Control.Monad.IO.Class ( MonadIO(liftIO) )
 
-import System.Directory ( findExecutable )
+import System.Directory ( doesFileExist, findExecutable )
 
 ------------------------------------------------------------------------------
 -- Apia imports
@@ -37,6 +37,7 @@ import qualified Utils.Except as E
 -- Agda library imports
 
 import Agda.Utils.Maybe ( caseMaybeM )
+import Agda.Utils.Monad ( ifM )
 
 ------------------------------------------------------------------------------
 
@@ -45,7 +46,9 @@ import Agda.Utils.Maybe ( caseMaybeM )
 checkExecutable ∷ MonadIO m ⇒ FilePath → String → E.ExceptT String m ()
 checkExecutable file msg =
   caseMaybeM (liftIO $ findExecutable file)
-             (E.throwE msg)
+             (ifM (liftIO $ doesFileExist file)
+                  (return ())
+                  (E.throwE msg))
              (\_ → return ())
 
 -- | Return 'True' if the files are equals, otherwise the function

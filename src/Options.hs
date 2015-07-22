@@ -76,6 +76,8 @@ import qualified Agda.Utils.Trie as Trie ( insert, singleton )
 ------------------------------------------------------------------------------
 -- Apia imports
 
+import Common ( ATP(Vampire) )
+
 #include "undefined.h"
 
 -----------------------------------------------------------------------------
@@ -235,7 +237,7 @@ versionOpt ∷ MOptions
 versionOpt opts = Right opts { optVersion = True }
 
 withVampireOpt ∷ String → MOptions
-withVampireOpt []   _    = Left "Option `--with-vampire' requires an argument COMMAND"
+withVampireOpt []   _    = Left "Option `--with-vampire' requires an argument PATH"
 withVampireOpt name opts = Right opts { optWithVampire = name }
 
 -- | Description of the command-line 'Options'.
@@ -289,8 +291,8 @@ options =
                "Set verbosity level to N."
   , Option []  ["version"] (NoArg versionOpt)
                "Show version number."
-  , Option []  ["with-vampire"] (ReqArg withVampireOpt "COMMAND")
-               "Set the Vampire executable (default: vampire_lin64)."
+  , Option []  ["with-vampire"] (ReqArg withVampireOpt "PATH") $
+               "Give the path to " ++ show Vampire ++"."
   ]
 
 usageHeader ∷ String → String

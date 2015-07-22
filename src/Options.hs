@@ -46,6 +46,8 @@ module Options
            , optWithIleanCoP
            , optWithMetis
            , optWithSPASS
+           , optWithtptp2X
+           , optWithtptp4X
            , optWithVampire
            , optWithZ3
            )
@@ -129,6 +131,8 @@ data Options = Options
   , optWithIleanCoP                    ∷ String
   , optWithMetis                       ∷ String
   , optWithSPASS                       ∷ String
+  , optWithtptp2X                      ∷ String
+  , optWithtptp4X                      ∷ String
   , optWithVampire                     ∷ String
   , optWithZ3                          ∷ String
   }
@@ -166,6 +170,8 @@ defaultOptions = Options
   , optWithIleanCoP                    = "ileancop.sh"
   , optWithMetis                       = "metis"
   , optWithSPASS                       = "SPASS"
+  , optWithtptp2X                      = "tptp2X"
+  , optWithtptp4X                      = "tptp4X"
   , optWithVampire                     = "vampire_lin64"
   , optWithZ3                          = "z3"
   }
@@ -291,6 +297,14 @@ withSPASSOpt ∷ String → MOptions
 withSPASSOpt []   _    = Left "Option `--with-spass' requires an argument PATH"
 withSPASSOpt name opts = Right opts { optWithSPASS = name }
 
+withtptp2XOpt ∷ String → MOptions
+withtptp2XOpt []   _    = Left "Option `--with-tptp2X' requires an argument PATH"
+withtptp2XOpt name opts = Right opts { optWithtptp2X = name }
+
+withtptp4XOpt ∷ String → MOptions
+withtptp4XOpt []   _    = Left "Option `--with-tptp4X' requires an argument PATH"
+withtptp4XOpt name opts = Right opts { optWithtptp4X = name }
+
 withVampireOpt ∷ String → MOptions
 withVampireOpt []   _    = Left "Option `--with-vampire' requires an argument PATH"
 withVampireOpt name opts = Right opts { optWithVampire = name }
@@ -362,6 +376,10 @@ options =
                "Give the path to " ++ show Metis
   , Option []  ["with-spass"] (ReqArg withSPASSOpt "PATH") $
                "Give the path to " ++ show SPASS
+  , Option []  ["with-tptp2X"] (ReqArg withtptp2XOpt "PATH")
+               "Give the path to tptp2X"
+  , Option []  ["with-tptp4X"] (ReqArg withtptp4XOpt "PATH")
+               "Give the path to tptp4X"
   , Option []  ["with-vampire"] (ReqArg withVampireOpt "PATH") $
                "Give the path to " ++ show Vampire
   , Option []  ["with-z3"] (ReqArg withZ3Opt "PATH") $

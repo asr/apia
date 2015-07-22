@@ -36,6 +36,8 @@ Usage: apia [OPTIONS] FILE
           --with-ileancop=PATH                 Give the path to IleanCoP
           --with-metis=PATH                    Give the path to Metis
           --with-spass=PATH                    Give the path to SPASS
+          --with-tptp2X=PATH                   Give the path to tptp2X
+          --with-tptp4X=PATH                   Give the path to tptp4X
           --with-vampire=PATH                  Give the path to Vampire
           --with-z3=PATH                       Give the path to Z3
 

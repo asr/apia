@@ -98,6 +98,7 @@ import Options
            , optWithIleanCoP
            , optWithMetis
            , optWithSPASS
+           , optWithtptp2X
            , optWithVampire
            , optWithZ3
            )
@@ -252,26 +253,25 @@ atpArgs Z3 timeout file = return [ "-T:" ++ show timeout
                                  , file
                                  ]
 
-tptp2X ∷ String
-tptp2X = "tptp2X"
-
 -- tptp2X from TPTP 6.1.0 is returing exit status 1 instead of 0
 -- (bug), so we need to handle the exception raised.
 createSMT2file ∷ FilePath → T ()
 createSMT2file file = do
 
+  tptp2XExec ← askTOpt optWithtptp2X
+
   let msgError ∷ String
-      msgError = "the " ++ tptp2X ++ " command from the TPTP library "
+      msgError = "the " ++ tptp2XExec ++ " command from the TPTP library "
                  ++ "does not exist and it is required for using "
                  ++ show Z3 ++ " as an first-order ATP"
 
-  checkExecutable tptp2X msgError
+  checkExecutable tptp2XExec msgError
 
   let dir ∷ String
       dir = dropFileName file
 
   liftIO $
-    callProcess tptp2X [ "-q2", "-fsmt2", "-d", dir, file ]
+    callProcess tptp2XExec [ "-q2", "-fsmt2", "-d", dir, file ]
       `catch` (\(_ ∷ IOException) → return ())
 
 smt2Ext ∷ String

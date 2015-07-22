@@ -27,7 +27,9 @@ import System.Process ( readProcessWithExitCode )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Monad.Base ( T )
+import Monad.Base ( askTOpt, T )
+
+import Options ( Options(optWithtptp4X) )
 
 import Utils.Directory ( checkExecutable )
 
@@ -35,30 +37,29 @@ import qualified Utils.Except as E
 
 -----------------------------------------------------------------------------
 
-tptp4X ∷ String
-tptp4X = "tptp4X"
-
 -- | Check the generated TPTP file using the @tptp4X@ program.
 checkTPTP ∷ FilePath → T ()
 checkTPTP file = do
 
+  tptp4XExec ← askTOpt optWithtptp4X
+
   let msgError ∷ String
-      msgError = "the " ++ tptp4X ++ " command from the TPTP library "
+      msgError = "the " ++ tptp4XExec ++ " command from the TPTP library "
                  ++ "does not exist"
 
-  checkExecutable tptp4X msgError
+  checkExecutable tptp4XExec msgError
 
   (exitCode, out, _) ←
-    liftIO $ readProcessWithExitCode tptp4X
+    liftIO $ readProcessWithExitCode tptp4XExec
                                      ["-ftptp", "-umachine" , "-w", file]
                                      []
   case exitCode of
     ExitFailure _ →
-      E.throwE $ tptp4X ++ " found an error in the file " ++ file
+      E.throwE $ tptp4XExec ++ " found an error in the file " ++ file
                  ++ "\nPlease report this as a bug"
 
     -- TODO (11 December 2012). How add a test case for this case?
     ExitSuccess →
       when ("WARNING" `isInfixOf` out) $
-        E.throwE $ tptp4X ++ " found a warning in the file " ++ file
+        E.throwE $ tptp4XExec ++ " found a warning in the file " ++ file
                    ++ "\nPlease report this as a bug"

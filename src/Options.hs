@@ -317,8 +317,8 @@ withZ3Opt name opts = Right opts { optWithZ3 = name }
 options ∷ [OptDescr MOptions]
 options =
   [ Option []  ["atp"] (ReqArg atpOpt "NAME") $
-               "Set the ATP (cvc4, e, equinox, ileancop, metis, spass, vampire, z3)\n"
-               ++ "(default: e, equinox, and vampire)"
+               "Set the ATP (cvc4, e, equinox, ileancop, metis, spass, vampire or z3)\n"
+               ++ "(default: e, equinox and vampire)"
   , Option []  ["check"] (NoArg checkOpt) $
                "Check the syntax of the generated TPTP files using the\n"
                ++ "tptp4X program from the TPTP library"

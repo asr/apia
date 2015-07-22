@@ -38,9 +38,9 @@ module Options
            , optSnapshotTest
            , optTime
            , optUnprovenNoError
-           , optVampireExec
            , optVerbose
            , optVersion
+           , optWithVampire
            )
   , printUsage
   , processOptions
@@ -102,9 +102,9 @@ data Options = Options
   , optSnapshotTest                    ∷ Bool
   , optTime                            ∷ Int
   , optUnprovenNoError                 ∷ Bool
-  , optVampireExec                     ∷ String
   , optVerbose                         ∷ Verbosity
   , optVersion                         ∷ Bool
+  , optWithVampire                     ∷ String
   }
 
 -- N.B. The default ATPs are handled by @ATP.callATPs@.
@@ -132,9 +132,9 @@ defaultOptions = Options
   , optSnapshotTest                    = False
   , optTime                            = 240
   , optUnprovenNoError                 = False
-  , optVampireExec                     = "vampire_lin64"
   , optVerbose                         = Trie.singleton [] 1
   , optVersion                         = False
+  , optWithVampire                     = "vampire_lin64"
   }
 
 -- | 'Options' monad.
@@ -213,10 +213,6 @@ timeOpt secs opts =
 unprovenNoErrorOpt ∷ MOptions
 unprovenNoErrorOpt opts = Right opts { optUnprovenNoError = True }
 
-vampireExecOpt ∷ String → MOptions
-vampireExecOpt []   _    = Left "Option `--vampire-exec' requires an argument COMMAND"
-vampireExecOpt name opts = Right opts { optVampireExec = name }
-
 -- Adapted from @Agda.Interaction.Options.verboseFlag@.
 verboseOpt ∷ String → MOptions
 verboseOpt [] _ = Left "Option `--verbose' requires an argument of the form x.y.z:N or N"
@@ -237,6 +233,10 @@ verboseOpt str opts =
 
 versionOpt ∷ MOptions
 versionOpt opts = Right opts { optVersion = True }
+
+withVampireOpt ∷ String → MOptions
+withVampireOpt []   _    = Left "Option `--with-vampire' requires an argument COMMAND"
+withVampireOpt name opts = Right opts { optWithVampire = name }
 
 -- | Description of the command-line 'Options'.
 options ∷ [OptDescr MOptions]
@@ -285,12 +285,12 @@ options =
                "Set timeout for the ATPs in seconds (default: 240)."
   , Option []  ["unproven-conjecture-no-error"] (NoArg unprovenNoErrorOpt)
                "An unproven TPTP conjecture does not generate an error."
-  , Option []  ["vampire-exec"] (ReqArg vampireExecOpt "COMMAND")
-               "Set the Vampire executable (default: vampire_lin64)."
   , Option "v" ["verbose"] (ReqArg verboseOpt "N")
                "Set verbosity level to N."
   , Option []  ["version"] (NoArg versionOpt)
                "Show version number."
+  , Option []  ["with-vampire"] (ReqArg withVampireOpt "COMMAND")
+               "Set the Vampire executable (default: vampire_lin64)."
   ]
 
 usageHeader ∷ String → String

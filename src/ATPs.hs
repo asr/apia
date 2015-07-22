@@ -90,7 +90,7 @@ import Common
 import Monad.Base    ( askTOpt, getTATPs, modifyTATPs, T )
 import Monad.Reports ( reportS )
 
-import Options ( Options(optATP, optTime, optUnprovenNoError, optVampireExec) )
+import Options ( Options(optATP, optTime, optUnprovenNoError, optWithVampire) )
 
 import qualified Utils.Except as E
 
@@ -105,7 +105,7 @@ atpExec Equinox  = return "equinox"
 atpExec IleanCoP = return "ileancop.sh"
 atpExec Metis    = return "metis"
 atpExec SPASS    = return "SPASS"
-atpExec Vampire  = askTOpt optVampireExec
+atpExec Vampire  = askTOpt optWithVampire
 atpExec Z3       = return "z3"
 
 optATP2ATP ∷ String → T ATP

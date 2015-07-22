@@ -96,7 +96,7 @@ apia: ATP foo unknown
 >>>= 1
 
 #13. ATP.hs: Bad ATP executable name
-dist/build/apia/apia -itest/fail/errors --atp=vampire --vampire-exec=xxx test/fail/errors/TrivialTheorem.agda
+dist/build/apia/apia -itest/fail/errors --atp=vampire --with-vampire=xxx test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
 Proving the conjecture in /tmp/TrivialTheorem/20-foo.fof
@@ -237,20 +237,20 @@ dist/build/apia/apia --time=-10
 apia: Option `--time' requires a non-negative integer argument
 >>>= 1
 
-#30. Options.hs (System.Console.GetOpt): --vampire-exec
-dist/build/apia/apia --vampire-exec
+#30. Options.hs (System.Console.GetOpt): --with-vampire
+dist/build/apia/apia --with-vampire
 <<<
 >>>
 >>>2
-apia: option `--vampire-exec' requires an argument COMMAND
+apia: option `--with-vampire' requires an argument COMMAND
 >>>= 1
 
-#31. Options.hs: --vampire-exec=
-dist/build/apia/apia --vampire-exec=
+#31. Options.hs: --with-vampire=
+dist/build/apia/apia --with-vampire=
 <<<
 >>>
 >>>2
-apia: Option `--vampire-exec' requires an argument COMMAND
+apia: Option `--with-vampire' requires an argument COMMAND
 >>>= 1
 
 #32. Options.hs (System.Console.GetOpt): -v

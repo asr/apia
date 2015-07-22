@@ -30,7 +30,14 @@ Usage: apia [OPTIONS] FILE
           --unproven-conjecture-no-error       An unproven TPTP conjecture does not generate an error
   -v N    --verbose=N                          Set verbosity level to N
           --version                            Show version number
+          --with-cvc4=PATH                     Give the path to CVC4
+          --with-e=PATH                        Give the path to E
+          --with-equinox=PATH                  Give the path to Equinox
+          --with-ileancop=PATH                 Give the path to IleanCoP
+          --with-metis=PATH                    Give the path to Metis
+          --with-spass=PATH                    Give the path to SPASS
           --with-vampire=PATH                  Give the path to Vampire
+          --with-z3=PATH                       Give the path to Z3
 
 >>>2
 >>>= 0

@@ -40,7 +40,14 @@ module Options
            , optUnprovenNoError
            , optVerbose
            , optVersion
+           , optWithCVC4
+           , optWithE
+           , optWithEquinox
+           , optWithIleanCoP
+           , optWithMetis
+           , optWithSPASS
            , optWithVampire
+           , optWithZ3
            )
   , printUsage
   , processOptions
@@ -76,7 +83,17 @@ import qualified Agda.Utils.Trie as Trie ( insert, singleton )
 ------------------------------------------------------------------------------
 -- Apia imports
 
-import Common ( ATP(Vampire) )
+import Common
+  ( ATP( CVC4
+       , E
+       , Equinox
+       , IleanCoP
+       , Metis
+       , SPASS
+       , Vampire
+       , Z3
+       )
+  )
 
 #include "undefined.h"
 
@@ -106,7 +123,14 @@ data Options = Options
   , optUnprovenNoError                 ∷ Bool
   , optVerbose                         ∷ Verbosity
   , optVersion                         ∷ Bool
+  , optWithCVC4                        ∷ String
+  , optWithE                           ∷ String
+  , optWithEquinox                     ∷ String
+  , optWithIleanCoP                    ∷ String
+  , optWithMetis                       ∷ String
+  , optWithSPASS                       ∷ String
   , optWithVampire                     ∷ String
+  , optWithZ3                          ∷ String
   }
 
 -- N.B. The default ATPs are handled by @ATP.callATPs@.
@@ -136,7 +160,14 @@ defaultOptions = Options
   , optUnprovenNoError                 = False
   , optVerbose                         = Trie.singleton [] 1
   , optVersion                         = False
+  , optWithCVC4                        = "cvc4"
+  , optWithE                           = "eprover"
+  , optWithEquinox                     = "equinox"
+  , optWithIleanCoP                    = "ileancop.sh"
+  , optWithMetis                       = "metis"
+  , optWithSPASS                       = "SPASS"
   , optWithVampire                     = "vampire_lin64"
+  , optWithZ3                          = "z3"
   }
 
 -- | 'Options' monad.
@@ -236,9 +267,37 @@ verboseOpt str opts =
 versionOpt ∷ MOptions
 versionOpt opts = Right opts { optVersion = True }
 
+withCVC4Opt ∷ String → MOptions
+withCVC4Opt []   _    = Left "Option `--with-cvc4' requires an argument PATH"
+withCVC4Opt name opts = Right opts { optWithCVC4 = name }
+
+withEOpt ∷ String → MOptions
+withEOpt []   _    = Left "Option `--with-e' requires an argument PATH"
+withEOpt name opts = Right opts { optWithE = name }
+
+withEquinoxOpt ∷ String → MOptions
+withEquinoxOpt []   _    = Left "Option `--with-equinox' requires an argument PATH"
+withEquinoxOpt name opts = Right opts { optWithEquinox = name }
+
+withIleanCoPOpt ∷ String → MOptions
+withIleanCoPOpt []   _    = Left "Option `--with-ileancop' requires an argument PATH"
+withIleanCoPOpt name opts = Right opts { optWithIleanCoP = name }
+
+withMetisOpt ∷ String → MOptions
+withMetisOpt []   _    = Left "Option `--with-metis' requires an argument PATH"
+withMetisOpt name opts = Right opts { optWithMetis = name }
+
+withSPASSOpt ∷ String → MOptions
+withSPASSOpt []   _    = Left "Option `--with-spass' requires an argument PATH"
+withSPASSOpt name opts = Right opts { optWithSPASS = name }
+
 withVampireOpt ∷ String → MOptions
 withVampireOpt []   _    = Left "Option `--with-vampire' requires an argument PATH"
 withVampireOpt name opts = Right opts { optWithVampire = name }
+
+withZ3Opt ∷ String → MOptions
+withZ3Opt []   _    = Left "Option `--with-z3' requires an argument PATH"
+withZ3Opt name opts = Right opts { optWithZ3 = name }
 
 -- | Description of the command-line 'Options'.
 options ∷ [OptDescr MOptions]
@@ -291,8 +350,22 @@ options =
                "Set verbosity level to N"
   , Option []  ["version"] (NoArg versionOpt)
                "Show version number"
+  , Option []  ["with-cvc4"] (ReqArg withCVC4Opt "PATH") $
+               "Give the path to " ++ show CVC4
+  , Option []  ["with-e"] (ReqArg withEOpt "PATH") $
+               "Give the path to " ++ show E
+  , Option []  ["with-equinox"] (ReqArg withEquinoxOpt "PATH") $
+               "Give the path to " ++ show Equinox
+  , Option []  ["with-ileancop"] (ReqArg withIleanCoPOpt "PATH") $
+               "Give the path to " ++ show IleanCoP
+  , Option []  ["with-metis"] (ReqArg withMetisOpt "PATH") $
+               "Give the path to " ++ show Metis
+  , Option []  ["with-spass"] (ReqArg withSPASSOpt "PATH") $
+               "Give the path to " ++ show SPASS
   , Option []  ["with-vampire"] (ReqArg withVampireOpt "PATH") $
                "Give the path to " ++ show Vampire
+  , Option []  ["with-z3"] (ReqArg withZ3Opt "PATH") $
+               "Give the path to " ++ show Z3
   ]
 
 usageHeader ∷ String → String

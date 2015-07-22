@@ -88,7 +88,20 @@ import Common
 import Monad.Base    ( askTOpt, getTATPs, modifyTATPs, T )
 import Monad.Reports ( reportS )
 
-import Options ( Options(optATP, optTime, optUnprovenNoError, optWithVampire) )
+import Options
+  ( Options( optATP
+           , optTime
+           , optUnprovenNoError
+           , optWithCVC4
+           , optWithE
+           , optWithEquinox
+           , optWithIleanCoP
+           , optWithMetis
+           , optWithSPASS
+           , optWithVampire
+           , optWithZ3
+           )
+  )
 
 import Utils.Directory ( checkExecutable )
 
@@ -99,14 +112,14 @@ import qualified Utils.Except as E
 ------------------------------------------------------------------------------
 
 atpExec ∷ ATP → T String
-atpExec CVC4     = return "cvc4"
-atpExec E        = return "eprover"
-atpExec Equinox  = return "equinox"
-atpExec IleanCoP = return "ileancop.sh"
-atpExec Metis    = return "metis"
-atpExec SPASS    = return "SPASS"
+atpExec CVC4     = askTOpt optWithCVC4
+atpExec E        = askTOpt optWithE
+atpExec Equinox  = askTOpt optWithEquinox
+atpExec IleanCoP = askTOpt optWithIleanCoP
+atpExec Metis    = askTOpt optWithMetis
+atpExec SPASS    = askTOpt optWithSPASS
 atpExec Vampire  = askTOpt optWithVampire
-atpExec Z3       = return "z3"
+atpExec Z3       = askTOpt optWithZ3
 
 optATP2ATP ∷ String → T ATP
 optATP2ATP "cvc4"     = return CVC4

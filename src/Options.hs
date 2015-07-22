@@ -22,10 +22,12 @@ module Options
            , optCheck
            , optDumpAgdai
            , optDumpQNames
+           , optFnConstant
            , optHelp
            , optInputFile
            , optIncludePath
            , optNoInternalEquality
+           , optNoPredicateConstants
            , optOnlyFiles
            , optOutputDir
            , optSchematicFunctions
@@ -39,8 +41,6 @@ module Options
            , optVampireExec
            , optVerbose
            , optVersion
-           , optWithFnConsts
-           , optWithoutPConsts
            )
   , printUsage
   , processOptions
@@ -86,10 +86,12 @@ data Options = Options
   , optCheck                           ∷ Bool
   , optDumpAgdai                       ∷ Bool
   , optDumpQNames                      ∷ Bool
+  , optFnConstant                      ∷ Bool
   , optHelp                            ∷ Bool
   , optIncludePath                     ∷ [FilePath]
   , optInputFile                       ∷ Maybe FilePath
   , optNoInternalEquality              ∷ Bool
+  , optNoPredicateConstants            ∷ Bool
   , optOnlyFiles                       ∷ Bool
   , optOutputDir                       ∷ FilePath
   , optSchematicFunctions              ∷ Bool
@@ -103,8 +105,6 @@ data Options = Options
   , optVampireExec                     ∷ String
   , optVerbose                         ∷ Verbosity
   , optVersion                         ∷ Bool
-  , optWithFnConsts                    ∷ Bool
-  , optWithoutPConsts                  ∷ Bool
   }
 
 -- N.B. The default ATPs are handled by @ATP.callATPs@.
@@ -116,10 +116,12 @@ defaultOptions = Options
   , optCheck                           = False
   , optDumpAgdai                       = False
   , optDumpQNames                      = False
+  , optFnConstant                      = False
   , optHelp                            = False
   , optIncludePath                     = []
   , optInputFile                       = Nothing
   , optNoInternalEquality              = False
+  , optNoPredicateConstants            = False
   , optOnlyFiles                       = False
   , optOutputDir                       = "/tmp"
   , optSchematicFunctions              = False
@@ -133,8 +135,6 @@ defaultOptions = Options
   , optVampireExec                     = "vampire_lin64"
   , optVerbose                         = Trie.singleton [] 1
   , optVersion                         = False
-  , optWithFnConsts                    = False
-  , optWithoutPConsts                  = False
   }
 
 -- | 'Options' monad.
@@ -153,6 +153,9 @@ dumpAgdaiOpt opts = Right opts { optDumpAgdai = True }
 dumpQNamesOpt ∷ MOptions
 dumpQNamesOpt opts = Right opts { optDumpQNames = True }
 
+fnConstantOpt ∷ MOptions
+fnConstantOpt opts = Right opts { optFnConstant = True }
+
 helpOpt ∷ MOptions
 helpOpt opts = Right opts { optHelp = True }
 
@@ -169,6 +172,9 @@ inputFileOpt file opts =
 
 noInternalEqualityOpt ∷ MOptions
 noInternalEqualityOpt opts = Right opts { optNoInternalEquality = True }
+
+noPredicateConstantsOpt ∷ MOptions
+noPredicateConstantsOpt opts = Right opts { optNoPredicateConstants = True }
 
 onlyFilesOpt ∷ MOptions
 onlyFilesOpt opts = Right opts { optOnlyFiles = True }
@@ -232,12 +238,6 @@ verboseOpt str opts =
 versionOpt ∷ MOptions
 versionOpt opts = Right opts { optVersion = True }
 
-withFnConstsOpt ∷ MOptions
-withFnConstsOpt opts = Right opts { optWithFnConsts = True }
-
-withoutPConstsOpt ∷ MOptions
-withoutPConstsOpt opts = Right opts { optWithoutPConsts = True }
-
 -- | Description of the command-line 'Options'.
 options ∷ [OptDescr MOptions]
 options =
@@ -251,12 +251,18 @@ options =
                "Dump the Agda interface file to stdout."
   , Option []  ["dump-qnames"] (NoArg dumpQNamesOpt)
                "Dump Agda QNames information to stdout."
+  , Option []  ["function-constant"] (NoArg fnConstantOpt) $
+               "Use a hard-coded binary function symbol for the translation\n"
+               ++ "of functions (required for handling currying)."
   , Option []  ["help"] (NoArg helpOpt)
                "Show this help."
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")
                "Look for imports in DIR."
   , Option []  ["no-internal-equality"] (NoArg noInternalEqualityOpt)
                "Do not translate _≡_ to the ATPs equality."
+  , Option []  ["no-predicate-constants"] (NoArg noPredicateConstantsOpt) $
+               "Do not use hard-coded (n+1)-ary predicate symbols for the\n"
+               ++ "translation of n-ary predicates."
   , Option []  ["only-files"] (NoArg onlyFilesOpt)
                "Do not call the ATPs, only to create the TPTP files."
   , Option []  ["output-dir"] (ReqArg outputDirOpt "DIR")
@@ -285,12 +291,6 @@ options =
                "Set verbosity level to N."
   , Option []  ["version"] (NoArg versionOpt)
                "Show version number."
-  , Option []  ["with-function-constants"] (NoArg withFnConstsOpt) $
-               "Use a hard-coded binary function symbol for the translation\n"
-               ++ "of functions (required for handling currying)."
-  , Option []  ["without-predicate-constants"] (NoArg withoutPConstsOpt) $
-               "Do not use hard-coded (n+1)-ary predicate symbols for the\n"
-               ++ "translation of n-ary predicates."
   ]
 
 usageHeader ∷ String → String

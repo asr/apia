@@ -105,12 +105,12 @@ import Monad.Base
 import Monad.Reports ( reportSLn )
 
 import Options
-  ( Options ( optNoInternalEquality
+  ( Options ( optFnConstant
+            , optNoInternalEquality
+            , optNoPredicateConstants
             , optSchematicFunctions
             , optSchematicPropositionalFunctions
             , optSchematicPropositionalSymbols
-            , optWithFnConsts
-            , optWithoutPConsts
             )
   )
 
@@ -187,7 +187,7 @@ predicate qName elims = do
 
   case length elims of
     0 → __IMPOSSIBLE__
-    _ → ifM (askTOpt optWithoutPConsts)
+    _ → ifM (askTOpt optNoPredicateConstants)
             -- Direct translation.
             (return $ Predicate folName termsFOL)
             -- Translation using Koen's suggestion.
@@ -496,10 +496,10 @@ termToFormula term = case ignoreSharing term of
             p = "--schematic-propositional-functions"
 
         ifM (askTOpt optSchematicPropositionalFunctions)
-            (ifM (askTOpt optWithoutPConsts)
+            (ifM (askTOpt optNoPredicateConstants)
                  (E.throwE $
-                   "The options '--schematic-propositional-functions'"
-                   ++ " and '--without-predicate-constants' are incompatible")
+                   "The '--schematic-propositional-functions'"
+                   ++ " and '--no-predicate-constants' options are incompatible")
                  (propositionalFunctionScheme vars n elims)
             )
             (E.throwE $ universalQuantificationErrorMsg p)
@@ -512,7 +512,7 @@ termToFormula term = case ignoreSharing term of
 appArgsF ∷ String → Args → T FOLTerm
 appArgsF fn args = do
   termsFOL ← mapM argTermToFOLTerm args
-  ifM (askTOpt optWithFnConsts)
+  ifM (askTOpt optFnConstant)
       -- Translation using a hard-coded binary function symbol.
       (return $ foldl' appF (FOLFun fn []) termsFOL)
       -- Direct translation.

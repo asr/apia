@@ -294,10 +294,10 @@ apia: tptp4X found an error in the file /tmp/TPTP4XError/22-foo.fof
 Please report this as a bug
 >>>= 1
 
-#37. Terms.hs: The --schematic-propositional-functions and the --without-predicate-constants option are incompatible
-dist/build/apia/apia --schematic-propositional-functions --without-predicate-constants -itest/fail/errors test/fail/errors/SchematicPropositionalFunctionsWithoutPredicateSymbols.agda
+#37. Terms.hs: The --schematic-propositional-functions and the --no-predicate-constants option are incompatible
+dist/build/apia/apia --schematic-propositional-functions --no-predicate-constants -itest/fail/errors test/fail/errors/SchematicPropositionalFunctionsWithoutPredicateSymbols.agda
 <<<
 >>>
 >>>2
-apia: The options '--schematic-propositional-functions' and '--without-predicate-constants' are incompatible
+apia: The '--schematic-propositional-functions' and '--no-predicate-constants' options are incompatible
 >>>= 1

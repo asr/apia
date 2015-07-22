@@ -245,30 +245,30 @@ options ∷ [OptDescr MOptions]
 options =
   [ Option []  ["atp"] (ReqArg atpOpt "NAME") $
                "Set the ATP (cvc4, e, equinox, ileancop, metis, spass, vampire, z3)\n"
-               ++ "(default: e, equinox, and vampire)."
+               ++ "(default: e, equinox, and vampire)"
   , Option []  ["check"] (NoArg checkOpt) $
                "Check the syntax of the generated TPTP files using the\n"
-               ++ "tptp4X program from the TPTP library."
+               ++ "tptp4X program from the TPTP library"
   , Option []  ["dump-agdai"] (NoArg dumpAgdaiOpt)
-               "Dump the Agda interface file to stdout."
+               "Dump the Agda interface file to stdout"
   , Option []  ["dump-qnames"] (NoArg dumpQNamesOpt)
-               "Dump Agda QNames information to stdout."
+               "Dump Agda QNames information to stdout"
   , Option []  ["function-constant"] (NoArg fnConstantOpt) $
                "Use a hard-coded binary function symbol for the translation\n"
-               ++ "of functions (required for handling currying)."
+               ++ "of functions (required for handling currying)"
   , Option []  ["help"] (NoArg helpOpt)
-               "Show this help."
+               "Show this help"
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")
-               "Look for imports in DIR."
+               "Look for imports in DIR"
   , Option []  ["no-internal-equality"] (NoArg noInternalEqualityOpt)
-               "Do not translate _≡_ to the ATPs equality."
+               "Do not translate _≡_ to the ATPs equality"
   , Option []  ["no-predicate-constants"] (NoArg noPredicateConstantsOpt) $
                "Do not use hard-coded (n+1)-ary predicate symbols for the\n"
-               ++ "translation of n-ary predicates."
+               ++ "translation of n-ary predicates"
   , Option []  ["only-files"] (NoArg onlyFilesOpt)
-               "Do not call the ATPs, only to create the TPTP files."
+               "Do not call the ATPs, only to create the TPTP files"
   , Option []  ["output-dir"] (ReqArg outputDirOpt "DIR")
-               "Directory in which the TPTP files are placed (default: /tmp)."
+               "Directory in which the TPTP files are placed (default: /tmp)"
   , Option []  ["schematic-propositional-functions"]
                (NoArg schematicPropositionalFunctionsOpt)
                "Enable translation of universal quantified FOL propositional functions"
@@ -277,22 +277,22 @@ options =
                "Enable translation of universal quantified FOL propositional symbols"
   , Option []  ["snapshot-dir"] (ReqArg snapshotDirOpt "DIR") $
                "Directory where is the snapshot of the TPTP files\n"
-               ++ "(default: snapshot)."
+               ++ "(default: snapshot)"
   , Option []  ["snapshot-no-error"] (NoArg snapshotNoErrorOpt) $
                "A difference in the snapshot-test does not generate an error\n"
-               ++ "(implies --snapshot-test)."
+               ++ "(implies --snapshot-test)"
   , Option []  ["snapshot-test"] (NoArg snapshotTestOpt)
-               "Compare the generated TPTP files against a snapshot of them."
+               "Compare the generated TPTP files against a snapshot of them"
   , Option []  ["time"] (ReqArg timeOpt "NUM")
-               "Set timeout for the ATPs in seconds (default: 240)."
+               "Set timeout for the ATPs in seconds (default: 240)"
   , Option []  ["unproven-conjecture-no-error"] (NoArg unprovenNoErrorOpt)
-               "An unproven TPTP conjecture does not generate an error."
+               "An unproven TPTP conjecture does not generate an error"
   , Option "v" ["verbose"] (ReqArg verboseOpt "N")
-               "Set verbosity level to N."
+               "Set verbosity level to N"
   , Option []  ["version"] (NoArg versionOpt)
-               "Show version number."
+               "Show version number"
   , Option []  ["with-vampire"] (ReqArg withVampireOpt "PATH") $
-               "Give the path to " ++ show Vampire ++"."
+               "Give the path to " ++ show Vampire
   ]
 
 usageHeader ∷ String → String

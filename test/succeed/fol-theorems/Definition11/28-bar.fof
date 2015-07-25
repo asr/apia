@@ -3,7 +3,7 @@
 %-----------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------
-% The required ATP definition(s) by the conjecture.
+% The required definition(s) by the conjecture.
 
 % The original Agda term was:
 % Name: Definition11._.P
@@ -11,7 +11,7 @@
 % Line: 24
 fof(n30_90119102, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cP_30_90119102,A,B) ) <=> ( ? [C] : ( B = C ) ) ) ) ) )).
 
-% End required ATP definition(s) by the conjecture.
+% End required definition(s) by the conjecture.
 
 %-----------------------------------------------------------------------------
 % The conjecture.

@@ -3,7 +3,7 @@
 %-----------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------
-% The required ATP definition(s) by the conjecture.
+% The required definition(s) by the conjecture.
 
 % The original Agda term was:
 % Name: Eta3.P
@@ -11,7 +11,7 @@
 % Line: 26
 fof(n16_156166027, definition, ( ! [A] : ( ( kp1_(cP_16_156166027,A) ) <=> ( ? [B] : ( kp2_(cP178,A,B) ) ) ) )).
 
-% End required ATP definition(s) by the conjecture.
+% End required definition(s) by the conjecture.
 
 %-----------------------------------------------------------------------------
 % The conjecture.

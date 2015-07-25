@@ -193,15 +193,15 @@ createConjectureFile lang file generalRoles conjectureSet = do
     addRoles lang file commonDefs "common required definition(s)"
     addRoles lang file (axioms newGeneralRoles) "general axiom(s)"
     addRoles lang file (defsAxioms newGeneralRoles)
-             "required ATP definition(s) by the general axiom(s)"
+             "required definition(s) by the general axiom(s)"
     addRoles lang file (hints newGeneralRoles) "general hint(s)"
     addRoles lang file (defsHints newGeneralRoles)
-             "required ATP definition(s) by the general hint(s)"
+             "required definition(s) by the general hint(s)"
     addRoles lang file (localHintsConjecture  newConjectureSet) "local hint(s)"
     addRoles lang file (defsLocalHints newConjectureSet)
-             "required ATP definition(s) by the local hint(s)"
+             "required definition(s) by the local hint(s)"
     addRoles lang file (defsConjecture newConjectureSet)
-             "required ATP definition(s) by the conjecture"
+             "required definition(s) by the conjecture"
     addRoles lang file [ theConjecture newConjectureSet ] "conjecture"
     T.appendFile file conjectureFooter
 

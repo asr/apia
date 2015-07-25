@@ -3,7 +3,7 @@
 %-----------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------
-% The required ATP definition(s) by the conjecture.
+% The required definition(s) by the conjecture.
 
 % The original Agda term was:
 % Name: PropositionalFunction4.A
@@ -11,7 +11,7 @@
 % Line: 20
 fof(n10_262544207, definition, ( ! [A] : ( ( kp1_(cA_10_262544207,A) ) <=> ( f(A) = f(A) ) ) )).
 
-% End required ATP definition(s) by the conjecture.
+% End required definition(s) by the conjecture.
 
 %-----------------------------------------------------------------------------
 % The conjecture.

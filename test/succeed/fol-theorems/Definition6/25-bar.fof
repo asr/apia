@@ -14,7 +14,7 @@ fof(n12_7009137, hypothesis, ( c = b )).
 % End local hint(s).
 
 %-----------------------------------------------------------------------------
-% The required ATP definition(s) by the local hint(s).
+% The required definition(s) by the local hint(s).
 
 % The original Agda term was:
 % Name: Definition6.b
@@ -22,7 +22,7 @@ fof(n12_7009137, hypothesis, ( c = b )).
 % Line: 17
 fof(n10_7009137, definition, ( b = a )).
 
-% End required ATP definition(s) by the local hint(s).
+% End required definition(s) by the local hint(s).
 
 %-----------------------------------------------------------------------------
 % The conjecture.

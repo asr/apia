@@ -3,7 +3,7 @@
 %-----------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------
-% The required ATP definition(s) by the conjecture.
+% The required definition(s) by the conjecture.
 
 % The original Agda term was:
 % Name: Definition2.foo
@@ -11,7 +11,7 @@
 % Line: 17
 fof(n6_177394723, definition, ( ! [A] : ( foo(A) = A ) )).
 
-% End required ATP definition(s) by the conjecture.
+% End required definition(s) by the conjecture.
 
 %-----------------------------------------------------------------------------
 % The conjecture.

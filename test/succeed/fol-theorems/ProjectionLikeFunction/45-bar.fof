@@ -3,7 +3,7 @@
 %-----------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------
-% The required ATP definition(s) by the conjecture.
+% The required definition(s) by the conjecture.
 
 % The original Agda term was:
 % Name: ProjectionLikeFunction._.P
@@ -11,7 +11,7 @@
 % Line: 41
 fof(n20_90809832, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cP_20_90809832,A,B) ) <=> ( B = B ) ) ) ) )).
 
-% End required ATP definition(s) by the conjecture.
+% End required definition(s) by the conjecture.
 
 %-----------------------------------------------------------------------------
 % The conjecture.

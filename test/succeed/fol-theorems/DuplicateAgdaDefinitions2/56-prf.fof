@@ -42,7 +42,7 @@ fof(n66_49333747, hypothesis, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cNLE_58_49333
 % End local hint(s).
 
 %-----------------------------------------------------------------------------
-% The required ATP definition(s) by the local hint(s).
+% The required definition(s) by the local hint(s).
 
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions2.NLE
@@ -50,7 +50,7 @@ fof(n66_49333747, hypothesis, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cNLE_58_49333
 % Line: 46
 fof(n58_49333747, definition, ( ! [A] : ( ! [B] : ( ( kp2_(cNLE_58_49333747,A,B) ) <=> ( n8804(A,B) = false ) ) ) )).
 
-% End required ATP definition(s) by the local hint(s).
+% End required definition(s) by the local hint(s).
 
 %-----------------------------------------------------------------------------
 % The conjecture.

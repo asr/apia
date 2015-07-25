@@ -3,7 +3,7 @@
 %-----------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------
-% The required ATP definition(s) by the conjecture.
+% The required definition(s) by the conjecture.
 
 % The original Agda term was:
 % Name: Eta4._*_
@@ -11,7 +11,7 @@
 % ATP pragma line: 28
 fof(n16_225476971, definition, ( ! [A] : ( ! [B] : ( n42(A,B) = rec(A,zero,lam(n4245helper2(B))) ) ) )).
 
-% End required ATP definition(s) by the conjecture.
+% End required definition(s) by the conjecture.
 
 %-----------------------------------------------------------------------------
 % The conjecture.

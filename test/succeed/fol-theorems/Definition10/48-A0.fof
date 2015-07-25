@@ -20,7 +20,7 @@ fof(n50_16837688, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) )
 % End general axiom(s).
 
 %-----------------------------------------------------------------------------
-% The required ATP definition(s) by the conjecture.
+% The required definition(s) by the conjecture.
 
 % The original Agda term was:
 % Name: Definition10._.A
@@ -28,7 +28,7 @@ fof(n50_16837688, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) )
 % Line: 44
 fof(n74_16837688, definition, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp1_(cN,A) ) => ( ( kp1_(cN,B) ) => ( ( kp1_(cN,C) ) => ( ! [D] : ( ( kp4_(cA_74_16837688,A,B,C,D) ) <=> ( n43(n43(D,B),C) = n43(D,n43(B,C)) ) ) ) ) ) ) ) ) )).
 
-% End required ATP definition(s) by the conjecture.
+% End required definition(s) by the conjecture.
 
 %-----------------------------------------------------------------------------
 % The conjecture.

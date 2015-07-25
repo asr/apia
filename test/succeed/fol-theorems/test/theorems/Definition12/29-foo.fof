@@ -14,7 +14,7 @@ fof(n16_163400516, axiom, ( ! [A] : ( ! [B] : ( n183(n183(n183(if,true),A),B) = 
 % End general axiom(s).
 
 %-----------------------------------------------------------------------------
-% The required ATP definition(s) by the conjecture.
+% The required definition(s) by the conjecture.
 
 % The original Agda term was:
 % Name: Definition12.if_then_else_
@@ -22,7 +22,7 @@ fof(n16_163400516, axiom, ( ! [A] : ( ! [B] : ( n183(n183(n183(if,true),A),B) = 
 % ATP pragma line: 24
 fof(n18_163400516, definition, ( ! [A] : ( ! [B] : ( ! [C] : ( ifthenelse(A,B,C) = n183(n183(n183(if,A),B),C) ) ) ) )).
 
-% End required ATP definition(s) by the conjecture.
+% End required definition(s) by the conjecture.
 
 %-----------------------------------------------------------------------------
 % The conjecture.

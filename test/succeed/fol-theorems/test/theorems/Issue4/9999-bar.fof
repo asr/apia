@@ -3,7 +3,7 @@
 %-----------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------
-% The required ATP definition(s) by the conjecture.
+% The required definition(s) by the conjecture.
 
 % The original Agda term was:
 % Name: Issue4._.c
@@ -11,7 +11,7 @@
 % ATP pragma line: 9999
 fof(n30_126633305, definition, ( ! [A] : ( ( kp1_(cP,A) ) => ( ! [B] : ( ( kp1_(cP,B) ) => ( c(A,B) = A ) ) ) ) )).
 
-% End required ATP definition(s) by the conjecture.
+% End required definition(s) by the conjecture.
 
 %-----------------------------------------------------------------------------
 % The conjecture.

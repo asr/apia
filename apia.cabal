@@ -18,17 +18,17 @@ description:
   automatic theorem provers (ATPs), via the translation of the Agda
   formulae to the TPTP format which is a standard for input and output
   for the ATPs <http://www.cs.miami.edu/~tptp/>.
-
-extra-source-files: src/undefined.h
+extra-source-files:
+        src/Apia/undefined.h
 
 source-repository head
   type:     git
   location: git://github.com/asr/apia.git
 
 executable apia
-  main-is:        Main.hs
+  main-is:        Apia/Main.hs
   hs-source-dirs: src
-  include-dirs:   src
+  include-dirs:   src/Apia
 
   build-depends:   Agda == 2.4.3.1
                  , base >= 4.6.0.1 && < 4.9
@@ -46,44 +46,44 @@ executable apia
   build-tools: cpphs >= 1.19 && < 1.20
 
   other-modules:
-    ATPs
-    CheckTPTP
-    Common
-    Dump
-    FOL.Constants
-    FOL.Primitives
-    FOL.Translation.ClauseBody
-    FOL.Translation.Functions
-    FOL.Translation.Name
-    FOL.Translation.Terms
-    FOL.Translation.Types
-    FOL.Types
-    Monad.Base
-    Monad.Environment
-    Monad.Reports
-    Options
-    Snapshot
-    TPTP.ConcreteSyntax.Common
-    TPTP.ConcreteSyntax.FOF
-    TPTP.ConcreteSyntax.TFF0
-    TPTP.Files
-    TPTP.Translation
-    TPTP.Types
-    Utils.AgdaAPI.DeBruijn
-    Utils.AgdaAPI.EtaExpansion
-    Utils.AgdaAPI.IgnoreSharing
-    Utils.AgdaAPI.Interface
-    Utils.AgdaAPI.RemoveProofTerms
-    Utils.AgdaAPI.Vars
-    Utils.Directory
-    Utils.Except
-    Utils.List
-    Utils.Monad
-    Utils.Names
-    Utils.Show
-    Utils.String
-    Utils.Text
-    Utils.Version
+    Apia.ATPs
+    Apia.CheckTPTP
+    Apia.Common
+    Apia.Dump
+    Apia.FOL.Constants
+    Apia.FOL.Primitives
+    Apia.FOL.Translation.ClauseBody
+    Apia.FOL.Translation.Functions
+    Apia.FOL.Translation.Name
+    Apia.FOL.Translation.Terms
+    Apia.FOL.Translation.Types
+    Apia.FOL.Types
+    Apia.Monad.Base
+    Apia.Monad.Environment
+    Apia.Monad.Reports
+    Apia.Options
+    Apia.Snapshot
+    Apia.TPTP.ConcreteSyntax.Common
+    Apia.TPTP.ConcreteSyntax.FOF
+    Apia.TPTP.ConcreteSyntax.TFF0
+    Apia.TPTP.Files
+    Apia.TPTP.Translation
+    Apia.TPTP.Types
+    Apia.Utils.AgdaAPI.DeBruijn
+    Apia.Utils.AgdaAPI.EtaExpansion
+    Apia.Utils.AgdaAPI.IgnoreSharing
+    Apia.Utils.AgdaAPI.Interface
+    Apia.Utils.AgdaAPI.RemoveProofTerms
+    Apia.Utils.AgdaAPI.Vars
+    Apia.Utils.Directory
+    Apia.Utils.Except
+    Apia.Utils.List
+    Apia.Utils.Monad
+    Apia.Utils.Names
+    Apia.Utils.Show
+    Apia.Utils.String
+    Apia.Utils.Text
+    Apia.Utils.Version
     Paths_apia
 
   ghc-options:

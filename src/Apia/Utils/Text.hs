@@ -16,20 +16,13 @@
 module Apia.Utils.Text ( (+++), toUpperFirst ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
+
+import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
 import Data.Char ( toUpper )
 
 import Data.Text ( Text )
 import qualified Data.Text as T
-
-------------------------------------------------------------------------------
--- Agda library imports
-
-import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 #include "undefined.h"
 

@@ -15,14 +15,12 @@
 {-# LANGUAGE TypeSynonymInstances #-}
 {-# LANGUAGE UnicodeSyntax        #-}
 
-------------------------------------------------------------------------------
 module Apia.Utils.AgdaAPI.Vars
   ( BoundedVars(boundedVars)
   , BoundedVarsType(boundedVarsType)
   ) where
 
 ------------------------------------------------------------------------------
--- Agda libray imports
 
 import Agda.Syntax.Common
   ( Arg(Arg)
@@ -45,9 +43,6 @@ import Agda.Syntax.Internal as I
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
 

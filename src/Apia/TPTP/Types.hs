@@ -27,21 +27,14 @@ module Apia.TPTP.Types
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Data.List ( (\\), sort )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Abstract.Name ( QName )
 import Agda.Syntax.Common        ( TPTPRole )
 
-------------------------------------------------------------------------------
--- Apia imports
-
 import Apia.FOL.Types  ( FOLFormula )
 import Apia.Utils.List ( duplicate, duplicatesElements )
+
+import Data.List ( (\\), sort )
 
 ------------------------------------------------------------------------------
 -- Note: We don't import the module TPTP.ConcreteSyntax to avoid a circular

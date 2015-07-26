@@ -22,16 +22,12 @@ module Apia.TPTP.ConcreteSyntax.TFF0
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Data.Text ( Text )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.TPTP.ConcreteSyntax.Common ( ToTPTP(toTPTP) )
 import Apia.TPTP.Types                 ( AF(AF) )
 import Apia.Utils.Text                 ( (+++) )
+
+import Data.Text ( Text )
 
 ------------------------------------------------------------------------------
 -- | TFF0 type synonym.

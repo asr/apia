@@ -21,7 +21,44 @@ module Apia.ATPs
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
+
+import Agda.Utils.Impossible ( Impossible(Impossible) , throwImpossible )
+import Agda.Utils.Monad      ( ifM )
+
+import Apia.Common
+  ( ATP( CVC4
+       , E
+       , Equinox
+       , IleanCoP
+       , Metis
+       , SPASS
+       , Vampire
+       , Z3
+       )
+  )
+
+import Apia.Monad.Base    ( askTOpt, getTATPs, modifyTATPs, T )
+import Apia.Monad.Reports ( reportS )
+
+import Apia.Options
+  ( Options( optATP
+           , optTime
+           , optUnprovenNoError
+           , optWithCVC4
+           , optWithE
+           , optWithEquinox
+           , optWithIleanCoP
+           , optWithMetis
+           , optWithSPASS
+           , optWithtptp2X
+           , optWithVampire
+           , optWithZ3
+           )
+  )
+
+import Apia.Utils.Directory ( checkExecutable )
+
+import qualified Apia.Utils.Except as E
 
 #if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ( (<$>) )
@@ -63,50 +100,6 @@ import System.Process
   , readProcess
   , StdStream(CreatePipe, Inherit)
   )
-
-------------------------------------------------------------------------------
--- Agda library imports
-
-import Agda.Utils.Impossible ( Impossible(Impossible) , throwImpossible )
-import Agda.Utils.Monad      ( ifM )
-
-------------------------------------------------------------------------------
--- Apia imports
-
-import Apia.Common
-  ( ATP( CVC4
-       , E
-       , Equinox
-       , IleanCoP
-       , Metis
-       , SPASS
-       , Vampire
-       , Z3
-       )
-  )
-
-import Apia.Monad.Base    ( askTOpt, getTATPs, modifyTATPs, T )
-import Apia.Monad.Reports ( reportS )
-
-import Apia.Options
-  ( Options( optATP
-           , optTime
-           , optUnprovenNoError
-           , optWithCVC4
-           , optWithE
-           , optWithEquinox
-           , optWithIleanCoP
-           , optWithMetis
-           , optWithSPASS
-           , optWithtptp2X
-           , optWithVampire
-           , optWithZ3
-           )
-  )
-
-import Apia.Utils.Directory ( checkExecutable )
-
-import qualified Apia.Utils.Except as E
 
 #include "undefined.h"
 

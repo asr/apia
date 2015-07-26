@@ -21,7 +21,6 @@ module Apia.Utils.Except
  ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
 
 #if MIN_VERSION_transformers(0,4,1)
 import Control.Monad.Trans.Except ( catchE, ExceptT, throwE, runExceptT )

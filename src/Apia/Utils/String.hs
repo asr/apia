@@ -19,19 +19,11 @@ module Apia.Utils.String
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Data.Char ( toUpper )
-
-import Text.Regex ( mkRegex, subRegex )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-------------------------------------------------------------------------------
--- Apia imports
+import Data.Char  ( toUpper )
+import Text.Regex ( mkRegex, subRegex )
 
 #include "undefined.h"
 

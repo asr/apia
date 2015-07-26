@@ -19,7 +19,6 @@ module Apia.Utils.Monad
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
 
 import System.Environment ( getProgName )
 import System.Exit        ( exitFailure )

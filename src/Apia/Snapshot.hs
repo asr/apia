@@ -16,22 +16,9 @@
 module Apia.Snapshot ( snapshotTest ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Control.Monad.IO.Class ( MonadIO(liftIO) )
-
-import Safe.Exact ( dropExact )
-
-import System.FilePath ( combine, joinPath, splitPath )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Utils.FileName ( doesFileExistCaseSensitive )
 import Agda.Utils.Monad    ( ifM, unlessM, whenM )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.Monad.Base ( askTOpt, T )
 
@@ -42,6 +29,10 @@ import Apia.Options
 import qualified Apia.Utils.Except as E
 
 import Apia.Utils.Directory ( notEqualFiles )
+
+import Control.Monad.IO.Class ( MonadIO(liftIO) )
+import Safe.Exact             ( dropExact )
+import System.FilePath        ( combine, joinPath, splitPath )
 
 ------------------------------------------------------------------------------
 

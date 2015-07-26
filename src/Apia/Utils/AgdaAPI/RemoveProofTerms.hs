@@ -62,19 +62,6 @@
 module Apia.Utils.AgdaAPI.RemoveProofTerms ( removeProofTerm ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-#if !MIN_VERSION_base(4,8,0)
-import Control.Applicative ( (<$>) )
-#endif
-
-import Control.Monad ( liftM2, when )
-
-import Data.List  ( elemIndex )
-import Data.Maybe ( fromMaybe )
-
-------------------------------------------------------------------------------
--- Agda libray imports
 
 import Agda.Syntax.Common ( Arg(Arg), Dom(Dom), Nat )
 
@@ -94,13 +81,19 @@ import Agda.Syntax.Internal as I
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-------------------------------------------------------------------------------
--- Apia imports
-
 import Apia.Monad.Base    ( getTVars, popTVar, pushTVar, T )
 import Apia.Monad.Reports ( reportSLn )
 
 import qualified Apia.Utils.Except as E
+
+#if !MIN_VERSION_base(4,8,0)
+import Control.Applicative ( (<$>) )
+#endif
+
+import Control.Monad ( liftM2, when )
+
+import Data.List  ( elemIndex )
+import Data.Maybe ( fromMaybe )
 
 #include "undefined.h"
 

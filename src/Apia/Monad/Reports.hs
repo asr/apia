@@ -20,13 +20,6 @@ module Apia.Monad.Reports
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Control.Monad          ( when )
-import Control.Monad.IO.Class ( MonadIO(liftIO) )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Utils.Impossible ( Impossible (Impossible), throwImpossible )
 
@@ -34,11 +27,11 @@ import qualified Agda.Utils.Trie as Trie ( lookupPath )
 
 import Agda.Utils.List ( wordsBy )
 
-------------------------------------------------------------------------------
--- Apia imports
-
 import Apia.Monad.Base ( askTOpt, T )
 import Apia.Options    ( Options(optVerbose) )
+
+import Control.Monad          ( when )
+import Control.Monad.IO.Class ( MonadIO(liftIO) )
 
 #include "undefined.h"
 

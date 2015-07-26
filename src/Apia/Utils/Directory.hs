@@ -19,7 +19,11 @@ module Apia.Utils.Directory
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
+
+import Agda.Utils.Maybe ( caseMaybeM )
+import Agda.Utils.Monad ( ifM )
+
+import qualified Apia.Utils.Except as E
 
 import qualified Data.ByteString.Lazy as BL ( readFile )
 
@@ -27,17 +31,6 @@ import Control.Monad          ( liftM2 )
 import Control.Monad.IO.Class ( MonadIO(liftIO) )
 
 import System.Directory ( doesFileExist, findExecutable )
-
-------------------------------------------------------------------------------
--- Agda library imports
-
-import Agda.Utils.Maybe ( caseMaybeM )
-import Agda.Utils.Monad ( ifM )
-
-------------------------------------------------------------------------------
--- Apia imports
-
-import qualified Apia.Utils.Except as E
 
 ------------------------------------------------------------------------------
 

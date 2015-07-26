@@ -15,16 +15,13 @@
 module Apia.Utils.Version ( progNameVersion ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
+
+import Apia.Utils.String ( toUpperFirst )
 
 import Data.Version       ( showVersion )
 import System.Environment ( getProgName )
 
-------------------------------------------------------------------------------
--- Apia imports
-
-import Apia.Utils.String ( toUpperFirst )
-import Paths_apia        ( version )
+import Paths_apia ( version )
 
 ------------------------------------------------------------------------------
 -- | Return program name and version information.

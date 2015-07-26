@@ -16,15 +16,11 @@
 module Apia.Monad.Environment ( env ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import System.Environment ( getArgs )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.Options     ( Options, processOptions )
 import Apia.Utils.Monad ( die )
+
+import System.Environment ( getArgs )
 
 ------------------------------------------------------------------------------
 -- | The environment.

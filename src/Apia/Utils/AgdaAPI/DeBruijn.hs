@@ -28,13 +28,6 @@ module Apia.Utils.AgdaAPI.DeBruijn
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Data.List  ( elemIndex )
-import Data.Maybe ( fromMaybe )
-
-------------------------------------------------------------------------------
--- Agda libray imports
 
 import Agda.Syntax.Common ( Arg(Arg), Dom(Dom), Nat )
 
@@ -57,10 +50,10 @@ import Agda.Syntax.Internal as I
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-------------------------------------------------------------------------------
--- Apia imports
-
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
+
+import Data.List  ( elemIndex )
+import Data.Maybe ( fromMaybe )
 
 #include "undefined.h"
 

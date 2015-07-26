@@ -14,7 +14,13 @@
 
 module Apia.CheckTPTP ( checkTPTP ) where
 
--- Haskell imports
+-----------------------------------------------------------------------------
+
+import Apia.Monad.Base      ( askTOpt, T )
+import Apia.Options         ( Options(optWithtptp4X) )
+import Apia.Utils.Directory ( checkExecutable )
+
+import qualified Apia.Utils.Except as E
 
 import Control.Monad           ( when )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
@@ -23,17 +29,6 @@ import Data.List ( isInfixOf )
 
 import System.Exit    ( ExitCode(ExitSuccess, ExitFailure) )
 import System.Process ( readProcessWithExitCode )
-
-------------------------------------------------------------------------------
--- Apia imports
-
-import Apia.Monad.Base ( askTOpt, T )
-
-import Apia.Options ( Options(optWithtptp4X) )
-
-import Apia.Utils.Directory ( checkExecutable )
-
-import qualified Apia.Utils.Except as E
 
 -----------------------------------------------------------------------------
 

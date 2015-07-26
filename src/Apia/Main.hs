@@ -20,20 +20,6 @@ module Main
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Control.Monad              ( when )
-import Control.Monad.IO.Class     ( MonadIO(liftIO) )
-import Control.Monad.Trans.Class  ( MonadTrans(lift) )
-import Control.Monad.Trans.Reader ( ask )
-
-import qualified Data.HashMap.Strict as HashMap ( unions )
-
-import System.Exit ( exitFailure, exitSuccess )
-import System.IO   ( hPrint, stderr )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.TypeChecking.Monad.Base
   ( Definitions
@@ -42,9 +28,6 @@ import Agda.TypeChecking.Monad.Base
   )
 
 import Agda.Utils.Impossible ( catchImpossible )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.ATPs      ( callATPs, selectedATPs )
 import Apia.CheckTPTP ( checkTPTP )
@@ -82,6 +65,16 @@ import qualified Apia.Utils.Except as E
 
 import Apia.Utils.Monad   ( failureMsg, pair )
 import Apia.Utils.Version ( progNameVersion )
+
+import Control.Monad              ( when )
+import Control.Monad.IO.Class     ( MonadIO(liftIO) )
+import Control.Monad.Trans.Class  ( MonadTrans(lift) )
+import Control.Monad.Trans.Reader ( ask )
+
+import qualified Data.HashMap.Strict as HashMap ( unions )
+
+import System.Exit ( exitFailure, exitSuccess )
+import System.IO   ( hPrint, stderr )
 
 ------------------------------------------------------------------------------
 

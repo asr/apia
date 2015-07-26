@@ -18,18 +18,12 @@ module Apia.Utils.List
   , duplicatesElements
   ) where
 
-------------------------------------------------------------------------------
--- Haskell imports
-
-import Data.List ( nub )
 
 ------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-------------------------------------------------------------------------------
--- Apia imports
+import Data.List ( nub )
 
 #include "undefined.h"
 

@@ -16,17 +16,10 @@
 module Apia.Utils.Names ( freshName ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Control.Monad.Trans.State ( get, put, State )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-------------------------------------------------------------------------------
--- Apia imports
+import Control.Monad.Trans.State ( get, put, State )
 
 #include "undefined.h"
 

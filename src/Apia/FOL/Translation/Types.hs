@@ -19,7 +19,6 @@ module Apia.FOL.Translation.Types
   ) where
 
 ------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Common
   ( ArgInfo(ArgInfo, argInfoHiding)
@@ -37,9 +36,6 @@ import Agda.Syntax.Internal as I
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.FOL.Translation.Terms ( termToFormula )
 import Apia.FOL.Types             ( FOLFormula )

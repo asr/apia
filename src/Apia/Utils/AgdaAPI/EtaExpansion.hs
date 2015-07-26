@@ -18,16 +18,6 @@
 module Apia.Utils.AgdaAPI.EtaExpansion ( EtaExpandible(etaExpand) ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-#if !MIN_VERSION_base(4,8,0)
-import Control.Applicative ( (<$>) )
-#endif
-
-import Control.Monad ( when )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Common
   ( Arg(Arg)
@@ -58,14 +48,17 @@ import Agda.TypeChecking.Substitute ( Apply(apply) )
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Maybe      ( whenJustM )
 
-------------------------------------------------------------------------------
--- Apia imports
-
 import Apia.Monad.Base                  ( newTVar, T )
 import Apia.Monad.Reports               ( reportSLn )
 import Apia.Utils.AgdaAPI.DeBruijn      ( IncIndex(incIndex) )
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
 import Apia.Utils.AgdaAPI.Interface     ( isProjection, qNameType )
+
+#if !MIN_VERSION_base(4,8,0)
+import Control.Applicative ( (<$>) )
+#endif
+
+import Control.Monad ( when )
 
 #include "undefined.h"
 

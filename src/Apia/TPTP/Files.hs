@@ -18,24 +18,6 @@
 module Apia.TPTP.Files ( createConjectureTPTPFile ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Control.Monad           ( when )
-import Control.Monad.IO.Class  ( MonadIO(liftIO) )
-
-import Data.Char ( chr, isAsciiUpper, isAsciiLower, isDigit, ord )
-import Data.List ( sort )
-
-import Data.Text ( Text )
-import qualified Data.Text as T
-import qualified Data.Text.IO as T
-
-import System.Directory   ( createDirectoryIfMissing )
-import System.Environment ( getProgName )
-import System.FilePath    ( (</>), addExtension )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Abstract.Name
   ( mnameToConcrete
@@ -55,9 +37,6 @@ import Agda.Syntax.Concrete.Name
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( whenM )
 import Agda.Utils.Pretty     ( prettyShow )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.Monad.Base               ( askTOpt, T )
 import Apia.Monad.Reports            ( reportS, reportSLn )
@@ -87,6 +66,20 @@ import Apia.Utils.AgdaAPI.Interface
 import Apia.Utils.List   ( duplicate )
 import Apia.Utils.String ( removeString )
 import Apia.Utils.Text   ( (+++), toUpperFirst )
+
+import Control.Monad           ( when )
+import Control.Monad.IO.Class  ( MonadIO(liftIO) )
+
+import Data.Char ( chr, isAsciiUpper, isAsciiLower, isDigit, ord )
+import Data.List ( sort )
+
+import Data.Text ( Text )
+import qualified Data.Text as T
+import qualified Data.Text.IO as T
+
+import System.Directory   ( createDirectoryIfMissing )
+import System.Environment ( getProgName )
+import System.FilePath    ( (</>), addExtension )
 
 #include "undefined.h"
 

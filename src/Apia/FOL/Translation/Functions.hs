@@ -21,12 +21,6 @@
 module Apia.FOL.Translation.Functions ( fnToFormula ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Control.Monad ( liftM2, replicateM, replicateM_, when )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Common
   ( Arg(Arg)
@@ -56,9 +50,6 @@ import Agda.Syntax.Internal
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-------------------------------------------------------------------------------
--- Apia imports
-
 import Apia.FOL.Primitives ( equal )
 
 import Apia.FOL.Translation.ClauseBody
@@ -86,6 +77,8 @@ import Apia.Utils.AgdaAPI.Vars     ( BoundedVars(boundedVars) )
 import qualified Apia.Utils.Except as E
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
+
+import Control.Monad ( liftM2, replicateM, replicateM_, when )
 
 #include "undefined.h"
 

@@ -34,24 +34,6 @@ module Apia.Utils.AgdaAPI.Interface
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-#if !MIN_VERSION_base(4,8,0)
-import Control.Applicative ( (<$>) )
-#endif
-
-import Control.Monad.IO.Class    ( MonadIO(liftIO) )
-import Control.Monad.Trans.Class ( MonadTrans(lift) )
-import Control.Monad.Trans.State ( evalStateT, get, put, StateT )
-
-import Data.Int ( Int32 )
-
-import qualified Data.HashMap.Strict as HashMap ( filter, lookup )
-
-import Data.Maybe ( fromMaybe )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Interaction.FindFile ( toIFile )
 import qualified Agda.Interaction.Imports as A ( getInterface, readInterface )
@@ -131,9 +113,6 @@ import Agda.Utils.Monad      ( unlessM )
 
 import qualified Agda.Utils.Trie as Trie ( singleton )
 
-------------------------------------------------------------------------------
--- Apia imports
-
 import Apia.Monad.Base    ( askTOpt, getTDefs, T )
 import Apia.Monad.Reports ( reportSLn )
 import Apia.Options       ( Options(optIncludePath) )
@@ -141,6 +120,20 @@ import Apia.Options       ( Options(optIncludePath) )
 import Apia.Utils.AgdaAPI.IgnoreSharing ( ignoreSharing )
 
 import qualified Apia.Utils.Except as E
+
+#if !MIN_VERSION_base(4,8,0)
+import Control.Applicative ( (<$>) )
+#endif
+
+import Control.Monad.IO.Class    ( MonadIO(liftIO) )
+import Control.Monad.Trans.Class ( MonadTrans(lift) )
+import Control.Monad.Trans.State ( evalStateT, get, put, StateT )
+
+import Data.Int ( Int32 )
+
+import qualified Data.HashMap.Strict as HashMap ( filter, lookup )
+
+import Data.Maybe ( fromMaybe )
 
 #include "undefined.h"
 

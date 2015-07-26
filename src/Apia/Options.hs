@@ -56,7 +56,24 @@ module Apia.Options
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
+
+import Agda.Interaction.Options ( Verbosity )
+import Agda.Utils.Impossible    ( Impossible(Impossible), throwImpossible )
+import Agda.Utils.List          ( wordsBy )
+
+import qualified Agda.Utils.Trie as Trie ( insert, singleton )
+
+import Apia.Common
+  ( ATP( CVC4
+       , E
+       , Equinox
+       , IleanCoP
+       , Metis
+       , SPASS
+       , Vampire
+       , Z3
+       )
+  )
 
 import Data.Char ( isDigit )
 import Data.List ( foldl' )
@@ -72,30 +89,6 @@ import System.Console.GetOpt
   )
 
 import System.Environment ( getProgName )
-
-------------------------------------------------------------------------------
--- Agda library imports
-
-import Agda.Interaction.Options ( Verbosity )
-import Agda.Utils.Impossible    ( Impossible(Impossible), throwImpossible )
-import Agda.Utils.List          ( wordsBy )
-
-import qualified Agda.Utils.Trie as Trie ( insert, singleton )
-
-------------------------------------------------------------------------------
--- Apia imports
-
-import Apia.Common
-  ( ATP( CVC4
-       , E
-       , Equinox
-       , IleanCoP
-       , Metis
-       , SPASS
-       , Vampire
-       , Z3
-       )
-  )
 
 #include "undefined.h"
 

@@ -19,13 +19,6 @@ module Apia.FOL.Translation.Terms
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Control.Monad ( liftM2, when )
-import Data.List     ( foldl' )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Abstract.Name ( Name(nameConcrete, nameId) , QName(QName) )
 
@@ -62,9 +55,6 @@ import Agda.Syntax.Internal as I
 import Agda.Syntax.Position  ( noRange )
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( ifM )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.FOL.Constants
   ( folTrue
@@ -118,6 +108,9 @@ import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
 import Apia.Utils.AgdaAPI.Interface     ( isATPDefinition, qNameDefinition )
 
 import qualified Apia.Utils.Except as E
+
+import Control.Monad ( liftM2, when )
+import Data.List     ( foldl' )
 
 #include "undefined.h"
 

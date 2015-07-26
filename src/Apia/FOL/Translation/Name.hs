@@ -16,7 +16,6 @@
 module Apia.FOL.Translation.Name ( concatName ) where
 
 ------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Concrete.Name ( NamePart(Id, Hole) )
 

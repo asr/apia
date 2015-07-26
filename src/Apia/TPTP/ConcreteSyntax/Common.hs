@@ -21,22 +21,6 @@ module Apia.TPTP.ConcreteSyntax.Common
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import Data.Char
-  ( chr
-  , isAsciiLower
-  , isAsciiUpper
-  , isDigit
-  , isUpper
-  , ord
-  )
-
-import Data.Text ( Text )
-import qualified Data.Text as T
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Abstract.Name ( Name(nameId), QName(QName) )
 
@@ -46,9 +30,6 @@ import Agda.Syntax.Common
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.FOL.Types
   ( FOLFormula( And
@@ -66,6 +47,18 @@ import Apia.FOL.Types
   )
 
 import Apia.Utils.Text ( (+++), toUpperFirst )
+
+import Data.Char
+  ( chr
+  , isAsciiLower
+  , isAsciiUpper
+  , isDigit
+  , isUpper
+  , ord
+  )
+
+import Data.Text ( Text )
+import qualified Data.Text as T
 
 #include "undefined.h"
 

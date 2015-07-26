@@ -23,12 +23,8 @@ module Apia.FOL.Primitives
   ) where
 
 ------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Utils.Impossible ( Impossible(Impossible) , throwImpossible )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.FOL.Types ( FOLTerm(FOLFun), FOLFormula(Predicate) )
 

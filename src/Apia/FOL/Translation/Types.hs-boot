@@ -6,12 +6,8 @@ module Apia.FOL.Translation.Types
   ) where
 
 ------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Internal as I ( Dom, Type )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.FOL.Types  ( FOLFormula )
 import Apia.Monad.Base ( T )

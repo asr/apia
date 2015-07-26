@@ -16,7 +16,6 @@
 module Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) ) where
 
 ------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Common
   ( Arg(Arg)
@@ -34,9 +33,6 @@ import Agda.Syntax.Internal as I
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 -- import Agda.Utils.Pointer ( derefPtr )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 #include "undefined.h"
 

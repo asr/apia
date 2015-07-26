@@ -18,17 +18,6 @@ module Apia.Dump
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-import qualified Data.HashMap.Strict as HashMap ( toList )
-
-import Data.Function ( on )
-import Data.List     ( sortBy )
-
-import Control.Monad.IO.Class ( MonadIO(liftIO) )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Abstract.Name ( QName, qnameToConcrete )
 import Agda.Syntax.Internal      ( Type )
@@ -43,9 +32,6 @@ import Agda.TypeChecking.Monad.Base
 
 import Agda.Utils.Pretty ( prettyShow )
 
-------------------------------------------------------------------------------
--- Apia imports
-
 import Apia.Monad.Base ( T )
 
 import Apia.Utils.AgdaAPI.Interface
@@ -54,6 +40,13 @@ import Apia.Utils.AgdaAPI.Interface
   , qNameNameBindingSiteRange
   , readInterface
   )
+
+import qualified Data.HashMap.Strict as HashMap ( toList )
+
+import Data.Function ( on )
+import Data.List     ( sortBy )
+
+import Control.Monad.IO.Class ( MonadIO(liftIO) )
 
 ------------------------------------------------------------------------------
 -- We sort the 'QName's by its position in the Agda module.

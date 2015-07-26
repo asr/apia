@@ -31,7 +31,17 @@ module Apia.Monad.Base
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
+
+import Agda.TypeChecking.Monad.Base ( Definitions )
+import Agda.Utils.Impossible        ( Impossible(Impossible), throwImpossible )
+
+import Apia.Common ( ATP )
+import Apia.Monad.Environment ( env )
+import Apia.Options           ( Options )
+
+import qualified Apia.Utils.Except as E
+
+import Apia.Utils.Names ( freshName )
 
 import Control.Monad.Trans.Class ( MonadTrans(lift) )
 
@@ -47,23 +57,6 @@ import Control.Monad.Trans.State
   )
 
 import qualified Data.HashMap.Strict as HashMap ( empty )
-
-------------------------------------------------------------------------------
--- Agda library imports
-
-import Agda.TypeChecking.Monad.Base ( Definitions )
-import Agda.Utils.Impossible        ( Impossible(Impossible), throwImpossible )
-
-------------------------------------------------------------------------------
--- Apia imports
-
-import Apia.Common ( ATP )
-import Apia.Monad.Environment ( env )
-import Apia.Options           ( Options )
-
-import qualified Apia.Utils.Except as E
-
-import Apia.Utils.Names ( freshName )
 
 #include "undefined.h"
 

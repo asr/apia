@@ -21,7 +21,6 @@ module Apia.FOL.Translation.ClauseBody
   ) where
 
 ------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Common ( Nat )
 
@@ -32,9 +31,6 @@ import Agda.Syntax.Internal
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.FOL.Translation.Terms      ( termToFormula, termToFOLTerm )
 import Apia.FOL.Types                  ( FOLFormula, FOLTerm )

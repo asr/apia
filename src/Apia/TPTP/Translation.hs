@@ -20,20 +20,6 @@ module Apia.TPTP.Translation
   ) where
 
 ------------------------------------------------------------------------------
--- Haskell imports
-
-#if !MIN_VERSION_base(4,8,0)
-import Control.Applicative ( (<$>) )
-#endif
-
-import Control.Monad ( foldM, liftM2, liftM4, zipWithM )
-
-import Data.List ( nub )
-
-import qualified Data.HashMap.Strict as HashMap ( elems, keys )
-
-------------------------------------------------------------------------------
--- Agda library imports
 
 import Agda.Syntax.Abstract.Name ( QName )
 
@@ -50,9 +36,6 @@ import Agda.TypeChecking.Monad.Base
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( ifM )
 import Agda.Utils.Pretty     ( prettyShow )
-
-------------------------------------------------------------------------------
--- Apia imports
 
 import Apia.FOL.Translation.Functions ( fnToFormula )
 import Apia.FOL.Translation.Types     ( typeToFormula )
@@ -82,6 +65,16 @@ import Apia.Utils.AgdaAPI.Interface
   )
 
 import Apia.Utils.Show ( showListLn, showLn )
+
+#if !MIN_VERSION_base(4,8,0)
+import Control.Applicative ( (<$>) )
+#endif
+
+import Control.Monad ( foldM, liftM2, liftM4, zipWithM )
+
+import Data.List ( nub )
+
+import qualified Data.HashMap.Strict as HashMap ( elems, keys )
 
 #include "undefined.h"
 

@@ -82,4 +82,4 @@ dumpQNames file = do
 
 -- | Print the Agda interface file to stdout.
 dumpAgdai ∷ FilePath → T ()
-dumpAgdai file =  liftIO . print =<< readInterface file
+dumpAgdai file =  liftIO . putStrLn . prettyShow =<< readInterface file

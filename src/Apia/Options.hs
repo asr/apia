@@ -26,6 +26,7 @@ module Apia.Options
            , optHelp
            , optInputFile
            , optIncludePath
+           , optLang
            , optNoInternalEquality
            , optNoPredicateConstants
            , optOnlyFiles
@@ -73,6 +74,7 @@ import Apia.Common
        , Vampire
        , Z3
        )
+  , Lang(FOF, TFF0)
   )
 
 import Data.Char ( isDigit )
@@ -104,6 +106,7 @@ data Options = Options
   , optHelp                            ∷ Bool
   , optIncludePath                     ∷ [FilePath]
   , optInputFile                       ∷ Maybe FilePath
+  , optLang                            ∷ Lang
   , optNoInternalEquality              ∷ Bool
   , optNoPredicateConstants            ∷ Bool
   , optOnlyFiles                       ∷ Bool
@@ -143,6 +146,7 @@ defaultOptions = Options
   , optHelp                            = False
   , optIncludePath                     = []
   , optInputFile                       = Nothing
+  , optLang                            = FOF
   , optNoInternalEquality              = False
   , optNoPredicateConstants            = False
   , optOnlyFiles                       = False
@@ -201,6 +205,11 @@ inputFileOpt file opts =
   case optInputFile opts of
     Nothing → Right opts { optInputFile = Just file }
     Just _  → Left "Only one input file allowed"
+
+langOpt ∷ String → MOptions
+langOpt "fof"  opts = Right opts { optLang = FOF }
+langOpt "tff0" opts = Right opts { optLang = TFF0 }
+langOpt lang   _    = Left $ "Language " ++ show lang ++ " is not a TPTP language"
 
 noInternalEqualityOpt ∷ MOptions
 noInternalEqualityOpt opts = Right opts { optNoInternalEquality = True }
@@ -326,6 +335,9 @@ options =
                "Show this help"
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")
                "Look for imports in DIR"
+  , Option "L" ["lang"] (ReqArg langOpt "LANG") $
+               "TPTP output language (fof or tff0)\n"
+               ++ "(default: fof)"
   , Option []  ["no-internal-equality"] (NoArg noInternalEqualityOpt)
                "Do not translate _≡_ to the ATPs equality"
   , Option []  ["no-predicate-constants"] (NoArg noPredicateConstantsOpt) $

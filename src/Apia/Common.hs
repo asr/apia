@@ -11,7 +11,9 @@
 -----------------------------------------------------------------------------
 
 module Apia.Common
-  ( ATP(CVC4, E, Equinox, IleanCoP, Metis, SPASS, Vampire, Z3))
+  ( ATP(CVC4, E, Equinox, IleanCoP, Metis, SPASS, Vampire, Z3)
+  , Lang(FOF, TFF0)
+  )
   where
 
 ------------------------------------------------------------------------------
@@ -24,4 +26,9 @@ data ATP = CVC4
          | SPASS
          | Vampire
          | Z3
-           deriving Show
+         deriving Show
+
+-- | TPTP output languages.
+data Lang = FOF   -- ^ First-order form.
+          | TFF0  -- ^ Typed first-order form (without arithmetic).
+

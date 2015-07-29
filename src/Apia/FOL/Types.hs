@@ -35,7 +35,7 @@ module Apia.FOL.Types
 -- | First-order logic terms.
 data FOLTerm = FOLFun String [FOLTerm]
              | FOLVar String
-               deriving Show
+             deriving Show
 
 -- | First-order logic formulae.
 data FOLFormula = TRUE

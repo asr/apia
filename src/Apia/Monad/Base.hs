@@ -65,9 +65,9 @@ import qualified Data.HashMap.Strict as HashMap ( empty )
 
 -- See note [@OptionsPragma@].
 data TState = TState
-  { tDefs ∷ Definitions -- ^ Agda definitions.
-  , tVars ∷ [String]    -- ^ Variables names.
-  , tATPs ∷ [ATP]       -- ^ Selected ATPs.
+  { tDefs ∷ Definitions  -- ^ Agda definitions.
+  , tVars ∷ [String]     -- ^ Variables names.
+  , tATPs ∷ [ATP]        -- ^ Selected ATPs.
   }
 
 -- The initial state.

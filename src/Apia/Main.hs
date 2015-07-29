@@ -42,11 +42,12 @@ import Apia.Monad.Base
 import Apia.Monad.Reports ( reportSLn )
 
 import Apia.Options
-  ( Options(optCheck
+  ( Options( optCheck
            , optDumpAgdai
            , optDumpQNames
            , optHelp
            , optInputFile
+           , optLang
            , optOnlyFiles
            , optSnapshotTest
            , optVersion
@@ -131,7 +132,8 @@ runApia = do
 
               -- Creation of the TPTP files.
               tptpFiles ←
-                mapM (createConjectureTPTPFile (fst allAFs)) (snd allAFs)
+                mapM (createConjectureTPTPFile (optLang opts) (fst allAFs))
+                     (snd allAFs)
 
               -- Check the generated TPTP files using the tptp4X
               -- program from the TPTP library.

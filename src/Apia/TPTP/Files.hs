@@ -38,6 +38,8 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( whenM )
 import Agda.Utils.Pretty     ( prettyShow )
 
+import Apia.Common ( Lang(FOF, TFF0) )
+
 import Apia.Monad.Base               ( askTOpt, T )
 import Apia.Monad.Reports            ( reportS, reportSLn )
 import Apia.Options                  ( Options(optOnlyFiles, optOutputDir) )
@@ -84,10 +86,6 @@ import System.FilePath    ( (</>), addExtension )
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
-
--- | TPTP languages.
-data Lang = FOF   -- First-order form.
-          | TFF0  -- Typed first-order form (without arithmetic).
 
 class AsciiName a where
   asciiName ∷ a → FilePath
@@ -255,7 +253,7 @@ tptpFileName lang conjectureSet = do
 
 -- | The 'createConjectureTPTPFile' function creates a TPTP file with a
 -- conjecture.
-createConjectureTPTPFile ∷ GeneralRoles → ConjectureSet → T FilePath
-createConjectureTPTPFile generalRoles conjectureSet = do
-  file ← tptpFileName FOF conjectureSet
-  createConjectureFile FOF file generalRoles conjectureSet
+createConjectureTPTPFile ∷ Lang → GeneralRoles → ConjectureSet → T FilePath
+createConjectureTPTPFile lang generalRoles conjectureSet = do
+  file ← tptpFileName lang conjectureSet
+  createConjectureFile lang file generalRoles conjectureSet

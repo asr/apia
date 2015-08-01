@@ -22,7 +22,7 @@ module Apia.TPTP.ConcreteSyntax.FOF
 
 ------------------------------------------------------------------------------
 
-import Apia.TPTP.ConcreteSyntax.Common ( ToTPTP(toTPTP) )
+import Apia.TPTP.ConcreteSyntax.Common ( G, ToTPTP(toTPTP) )
 import Apia.TPTP.Types                 ( AF(AF) )
 import Apia.Utils.Text                 ( (+++) )
 
@@ -34,15 +34,19 @@ type FOF = Text
 
 -- | Translation to FOF concrete syntax.
 class ToFOF a where
-  toFOF ∷ a → FOF
+  toFOF ∷ a → G FOF
 
 ------------------------------------------------------------------------------
 -- Translation of annotated formulae to FOF concrete syntax.
 
 instance ToFOF AF where
-  toFOF (AF qName atpRole formula) =
-    "fof("
-    +++ toTPTP qName +++ ", "
-    +++ toTPTP atpRole +++ ", "
-    +++ toTPTP formula
-    +++ ")." +++ "\n\n"
+  toFOF (AF qName atpRole formula) = do
+    qName_   ← toTPTP qName
+    atpRole_ ← toTPTP atpRole
+    formula_ ← toTPTP formula
+
+    return $ "fof("
+      +++ qName_ +++ ", "
+      +++ atpRole_ +++ ", "
+      +++ formula_ +++ ")."
+      +++ "\n\n"

@@ -46,8 +46,8 @@ data FOLFormula = TRUE
                 | Or FOLFormula FOLFormula
                 | Implies FOLFormula FOLFormula
                 | Equiv FOLFormula FOLFormula
-                | ForAll String (FOLTerm → FOLFormula)
-                | Exists String (FOLTerm → FOLFormula)
+                | ForAll (FOLTerm → FOLFormula)
+                | Exists (FOLTerm → FOLFormula)
 
 instance Show FOLFormula where
   show TRUE                = " TRUE "
@@ -58,5 +58,7 @@ instance Show FOLFormula where
   show (Or f1 f2)          = " Or " ++ show f1 ++ show f2
   show (Implies f1 f2)     = " Implies " ++ show f1 ++ show f2
   show (Equiv f1 f2)       = " Equiv " ++ show f1 ++ show f2
-  show (ForAll var f)      = " ForAll " ++ show var ++ show (f $ FOLVar var)
-  show (Exists var f)      = " Exists " ++ show var ++ show (f $ FOLVar var)
+  -- show (ForAll var f)      = " ForAll " ++ show var ++ show (f $ FOLVar var)
+  -- show (Exists var f)      = " Exists " ++ show var ++ show (f $ FOLVar var)
+  show (ForAll _)          = " ForAll " ++ show "TODO"
+  show (Exists _)          = " Exists " ++ show "TODO"

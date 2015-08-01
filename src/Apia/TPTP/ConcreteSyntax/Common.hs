@@ -16,7 +16,9 @@
 {-# LANGUAGE UnicodeSyntax     #-}
 
 module Apia.TPTP.ConcreteSyntax.Common
-  ( ToTPTP(toTPTP)
+  ( G
+  , runG
+  , ToTPTP(toTPTP)
   , TPTP  -- Required by Haddock.
   ) where
 
@@ -46,7 +48,16 @@ import Apia.FOL.Types
   , FOLTerm(FOLFun, FOLVar)
   )
 
-import Apia.Utils.Text ( (+++), toUpperFirst )
+import Apia.Utils.Names ( freshName )
+import Apia.Utils.Text  ( (+++), toUpperFirst )
+
+import Control.Monad.Trans.State
+  ( evalState
+  , evalStateT
+  , get
+  , put
+  , StateT
+  )
 
 import Data.Char
   ( chr
@@ -63,12 +74,49 @@ import qualified Data.Text as T
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
+-- | The generating TPTP files monad.
+
+type GState = [String]
+
+-- The initial state.
+initGState ∷ GState
+initGState = []
+
+type G = StateT GState IO
+
+-- | Fresh variable.
+newGVar ∷ G String
+newGVar = fmap (evalState freshName) get
+
+-- | Pop a variable from the state.
+popGVar ∷ G ()
+popGVar = do
+  state ← get
+  case state of
+    []       → __IMPOSSIBLE__
+    (_ : xs) → put xs
+
+-- | Push a variable in the state.
+pushGVar ∷ String → G ()
+pushGVar x = do
+  state ← get
+  put $ x : state
+
+-- | Create a fresh variable and push it in the state.
+pushGNewVar ∷ G String
+pushGNewVar = newGVar >>= \freshVar → pushGVar freshVar >> return freshVar
+
+-- | Running the generating TPTP files monad.
+runG ∷ G a → IO a
+runG ga = evalStateT ga initGState
+
+------------------------------------------------------------------------------
 -- | TPTP type synonym
 type TPTP = Text
 
 -- | Translation to TPTP concrete syntax.
 class ToTPTP a where
-  toTPTP ∷ a → TPTP
+  toTPTP ∷ a → G TPTP
 
 -- Constant, function or predicate.
 data CFP = C | F | P
@@ -94,9 +142,12 @@ prefixLetter name =
 -- underscore ...
 
 -- Constants, functions and predicates names to TPTP
-cfpNameToTPTP ∷ CFP → String → TPTP
-cfpNameToTPTP cfp name =
-  if isUpper (T.head nameTPTP) then T.cons (symbol cfp) nameTPTP else nameTPTP
+cfpNameToTPTP ∷ CFP → String → G TPTP
+cfpNameToTPTP cfp name = do
+  name_ ← toTPTP name
+  if isUpper (T.head name_)
+    then return $ T.cons (symbol cfp) name_
+    else return name_
   where
   symbol ∷ CFP → Char
   -- If a function is applied to zero arguments, then if the function
@@ -107,9 +158,6 @@ cfpNameToTPTP cfp name =
   symbol F = 'f'
   -- If a predicate name start by an uppper case letter, we add a @'p'@.
   symbol P = 'p'
-
-  nameTPTP ∷ Text
-  nameTPTP = toTPTP name
 
 -- If a variable name start by an lower case letter, we add a @'V'@.
 --
@@ -122,6 +170,13 @@ cfpNameToTPTP cfp name =
 --   where
 --   nameTPTP ∷ String
 --   nameTPTP = toTPTP name
+
+quantifierHelper ∷ (FOLTerm → FOLFormula) → G (String, Text)
+quantifierHelper f = do
+  freshVar ← pushGNewVar
+  f_       ← toTPTP (f (FOLVar freshVar))
+  popGVar
+  return (freshVar, f_)
 
 ------------------------------------------------------------------------------
 -- Translation of Agda/Haskell types to TPTP concrete syntax.
@@ -141,11 +196,11 @@ instance ToTPTP Char where
     | c == '@'  = __IMPOSSIBLE__
     -- We use the character @_@ to separate the Agda NameId (see
     -- below).
-    | c == '_' = T.singleton c
+    | c == '_' = return $ T.singleton c
     -- The character is a subscript digit (i.e. ₀, ₁, ..., ₉).
-    | ord c `elem` [8320 .. 8329]  = T.singleton $ chr (ord c - 8272)
-    | isDigit c || isAsciiUpper c || isAsciiLower c = T.singleton c
-    | otherwise  = T.pack $ show $ ord c
+    | ord c `elem` [8320 .. 8329]  = return $ T.singleton $ chr (ord c - 8272)
+    | isDigit c || isAsciiUpper c || isAsciiLower c = return $ T.singleton c
+    | otherwise = return $ T.pack $ show $ ord c
 
 ------------------------------------------------------------------------------
 -- Translation of Agda types to TPTP concrete syntax.
@@ -156,7 +211,7 @@ instance ToTPTP NameId where
   -- with '@'. We use '_' because '@' is not TPTP valid.
   --
   -- TODO (02 July 2014). Improve the implemention.
-  toTPTP (NameId x i) =
+  toTPTP (NameId x i) = return $
     prefixLetter $ (T.pack . show) x +++ "_" +++ (T.pack . show) i
 
 instance ToTPTP QName where
@@ -171,58 +226,97 @@ instance ToTPTP QName where
 
 -- Requires @TypeSynonymInstances@.
 instance ToTPTP String where
-  toTPTP = prefixLetter . T.concat . map toTPTP
+  toTPTP xs = do
+    xs_ ← mapM toTPTP xs
+    return $ prefixLetter $ T.concat xs_
 
 instance ToTPTP FOLTerm where
   toTPTP (FOLFun name []) = cfpNameToTPTP C name
-  toTPTP (FOLFun name terms) =
-    cfpNameToTPTP F name +++ "(" +++ toTPTP terms +++ ")"
-  toTPTP (FOLVar name) = toUpperFirst $ T.pack name
+
+  toTPTP (FOLFun name terms) = do
+    terms_ ← toTPTP terms
+    name_  ← cfpNameToTPTP F name
+    return $ name_ +++ "(" +++ terms_ +++ ")"
+
+  toTPTP (FOLVar name) = return $ toUpperFirst $ T.pack name
 
 -- Requires @FlexibleInstances@.
 instance ToTPTP [FOLTerm] where
   toTPTP []       = __IMPOSSIBLE__
   toTPTP [a]      = toTPTP a
-  toTPTP (a : as) = toTPTP a +++ "," +++ toTPTP as
+  toTPTP (a : as) = do
+    a_ ← toTPTP a
+    as_ ← toTPTP as
+    return $ a_ +++ "," +++ as_
 
 instance ToTPTP FOLFormula where
   -- We translate the hard-coded first-order logic predicate @equal_@
   -- as the predefined equality in the ATP.
-  toTPTP (Predicate "equal_" [t1, t2] ) =
-    "( " +++ toTPTP t1 +++ " = " +++ toTPTP t2 +++ " )"
+  toTPTP (Predicate "equal_" [t1, t2] ) = do
+    t1_ ← toTPTP t1
+    t2_ ← toTPTP t2
+    return $ "( " +++ t1_ +++ " = " +++ t2_ +++ " )"
 
   toTPTP (Predicate "equal_" _) = __IMPOSSIBLE__
 
   -- If the predicate represents a propositional logic variable,
   -- following the TPTP syntax, we do not print the internal
   -- parenthesis.
-  toTPTP (Predicate name []) = "( " +++ cfpNameToTPTP P name +++ " )"
+  toTPTP (Predicate name []) = do
+    name_ ← cfpNameToTPTP P name
+    return $ "( " +++ name_ +++ " )"
 
-  toTPTP (Predicate name terms) =
-    "( " +++ cfpNameToTPTP P name +++ "(" +++ toTPTP terms +++ ")" +++ " )"
+  toTPTP (Predicate name terms) = do
+    terms_ ← toTPTP terms
+    name_ ← cfpNameToTPTP P name
+    return $ "( " +++ name_ +++ "(" +++ terms_ +++ ")" +++ " )"
 
-  toTPTP (And f1 f2)     = "( " +++ toTPTP f1 +++ " & " +++ toTPTP f2 +++ " )"
-  toTPTP (Or f1 f2)      = "( " +++ toTPTP f1 +++ " | " +++ toTPTP f2 +++ " )"
-  toTPTP (Not f)         = "( " +++ T.cons '~' (toTPTP f) +++ " )"
-  toTPTP (Implies f1 f2) = "( " +++ toTPTP f1 +++ " => " +++ toTPTP f2 +++ " )"
-  toTPTP (Equiv f1 f2)   = "( " +++ toTPTP f1 +++ " <=> " +++ toTPTP f2 +++ " )"
+  toTPTP (And f1 f2) = do
+    f1_ ← toTPTP f1
+    f2_ ← toTPTP f2
+    return $ "( " +++ f1_ +++ " & " +++ f2_ +++ " )"
 
-  toTPTP (ForAll var f) =
-    "( ! [" +++ toUpperFirst (T.pack var) +++ "] : "
-    +++ toTPTP (f (FOLVar var))
-    +++ " )"
+  toTPTP (Or f1 f2) = do
+    f1_ ← toTPTP f1
+    f2_ ← toTPTP f2
+    return $ "( " +++ f1_ +++ " | " +++ f2_ +++ " )"
 
-  toTPTP (Exists var f) =
-    "( ? [" +++ toUpperFirst (T.pack var) +++ "] : "
-    +++ toTPTP (f (FOLVar var))
-    +++ " )"
+  toTPTP (Not f) = do
+    f_ ← toTPTP f
+    return $ "( " +++ T.cons '~' f_ +++ " )"
 
-  toTPTP TRUE  = "( " +++ "$true" +++ " )"
-  toTPTP FALSE = "( " +++ "$false" +++ " )"
+  toTPTP (Implies f1 f2) = do
+    f1_ ← toTPTP f1
+    f2_ ← toTPTP f2
+    return $ "( " +++ f1_ +++ " => " +++ f2_ +++ " )"
+
+  toTPTP (Equiv f1 f2) = do
+    f1_ ← toTPTP f1
+    f2_ ← toTPTP f2
+    return $ "( " +++ f1_ +++ " <=> " +++ f2_ +++ " )"
+
+  toTPTP (ForAll f) = do
+    (freshVar, f_) ← quantifierHelper f
+
+    return $
+      "( ! [" +++ toUpperFirst (T.pack freshVar) +++ "] : "
+      +++ f_
+      +++ " )"
+
+  toTPTP (Exists f) = do
+    (freshVar, f_) ← quantifierHelper f
+
+    return $
+      "( ? [" +++ toUpperFirst (T.pack freshVar) +++ "] : "
+      +++ f_
+      +++ " )"
+
+  toTPTP TRUE  = return $ "( " +++ "$true" +++ " )"
+  toTPTP FALSE = return $ "( " +++ "$false" +++ " )"
 
 instance ToTPTP TPTPRole where
-  toTPTP TPTPAxiom      = "axiom"
-  toTPTP TPTPConjecture = "conjecture"
-  toTPTP TPTPDefinition = "definition"
-  toTPTP TPTPHint       = "hypothesis"
+  toTPTP TPTPAxiom      = return "axiom"
+  toTPTP TPTPConjecture = return "conjecture"
+  toTPTP TPTPDefinition = return "definition"
+  toTPTP TPTPHint       = return "hypothesis"
   toTPTP _              = __IMPOSSIBLE__

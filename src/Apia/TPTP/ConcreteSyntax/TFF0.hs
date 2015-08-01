@@ -23,7 +23,7 @@ module Apia.TPTP.ConcreteSyntax.TFF0
 
 ------------------------------------------------------------------------------
 
-import Apia.TPTP.ConcreteSyntax.Common ( ToTPTP(toTPTP) )
+import Apia.TPTP.ConcreteSyntax.Common ( G, ToTPTP(toTPTP) )
 import Apia.TPTP.Types                 ( AF(AF) )
 import Apia.Utils.Text                 ( (+++) )
 
@@ -35,15 +35,20 @@ type TFF0 = Text
 
 -- | Translation to TFF0 concrete syntax.
 class ToTFF0 a where
-  toTFF0 ∷ a → TFF0
+  toTFF0 ∷ a → G TFF0
 
 ------------------------------------------------------------------------------
 -- Translation of annotated formulae to TFF0 concrete syntax.
 
 instance ToTFF0 AF where
-  toTFF0 (AF qName atpRole formula) =
-    "tff("
-    +++ toTPTP qName +++ ", "
-    +++ toTPTP atpRole +++ ", "
-    +++ toTPTP formula
-    +++ ")." +++ "\n\n"
+  toTFF0 (AF qName atpRole formula) = do
+    qName_   ← toTPTP qName
+    atpRole_ ← toTPTP atpRole
+    formula_ ← toTPTP formula
+
+    return $ "tff("
+      +++ qName_ +++ ", "
+      +++ atpRole_ +++ ", "
+      +++ formula_ +++ ")."
+      +++ "\n\n"
+

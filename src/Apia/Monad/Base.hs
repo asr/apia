@@ -84,8 +84,7 @@ type T = E.ExceptT String (StateT TState (ReaderT Options IO))
 runT ∷ T a → IO (Either String a)
 runT ta = env >>= runReaderT (evalStateT (E.runExceptT ta) initTState)
 
--- | Return 'True' if the list of variables in the translation monad
--- state is empty.
+-- | Return 'True' if the list of variables in the state is empty.
 isTVarsEmpty ∷ T Bool
 isTVarsEmpty = lift $ fmap (null . tVars) get
 
@@ -93,7 +92,7 @@ isTVarsEmpty = lift $ fmap (null . tVars) get
 newTVar ∷ T String
 newTVar = lift $ fmap (evalState freshName . tVars) get
 
--- | Pop a variable from the translation monad state.
+-- | Pop a variable from the state.
 popTVar ∷ T ()
 popTVar = do
   state ← lift get
@@ -101,37 +100,36 @@ popTVar = do
     []       → __IMPOSSIBLE__
     (_ : xs) → lift $ put state { tVars = xs }
 
--- | Push a variable in the translation monad state.
+-- | Push a variable in the state.
 pushTVar ∷ String → T ()
 pushTVar x = do
   state ← lift get
   lift $ put state { tVars = x : tVars state }
 
--- | Create a fresh variable and push it in the translation monad state.
+-- | Create a fresh variable and push it in the state.
 pushTNewVar ∷ T String
 pushTNewVar = newTVar >>= \freshVar → pushTVar freshVar >> return freshVar
 
--- | Get the ATPs from the translation monad state.
+-- | Get the ATPs from the state.
 getTATPs ∷ T [ATP]
 getTATPs = lift $ fmap tATPs get
 
--- | Get the Agda 'Definitions' from the translation monad state.
+-- | Get the Agda 'Definitions' from the state.
 getTDefs ∷ T Definitions
 getTDefs = lift $ fmap tDefs get
 
--- | Ask for a concrete 'Options' from the translation monad
--- environment.
+-- | Ask for a concrete 'Options' from the environment.
 askTOpt ∷ (Options → a) → T a
 askTOpt opt = lift $ lift $ fmap opt ask
 
--- | Get the variables from the translation monad state.
+-- | Get the variables from the state.
 getTVars ∷ T [String]
 getTVars = lift $ fmap tVars get
 
--- | Modify the ATPs in the translation monad state.
+-- | Modify the ATPs in the state.
 modifyTATPs ∷ [ATP] → T ()
 modifyTATPs atps = lift $ modify $ \s → s { tATPs = atps }
 
--- | Modify the Agda 'Definitions' in the translation monad state.
+-- | Modify the Agda 'Definitions' in the state.
 modifyTDefs ∷ Definitions → T ()
 modifyTDefs defs = lift $ modify $ \s → s { tDefs = defs }

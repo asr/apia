@@ -1,4 +1,4 @@
-% Only Equinox and tptp4X (from TPTP 6.1.0) detect the parsing error.
+% Only Equinox and tptp4X (from TPTP 6.2.0) detect the parsing error.
 
 % Tested with:
 
@@ -8,3 +8,9 @@
 % Vampire 0.6 (revision 903)
 
 fof(test, conjecture, ! [A] : A = B).
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% $ tptp4X parsing_error.tptp
+% ...
+% ERROR: Line 10 Char 36 Token ")" continuing with ".

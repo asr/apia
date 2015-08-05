@@ -43,13 +43,13 @@ Prerequisites
   The tptp2X program from the
   [TPTP library](http://www.cs.miami.edu/~tptp/) is required for using
   Z3 as a first-order ATP. The tested version of tptp2X is from
-  TPTP 6.1.0.
+  TPTP 6.2.0.
 
 * The tptp4X program
 
   The `--check` command-line option requires the tptp4X program from
   the [TPTP library](http://www.cs.miami.edu/~tptp/). The tested
-  version of tptp4X is from TPTP 6.1.0.
+  version of tptp4X is from TPTP 6.2.0.
 
 Installation
 ------------

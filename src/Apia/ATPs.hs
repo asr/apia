@@ -270,6 +270,7 @@ createSMT2file file = do
 smt2Ext ∷ String
 smt2Ext = ".smt2"
 
+-- | The selected ATPs by the user or the default ones.
 selectedATPs ∷ T ()
 selectedATPs = do
   atpsAux ← askTOpt optATP

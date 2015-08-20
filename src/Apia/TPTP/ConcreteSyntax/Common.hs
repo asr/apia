@@ -74,14 +74,13 @@ import qualified Data.Text as T
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
--- | The generating TPTP files monad.
-
 type GState = [String]
 
 -- The initial state.
 initGState ∷ GState
 initGState = []
 
+-- | The generating TPTP files monad.
 type G = StateT GState IO
 
 -- | Fresh variable.

@@ -10,8 +10,9 @@
 -- Process the command-line arguments.
 -----------------------------------------------------------------------------
 
-{-# LANGUAGE CPP           #-}
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE CPP               #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE UnicodeSyntax     #-}
 
 module Apia.Options
   ( defaultOptions
@@ -76,6 +77,8 @@ import Apia.Common
        )
   , Lang(FOF, TFF0)
   )
+
+import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes, text )
 
 import Data.Char ( isDigit )
 import Data.List ( foldl' )
@@ -174,10 +177,11 @@ defaultOptions = Options
   }
 
 -- | 'Options' monad.
-type MOptions = Options → Either String Options
+type MOptions = Options → Either Doc Options
 
 atpOpt ∷ String → MOptions
-atpOpt []   _    = Left "Option `--atp' requires an argument NAME"
+atpOpt [] _ = Left $
+  text "option " <> squotes "--atp" <> " requires an argument NAME"
 atpOpt name opts = Right opts { optATP = optATP opts ++ [name] }
 
 checkOpt ∷ MOptions
@@ -196,7 +200,9 @@ helpOpt ∷ MOptions
 helpOpt opts = Right opts { optHelp = True }
 
 includePathOpt ∷ FilePath → MOptions
-includePathOpt [] _ = error "Option `--include-path' requires an argument DIR"
+includePathOpt [] _ = Left $
+  text "option " <> squotes "--include-path"
+  <> " requires an argument DIR"
 includePathOpt dir opts =
   Right opts { optIncludePath = optIncludePath opts ++ [dir] }
 
@@ -204,12 +210,13 @@ inputFileOpt ∷ FilePath → MOptions
 inputFileOpt file opts =
   case optInputFile opts of
     Nothing → Right opts { optInputFile = Just file }
-    Just _  → Left "Only one input file allowed"
+    Just _  → Left "only one input file allowed"
 
 langOpt ∷ String → MOptions
 langOpt "fof"  opts = Right opts { optLang = FOF }
 langOpt "tff0" opts = Right opts { optLang = TFF0 }
-langOpt lang   _    = Left $ "Language " ++ show lang ++ " is not a TPTP language"
+langOpt lang   _    = Left $
+  text "Language " <> pretty lang <> " is not a TPTP language"
 
 noInternalEqualityOpt ∷ MOptions
 noInternalEqualityOpt opts = Right opts { optNoInternalEquality = True }
@@ -221,7 +228,8 @@ onlyFilesOpt ∷ MOptions
 onlyFilesOpt opts = Right opts { optOnlyFiles = True }
 
 outputDirOpt ∷ FilePath → MOptions
-outputDirOpt []  _    = Left "Option `--output-dir' requires an argument DIR"
+outputDirOpt [] _ = Left $
+  text "option " <> squotes "--output-dir" <> " requires an argument DIR"
 outputDirOpt dir opts = Right opts { optOutputDir = dir }
 
 schematicPropositionalFunctionsOpt :: MOptions
@@ -233,7 +241,8 @@ schematicPropositionalSymbolsOpt opts =
   Right opts { optSchematicPropositionalSymbols = True }
 
 snapshotDirOpt ∷ FilePath → MOptions
-snapshotDirOpt []  _    = Left "Option `--snapshot-dir' requires an argument DIR"
+snapshotDirOpt [] _ = Left $
+  text "option " <> squotes "--snapshot-dir" <> " requires an argument DIR"
 snapshotDirOpt dir opts = Right opts { optSnapshotDir = dir }
 
 snapshotNoErrorOpt ∷ MOptions
@@ -245,18 +254,22 @@ snapshotTestOpt ∷ MOptions
 snapshotTestOpt opts = Right opts { optSnapshotTest = True }
 
 timeOpt ∷ String → MOptions
-timeOpt []   _    = Left "Option `--time' requires an argument NUM"
+timeOpt [] _ = Left $
+  text "option " <> squotes "--time" <> " requires an argument NUM"
 timeOpt secs opts =
   if all isDigit secs
   then Right opts { optTime = read secs }
-  else Left "Option `--time' requires a non-negative integer argument"
+  else Left $ text "option " <> squotes "--time"
+              <> " requires a non-negative integer argument"
 
 unprovenNoErrorOpt ∷ MOptions
 unprovenNoErrorOpt opts = Right opts { optUnprovenNoError = True }
 
 -- Adapted from @Agda.Interaction.Options.verboseFlag@.
 verboseOpt ∷ String → MOptions
-verboseOpt [] _ = Left "Option `--verbose' requires an argument of the form x.y.z:N or N"
+verboseOpt [] _ = Left $
+ text "option " <> squotes "--verbose"
+ <> " requires an argument of the form x.y.z:N or N"
 verboseOpt str opts =
   Right opts { optVerbose = Trie.insert k n $ optVerbose opts }
   where
@@ -266,7 +279,7 @@ verboseOpt str opts =
 
   parseVerbose ∷ String → ([String], Int)
   parseVerbose s =
-    case wordsBy (`elem` ":.") s of
+    case wordsBy (`elem` (":." ∷ String)) s of
       [] → __IMPOSSIBLE__
       ss → let m ∷ Int
                m = read $ last ss
@@ -276,43 +289,53 @@ versionOpt ∷ MOptions
 versionOpt opts = Right opts { optVersion = True }
 
 withCVC4Opt ∷ String → MOptions
-withCVC4Opt []   _    = Left "Option `--with-cvc4' requires an argument PATH"
+withCVC4Opt [] _ = Left $
+  text "option " <> squotes "--with-cvc4" <> " requires an argument PATH"
 withCVC4Opt name opts = Right opts { optWithCVC4 = name }
 
 withEOpt ∷ String → MOptions
-withEOpt []   _    = Left "Option `--with-e' requires an argument PATH"
+withEOpt [] _ = Left $
+  text "option " <> squotes "--with-e" <> " requires an argument PATH"
 withEOpt name opts = Right opts { optWithE = name }
 
 withEquinoxOpt ∷ String → MOptions
-withEquinoxOpt []   _    = Left "Option `--with-equinox' requires an argument PATH"
+withEquinoxOpt [] _ = Left $
+  text "option " <> squotes "--with-equinox" <> " requires an argument PATH"
 withEquinoxOpt name opts = Right opts { optWithEquinox = name }
 
 withIleanCoPOpt ∷ String → MOptions
-withIleanCoPOpt []   _    = Left "Option `--with-ileancop' requires an argument PATH"
+withIleanCoPOpt [] _ = Left $
+  text "option " <> squotes "--with-ileancop" <> " requires an argument PATH"
 withIleanCoPOpt name opts = Right opts { optWithIleanCoP = name }
 
 withMetisOpt ∷ String → MOptions
-withMetisOpt []   _    = Left "Option `--with-metis' requires an argument PATH"
+withMetisOpt [] _ = Left $
+  text "option " <> squotes "--with-metis" <> " requires an argument PATH"
 withMetisOpt name opts = Right opts { optWithMetis = name }
 
 withSPASSOpt ∷ String → MOptions
-withSPASSOpt []   _    = Left "Option `--with-spass' requires an argument PATH"
+withSPASSOpt [] _ = Left $
+  text "option " <> squotes "--with-spass" <> " requires an argument PATH"
 withSPASSOpt name opts = Right opts { optWithSPASS = name }
 
 withtptp2XOpt ∷ String → MOptions
-withtptp2XOpt []   _    = Left "Option `--with-tptp2X' requires an argument PATH"
+withtptp2XOpt [] _ = Left $
+  text "option " <> squotes "--with-tptp2X" <> " requires an argument PATH"
 withtptp2XOpt name opts = Right opts { optWithtptp2X = name }
 
 withtptp4XOpt ∷ String → MOptions
-withtptp4XOpt []   _    = Left "Option `--with-tptp4X' requires an argument PATH"
+withtptp4XOpt [] _ = Left $
+  text "option " <> squotes "--with-tptp4X" <> " requires an argument PATH"
 withtptp4XOpt name opts = Right opts { optWithtptp4X = name }
 
 withVampireOpt ∷ String → MOptions
-withVampireOpt []   _    = Left "Option `--with-vampire' requires an argument PATH"
+withVampireOpt [] _  = Left $
+  text "option " <> squotes "--with-vampire" <> " requires an argument PATH"
 withVampireOpt name opts = Right opts { optWithVampire = name }
 
 withZ3Opt ∷ String → MOptions
-withZ3Opt []   _    = Left "Option `--with-z3' requires an argument PATH"
+withZ3Opt []   _    = Left $
+  text "option " <> squotes "--with-z3" <> " requires an argument PATH"
 withZ3Opt name opts = Right opts { optWithZ3 = name }
 
 -- | Description of the command-line 'Options'.
@@ -404,8 +427,8 @@ processOptionsHelper ∷ [String] → (FilePath → MOptions) → MOptions
 processOptionsHelper argv f defaults =
   case getOpt (ReturnInOrder f) options argv of
     (o, _, [])   → foldl' (>>=) (return defaults) o
-    (_, _, errs) → Left $ initDef (__IMPOSSIBLE__) $ init $ unlines errs
+    (_, _, errs) → Left $ text $ initDef (__IMPOSSIBLE__) $ init $ unlines errs
 
 -- | Processing the command-line 'Options'.
-processOptions ∷ [String] → Either String Options
+processOptions ∷ [String] → Either Doc Options
 processOptions argv = processOptionsHelper argv inputFileOpt defaultOptions

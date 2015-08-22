@@ -16,6 +16,8 @@ module Apia.Common
   )
   where
 
+import Apia.Utils.PrettyPrint ( Pretty(pretty), text )
+
 ------------------------------------------------------------------------------
 -- | The ATPs (first-order ATPs and SMT solvers).
 data ATP = CVC4
@@ -27,6 +29,9 @@ data ATP = CVC4
          | Vampire
          | Z3
          deriving Show
+
+instance Pretty ATP where
+  pretty = text . show
 
 -- | TPTP output languages.
 data Lang = FOF   -- ^ First-order form.

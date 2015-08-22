@@ -13,6 +13,7 @@
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
 module Main
@@ -60,9 +61,10 @@ import Apia.TPTP.Files       ( createConjectureTPTPFile )
 import Apia.TPTP.Translation ( conjecturesToAFs, generalRolesToAFs )
 import Apia.TPTP.Types       ( ConjectureSet, GeneralRoles )
 
-import Apia.Utils.AgdaAPI.Interface ( getImportedInterfaces, readInterface )
-
 import qualified Apia.Utils.Except as E
+
+import Apia.Utils.AgdaAPI.Interface ( getImportedInterfaces, readInterface )
+import Apia.Utils.PrettyPrint       ( Doc )
 
 import Apia.Utils.Monad   ( failureMsg, pair )
 import Apia.Utils.Version ( progNameVersion )
@@ -152,7 +154,7 @@ runApia = do
 main ∷ IO ()
 main = do
   -- Adapted from @Agda.Main.main@. Requires -XScopedTypeVariables.
-  r ∷ Either String () ← runT $ runApia `E.catchE` \err →
+  r ∷ Either Doc () ← runT $ runApia `E.catchE` \err →
     do liftIO $ failureMsg err
        E.throwE err
 

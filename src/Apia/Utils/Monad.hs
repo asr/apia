@@ -20,6 +20,8 @@ module Apia.Utils.Monad
 
 ------------------------------------------------------------------------------
 
+import Apia.Utils.PrettyPrint ( Doc, prettyShow )
+
 import System.Environment ( getProgName )
 import System.Exit        ( exitFailure )
 import System.IO          ( hPutStrLn, stderr )
@@ -30,9 +32,10 @@ pair ∷ Monad m ⇒ m a → m b → m (a, b)
 pair mx my = mx >>= \x → my >>= \y → return (x, y)
 
 -- | Failure message.
-failureMsg ∷ String → IO ()
-failureMsg err = getProgName >>= \prg → hPutStrLn stderr $ prg ++ ": " ++ err
+failureMsg ∷ Doc → IO ()
+failureMsg err =
+  getProgName >>= \prg → hPutStrLn stderr $ prg ++ ": " ++ prettyShow err
 
 -- | Exit with an error message.
-die ∷ String → IO a
+die ∷ Doc → IO a
 die err = failureMsg err >> exitFailure

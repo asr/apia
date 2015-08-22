@@ -10,8 +10,9 @@
 -- Snapshot test.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP           #-}
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE CPP               #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE UnicodeSyntax     #-}
 
 module Apia.Snapshot ( snapshotTest ) where
 
@@ -28,7 +29,8 @@ import Apia.Options
 
 import qualified Apia.Utils.Except as E
 
-import Apia.Utils.Directory ( notEqualFiles )
+import Apia.Utils.Directory   ( notEqualFiles )
+import Apia.Utils.PrettyPrint ( (<>), Doc, prettyShow, squotes, text )
 
 import Control.Monad.IO.Class ( MonadIO(liftIO) )
 import Safe.Exact             ( dropExact )
@@ -44,7 +46,9 @@ snapshotTest file = do
   snapshotDir ← askTOpt optSnapshotDir
 
   if outputDir == snapshotDir
-    then E.throwE "the options `--output-dir' and `--snapshot-dir' cannot be the same"
+    then E.throwE $ text "the " <> squotes "--output-dir"
+                    <> text " and " <> squotes "--snapshot-dir"
+                    <> " options cannot be the same"
     else do
       -- The original file without the output directory.
       let auxFile ∷ FilePath
@@ -54,12 +58,13 @@ snapshotTest file = do
           snapshotFile = combine snapshotDir auxFile
 
       unlessM (liftIO $ doesFileExistCaseSensitive snapshotFile) $ E.throwE $
-        "the file " ++ snapshotFile ++ " does not exist"
+        text "the file " <> text snapshotFile <> " does not exist"
 
       whenM (liftIO $ notEqualFiles file snapshotFile) $ do
-        let msg ∷ String
-            msg = "the files are different:\n" ++ file ++ "\n" ++ snapshotFile
+        let msg ∷ Doc
+            msg = text "the files are different:\n"
+                  <> text file <> text "\n" <> text snapshotFile
 
         ifM (askTOpt optSnapshotNoError)
-            (liftIO $ putStrLn msg)
+            (liftIO $ putStrLn $ prettyShow msg)
             (E.throwE msg)

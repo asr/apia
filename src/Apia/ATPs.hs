@@ -12,6 +12,7 @@
 
 {-# LANGUAGE CPP                 #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
 module Apia.ATPs
@@ -56,7 +57,16 @@ import Apia.Options
            )
   )
 
-import Apia.Utils.Directory ( checkExecutable )
+import Apia.Utils.Directory   ( checkExecutable )
+
+import Apia.Utils.PrettyPrint
+  ( (<>)
+  , Doc
+  , Pretty(pretty)
+  , prettyShow
+  , squotes
+  , text
+  )
 
 import qualified Apia.Utils.Except as E
 
@@ -124,7 +134,7 @@ optATP2ATP "metis"    = return Metis
 optATP2ATP "spass"    = return SPASS
 optATP2ATP "vampire"  = return Vampire
 optATP2ATP "z3"       = return Z3
-optATP2ATP other      = E.throwE $ "ATP " ++ other ++ " unknown"
+optATP2ATP other      = E.throwE $ text "ATP " <> text other <> " unknown"
 
 -- | Default ATPs.
 defaultATPs ∷ [String]
@@ -151,7 +161,7 @@ atpOk Z3 = "unsat"
 atpVersion ∷ ATP → T String
 atpVersion CVC4 = do
   exec ← atpExec CVC4
-  liftIO $ fmap ( drop (length "This is ")
+  liftIO $ fmap ( drop (length ("This is " ∷ String))
                 . takeWhile (/= '\n')
                 . initDef (__IMPOSSIBLE__)
                 )
@@ -211,7 +221,8 @@ atpArgs E timeout file = do
                     , file
                     ]
         -- This message is not included in the error test.
-        else E.throwE $ "the ATP " ++ eVersion ++ " is not supported"
+        else E.throwE $ text "the ATP " <> text eVersion
+                        <> " is not supported"
 
 -- Equinox bug. Neither the option @--no-progress@ nor the option
 -- @--verbose 0@ reduce the output.
@@ -253,10 +264,11 @@ createSMT2file file = do
 
   tptp2XExec ← askTOpt optWithtptp2X
 
-  let msgError ∷ String
-      msgError = "the " ++ tptp2XExec ++ " command from the TPTP library "
-                 ++ "does not exist and it is required for using "
-                 ++ show Z3 ++ " as an first-order ATP"
+  let msgError ∷ Doc
+      msgError = text "the " <> text tptp2XExec
+                 <> " command from the TPTP library "
+                 <> "does not exist and it is required for using "
+                 <> pretty Z3 <> " as an first-order ATP"
 
   checkExecutable tptp2XExec msgError
 
@@ -293,9 +305,9 @@ runATP atp outputMVar timeout fileTPTP = do
   args ∷ [String] ← atpArgs atp timeout file
   cmd  ∷ String   ← atpExec atp
 
-  let msgError ∷ String
-      msgError = "the `" ++ cmd ++ "` command associated with " ++ show atp
-                  ++ " does not exist"
+  let msgError ∷ Doc
+      msgError = text "the " <> squotes cmd <> " command associated with "
+                 <> pretty atp <> " does not exist"
 
   checkExecutable cmd msgError
 
@@ -327,10 +339,12 @@ atpsAnswer ∷ [ATP] → MVar (Bool, ATP) → [ProcessHandle] → FilePath → I
 atpsAnswer atps outputMVar atpsPH file n =
   if n == length atps
     then do
-      let msg ∷ String
-          msg = "the ATP(s) did not prove the conjecture in " ++ file
+      let msg ∷ Doc
+          msg = text "the ATP(s) did not prove the conjecture in "
+                <> pretty file
+
       ifM (askTOpt optUnprovenNoError)
-          (liftIO $ putStrLn msg)
+          (liftIO $ putStrLn $ prettyShow msg)
           (E.throwE msg)
     else do
       output ← liftIO $ takeMVar outputMVar

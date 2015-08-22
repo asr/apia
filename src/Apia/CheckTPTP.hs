@@ -10,7 +10,8 @@
 -- Check the generated TPTP file using the tptp4X program.
 -----------------------------------------------------------------------------
 
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE UnicodeSyntax     #-}
 
 module Apia.CheckTPTP ( checkTPTP ) where
 
@@ -21,6 +22,8 @@ import Apia.Options         ( Options(optWithtptp4X) )
 import Apia.Utils.Directory ( checkExecutable )
 
 import qualified Apia.Utils.Except as E
+
+import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), text )
 
 import Control.Monad           ( when )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
@@ -38,9 +41,9 @@ checkTPTP file = do
 
   tptp4XExec ← askTOpt optWithtptp4X
 
-  let msgError ∷ String
-      msgError = "the " ++ tptp4XExec ++ " command from the TPTP library "
-                 ++ "does not exist"
+  let msgError ∷ Doc
+      msgError = text "the " <> text tptp4XExec
+                 <> " command from the TPTP library does not exist"
 
   checkExecutable tptp4XExec msgError
 
@@ -50,11 +53,13 @@ checkTPTP file = do
                                      []
   case exitCode of
     ExitFailure _ →
-      E.throwE $ tptp4XExec ++ " found an error in the file " ++ file
-                 ++ "\nPlease report this as a bug"
+      E.throwE $ text tptp4XExec <> " found an error in the file " <>
+                 pretty file
+                 <> "\nPlease report this as a bug"
 
     -- TODO (11 December 2012). How add a test case for this case?
     ExitSuccess →
       when ("WARNING" `isInfixOf` out) $
-        E.throwE $ tptp4XExec ++ " found a warning in the file " ++ file
-                   ++ "\nPlease report this as a bug"
+        E.throwE $ text tptp4XExec <> " found a warning in the file "
+                   <> pretty file
+                   <> "\nPlease report this as a bug"

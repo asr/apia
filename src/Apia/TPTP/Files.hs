@@ -38,8 +38,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( whenM )
 import Agda.Utils.Pretty     ( prettyShow )
 
-import Apia.Common ( Lang(FOF, TFF0) )
-
+import Apia.Common                     ( Lang(FOF, TFF0) )
 import Apia.Monad.Base                 ( askTOpt, T )
 import Apia.Monad.Reports              ( reportS, reportSLn )
 import Apia.Options                    ( Options(optOnlyFiles, optOutputDir) )
@@ -66,9 +65,9 @@ import Apia.Utils.AgdaAPI.Interface
  , qNameNameBindingSiteRange
  )
 
-import Apia.Utils.List   ( duplicate )
-import Apia.Utils.String ( removeString )
-import Apia.Utils.Text   ( (+++), toUpperFirst )
+import Apia.Utils.List        ( duplicate )
+import Apia.Utils.String      ( removeString )
+import Apia.Utils.Text        ( (+++), toUpperFirst )
 
 import Control.Monad           ( when )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )

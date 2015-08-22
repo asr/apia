@@ -13,7 +13,8 @@
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP               #-}
-{-# LANGUAGE FlexibleInstances #-}  -- Implies TypeSynonymInstances.
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE UnicodeSyntax     #-}
 
 ------------------------------------------------------------------------------
@@ -85,6 +86,7 @@ import Apia.Monad.Base    ( getTVars, popTVar, pushTVar, T )
 import Apia.Monad.Reports ( reportSLn )
 
 import qualified Apia.Utils.Except as E
+import Apia.Utils.PrettyPrint ( (<>), text )
 
 #if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ( (<$>) )
@@ -235,8 +237,8 @@ removeProofTerm ty (x, typeVar) = do
     El (Type (Max [])) someTerm → do
       reportSLn "removePT" 20 $
                 "The term someTerm is: " ++ show someTerm
-      E.throwE $ "the translation failed because we do not know how erase "
-                 ++ "the term\n" ++ show someTerm
+      E.throwE $ text "the translation failed because we do not know how erase "
+                 <> "the term\n" <> (text . show) someTerm
 
     -- N.B. The next case is just a generalization to various
     -- arguments of the previous case.

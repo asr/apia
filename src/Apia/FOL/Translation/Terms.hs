@@ -10,8 +10,9 @@
 -- Translation from Agda internal terms to first-order logic formulae.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP           #-}
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE CPP               #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE UnicodeSyntax     #-}
 
 module Apia.FOL.Translation.Terms
   ( termToFormula
@@ -108,6 +109,8 @@ import Apia.Utils.AgdaAPI.Interface     ( isATPDefinition, qNameDefinition )
 
 import qualified Apia.Utils.Except as E
 
+import Apia.Utils.PrettyPrint ( (<>), Doc, squotes, text )
+
 import Control.Monad ( liftM2, when )
 import Data.List     ( foldl' )
 
@@ -115,11 +118,11 @@ import Data.List     ( foldl' )
 
 ------------------------------------------------------------------------------
 
-universalQuantificationErrorMsg ∷ String → String
+universalQuantificationErrorMsg ∷ String → Doc
 universalQuantificationErrorMsg p =
-  "use the " ++ "`" ++ p ++ "' "
-  ++ "option for the translation of first-order logic universal quantified "
-  ++ entities
+  text "use the " <> squotes p
+  <> " option for the translation of first-order logic universal quantified "
+  <> text entities
   where
     entities ∷ String
     entities =
@@ -487,8 +490,10 @@ termToFormula term = case ignoreSharing term of
         ifM (askTOpt optSchematicPropositionalFunctions)
             (ifM (askTOpt optNoPredicateConstants)
                  (E.throwE $
-                   "The '--schematic-propositional-functions'"
-                   ++ " and '--no-predicate-constants' options are incompatible")
+                   text "the " <> squotes "--schematic-propositional-functions"
+                   <> text " and "
+                   <> squotes "--no-predicate-constants"
+                   <> " options are incompatible")
                  (propositionalFunctionScheme vars n elims)
             )
             (E.throwE $ universalQuantificationErrorMsg p)

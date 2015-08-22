@@ -25,6 +25,8 @@ import Agda.Utils.Monad ( ifM )
 
 import qualified Apia.Utils.Except as E
 
+import Apia.Utils.PrettyPrint ( Doc )
+
 import qualified Data.ByteString.Lazy as BL ( readFile )
 
 import Control.Monad          ( liftM2 )
@@ -36,7 +38,7 @@ import System.Directory ( doesFileExist, findExecutable )
 
 -- | @checkExecutable file msg@ throws an exception with message @msg@
 -- if the executable @file@ is missing.
-checkExecutable ∷ MonadIO m ⇒ FilePath → String → E.ExceptT String m ()
+checkExecutable ∷ MonadIO m ⇒ FilePath → Doc → E.ExceptT Doc m ()
 checkExecutable file msg =
   caseMaybeM (liftIO $ findExecutable file)
              (ifM (liftIO $ doesFileExist file)

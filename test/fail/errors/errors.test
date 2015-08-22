@@ -20,7 +20,7 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/Schemati
 <<<
 >>>
 >>>2
-apia: use the `--schematic-propositional-symbols' option for the translation of first-order logic universal quantified propositional symbols
+apia: use the ‘--schematic-propositional-symbols’ option for the translation of first-order logic universal quantified propositional symbols
 >>>= 1
 
 #4. Terms.hs: Required --schematic-propositional-functions option
@@ -28,7 +28,7 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/Schemati
 <<<
 >>>
 >>>2
-apia: use the `--schematic-propositional-functions' option for the translation of first-order logic universal quantified propositional functions
+apia: use the ‘--schematic-propositional-functions’ option for the translation of first-order logic universal quantified propositional functions
 >>>= 1
 
 #5. Terms.hs: Required --schematic-functions option
@@ -36,7 +36,7 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/Schemati
 <<<
 >>>
 >>>2
-apia: use the `--schematic-functions' option for the translation of first-order logic universal quantified functions
+apia: use the ‘--schematic-functions’ option for the translation of first-order logic universal quantified functions
 >>>= 1
 
 #6. RemoveProofTerms.hs: Underscore variables
@@ -52,7 +52,7 @@ dist/build/apia/apia File1.agda File2.agda
 <<<
 >>>
 >>>2
-apia: Only one input file allowed
+apia: only one input file allowed
 >>>= 1
 
 #8. Unrecognized option
@@ -76,7 +76,7 @@ dist/build/apia/apia -itest/fail/errors --output-dir=/tmp --snapshot-test --snap
 <<<
 >>>
 >>>2
-apia: the options `--output-dir' and `--snapshot-dir' cannot be the same
+apia: the ‘--output-dir’ and ‘--snapshot-dir’ options cannot be the same
 >>>= 1
 
 #11. Snapshot.hs: Missing snapshot file
@@ -101,7 +101,7 @@ dist/build/apia/apia -itest/fail/errors --atp=vampire --with-vampire=xxx test/fa
 >>>
 Proving the conjecture in /tmp/TrivialTheorem/20-foo.fof
 >>>2
-apia: the `xxx` command associated with Vampire does not exist
+apia: the ‘xxx’ command associated with Vampire does not exist
 >>>= 1
 
 #14. ATP.hs: No theorem
@@ -162,7 +162,7 @@ dist/build/apia/apia --include-path=
 <<<
 >>>
 >>>2
-apia: Option `--include-path' requires an argument DIR
+apia: option ‘--include-path’ requires an argument DIR
 >>>= 1
 
 #21. Options.hs (System.Console.GetOpt): --atp
@@ -178,7 +178,7 @@ dist/build/apia/apia --atp=
 <<<
 >>>
 >>>2
-apia: Option `--atp' requires an argument NAME
+apia: option ‘--atp’ requires an argument NAME
 >>>= 1
 
 #23. Options.hs (System.Console.GetOpt): --output-dir
@@ -194,7 +194,7 @@ dist/build/apia/apia --output-dir=
 <<<
 >>>
 >>>2
-apia: Option `--output-dir' requires an argument DIR
+apia: option ‘--output-dir’ requires an argument DIR
 >>>= 1
 
 #25. Options.hs (System.Console.GetOpt): --snapshot-dir
@@ -210,7 +210,7 @@ dist/build/apia/apia --snapshot-dir=
 <<<
 >>>
 >>>2
-apia: Option `--snapshot-dir' requires an argument DIR
+apia: option ‘--snapshot-dir’ requires an argument DIR
 >>>= 1
 
 #27. Options.hs (System.Console.GetOpt): --time
@@ -226,7 +226,7 @@ dist/build/apia/apia --time=
 <<<
 >>>
 >>>2
-apia: Option `--time' requires an argument NUM
+apia: option ‘--time’ requires an argument NUM
 >>>= 1
 
 #29. Options.hs: --time=negative_value
@@ -234,7 +234,7 @@ dist/build/apia/apia --time=-10
 <<<
 >>>
 >>>2
-apia: Option `--time' requires a non-negative integer argument
+apia: option ‘--time’ requires a non-negative integer argument
 >>>= 1
 
 #30. Options.hs (System.Console.GetOpt): --with-vampire
@@ -250,7 +250,7 @@ dist/build/apia/apia --with-vampire=
 <<<
 >>>
 >>>2
-apia: Option `--with-vampire' requires an argument PATH
+apia: option ‘--with-vampire’ requires an argument PATH
 >>>= 1
 
 #32. Options.hs (System.Console.GetOpt): -v
@@ -274,7 +274,7 @@ dist/build/apia/apia --verbose=
 <<<
 >>>
 >>>2
-apia: Option `--verbose' requires an argument of the form x.y.z:N or N
+apia: option ‘--verbose’ requires an argument of the form x.y.z:N or N
 >>>= 1
 
 #35. Functions.hs: The definitions to be translated must be first-order
@@ -299,5 +299,5 @@ dist/build/apia/apia --schematic-propositional-functions --no-predicate-constant
 <<<
 >>>
 >>>2
-apia: The '--schematic-propositional-functions' and '--no-predicate-constants' options are incompatible
+apia: the ‘--schematic-propositional-functions’ and ‘--no-predicate-constants’ options are incompatible
 >>>= 1

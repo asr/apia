@@ -41,7 +41,8 @@ import Apia.Options           ( Options )
 
 import qualified Apia.Utils.Except as E
 
-import Apia.Utils.Names ( freshName )
+import Apia.Utils.Names       ( freshName )
+import Apia.Utils.PrettyPrint ( Doc )
 
 import Control.Monad.Trans.Class ( MonadTrans(lift) )
 
@@ -78,10 +79,10 @@ initTState = TState { tDefs = HashMap.empty
                     }
 
 -- | The translation monad.
-type T = E.ExceptT String (StateT TState (ReaderT Options IO))
+type T = E.ExceptT Doc (StateT TState (ReaderT Options IO))
 
 -- | Running the translation monad.
-runT ∷ T a → IO (Either String a)
+runT ∷ T a → IO (Either Doc a)
 runT ta = env >>= runReaderT (evalStateT (E.runExceptT ta) initTState)
 
 -- | Return 'True' if the list of variables in the state is empty.

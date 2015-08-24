@@ -16,7 +16,10 @@
 {-# LANGUAGE UnicodeSyntax     #-}
 
 module Apia.TPTP.ConcreteSyntax.Common
-  ( G
+  ( CFP(P)
+  , cfpNameToTPTP
+  , G
+  , quantifierHelper
   , runG
   , ToTPTP(toTPTP)
   , TPTP  -- Required by Haddock.
@@ -28,29 +31,15 @@ import Agda.Syntax.Abstract.Name ( Name(nameId), QName(QName) )
 import Agda.Syntax.Common        ( NameId(NameId) )
 import Agda.Utils.Impossible     ( Impossible(Impossible), throwImpossible )
 
-import Apia.Logic.Types
-  ( LFormula( And
-            , Equiv
-            , Exists
-            , FALSE
-            , ForAll
-            , Implies
-            , Not
-            , Or
-            , Predicate
-            , TRUE
-           )
-  , LTerm(Fun, Var)
-  )
-
+import Apia.Logic.Types ( LFormula, LTerm(Fun, Var) )
 import Apia.Utils.Names ( freshName )
 import Apia.Utils.Text  ( (+++), toUpperFirst )
 
 import Control.Monad.Trans.State
   ( evalState
   , evalStateT
-  , get
-  , put
+ , get
+ , put
   , StateT
   )
 
@@ -165,10 +154,10 @@ cfpNameToTPTP cfp name = do
 --   nameTPTP ∷ String
 --   nameTPTP = toTPTP name
 
-quantifierHelper ∷ (LTerm → LFormula) → G (String, Text)
-quantifierHelper f = do
+quantifierHelper ∷ (LFormula → G Text) → (LTerm → LFormula) → G (String, Text)
+quantifierHelper toSomething f = do
   freshVar ← pushGNewVar
-  f_       ← toTPTP (f (Var freshVar))
+  f_       ← toSomething (f (Var freshVar))
   popGVar
   return (freshVar, f_)
 
@@ -242,68 +231,3 @@ instance ToTPTP [LTerm] where
     a_ ← toTPTP a
     as_ ← toTPTP as
     return $ a_ +++ "," +++ as_
-
-instance ToTPTP LFormula where
-  -- We translate the hard-coded first-order logic predicate @equal_@
-  -- as the predefined equality in the ATP.
-  toTPTP (Predicate "equal_" [t1, t2] ) = do
-    t1_ ← toTPTP t1
-    t2_ ← toTPTP t2
-    return $ "( " +++ t1_ +++ " = " +++ t2_ +++ " )"
-
-  toTPTP (Predicate "equal_" _) = __IMPOSSIBLE__
-
-  -- If the predicate represents a propositional logic variable,
-  -- following the TPTP syntax, we do not print the internal
-  -- parenthesis.
-  toTPTP (Predicate name []) = do
-    name_ ← cfpNameToTPTP P name
-    return $ "( " +++ name_ +++ " )"
-
-  toTPTP (Predicate name terms) = do
-    terms_ ← toTPTP terms
-    name_ ← cfpNameToTPTP P name
-    return $ "( " +++ name_ +++ "(" +++ terms_ +++ ")" +++ " )"
-
-  toTPTP (And f1 f2) = do
-    f1_ ← toTPTP f1
-    f2_ ← toTPTP f2
-    return $ "( " +++ f1_ +++ " & " +++ f2_ +++ " )"
-
-  toTPTP (Or f1 f2) = do
-    f1_ ← toTPTP f1
-    f2_ ← toTPTP f2
-    return $ "( " +++ f1_ +++ " | " +++ f2_ +++ " )"
-
-  toTPTP (Not f) = do
-    f_ ← toTPTP f
-    return $ "( " +++ T.cons '~' f_ +++ " )"
-
-  toTPTP (Implies f1 f2) = do
-    f1_ ← toTPTP f1
-    f2_ ← toTPTP f2
-    return $ "( " +++ f1_ +++ " => " +++ f2_ +++ " )"
-
-  toTPTP (Equiv f1 f2) = do
-    f1_ ← toTPTP f1
-    f2_ ← toTPTP f2
-    return $ "( " +++ f1_ +++ " <=> " +++ f2_ +++ " )"
-
-  toTPTP (ForAll f) = do
-    (freshVar, f_) ← quantifierHelper f
-
-    return $
-      "( ! [" +++ toUpperFirst (T.pack freshVar) +++ "] : "
-      +++ f_
-      +++ " )"
-
-  toTPTP (Exists f) = do
-    (freshVar, f_) ← quantifierHelper f
-
-    return $
-      "( ? [" +++ toUpperFirst (T.pack freshVar) +++ "] : "
-      +++ f_
-      +++ " )"
-
-  toTPTP TRUE  = return $ "( " +++ "$true" +++ " )"
-  toTPTP FALSE = return $ "( " +++ "$false" +++ " )"

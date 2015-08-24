@@ -13,7 +13,6 @@
 
 {-# LANGUAGE CPP                 #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
 -- Only are translated the functions that will be translate as TPTP
@@ -50,7 +49,8 @@ import Agda.Syntax.Internal
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
-import Agda.Utils.Pretty     ( Pretty(pretty) )
+
+import qualified Agda.Utils.Pretty as A
 
 import Apia.Logic.Primitives ( equal )
 
@@ -84,7 +84,7 @@ import Apia.Utils.AgdaAPI.Vars     ( BoundedVars(boundedVars) )
 import qualified Apia.Utils.Except as E
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
-import Apia.Utils.PrettyPrint           ( (<>), text )
+import Apia.Utils.PrettyPrint           ( (<>), Pretty(pretty) )
 
 import Control.Monad ( liftM2, replicateM, replicateM_, when )
 
@@ -108,8 +108,8 @@ fnToFormula ∷ QName → Type → [Clause] → T LFormula
 fnToFormula _      _  []   = __IMPOSSIBLE__
 fnToFormula qName  ty [cl] = clauseToFormula qName ty cl
 fnToFormula qName  _  _    =
-  E.throwE $ text "the translation of " <> pretty qName
-             <> " failed because its definition only can have a clause"
+  E.throwE $ pretty "the translation of " <> A.pretty qName
+             <> pretty " failed because its definition only can have a clause"
 
 -- A Clause is defined by (Agda.Syntax.Internal)
 -- data Clause = Clause
@@ -190,8 +190,8 @@ clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy cc) =
       return $ Implies f1 f2
 
     ExtendTel (Dom _ (El (Type (Max [])) (Pi _ _))) _ →
-      E.throwE $ text "the translation of " <> pretty qName
-                 <> " failed because it is a higher-order definition"
+      E.throwE $ pretty "the translation of " <> A.pretty qName
+                 <> pretty " failed because it is a higher-order definition"
 
     _ → do
         reportSLn "def2f" 20 $ "tel: " ++ show (ignoreSharing tel)

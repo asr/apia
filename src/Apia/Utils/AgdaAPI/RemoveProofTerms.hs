@@ -14,7 +14,6 @@
 
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE UnicodeSyntax     #-}
 
 ------------------------------------------------------------------------------
@@ -86,7 +85,7 @@ import Apia.Monad.Base    ( getTVars, popTVar, pushTVar, T )
 import Apia.Monad.Reports ( reportSLn )
 
 import qualified Apia.Utils.Except as E
-import Apia.Utils.PrettyPrint ( (<>), text )
+import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
 
 #if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ( (<$>) )
@@ -169,7 +168,8 @@ instance RemoveVar Elims where
     vars ← getTVars
 
     when (x == "_") $
-      E.throwE "the translation of underscore variables is not implemented"
+      E.throwE $
+        pretty "the translation of underscore variables is not implemented"
 
     let index ∷ Nat
         index = fromMaybe (__IMPOSSIBLE__) $ elemIndex x vars
@@ -237,8 +237,8 @@ removeProofTerm ty (x, typeVar) = do
     El (Type (Max [])) someTerm → do
       reportSLn "removePT" 20 $
                 "The term someTerm is: " ++ show someTerm
-      E.throwE $ text "the translation failed because we do not know how erase "
-                 <> "the term\n" <> (text . show) someTerm
+      E.throwE $ pretty "the translation failed because we do not know how erase "
+                 <> pretty "the term\n" <> (pretty . show) someTerm
 
     -- N.B. The next case is just a generalization to various
     -- arguments of the previous case.

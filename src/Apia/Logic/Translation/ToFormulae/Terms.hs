@@ -10,9 +10,8 @@
 -- Translation from Agda internal terms to target logic formulae.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP               #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE UnicodeSyntax     #-}
+{-# LANGUAGE CPP           #-}
+{-# LANGUAGE UnicodeSyntax #-}
 
 module Apia.Logic.Translation.ToFormulae.Terms
   ( agdaTermToFormula
@@ -119,7 +118,7 @@ import Apia.Utils.AgdaAPI.Interface     ( isATPDefinition, qNameDefinition )
 import qualified Apia.Utils.Except as E
 
 import Apia.Utils.Name        ( concatName )
-import Apia.Utils.PrettyPrint ( (<>), Doc, squotes, text )
+import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
 
 import Control.Monad ( liftM2, when )
 import Data.List     ( foldl' )
@@ -130,9 +129,9 @@ import Data.List     ( foldl' )
 
 universalQuantificationErrorMsg ∷ String → Doc
 universalQuantificationErrorMsg p =
-  text "use the " <> squotes p
-  <> " option for the translation of first-order logic universal quantified "
-  <> text entities
+  pretty "use the " <> squotes p
+  <> pretty " option for the translation of first-order logic universal quantified "
+  <> pretty entities
   where
     entities ∷ String
     entities =
@@ -499,10 +498,10 @@ agdaTermToFormula term = case ignoreSharing term of
         ifM (askTOpt optSchematicPropositionalFunctions)
             (ifM (askTOpt optNoPredicateConstants)
                  (E.throwE $
-                   text "the " <> squotes "--schematic-propositional-functions"
-                   <> text " and "
+                   pretty "the " <> squotes "--schematic-propositional-functions"
+                   <> pretty " and "
                    <> squotes "--no-predicate-constants"
-                   <> " options are incompatible")
+                   <> pretty " options are incompatible")
                  (propositionalFunctionScheme vars n elims)
             )
             (E.throwE $ universalQuantificationErrorMsg p)
@@ -619,7 +618,8 @@ agdaTermToTerm term = case ignoreSharing term of
 
         ifM (askTOpt optSchematicFunctions)
             -- TODO (24 March 2013). Implementation.
-            (E.throwE "the option '--schematic-functions' is not implemented")
+            (E.throwE $ pretty "the option " <> squotes "--schematic-functions"
+                        <> pretty " is not implemented")
             -- (do lTerms ← mapM agdaArgTermToTerm varArgs
             --     ifM (askTOpt optAppF)
             --         (return $ foldl' app (Var (vars !! n)) lTerms)

@@ -12,7 +12,6 @@
 
 {-# LANGUAGE CPP                 #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
 module Apia.ATPs
@@ -65,7 +64,6 @@ import Apia.Utils.PrettyPrint
   , Pretty(pretty)
   , prettyShow
   , squotes
-  , text
   )
 
 import qualified Apia.Utils.Except as E
@@ -134,7 +132,8 @@ optATP2ATP "metis"    = return Metis
 optATP2ATP "spass"    = return SPASS
 optATP2ATP "vampire"  = return Vampire
 optATP2ATP "z3"       = return Z3
-optATP2ATP other      = E.throwE $ text "ATP " <> text other <> " unknown"
+optATP2ATP other =
+  E.throwE $ pretty "ATP " <> pretty other <> pretty " unknown"
 
 -- | Default ATPs.
 defaultATPs ∷ [String]
@@ -221,8 +220,8 @@ atpArgs E timeout file = do
                     , file
                     ]
         -- This message is not included in the error test.
-        else E.throwE $ text "the ATP " <> text eVersion
-                        <> " is not supported"
+        else E.throwE $ pretty "the ATP " <> pretty eVersion
+                        <> pretty " is not supported"
 
 -- Equinox bug. Neither the option @--no-progress@ nor the option
 -- @--verbose 0@ reduce the output.
@@ -265,10 +264,10 @@ createSMT2file file = do
   tptp2XExec ← askTOpt optWithtptp2X
 
   let msgError ∷ Doc
-      msgError = text "the " <> text tptp2XExec
-                 <> " command from the TPTP library "
-                 <> "does not exist and it is required for using "
-                 <> pretty Z3 <> " as an first-order ATP"
+      msgError = pretty "the " <> pretty tptp2XExec
+                 <> pretty " command from the TPTP library "
+                 <> pretty "does not exist and it is required for using "
+                 <> pretty Z3 <> pretty " as an first-order ATP"
 
   checkExecutable tptp2XExec msgError
 
@@ -306,8 +305,9 @@ runATP atp outputMVar timeout fileTPTP = do
   cmd  ∷ String   ← atpExec atp
 
   let msgError ∷ Doc
-      msgError = text "the " <> squotes cmd <> " command associated with "
-                 <> pretty atp <> " does not exist"
+      msgError = pretty "the " <> squotes cmd
+                 <> pretty " command associated with "
+                 <> pretty atp <> pretty " does not exist"
 
   checkExecutable cmd msgError
 
@@ -340,7 +340,7 @@ atpsAnswer atps outputMVar atpsPH file n =
   if n == length atps
     then do
       let msg ∷ Doc
-          msg = text "the ATP(s) did not prove the conjecture in "
+          msg = pretty "the ATP(s) did not prove the conjecture in "
                 <> pretty file
 
       ifM (askTOpt optUnprovenNoError)

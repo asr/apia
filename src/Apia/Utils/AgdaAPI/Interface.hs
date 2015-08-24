@@ -13,7 +13,6 @@
 {-# LANGUAGE CPP                 #-}
 {-# LANGUAGE FlexibleInstances   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
-{-# LANGUAGE OverloadedStrings   #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
 module Apia.Utils.AgdaAPI.Interface
@@ -123,7 +122,7 @@ import Apia.Utils.AgdaAPI.IgnoreSharing ( ignoreSharing )
 
 import qualified Apia.Utils.Except as E
 
-import Apia.Utils.PrettyPrint ( (<>), text )
+import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
 
 #if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ( (<$>) )
@@ -207,14 +206,15 @@ readInterface file = do
   pFile ∷ FilePath ← liftIO $ fmap filePath (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive pFile)
-          (E.throwE $ text "the file " <> text pFile <> " does not exist")
+          (E.throwE $ pretty "the file " <> pretty pFile
+                      <> pretty " does not exist")
 
   -- The physical Agda interface file.
   iFile ∷ FilePath ← liftIO $ fmap (filePath . toIFile) (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive iFile)
-          (E.throwE $ text "the interface file " <> text iFile
-                      <> " does not exist (use Agda to generate it)")
+          (E.throwE $ pretty "the interface file " <> pretty iFile
+                      <> pretty " does not exist (use Agda to generate it)")
 
   r ∷ Either TCErr (Maybe Interface) ← liftIO $ runTCMTop $
     do setCommandLineOptions optsCommandLine
@@ -224,11 +224,11 @@ readInterface file = do
     Right (Just i) → return i
     -- This message is not included in the errors test.
     Right Nothing  → E.throwE $
-                       text "The reading of the interface file "
-                       <> text iFile <> " failed. "
-                       <> "It is possible that you used a different version "
-                       <> "of Agda to build the Apia program and to "
-                       <> "type-check your module"
+                       pretty "The reading of the interface file "
+                       <> pretty iFile <> pretty " failed. "
+                       <> pretty "It is possible that you used a different version "
+                       <> pretty "of Agda to build the Apia program and to "
+                       <> pretty "type-check your module"
     Left _         → __IMPOSSIBLE__
 
 getInterface ∷ ModuleName → T Interface

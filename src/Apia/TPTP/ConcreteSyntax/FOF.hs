@@ -22,11 +22,19 @@ module Apia.TPTP.ConcreteSyntax.FOF
 
 ------------------------------------------------------------------------------
 
+import Agda.Syntax.Common
+  ( TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint)
+  )
+
+import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
+
 import Apia.TPTP.ConcreteSyntax.Common ( G, ToTPTP(toTPTP) )
 import Apia.TPTP.Types                 ( AF(AF) )
 import Apia.Utils.Text                 ( (+++) )
 
 import Data.Text ( Text )
+
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
 -- | FOF type synonym.
@@ -37,12 +45,19 @@ class ToFOF a where
   toFOF ∷ a → G FOF
 
 ------------------------------------------------------------------------------
--- Translation of annotated formulae to FOF concrete syntax.
 
+instance ToFOF TPTPRole where
+  toFOF TPTPAxiom      = return "axiom"
+  toFOF TPTPConjecture = return "conjecture"
+  toFOF TPTPDefinition = return "definition"
+  toFOF TPTPHint       = return "hypothesis"
+  toFOF _              = __IMPOSSIBLE__
+
+-- Translation of annotated formulae to FOF concrete syntax.
 instance ToFOF AF where
   toFOF (AF qName atpRole formula) = do
     qName_   ← toTPTP qName
-    atpRole_ ← toTPTP atpRole
+    atpRole_ ← toFOF atpRole
     formula_ ← toTPTP formula
 
     return $ "fof("

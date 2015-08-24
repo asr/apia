@@ -25,13 +25,8 @@ module Apia.TPTP.ConcreteSyntax.Common
 ------------------------------------------------------------------------------
 
 import Agda.Syntax.Abstract.Name ( Name(nameId), QName(QName) )
-
-import Agda.Syntax.Common
-  ( NameId(NameId)
-  , TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint)
-  )
-
-import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
+import Agda.Syntax.Common        ( NameId(NameId) )
+import Agda.Utils.Impossible     ( Impossible(Impossible), throwImpossible )
 
 import Apia.Logic.Types
   ( LFormula( And
@@ -312,10 +307,3 @@ instance ToTPTP LFormula where
 
   toTPTP TRUE  = return $ "( " +++ "$true" +++ " )"
   toTPTP FALSE = return $ "( " +++ "$false" +++ " )"
-
-instance ToTPTP TPTPRole where
-  toTPTP TPTPAxiom      = return "axiom"
-  toTPTP TPTPConjecture = return "conjecture"
-  toTPTP TPTPDefinition = return "definition"
-  toTPTP TPTPHint       = return "hypothesis"
-  toTPTP _              = __IMPOSSIBLE__

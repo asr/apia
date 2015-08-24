@@ -23,6 +23,10 @@ module Apia.TPTP.ConcreteSyntax.TFF0
 
 ------------------------------------------------------------------------------
 
+import Agda.Syntax.Common
+  ( TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint, TPTPType)
+  )
+
 import Apia.TPTP.ConcreteSyntax.Common ( G, ToTPTP(toTPTP) )
 import Apia.TPTP.Types                 ( AF(AF) )
 import Apia.Utils.Text                 ( (+++) )
@@ -38,12 +42,19 @@ class ToTFF0 a where
   toTFF0 ∷ a → G TFF0
 
 ------------------------------------------------------------------------------
--- Translation of annotated formulae to TFF0 concrete syntax.
 
+instance ToTFF0 TPTPRole where
+  toTFF0 TPTPAxiom      = return "axiom"
+  toTFF0 TPTPConjecture = return "conjecture"
+  toTFF0 TPTPDefinition = return "definition"
+  toTFF0 TPTPHint       = return "hypothesis"
+  toTFF0 TPTPType       = return "type"
+
+-- Translation of annotated formulae to TFF0 concrete syntax.
 instance ToTFF0 AF where
   toTFF0 (AF qName atpRole formula) = do
     qName_   ← toTPTP qName
-    atpRole_ ← toTPTP atpRole
+    atpRole_ ← toTFF0 atpRole
     formula_ ← toTPTP formula
 
     return $ "tff("
@@ -51,4 +62,3 @@ instance ToTFF0 AF where
       +++ atpRole_ +++ ", "
       +++ formula_ +++ ")."
       +++ "\n\n"
-

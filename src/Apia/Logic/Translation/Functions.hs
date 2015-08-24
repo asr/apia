@@ -1,13 +1,13 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.FOL.Translation.Functions
+-- Module      : Apia.Logic.Translation.Functions
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- Translation of Agda internal functions to first-order logic
+-- Translation of Agda internal functions to the target logic
 -- formulae.
 ------------------------------------------------------------------------------
 
@@ -19,7 +19,7 @@
 -- Only are translated the functions that will be translate as TPTP
 -- definitions.
 
-module Apia.FOL.Translation.Functions ( fnToFormula ) where
+module Apia.Logic.Translation.Functions ( fnToFormula ) where
 
 ------------------------------------------------------------------------------
 
@@ -52,17 +52,17 @@ import Agda.Syntax.Internal
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Pretty     ( Pretty(pretty) )
 
-import Apia.FOL.Primitives ( equal )
+import Apia.Logic.Primitives ( equal )
 
-import Apia.FOL.Translation.ClauseBody
+import Apia.Logic.Translation.ClauseBody
   ( cBodyToFormula
-  , cBodyToFOLTerm
+  , cBodyToTerm
   , dropProofTermOnCBody
   )
 
-import Apia.FOL.Translation.Terms ( termToFormula, termToFOLTerm )
-import Apia.FOL.Translation.Types ( typeToFormula )
-import Apia.FOL.Types             ( FOLFormula(Implies, Equiv, ForAll) )
+import Apia.Logic.Translation.Terms ( agdaTermToFormula, agdaTermToTerm )
+import Apia.Logic.Translation.Types ( agdaTypeToFormula )
+import Apia.Logic.Types             ( LFormula(Implies, Equiv, ForAll) )
 
 import Apia.Monad.Base
   ( getTVars
@@ -98,9 +98,8 @@ varsToElims n = Apply (Arg defaultArgInfo (var (n - 1))) : varsToElims (n - 1)
 -- pattern matching. In our case it is only necessary to translate
 -- definitions with only one clause.
 
--- | Translate an ATP definition to a first-order logic formula
--- 'FOLFormula'.
-fnToFormula ∷ QName → Type → [Clause] → T FOLFormula
+-- | Translate an ATP definition to a target logic formula.
+fnToFormula ∷ QName → Type → [Clause] → T LFormula
 fnToFormula _      _  []   = __IMPOSSIBLE__
 fnToFormula qName  ty [cl] = clauseToFormula qName ty cl
 fnToFormula qName  _  _    =
@@ -121,7 +120,7 @@ fnToFormula qName  _  _    =
 -- LHS and the RHS (i.e. the body of the clause) it is necessary to
 -- generate an universal quantification on an equal number of
 -- variables to length @[Arg Pattern]@.
-clauseToFormula ∷ QName → Type → Clause → T FOLFormula
+clauseToFormula ∷ QName → Type → Clause → T LFormula
 
 -- There is at most one variable in the clause's pattern.
 clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy cc) =
@@ -159,7 +158,7 @@ clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy cc) =
 
       reportSLn "def2f" 20 $ "tye: " ++ show tye
 
-      f1 ← typeToFormula tye
+      f1 ← agdaTypeToFormula tye
 
       reportSLn "def2f" 20 $ "f1: " ++ show f1
 
@@ -210,7 +209,7 @@ clauseToFormula qName ty (Clause _ _ _ [] cBody _ _) = do
 
       -- Because the LHS and the RHS (the body of the clause) are
       -- formulae, they are related via an equivalence logic.
-      liftM2 Equiv (termToFormula lhs) (cBodyToFormula cBody)
+      liftM2 Equiv (agdaTermToFormula lhs) (cBodyToFormula cBody)
 
     -- The defined symbol is a function.
     El (Type (Max [])) _ → do
@@ -235,7 +234,7 @@ clauseToFormula qName ty (Clause _ _ _ [] cBody _ _) = do
         -- @foo d = ...
         --
         -- so we don't need to add new fresh variables.
-        then liftM2 equal (termToFOLTerm lhs) (cBodyToFOLTerm cBody)
+        then liftM2 equal (agdaTermToTerm lhs) (cBodyToTerm cBody)
         -- The definition is of the form
         --
         -- @foo ∷ D → D@
@@ -250,13 +249,14 @@ clauseToFormula qName ty (Clause _ _ _ [] cBody _ _) = do
 
             freshVars ← replicateM diff pushTNewVar
             reportSLn "def2f" 20 $ "Freshvars: " ++ show freshVars
-            tLHS ← termToFOLTerm lhs
+            tLHS ← agdaTermToTerm lhs
             replicateM_ diff popTVar
-            tRHS ← cBodyToFOLTerm cBody
+            tRHS ← cBodyToTerm cBody
 
-            -- Because the LHS and the RHS (the body of the clause) are
-            -- terms, they are related via the first-order logic equaliy.
-            let helper ∷ [String] → FOLFormula
+            -- Because the LHS and the RHS (the body of the clause)
+            -- are terms, they are related via the target logic
+            -- equaliy.
+            let helper ∷ [String] → LFormula
                 helper []       = __IMPOSSIBLE__
                 helper [_]      = ForAll $ \_ → equal tLHS tRHS
                 helper (_ : xs) = ForAll $ \_ → helper xs

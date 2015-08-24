@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.FOL.Translation.Concrete.Name
+-- Module      : Apia.Logic.Translation.Concrete.Name
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
@@ -13,7 +13,7 @@
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.FOL.Translation.Name ( concatName ) where
+module Apia.Logic.Translation.Name ( concatName ) where
 
 ------------------------------------------------------------------------------
 

@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.FOL.Primitives
+-- Module      : Apia.Logic.Primitives
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
@@ -8,7 +8,7 @@
 -- Stability   : experimental
 --
 -- Names hard-coded in the translation of Agda internal types to
--- first-order logic formulae.
+-- logic formulae.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP           #-}
@@ -16,7 +16,7 @@
 
 -- Adapted from AgdaLight (Plugins.FOL.Primitive).
 
-module Apia.FOL.Primitives
+module Apia.Logic.Primitives
   ( appF
   , appP
   , equal
@@ -26,7 +26,7 @@ module Apia.FOL.Primitives
 
 import Agda.Utils.Impossible ( Impossible(Impossible) , throwImpossible )
 
-import Apia.FOL.Types ( FOLTerm(FOLFun), FOLFormula(Predicate) )
+import Apia.Logic.Types ( LFormula(Predicate), LTerm(Fun) )
 
 #include "undefined.h"
 
@@ -40,15 +40,15 @@ kApp = "app_"
 -- For example, the function @foo x1 ... xn@ will be translated to
 -- @app(... app(app(foo,x1),x2), ...,xn)@, where @app@ is a hard-coded
 -- binary function symbol.
-appF ∷ FOLTerm → FOLTerm → FOLTerm
-appF t1 t2 = FOLFun kApp [t1, t2]
+appF ∷ LTerm → LTerm → LTerm
+appF t1 t2 = Fun kApp [t1, t2]
 
 -- | Translation of first-order logic predicates by default.
 -- For example, the predicate @P x1 x2 x3@ will be translated to
 -- @kp3(p,x1,x2,x3)@, where @kp3@ is a hard-coded 4-ary predicate
 -- symbol. Using the option @--without-predicate-symbols@ the
 -- predicates are translated directly.
-appP ∷ FOLTerm → [FOLTerm] → FOLFormula
+appP ∷ LTerm → [LTerm] → LFormula
 appP _ [] = __IMPOSSIBLE__
 appP p ts = Predicate name (p : ts)
   where name ∷ String
@@ -62,6 +62,6 @@ appP p ts = Predicate name (p : ts)
 kEqual ∷ String
 kEqual = "equal_"
 
--- | Translation to first-order logic equality.
-equal ∷ FOLTerm → FOLTerm → FOLFormula
+-- | Translation of the target logic equality.
+equal ∷ LTerm → LTerm → LFormula
 equal t1 t2 = Predicate kEqual [t1, t2]

@@ -55,7 +55,7 @@
 -- Test.Succeed.Conjectures.DefinitionsInsideWhereClauses._.P [r{Var 1 []}...].
 
 -- In addition the quantification on Nn will be removed too. See
--- FOL.Translation.Internal.Terms.termToFormula (on Pi terms).
+-- Logic.Translation.Internal.Terms.agdaTermToFormula (on Pi terms).
 
 -- End general description.
 

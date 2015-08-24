@@ -1,22 +1,22 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.FOL.Translation.Internal.Terms
+-- Module      : Apia.Logic.Translation.Internal.Terms
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- Translation from Agda internal terms to first-order logic formulae.
+-- Translation from Agda internal terms to target logic formulae.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE UnicodeSyntax     #-}
 
-module Apia.FOL.Translation.Terms
-  ( termToFormula
-  , termToFOLTerm
+module Apia.Logic.Translation.Terms
+  ( agdaTermToFormula
+  , agdaTermToTerm
   ) where
 
 ------------------------------------------------------------------------------
@@ -57,31 +57,41 @@ import Agda.Syntax.Position  ( noRange )
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( ifM )
 
-import Apia.FOL.Constants
-  ( folTrue
-  , folFalse
-  , folNot
-  , folAnd
-  , folOr
-  , folCond
-  , folBicond1
-  , folBicond2
-  , folExists
-  , folForAll
-  , folEquals
+import Apia.Logic.Constants
+  ( lTrue
+  , lFalse
+  , lNot
+  , lAnd
+  , lOr
+  , lCond
+  , lBicond1
+  , lBicond2
+  , lExists
+  , lForAll
+  , lEquals
   )
 
-import Apia.FOL.Primitives       ( appF, appP, equal )
-import Apia.FOL.Translation.Name ( concatName )
+import Apia.Logic.Primitives       ( appF, appP, equal )
+import Apia.Logic.Translation.Name ( concatName )
 
-import {-# source #-} Apia.FOL.Translation.Types
-  ( domTypeToFormula
-  , typeToFormula
+import {-# source #-} Apia.Logic.Translation.Types
+  ( agdaDomTypeToFormula
+  , agdaTypeToFormula
   )
 
-import Apia.FOL.Types
-  ( FOLFormula(TRUE, FALSE, Predicate, Not, And, Or, Implies, Equiv, ForAll, Exists)
-  , FOLTerm(FOLFun, FOLVar)
+import Apia.Logic.Types as L
+  ( LFormula( TRUE
+            , FALSE
+            , Predicate
+            , Not
+            , And
+            , Or
+            , Implies
+            , Equiv
+            , ForAll
+            , Exists
+            )
+  , LTerm(Fun, Var)
   )
 
 import Apia.Monad.Base
@@ -150,60 +160,59 @@ qName2String qName@(QName _ name) = do
                               ++ show i
     else return $ show $ nameConcrete name
 
-argTermToFormula ∷ I.Arg Term → T FOLFormula
-argTermToFormula Arg {argInfo = info, unArg = t} =
+agdaArgTermToFormula ∷ I.Arg Term → T LFormula
+agdaArgTermToFormula Arg {argInfo = info, unArg = t} =
   case info of
-    ArgInfo { argInfoHiding = NotHidden } → termToFormula t
+    ArgInfo { argInfoHiding = NotHidden } → agdaTermToFormula t
     _                                     → __IMPOSSIBLE__
 
-argTermToFOLTerm ∷ I.Arg Term → T FOLTerm
-argTermToFOLTerm Arg {argInfo = info, unArg = t} =
+agdaArgTermToTerm ∷ I.Arg Term → T LTerm
+agdaArgTermToTerm Arg {argInfo = info, unArg = t} =
   case info of
-    ArgInfo { argInfoHiding = Hidden }    → termToFOLTerm t
-    ArgInfo { argInfoHiding = NotHidden } → termToFOLTerm t
+    ArgInfo { argInfoHiding = Hidden }    → agdaTermToTerm t
+    ArgInfo { argInfoHiding = NotHidden } → agdaTermToTerm t
     _                                     → __IMPOSSIBLE__
 
-binConst ∷ (FOLFormula → FOLFormula → FOLFormula) →
+binConst ∷ (LFormula → LFormula → LFormula) →
            I.Arg Term →
            I.Arg Term →
-           T FOLFormula
+           T LFormula
 binConst op arg1 arg2 =
-  liftM2 op (argTermToFormula arg1) (argTermToFormula arg2)
+  liftM2 op (agdaArgTermToFormula arg1) (agdaArgTermToFormula arg2)
 
-elimTermToFOLTerm ∷ Elim → T FOLTerm
-elimTermToFOLTerm (Apply arg) = argTermToFOLTerm arg
-elimTermToFOLTerm (Proj _)    = __IMPOSSIBLE__
+elimToTerm ∷ Elim → T LTerm
+elimToTerm (Apply arg) = agdaArgTermToTerm arg
+elimToTerm (Proj _)    = __IMPOSSIBLE__
 
 -- Translation of predicates.
-predicate ∷ QName → Elims → T FOLFormula
+predicate ∷ QName → Elims → T LFormula
 predicate qName elims = do
-  folName  ← qName2String qName
-  termsFOL ← mapM elimTermToFOLTerm elims
+  lName  ← qName2String qName
+  lTerms ← mapM elimToTerm elims
 
   case length elims of
     0 → __IMPOSSIBLE__
     _ → ifM (askTOpt optNoPredicateConstants)
             -- Direct translation.
-            (return $ Predicate folName termsFOL)
+            (return $ Predicate lName lTerms)
             -- Translation using Koen's suggestion.
-            (return $ appP (FOLFun folName []) termsFOL)
+            (return $ appP (Fun lName []) lTerms)
 
-propositionalFunctionScheme ∷ [String] → Nat → Elims → T FOLFormula
+propositionalFunctionScheme ∷ [String] → Nat → Elims → T LFormula
 propositionalFunctionScheme vars n elims = do
   let var ∷ String
       var = vars !! n
 
   case length elims of
     0 → __IMPOSSIBLE__
-    _ → fmap (appP (FOLVar var)) (mapM elimTermToFOLTerm elims)
+    _ → fmap (appP (L.Var var)) (mapM elimToTerm elims)
 
--- | Translate an Agda internal 'Term' to a first-order logic formula
--- 'FOLFormula'.
-termToFormula ∷ Term → T FOLFormula
-termToFormula term = case ignoreSharing term of
+-- | Translate an Agda internal 'Term' to a target logic formula.
+agdaTermToFormula ∷ Term → T LFormula
+agdaTermToFormula term = case ignoreSharing term of
 
   term'@(Def qName@(QName _ name) elims) → do
-    reportSLn "t2f" 10 $ "termToFormula Def:\n" ++ show term'
+    reportSLn "t2f" 10 $ "agdaTermToFormula Def:\n" ++ show term'
 
     let cName ∷ C.Name
         cName = nameConcrete name
@@ -217,82 +226,82 @@ termToFormula term = case ignoreSharing term of
        case allApplyElims elims of
          Nothing → __IMPOSSIBLE__
 
-         Just [] | isCNameFOLConst folTrue  → return TRUE
+         Just [] | isCNameLogicConst lTrue  → return TRUE
 
-                 | isCNameFOLConst folFalse → return FALSE
+                 | isCNameLogicConst lFalse → return FALSE
 
                  | otherwise → do
                    -- In this guard we translate 0-ary predicates, i.e.
                    -- propositional functions, for example, A : Set.
-                   folName ← qName2String qName
-                   return $ Predicate folName []
+                   lName ← qName2String qName
+                   return $ Predicate lName []
 
          Just [a]
-           | isCNameFOLConstHoleRight folNot → fmap Not (argTermToFormula a)
+           | isCNameHoleRight lNot → fmap Not (agdaArgTermToFormula a)
 
-           | isCNameFOLConst folExists ||
-             isCNameFOLConst folForAll → do
-               fm ← argTermToFormula a
+           | isCNameLogicConst lExists ||
+             isCNameLogicConst lForAll → do
+               fm ← agdaArgTermToFormula a
 
-               return $ if isCNameFOLConst folExists
+               return $ if isCNameLogicConst lExists
                         then Exists $ const fm
                         else ForAll $ const fm
 
            | otherwise → predicate qName elims
 
          Just [a1, a2]
-           | isCNameFOLConstTwoHoles folAnd → binConst And a1 a2
+           | isCNameTwoHoles lAnd → binConst And a1 a2
 
-           | isCNameFOLConstTwoHoles folOr → binConst Or a1 a2
+           | isCNameTwoHoles lOr → binConst Or a1 a2
 
-           | isCNameFOLConstTwoHoles folCond → binConst Implies a1 a2
+           | isCNameTwoHoles lCond → binConst Implies a1 a2
 
-           | isCNameFOLConstTwoHoles folBicond1
-             || isCNameFOLConstTwoHoles folBicond2 → binConst Equiv a1 a2
+           | isCNameTwoHoles lBicond1
+             || isCNameTwoHoles lBicond2 → binConst Equiv a1 a2
 
-           | isCNameFOLConstTwoHoles folEquals → do
+           | isCNameTwoHoles lEquals → do
                reportSLn "t2f" 20 "Processing equals"
                ifM (askTOpt optNoInternalEquality)
                    -- Not using the ATPs internal equality.
                    (predicate qName elims)
                    -- Using the ATPs internal equality.
-                   (liftM2 equal (argTermToFOLTerm a1) (argTermToFOLTerm a2))
+                   (liftM2 equal (agdaArgTermToTerm a1) (agdaArgTermToTerm a2))
 
            | otherwise → predicate qName elims
 
          _ → predicate qName elims
 
          where
-         isCNameFOLConst ∷ String → Bool
-         isCNameFOLConst constFOL =
+         isCNameLogicConst ∷ String → Bool
+         isCNameLogicConst lConst =
            -- The equality on the data type @C.Name@ is defined to
            -- ignore ranges, so we use @noRange@.
-           cName == C.Name noRange [C.Id constFOL]
+           cName == C.Name noRange [C.Id lConst]
 
-         isCNameFOLConstHoleRight ∷ String → Bool
-         isCNameFOLConstHoleRight constFOL =
+         isCNameHoleRight ∷ String → Bool
+         isCNameHoleRight lConst =
            -- The operators are represented by a list with @Hole@'s.
            -- See the documentation for @C.Name@.
-           cName == C.Name noRange [C.Id constFOL, C.Hole]
+           cName == C.Name noRange [C.Id lConst, C.Hole]
 
-         isCNameFOLConstTwoHoles ∷ String → Bool
-         isCNameFOLConstTwoHoles constFOL =
+         isCNameTwoHoles ∷ String → Bool
+         isCNameTwoHoles lConst =
            -- The operators are represented by a list with @Hole@'s.  See
            -- the documentation for @C.Name@.
-           cName == C.Name noRange [C.Hole, C.Id constFOL, C.Hole]
+           cName == C.Name noRange [C.Hole, C.Id lConst, C.Hole]
 
   term'@(Lam _ (Abs _ termLam)) → do
-    reportSLn "t2f" 10 $ "termToFormula Lam:\n" ++ show term'
+    reportSLn "t2f" 10 $ "agdaTermToFormula Lam:\n" ++ show term'
 
     _ ← pushTNewVar
-    f ← termToFormula termLam
+    f ← agdaTermToFormula termLam
     popTVar
 
     return f
 
   Pi domTy (Abs x absTy) → do
     reportSLn "t2f" 10 $
-      "termToFormula Pi _ (Abs _ _):\n"
+      "agdaTermToFormula Pi _ (Abs _ _):\n"
       ++ "domTy: " ++ show domTy ++ "\n"
       ++ "absTy: " ++ show (Abs x absTy)
 
@@ -302,7 +311,7 @@ termToFormula term = case ignoreSharing term of
       "Starting processing in local environment with fresh variable "
       ++ show freshVar ++ " and type:\n" ++ show absTy
 
-    f ← typeToFormula absTy
+    f ← agdaTypeToFormula absTy
     popTVar
 
     reportSLn "t2f" 20 $
@@ -339,7 +348,7 @@ termToFormula term = case ignoreSharing term of
       -- e.g. the bounded variable is @f : D → D@, where @D : Set@.
       --
       -- In this case we handle the bounded variable/function as a FOL
-      -- variable in @termToFOLTerm (Var n args)@, which is processed
+      -- variable in @agdaTermToTerm (Var n args)@, which is processed
       -- first due to lazyness. We quantified on this variable.
       El (Type (Max []))
          (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
@@ -361,7 +370,7 @@ termToFormula term = case ignoreSharing term of
       -- @D : Set@.
       --
       -- In this case we handle the bounded variable/function as a FOL
-      -- variable in @termToFOLTerm (Var n args)@, which is processed
+      -- variable in @agdaTermToTerm (Var n args)@, which is processed
       -- first due to lazyness. We quantified on this variable.
       El (Type (Max []))
          (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
@@ -407,7 +416,7 @@ termToFormula term = case ignoreSharing term of
       -- @∨-comm  : {A B : Set} → A ∨ B → B ∨ A@.
       --
       -- In this case we handle the bounded variable/function in
-      -- @termToFormula (Var n args)@, which is processed first due to
+      -- @agdaTermToFormula (Var n args)@, which is processed first due to
       -- lazyness.
 
       El (Type (Max [ClosedLevel 1])) (Sort _) → do
@@ -426,10 +435,10 @@ termToFormula term = case ignoreSharing term of
 
   Pi domTy (NoAbs x absTy) → do
     reportSLn "t2f" 10 $
-      "termToFormula Pi _ (NoAbs _ _):\n"
+      "agdaTermToFormula Pi _ (NoAbs _ _):\n"
       ++ "domTy: " ++ show domTy ++ "\n"
       ++ "absTy: " ++ show (NoAbs x absTy)
-    f2 ← typeToFormula absTy
+    f2 ← agdaTypeToFormula absTy
 
     if x /= "_"
       then
@@ -443,7 +452,7 @@ termToFormula term = case ignoreSharing term of
           -- The variable @x@ is a proof term, therefore we erase the
           -- quantification on it.
           El (Type (Max [])) (Def _ _) → do
-            f1 ← domTypeToFormula domTy
+            f1 ← agdaDomTypeToFormula domTy
             return $ Implies f1 f2
 
           -- The variable in @domTy@ has type @Set₁@
@@ -455,11 +464,11 @@ termToFormula term = case ignoreSharing term of
             __IMPOSSIBLE__
 
       else do
-        f1 ← domTypeToFormula domTy
+        f1 ← agdaDomTypeToFormula domTy
         return $ Implies f1 f2
 
-  term'@(Var n elims) → do
-    reportSLn "t2f" 10 $ "termToFormula Var: " ++ show term'
+  term'@(I.Var n elims) → do
+    reportSLn "t2f" 10 $ "agdaTermToFormula Var: " ++ show term'
 
     when (n < 0) (__IMPOSSIBLE__)
     vars ← getTVars
@@ -479,7 +488,7 @@ termToFormula term = case ignoreSharing term of
       --
       -- we are quantifying on this variable/function
       --
-      -- (see @termToFormula (Pi domTy (Abs _ absTy))@),
+      -- (see @agdaTermToFormula (Pi domTy (Abs _ absTy))@),
       --
       -- therefore we need to apply this variable/function to the
       -- others variables.
@@ -503,22 +512,21 @@ termToFormula term = case ignoreSharing term of
     __IMPOSSIBLE__
 
 -- Translate the function @foo x1 ... xn@.
-appArgsF ∷ String → Args → T FOLTerm
+appArgsF ∷ String → Args → T LTerm
 appArgsF fn args = do
-  termsFOL ← mapM argTermToFOLTerm args
+  lTerms ← mapM agdaArgTermToTerm args
   ifM (askTOpt optFnConstant)
       -- Translation using a hard-coded binary function symbol.
-      (return $ foldl' appF (FOLFun fn []) termsFOL)
+      (return $ foldl' appF (Fun fn []) lTerms)
       -- Direct translation.
-      (return $ FOLFun fn termsFOL)
+      (return $ Fun fn lTerms)
 
--- | Translate an Agda internal 'Term' to a first-order logic term
--- 'FOLTerm'.
-termToFOLTerm ∷ Term → T FOLTerm
-termToFOLTerm term = case ignoreSharing term of
+-- | Translate an Agda internal 'Term' to a target logic term.
+agdaTermToTerm ∷ Term → T LTerm
+agdaTermToTerm term = case ignoreSharing term of
 
   term'@(Con (ConHead (QName _ name) _ _) args) → do
-    reportSLn "t2t" 10 $ "termToFOLTerm Con:\n" ++ show term'
+    reportSLn "t2t" 10 $ "agdaTermToTerm Con:\n" ++ show term'
 
     let cName ∷ C.Name
         cName = nameConcrete name
@@ -532,7 +540,7 @@ termToFOLTerm term = case ignoreSharing term of
       -- a first-order logic function.
       C.Name _ [C.Id str] →
        case args of
-         [] → return $ FOLFun str []
+         [] → return $ Fun str []
          _  → appArgsF str args
 
       -- The term @Con@ has holes. It is translated as a first-order
@@ -545,7 +553,7 @@ termToFOLTerm term = case ignoreSharing term of
       --     _  → appArgsFn (concatName parts) args
 
   term'@(Def (QName _ name) elims) → do
-    reportSLn "t2t" 10 $ "termToFOLTerm Def:\n" ++ show term'
+    reportSLn "t2t" 10 $ "agdaTermToTerm Def:\n" ++ show term'
 
     let cName ∷ C.Name
         cName = nameConcrete name
@@ -560,7 +568,7 @@ termToFOLTerm term = case ignoreSharing term of
       C.Name _ [C.Id str] →
        case allApplyElims elims of
          Nothing    → __IMPOSSIBLE__
-         Just []    → return $ FOLFun str []
+         Just []    → return $ Fun str []
          Just args  → appArgsF str args
 
       -- The term @Def@ has holes. It is translated as a first-order
@@ -572,23 +580,23 @@ termToFOLTerm term = case ignoreSharing term of
           Just args  → appArgsF (concatName parts) args
 
   term'@(Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ termLam)) → do
-    reportSLn "t2f" 10 $ "termToFOLTerm Lam:\n" ++ show term'
+    reportSLn "t2f" 10 $ "agdaTermToTerm Lam:\n" ++ show term'
 
     _ ← pushTNewVar
-    f ← termToFOLTerm termLam
+    f ← agdaTermToTerm termLam
     popTVar
 
     return f
 
-  term'@(Var n args) → do
-    reportSLn "t2t" 10 $ "termToFOLTerm Var:\n" ++ show term'
+  term'@(I.Var n args) → do
+    reportSLn "t2t" 10 $ "agdaTermToTerm Var:\n" ++ show term'
 
     when (n < 0) (__IMPOSSIBLE__)
     vars ← getTVars
     when (length vars <= n) (__IMPOSSIBLE__)
 
     case args of
-      [] → return $ FOLVar (vars !! n)
+      [] → return $ L.Var (vars !! n)
 
       -- Non-FOL translation: First-order logic universal quantified
       -- functions term.
@@ -600,7 +608,7 @@ termToFOLTerm term = case ignoreSharing term of
       --
       -- we are quantifying on this variable/function
       --
-      -- (see @termToFormula (Pi domTy (Abs _ absTy))@),
+      -- (see @agdaTermToFormula (Pi domTy (Abs _ absTy))@),
       --
       -- therefore we need to apply this variable/function to the
       -- others variables. See an example in
@@ -612,10 +620,10 @@ termToFOLTerm term = case ignoreSharing term of
         ifM (askTOpt optSchematicFunctions)
             -- TODO (24 March 2013). Implementation.
             (E.throwE "the option '--schematic-functions' is not implemented")
-            -- (do termsFOL ← mapM argTermToFOLTerm varArgs
+            -- (do lTerms ← mapM agdaArgTermToTerm varArgs
             --     ifM (askTOpt optAppF)
-            --         (return $ foldl' app (FOLVar (vars !! n)) termsFOL)
-            --         (return $ FOLFun (vars !! n) termsFOL))
+            --         (return $ foldl' app (Var (vars !! n)) lTerms)
+            --         (return $ Fun (vars !! n) lTerms))
             (E.throwE $ universalQuantificationErrorMsg p)
 
   _ → __IMPOSSIBLE__

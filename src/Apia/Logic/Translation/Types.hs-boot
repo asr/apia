@@ -1,18 +1,18 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.FOL.Translation.Types
-  ( domTypeToFormula
-  , typeToFormula
+module Apia.Logic.Translation.Types
+  ( agdaDomTypeToFormula
+  , agdaTypeToFormula
   ) where
 
 ------------------------------------------------------------------------------
 
 import Agda.Syntax.Internal as I ( Dom, Type )
 
-import Apia.FOL.Types  ( FOLFormula )
-import Apia.Monad.Base ( T )
+import Apia.Logic.Types ( LFormula )
+import Apia.Monad.Base  ( T )
 
 ------------------------------------------------------------------------------
 
-domTypeToFormula ∷ I.Dom Type → T FOLFormula
-typeToFormula    ∷ Type → T FOLFormula
+agdaDomTypeToFormula ∷ I.Dom Type → T LFormula
+agdaTypeToFormula    ∷ Type → T LFormula

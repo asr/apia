@@ -51,14 +51,14 @@ executable apia
     Apia.CheckTPTP
     Apia.Common
     Apia.Dump
-    Apia.FOL.Constants
-    Apia.FOL.Primitives
-    Apia.FOL.Translation.ClauseBody
-    Apia.FOL.Translation.Functions
-    Apia.FOL.Translation.Name
-    Apia.FOL.Translation.Terms
-    Apia.FOL.Translation.Types
-    Apia.FOL.Types
+    Apia.Logic.Constants
+    Apia.Logic.Primitives
+    Apia.Logic.Translation.ClauseBody
+    Apia.Logic.Translation.Functions
+    Apia.Logic.Translation.Name
+    Apia.Logic.Translation.Terms
+    Apia.Logic.Translation.Types
+    Apia.Logic.Types
     Apia.Monad.Base
     Apia.Monad.Environment
     Apia.Monad.Reports

@@ -33,19 +33,19 @@ import Agda.Syntax.Common
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Apia.FOL.Types
-  ( FOLFormula( And
-              , Equiv
-              , Exists
-              , FALSE
-              , ForAll
-              , Implies
-              , Not
-              , Or
-              , Predicate
-              , TRUE
-              )
-  , FOLTerm(FOLFun, FOLVar)
+import Apia.Logic.Types
+  ( LFormula( And
+            , Equiv
+            , Exists
+            , FALSE
+            , ForAll
+            , Implies
+            , Not
+            , Or
+            , Predicate
+            , TRUE
+           )
+  , LTerm(Fun, Var)
   )
 
 import Apia.Utils.Names ( freshName )
@@ -170,10 +170,10 @@ cfpNameToTPTP cfp name = do
 --   nameTPTP ∷ String
 --   nameTPTP = toTPTP name
 
-quantifierHelper ∷ (FOLTerm → FOLFormula) → G (String, Text)
+quantifierHelper ∷ (LTerm → LFormula) → G (String, Text)
 quantifierHelper f = do
   freshVar ← pushGNewVar
-  f_       ← toTPTP (f (FOLVar freshVar))
+  f_       ← toTPTP (f (Var freshVar))
   popGVar
   return (freshVar, f_)
 
@@ -229,18 +229,18 @@ instance ToTPTP String where
     xs_ ← mapM toTPTP xs
     return $ prefixLetter $ T.concat xs_
 
-instance ToTPTP FOLTerm where
-  toTPTP (FOLFun name []) = cfpNameToTPTP C name
+instance ToTPTP LTerm where
+  toTPTP (Fun name []) = cfpNameToTPTP C name
 
-  toTPTP (FOLFun name terms) = do
+  toTPTP (Fun name terms) = do
     terms_ ← toTPTP terms
     name_  ← cfpNameToTPTP F name
     return $ name_ +++ "(" +++ terms_ +++ ")"
 
-  toTPTP (FOLVar name) = return $ toUpperFirst $ T.pack name
+  toTPTP (Var name) = return $ toUpperFirst $ T.pack name
 
 -- Requires @FlexibleInstances@.
-instance ToTPTP [FOLTerm] where
+instance ToTPTP [LTerm] where
   toTPTP []       = __IMPOSSIBLE__
   toTPTP [a]      = toTPTP a
   toTPTP (a : as) = do
@@ -248,7 +248,7 @@ instance ToTPTP [FOLTerm] where
     as_ ← toTPTP as
     return $ a_ +++ "," +++ as_
 
-instance ToTPTP FOLFormula where
+instance ToTPTP LFormula where
   -- We translate the hard-coded first-order logic predicate @equal_@
   -- as the predefined equality in the ATP.
   toTPTP (Predicate "equal_" [t1, t2] ) = do

@@ -37,10 +37,10 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( ifM )
 import Agda.Utils.Pretty     ( prettyShow )
 
-import Apia.FOL.Translation.Functions ( fnToFormula )
-import Apia.FOL.Translation.Types     ( typeToFormula )
-import Apia.Monad.Base                ( getTDefs, isTVarsEmpty, T)
-import Apia.Monad.Reports             ( reportSLn )
+import Apia.Logic.Translation.Functions ( fnToFormula )
+import Apia.Logic.Translation.Types     ( agdaTypeToFormula )
+import Apia.Monad.Base                  ( getTDefs, isTVarsEmpty, T)
+import Apia.Monad.Reports               ( reportSLn )
 
 import Apia.TPTP.Types
   ( AF(AF)
@@ -134,11 +134,11 @@ toAF role qName def = do
 
   reportSLn "toAF" 10 $ "tyReady:\n" ++ show tyReady
 
-  -- We run the translation from Agda types to FOL.
-  for ← ifM isTVarsEmpty (typeToFormula tyReady) (__IMPOSSIBLE__)
+  -- We run the translation from Agda types to the target logic.
+  for ← ifM isTVarsEmpty (agdaTypeToFormula tyReady) (__IMPOSSIBLE__)
 
   reportSLn "toAF" 10 $
-    "The FOL formula for " ++ show qName ++ " is:\n" ++ show for
+    "The logic formula for " ++ show qName ++ " is:\n" ++ show for
 
   ifM isTVarsEmpty (return $ AF qName role for) (__IMPOSSIBLE__)
 
@@ -163,7 +163,7 @@ fnToAF qName def = do
 
   for ← ifM isTVarsEmpty (fnToFormula qName ty cls) (__IMPOSSIBLE__)
   reportSLn "symbolToAF" 20 $
-    "The FOL formula for " ++ show qName ++ " is:\n" ++ show for
+    "The logic formula for " ++ show qName ++ " is:\n" ++ show for
 
   return $ AF qName TPTPDefinition for
 
@@ -178,7 +178,7 @@ localHintsToAFs def = do
   let hints ∷ [QName]
       hints = getLocalHints def
 
-  reportSLn "hintsToFOLs" 20 $
+  reportSLn "localHintsToAFs" 20 $
     "The local hints for the conjecture " ++ (show . defName) def
     ++ " are:\n" ++ show hints
 
@@ -234,7 +234,7 @@ conjecturesToAFs topLevelDefs = do
   let conjecturesDefs ∷ Definitions
       conjecturesDefs = getATPConjectures topLevelDefs
 
-  reportSLn "conjecturesToFOLs" 20 $
+  reportSLn "conjecturesToAFs" 20 $
     "Conjectures:\n" ++ (show . HashMap.keys) conjecturesDefs
 
   zipWithM conjectureToAF

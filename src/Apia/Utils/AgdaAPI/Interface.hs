@@ -20,6 +20,7 @@ module Apia.Utils.AgdaAPI.Interface
   ( getATPAxioms
   , getATPConjectures
   , getATPHints
+  , getATPTypes
   , getClauses
   , getImportedInterfaces
   , getLocalHints
@@ -56,7 +57,7 @@ import Agda.Syntax.Abstract.Name
 import Agda.Syntax.Common
   ( Arg(Arg)
   , Dom(Dom)
-  , TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint)
+  , TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint, TPTPType)
   )
 
 import Agda.Syntax.Internal as I
@@ -176,6 +177,10 @@ getLocalHints def =
   in case defn of
        Axiom{} → axTPTPHints defn
        _       → __IMPOSSIBLE__
+
+-- | Return the ATP types from a set of Agda 'Definitions'.
+getATPTypes ∷ Definitions → Definitions
+getATPTypes = getATPRole TPTPType
 
 -- We do not want any verbosity from the Agda API.
 noVerbosity ∷ PragmaOptions

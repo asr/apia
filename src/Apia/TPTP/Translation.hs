@@ -15,8 +15,8 @@
 {-# LANGUAGE UnicodeSyntax       #-}
 
 module Apia.TPTP.Translation
-  ( conjecturesToAFs
-  , generalRolesToAFs
+  ( conjecturesToAFors
+  , generalRolesToAFors
   ) where
 
 ------------------------------------------------------------------------------
@@ -43,7 +43,7 @@ import Apia.Monad.Base                  ( getTDefs, isTVarsEmpty, T)
 import Apia.Monad.Reports               ( reportSLn )
 
 import Apia.TPTP.Types
-  ( AF(AF)
+  ( AF(AFor)
   , ConjectureSet(ConjectureSet)
   , GeneralRoles(GeneralRoles)
   )
@@ -80,11 +80,11 @@ import qualified Data.HashMap.Strict as HashMap ( elems, keys )
 
 ------------------------------------------------------------------------------
 
-toAF ∷ TPTPRole → QName → Definition → T AF
-toAF role qName def = do
+toAFor ∷ TPTPRole → QName → Definition → T AF
+toAFor role qName def = do
   let ty ∷ Type
       ty = defType def
-  reportSLn "toAF" 10 $
+  reportSLn "toAFor" 10 $
      "Translating QName: " ++ showLn qName
      ++ "The type (pretty-printer):\n" ++ prettyShow ty ++ "\n"
      ++ "The type (show):\n" ++ showLn ty
@@ -99,7 +99,7 @@ toAF role qName def = do
   -- sharing must be equals.
   -- when (ty /= tyIgnoredSharing) (__IMPOSSIBLE__)
 
-  -- reportSLn "toAF" 10 $
+  -- reportSLn "toAFor" 10 $
   --   "The type ignoring sharing is:\n"
   --   ++ "The type (pretty-printer):\n" ++ prettyShow tyIgnoredSharing ++ "\n"
   --   ++ "The type (show):\n" ++ showLn tyIgnoredSharing
@@ -109,12 +109,12 @@ toAF role qName def = do
                       (etaExpand ty)
                       (__IMPOSSIBLE__)
 
-  reportSLn "toAF" 10 $
+  reportSLn "toAFor" 10 $
     "The η-expanded type is:\n"
     ++ "The type (pretty-printer):\n" ++ prettyShow tyEtaExpanded ++ "\n"
     ++ "The type (show):\n" ++ showLn tyEtaExpanded
 
-  reportSLn "toAF" 10 $
+  reportSLn "toAFor" 10 $
     if ty == tyEtaExpanded
     then "The type and the η-expanded type: equals"
     else "The type and the η-expanded type: different"
@@ -122,7 +122,7 @@ toAF role qName def = do
   let boundedVarsTy ∷ [(String, Type)]
       boundedVarsTy = boundedVarsType tyEtaExpanded
 
-  reportSLn "toAF" 10 $
+  reportSLn "toAFor" 10 $
     "The types of the bounded variables,"
     ++ "i.e. (Abs x _), but not (NoAbs x _) are:\n"
     ++ showListLn boundedVarsTy
@@ -132,23 +132,23 @@ toAF role qName def = do
                   tyEtaExpanded
                   (reverse boundedVarsTy)
 
-  reportSLn "toAF" 10 $ "tyReady:\n" ++ show tyReady
+  reportSLn "toAFor" 10 $ "tyReady:\n" ++ show tyReady
 
   -- We run the translation from Agda types to the target logic.
   for ← ifM isTVarsEmpty (agdaTypeToFormula tyReady) (__IMPOSSIBLE__)
 
-  reportSLn "toAF" 10 $
+  reportSLn "toAFor" 10 $
     "The logic formula for " ++ show qName ++ " is:\n" ++ show for
 
-  ifM isTVarsEmpty (return $ AF qName role for) (__IMPOSSIBLE__)
+  ifM isTVarsEmpty (return $ AFor qName role for) (__IMPOSSIBLE__)
 
--- Translation of an Agda internal function to an AF definition.
-fnToAF ∷ QName → Definition → T AF
-fnToAF qName def = do
+-- Translation of an Agda internal function to an annotated formula.
+fnToAFor ∷ QName → Definition → T AF
+fnToAFor qName def = do
   let ty ∷ Type
       ty = defType def
 
-  reportSLn "symbolToAF" 10 $
+  reportSLn "fnToAFor" 10 $
     "Symbol: " ++ showLn qName
     ++ "Type:\n" ++ showLn ty
     ++ "Position: " ++ (showLn . qNameConcreteNameRange) qName
@@ -158,31 +158,33 @@ fnToAF qName def = do
   let cls ∷ [Clause]
       cls = getClauses def
 
-  reportSLn "symbolToAF" 10 $
+  reportSLn "fnToAFor" 10 $
     "Symbol: " ++ showLn qName ++ "Clauses: " ++ show cls
 
   for ← ifM isTVarsEmpty (fnToFormula qName ty cls) (__IMPOSSIBLE__)
-  reportSLn "symbolToAF" 20 $
+  reportSLn "fnToAFor" 20 $
     "The logic formula for " ++ show qName ++ " is:\n" ++ show for
 
-  return $ AF qName TPTPDefinition for
+  return $ AFor qName TPTPDefinition for
 
--- We translate a local hint to an AF.
-localHintToAF ∷ QName → T AF
-localHintToAF qName = qNameDefinition qName >>= toAF TPTPHint qName
+-- We translate a local hint to annotated formula.
+localHintToAFor ∷ QName → T AF
+localHintToAFor qName = qNameDefinition qName >>= toAFor TPTPHint qName
 
--- We translate the local hints of an ATP conjecture to AF's.
+-- We translate the local hints of an ATP conjecture to annotated
+-- formulae.
+--
 -- Invariant: The 'Definition' must be an ATP conjecture.
-localHintsToAFs ∷ Definition → T [AF]
-localHintsToAFs def = do
+localHintsToAFors ∷ Definition → T [AF]
+localHintsToAFors def = do
   let hints ∷ [QName]
       hints = getLocalHints def
 
-  reportSLn "localHintsToAFs" 20 $
+  reportSLn "localHintsToAFors" 20 $
     "The local hints for the conjecture " ++ (show . defName) def
     ++ " are:\n" ++ show hints
 
-  mapM localHintToAF hints
+  mapM localHintToAFor hints
 
 -- If a 'QName' is an ATP definition then we required it.
 requiredQName ∷ QName → T [AF]
@@ -193,7 +195,7 @@ requiredQName qName = do
   -- duplicates ones from this function.
   if isATPDefinition qNameDef
     then liftM2 (:)
-                (fnToAF qName qNameDef)
+                (fnToAFor qName qNameDef)
                 (requiredATPDefsByATPDefinition qNameDef)
     else return []
 
@@ -220,33 +222,33 @@ requiredATPDefsByLocalHints def = do
 
   fmap (nub . concat) (mapM requiredATPDefsByDefinition hintsDefs)
 
-conjectureToAF ∷ QName → Definition → T ConjectureSet
-conjectureToAF qName def = liftM4 ConjectureSet
-                                  (toAF TPTPConjecture qName def)
-                                  (requiredATPDefsByDefinition def)
-                                  (localHintsToAFs def)
-                                  (requiredATPDefsByLocalHints def)
+conjectureToAFor ∷ QName → Definition → T ConjectureSet
+conjectureToAFor qName def = liftM4 ConjectureSet
+                                    (toAFor TPTPConjecture qName def)
+                                    (requiredATPDefsByDefinition def)
+                                    (localHintsToAFors def)
+                                    (requiredATPDefsByLocalHints def)
 
 -- | Translate the ATP conjectures and their local hints in the top
--- level module to TPTP formulae.
-conjecturesToAFs ∷ Definitions → T [ConjectureSet]
-conjecturesToAFs topLevelDefs = do
+-- level module to annotated formulae.
+conjecturesToAFors ∷ Definitions → T [ConjectureSet]
+conjecturesToAFors topLevelDefs = do
   let conjecturesDefs ∷ Definitions
       conjecturesDefs = getATPConjectures topLevelDefs
 
-  reportSLn "conjecturesToAFs" 20 $
+  reportSLn "conjecturesToAFors" 20 $
     "Conjectures:\n" ++ (show . HashMap.keys) conjecturesDefs
 
-  zipWithM conjectureToAF
+  zipWithM conjectureToAFor
            (HashMap.keys conjecturesDefs)
            (HashMap.elems conjecturesDefs)
 
--- We translate the ATP axioms to TPTP formulae.
-axiomsToAFs ∷ T [AF]
-axiomsToAFs = do
+-- We translate the ATP axioms to annonated formulae.
+axiomsToAFors ∷ T [AF]
+axiomsToAFors = do
   axDefs ∷ Definitions ← getATPAxioms <$> getTDefs
 
-  zipWithM (toAF TPTPAxiom) (HashMap.keys axDefs) (HashMap.elems axDefs)
+  zipWithM (toAFor TPTPAxiom) (HashMap.keys axDefs) (HashMap.elems axDefs)
 
 requiredATPDefsByDefinition ∷ Definition → T [AF]
 requiredATPDefsByDefinition def = do
@@ -262,12 +264,12 @@ requiredATPDefsByAxioms = do
 
   fmap (nub . concat) (mapM requiredATPDefsByDefinition (HashMap.elems axDefs))
 
--- We translate the ATP general hints to TPTP formulae.
-generalHintsToAFs ∷ T [AF]
-generalHintsToAFs = do
+-- We translate the ATP general hints to annonated formulae.
+generalHintsToAFors ∷ T [AF]
+generalHintsToAFors = do
   ghDefs ∷ Definitions ← getATPHints <$> getTDefs
 
-  zipWithM (toAF TPTPHint) (HashMap.keys ghDefs) (HashMap.elems ghDefs)
+  zipWithM (toAFor TPTPHint) (HashMap.keys ghDefs) (HashMap.elems ghDefs)
 
 requiredATPDefsByHints ∷ T [AF]
 requiredATPDefsByHints = do
@@ -277,10 +279,10 @@ requiredATPDefsByHints = do
 
 -- | Translate the ATP axioms, the ATP general hints, and the ATP
 -- required definitions in the top level module and its imported
--- modules to TPTP formulae.
-generalRolesToAFs ∷ T GeneralRoles
-generalRolesToAFs = liftM4 GeneralRoles
-                           axiomsToAFs
-                           requiredATPDefsByAxioms
-                           generalHintsToAFs
-                           requiredATPDefsByHints
+-- modules to annotated formulae.
+generalRolesToAFors ∷ T GeneralRoles
+generalRolesToAFors = liftM4 GeneralRoles
+                             axiomsToAFors
+                             requiredATPDefsByAxioms
+                             generalHintsToAFors
+                             requiredATPDefsByHints

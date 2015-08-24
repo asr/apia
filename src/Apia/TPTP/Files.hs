@@ -47,7 +47,7 @@ import Apia.TPTP.ConcreteSyntax.FOF    ( ToFOF(toFOF) )
 import Apia.TPTP.ConcreteSyntax.TFF0   ( ToTFF0(toTFF0) )
 
 import Apia.TPTP.Types
-  ( AF(AF)
+  ( AF(AFor)
   , allRequiredDefs
   , ConjectureSet(defsConjecture
                  , defsLocalHints
@@ -135,7 +135,7 @@ agdaOriginalTerm qName role =
   +++ "% Line: " +++ (T.pack . prettyShow . qNameLine) qName +++ "\n"
 
 addRole ∷ Lang → FilePath → AF → IO ()
-addRole lang file af@(AF qName afRole _) = do
+addRole lang file af@(AFor qName afRole _) = do
 
   af_ ← case lang of
     FOF  → runG $ toFOF af
@@ -214,7 +214,7 @@ tptpFileName lang conjectureSet = do
 
   let qName ∷ QName
       qName = case theConjecture conjectureSet of
-                AF _qName _ _ → _qName
+                AFor _qName _ _ → _qName
 
       moduleDir ∷ FilePath
       moduleDir = ((`moduleNameToFileName` [])

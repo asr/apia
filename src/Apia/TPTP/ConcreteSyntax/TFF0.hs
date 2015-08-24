@@ -51,7 +51,7 @@ import Apia.TPTP.ConcreteSyntax.Common
   , ToTPTP(toTPTP)
   )
 
-import Apia.TPTP.Types ( AF(AF) )
+import Apia.TPTP.Types ( AF(AFor) )
 import Apia.Utils.Text ( (+++), toUpperFirst )
 
 import Data.Text ( Text )
@@ -143,7 +143,7 @@ instance ToTFF0 TPTPRole where
 
 -- Translation of annotated formulae to TFF0 concrete syntax.
 instance ToTFF0 AF where
-  toTFF0 (AF qName atpRole formula) = do
+  toTFF0 (AFor qName atpRole formula) = do
     qName_   ← toTPTP qName
     atpRole_ ← toTFF0 atpRole
     formula_ ← toTFF0 formula

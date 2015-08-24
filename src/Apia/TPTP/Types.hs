@@ -13,7 +13,7 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Apia.TPTP.Types
-  ( AF(AF)
+  ( AF(AFor)
   , allRequiredDefs
   , commonRequiredDefs
   , ConjectureSet(defsConjecture
@@ -45,16 +45,16 @@ import Data.List ( (\\), sort )
 --
 -- The annotated formulae are not in TPTP (FOF or TFF0) concrete
 -- syntax.
-data AF = AF QName TPTPRole LFormula
+data AF = AFor QName TPTPRole LFormula
 
 instance Eq AF where
-  (AF qName1 _ _) == (AF qName2 _ _) = qName1 == qName2
+  (AFor qName1 _ _) == (AFor qName2 _ _) = qName1 == qName2
 
 instance Ord AF where
-  compare (AF qName1 _ _) (AF qName2 _ _) = compare qName1 qName2
+  compare (AFor qName1 _ _) (AFor qName2 _ _) = compare qName1 qName2
 
 instance Show AF where
-  show (AF qname _ _) = show qname
+  show (AFor qname _ _) = show qname
 
 -- | The 'ATPRole's share by all the conjetures in an Agda module.
 data GeneralRoles = GeneralRoles

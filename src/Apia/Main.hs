@@ -58,7 +58,7 @@ import Apia.Options
 
 import Apia.Snapshot         ( snapshotTest )
 import Apia.TPTP.Files       ( createConjectureTPTPFile )
-import Apia.TPTP.Translation ( conjecturesToAFs, generalRolesToAFs )
+import Apia.TPTP.Translation ( conjecturesToAFors, generalRolesToAFors )
 import Apia.TPTP.Types       ( ConjectureSet, GeneralRoles )
 
 import qualified Apia.Utils.Except as E
@@ -103,7 +103,7 @@ translation agdaFile = do
   -- We add @allDefs@ the translation monad state.
   modifyTDefs allDefs
 
-  pair generalRolesToAFs $ conjecturesToAFs topLevelDefs
+  pair generalRolesToAFors $ conjecturesToAFors topLevelDefs
 
 -- | The main function.
 runApia ∷ T ()

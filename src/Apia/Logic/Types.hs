@@ -29,13 +29,21 @@ module Apia.Logic.Types
   , LTerm(Fun, Var)
   ) where
 
+import Apia.Utils.PrettyPrint ( (<>), hcat, Pretty(pretty), space, sspaces )
+
 ------------------------------------------------------------------------------
 -- Adapted from AgdaLight (Plugins.FOL.Types).
 
 -- | Target logic terms.
 data LTerm = Fun String [LTerm]
            | Var String
-          deriving Show
+
+instance Pretty LTerm where
+  pretty (Fun f ts) = sspaces "Fun" <> pretty f <> pretty ts
+  pretty (Var v)    = sspaces "Var" <> pretty v
+
+instance Pretty [LTerm] where
+  pretty = hcat . map pretty
 
 -- | Target logic formulae.
 data LFormula = TRUE
@@ -49,16 +57,16 @@ data LFormula = TRUE
               | ForAll (LTerm → LFormula)
               | Exists (LTerm → LFormula)
 
-instance Show LFormula where
-  show TRUE                = " TRUE "
-  show FALSE               = " FALSE "
-  show (Predicate name ts) = " Predicate " ++ show name ++ " " ++ show ts
-  show (Not f)             = " Not " ++ show f
-  show (And f1 f2)         = " And " ++ show f1 ++ show f2
-  show (Or f1 f2)          = " Or " ++ show f1 ++ show f2
-  show (Implies f1 f2)     = " Implies " ++ show f1 ++ show f2
-  show (Equiv f1 f2)       = " Equiv " ++ show f1 ++ show f2
-  -- show (ForAll var f)      = " ForAll " ++ show var ++ show (f $ Var var)
-  -- show (Exists var f)      = " Exists " ++ show var ++ show (f $ Var var)
-  show (ForAll _)          = " ForAll " ++ show "TODO"
-  show (Exists _)          = " Exists " ++ show "TODO"
+instance Pretty LFormula where
+  pretty TRUE                = sspaces "TRUE"
+  pretty FALSE               = sspaces "FALSE"
+  pretty (Predicate name ts) = sspaces "Predicate" <> pretty name <> space <> pretty ts
+  pretty (Not f)             = sspaces "Not" <> pretty f
+  pretty (And f1 f2)         = sspaces "And" <> pretty f1 <> pretty f2
+  pretty (Or f1 f2)          = sspaces "Or" <> pretty f1 <> pretty f2
+  pretty (Implies f1 f2)     = sspaces "Implies" <> pretty f1 <> pretty f2
+  pretty (Equiv f1 f2)       = sspaces "Equiv" <> pretty f1 <> pretty f2
+  -- pretty (ForAll var f)      = " ForAll " <> pretty var <> pretty (f $ Var var)
+  -- pretty (Exists var f)      = " Exists " <> pretty var <> pretty (f $ Var var)
+  pretty (ForAll _)          = sspaces "ForAll" <> pretty "TODO"
+  pretty (Exists _)          = sspaces "Exists" <> pretty "TODO"

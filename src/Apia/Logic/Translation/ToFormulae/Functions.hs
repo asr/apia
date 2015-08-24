@@ -50,7 +50,7 @@ import Agda.Syntax.Internal
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import qualified Agda.Utils.Pretty as A
+import qualified Agda.Utils.Pretty as AP
 
 import Apia.Logic.Primitives ( equal )
 
@@ -76,7 +76,7 @@ import Apia.Monad.Base
   , T
   )
 
-import Apia.Monad.Reports ( reportSLn )
+import Apia.Monad.Reports ( reportDLn, reportSLn )
 
 import Apia.Utils.AgdaAPI.DeBruijn ( DecIndex(decIndex) )
 import Apia.Utils.AgdaAPI.Vars     ( BoundedVars(boundedVars) )
@@ -108,7 +108,7 @@ fnToFormula ∷ QName → Type → [Clause] → T LFormula
 fnToFormula _      _  []   = __IMPOSSIBLE__
 fnToFormula qName  ty [cl] = clauseToFormula qName ty cl
 fnToFormula qName  _  _    =
-  E.throwE $ pretty "the translation of " <> A.pretty qName
+  E.throwE $ pretty "the translation of " <> AP.pretty qName
              <> pretty " failed because its definition only can have a clause"
 
 -- A Clause is defined by (Agda.Syntax.Internal)
@@ -165,7 +165,7 @@ clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy cc) =
 
       f1 ← agdaTypeToFormula tye
 
-      reportSLn "def2f" 20 $ "f1: " ++ show f1
+      reportDLn "def2f" 20 $ pretty "f1: " <> pretty f1
 
       reportSLn "def2f" 20 $ "Current body: " ++ show cBody
 
@@ -185,12 +185,12 @@ clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy cc) =
       -- We process forward in the telescope and the pattern.
       f2 ← clauseToFormula qName ty (Clause r decTels perm pats newBody cTy cc)
 
-      reportSLn "def2f" 20 $ "f2: " ++ show f2
+      reportDLn "def2f" 20 $ pretty "f2: " <> pretty f2
 
       return $ Implies f1 f2
 
     ExtendTel (Dom _ (El (Type (Max [])) (Pi _ _))) _ →
-      E.throwE $ pretty "the translation of " <> A.pretty qName
+      E.throwE $ pretty "the translation of " <> AP.pretty qName
                  <> pretty " failed because it is a higher-order definition"
 
     _ → do

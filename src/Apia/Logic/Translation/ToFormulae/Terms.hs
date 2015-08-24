@@ -100,7 +100,7 @@ import Apia.Monad.Base
   , T
   )
 
-import Apia.Monad.Reports ( reportSLn )
+import Apia.Monad.Reports ( reportDLn, reportSLn )
 
 import Apia.Options
   ( Options ( optFnConstant
@@ -317,7 +317,7 @@ agdaTermToFormula term = case ignoreSharing term of
       "Finalized processing in local environment with fresh variable "
       ++ show freshVar ++ " and type:\n" ++ show absTy
 
-    reportSLn "t2f" 20 $ "The formula f is: " ++ show f
+    reportDLn "t2f" 20 $ pretty "The formula f is: " <> pretty f
 
     case unDom domTy of
       -- The bounded variable is quantified on a @Set@,

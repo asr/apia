@@ -35,12 +35,13 @@ import Agda.TypeChecking.Monad.Base
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( ifM )
-import Agda.Utils.Pretty     ( prettyShow )
+
+import qualified Agda.Utils.Pretty as AP
 
 import Apia.Logic.Translation.ToFormulae.Functions ( fnToFormula )
 import Apia.Logic.Translation.ToFormulae.Types     ( agdaTypeToFormula )
 import Apia.Monad.Base                             ( getTDefs, isTVarsEmpty, T)
-import Apia.Monad.Reports                          ( reportSLn )
+import Apia.Monad.Reports                          ( reportDLn, reportSLn )
 
 import Apia.TPTP.Types
   ( AF(AFor)
@@ -64,7 +65,8 @@ import Apia.Utils.AgdaAPI.Interface
   , qNameConcreteNameRange
   )
 
-import Apia.Utils.Show ( showListLn, showLn )
+import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
+import Apia.Utils.Show        ( showListLn, showLn )
 
 #if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ( (<$>) )
@@ -86,7 +88,7 @@ toAFor role qName def = do
       ty = defType def
   reportSLn "toAFor" 10 $
      "Translating QName: " ++ showLn qName
-     ++ "The type (pretty-printer):\n" ++ prettyShow ty ++ "\n"
+     ++ "The type (pretty-printer):\n" ++ AP.prettyShow ty ++ "\n"
      ++ "The type (show):\n" ++ showLn ty
      ++ "Role: " ++ showLn role ++ "\n"
      ++ "Position: " ++ (showLn . qNameConcreteNameRange) qName
@@ -111,7 +113,7 @@ toAFor role qName def = do
 
   reportSLn "toAFor" 10 $
     "The η-expanded type is:\n"
-    ++ "The type (pretty-printer):\n" ++ prettyShow tyEtaExpanded ++ "\n"
+    ++ "The type (pretty-printer):\n" ++ AP.prettyShow tyEtaExpanded ++ "\n"
     ++ "The type (show):\n" ++ showLn tyEtaExpanded
 
   reportSLn "toAFor" 10 $
@@ -137,8 +139,9 @@ toAFor role qName def = do
   -- We run the translation from Agda types to the target logic.
   for ← ifM isTVarsEmpty (agdaTypeToFormula tyReady) (__IMPOSSIBLE__)
 
-  reportSLn "toAFor" 10 $
-    "The logic formula for " ++ show qName ++ " is:\n" ++ show for
+  reportDLn "toAFor" 10 $
+    pretty "The logic formula for " <> AP.pretty qName
+    <> pretty " is:\n" <> pretty for
 
   ifM isTVarsEmpty (return $ AFor qName role for) (__IMPOSSIBLE__)
 
@@ -162,8 +165,9 @@ fnToAFor qName def = do
     "Symbol: " ++ showLn qName ++ "Clauses: " ++ show cls
 
   for ← ifM isTVarsEmpty (fnToFormula qName ty cls) (__IMPOSSIBLE__)
-  reportSLn "fnToAFor" 20 $
-    "The logic formula for " ++ show qName ++ " is:\n" ++ show for
+  reportDLn "fnToAFor" 20 $
+    pretty "The logic formula for " <> AP.pretty qName
+    <> pretty " is:\n" <> pretty for
 
   return $ AFor qName TPTPDefinition for
 

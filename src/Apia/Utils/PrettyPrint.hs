@@ -17,6 +17,7 @@ module Apia.Utils.PrettyPrint
   ( module Text.PrettyPrint
   , Pretty(pretty)
   , prettyShow
+  , sspaces
   , squotes
   ) where
 
@@ -24,13 +25,21 @@ import Text.PrettyPrint
 ------------------------------------------------------------------------------
 -- Auxiliary functions
 
--- | Wrap document in ‘...’.
+-- | Wrap a document in ‘...’.
 bquotes ∷ Doc → Doc
-bquotes p = char '‘' <> p <> char '’'
+bquotes d = char '‘' <> d <> char '’'
+
+-- | Wrap a document in spaces.
+spaces ∷ Doc → Doc
+spaces d = space <> d <> space
 
 -- | Wrap a string in ‘...’.
 squotes ∷ String → Doc
 squotes = bquotes . text
+
+-- | Wrap a string in spaces.
+sspaces ∷ String → Doc
+sspaces = spaces . text
 
 -- | Use instead of 'show' when printing to world.
 prettyShow :: Pretty a ⇒ a → String

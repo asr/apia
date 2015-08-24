@@ -14,7 +14,8 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Apia.Monad.Reports
-  ( reportS
+  ( reportDLn
+  , reportS
   , reportSLn
   , VerboseKey  -- Required by Haddock.
   ) where
@@ -27,8 +28,9 @@ import qualified Agda.Utils.Trie as Trie ( lookupPath )
 
 import Agda.Utils.List ( wordsBy )
 
-import Apia.Monad.Base ( askTOpt, T )
-import Apia.Options    ( Options(optVerbose) )
+import Apia.Monad.Base        ( askTOpt, T )
+import Apia.Options           ( Options(optVerbose) )
+import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), prettyShow )
 
 import Control.Monad          ( when )
 import Control.Monad.IO.Class ( MonadIO(liftIO) )
@@ -61,3 +63,8 @@ reportS k n s = verboseS k n $ liftIO $ putStr (s ++ "\n")
 -- | Print debug information via the @--verbose@ option.
 reportSLn ∷ VerboseKey → Int → String → T ()
 reportSLn k n s = verboseS k n $ liftIO $ putStrLn (s ++ "\n")
+
+-- | Print debug information via the @--verbose@ option.
+reportDLn ∷ VerboseKey → Int → Doc → T ()
+reportDLn k n s =
+  verboseS k n $ liftIO $ putStrLn $ prettyShow (s <> pretty "\n")

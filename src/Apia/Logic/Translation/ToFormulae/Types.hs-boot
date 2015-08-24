@@ -1,6 +1,6 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.Logic.Translation.Types
+module Apia.Logic.Translation.ToFormulae.Types
   ( agdaDomTypeToFormula
   , agdaTypeToFormula
   ) where

@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.Logic.Translation.ClauseBody
+-- Module      : Apia.Logic.Translation.ToFormulae.ClauseBody
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
@@ -14,7 +14,7 @@
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.Logic.Translation.ClauseBody
+module Apia.Logic.Translation.ToFormulae.ClauseBody
   ( cBodyToFormula
   , cBodyToTerm
   , dropProofTermOnCBody
@@ -32,7 +32,11 @@ import Agda.Syntax.Internal
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Apia.Logic.Translation.Terms    ( agdaTermToFormula, agdaTermToTerm )
+import Apia.Logic.Translation.ToFormulae.Terms
+  ( agdaTermToFormula
+  , agdaTermToTerm
+  )
+
 import Apia.Logic.Types                ( LFormula, LTerm )
 import Apia.Monad.Base                 ( T )
 import Apia.Monad.Reports              ( reportSLn )

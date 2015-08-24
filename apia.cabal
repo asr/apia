@@ -53,10 +53,10 @@ executable apia
     Apia.Dump
     Apia.Logic.Constants
     Apia.Logic.Primitives
-    Apia.Logic.Translation.ClauseBody
-    Apia.Logic.Translation.Functions
-    Apia.Logic.Translation.Terms
-    Apia.Logic.Translation.Types
+    Apia.Logic.Translation.ToFormulae.ClauseBody
+    Apia.Logic.Translation.ToFormulae.Functions
+    Apia.Logic.Translation.ToFormulae.Terms
+    Apia.Logic.Translation.ToFormulae.Types
     Apia.Logic.Types
     Apia.Monad.Base
     Apia.Monad.Environment

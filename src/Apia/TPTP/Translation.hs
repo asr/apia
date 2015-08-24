@@ -37,10 +37,10 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( ifM )
 import Agda.Utils.Pretty     ( prettyShow )
 
-import Apia.Logic.Translation.Functions ( fnToFormula )
-import Apia.Logic.Translation.Types     ( agdaTypeToFormula )
-import Apia.Monad.Base                  ( getTDefs, isTVarsEmpty, T)
-import Apia.Monad.Reports               ( reportSLn )
+import Apia.Logic.Translation.ToFormulae.Functions ( fnToFormula )
+import Apia.Logic.Translation.ToFormulae.Types     ( agdaTypeToFormula )
+import Apia.Monad.Base                             ( getTDefs, isTVarsEmpty, T)
+import Apia.Monad.Reports                          ( reportSLn )
 
 import Apia.TPTP.Types
   ( AF(AFor)

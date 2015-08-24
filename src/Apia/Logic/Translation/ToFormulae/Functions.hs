@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.Logic.Translation.Functions
+-- Module      : Apia.Logic.Translation.ToFormulae.Functions
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
@@ -19,7 +19,7 @@
 -- Only are translated the functions that will be translate as TPTP
 -- definitions.
 
-module Apia.Logic.Translation.Functions ( fnToFormula ) where
+module Apia.Logic.Translation.ToFormulae.Functions ( fnToFormula ) where
 
 ------------------------------------------------------------------------------
 
@@ -54,15 +54,20 @@ import Agda.Utils.Pretty     ( Pretty(pretty) )
 
 import Apia.Logic.Primitives ( equal )
 
-import Apia.Logic.Translation.ClauseBody
+import Apia.Logic.Translation.ToFormulae.ClauseBody
   ( cBodyToFormula
   , cBodyToTerm
   , dropProofTermOnCBody
   )
 
-import Apia.Logic.Translation.Terms ( agdaTermToFormula, agdaTermToTerm )
-import Apia.Logic.Translation.Types ( agdaTypeToFormula )
-import Apia.Logic.Types             ( LFormula(Implies, Equiv, ForAll) )
+import Apia.Logic.Translation.ToFormulae.Terms
+  ( agdaTermToFormula
+  , agdaTermToTerm
+  )
+
+import Apia.Logic.Translation.ToFormulae.Types ( agdaTypeToFormula )
+
+import Apia.Logic.Types ( LFormula(Implies, Equiv, ForAll) )
 
 import Apia.Monad.Base
   ( getTVars

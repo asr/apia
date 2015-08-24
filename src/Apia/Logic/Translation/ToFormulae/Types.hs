@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.Logic.Translation.Internal.Types
+-- Module      : Apia.Logic.Translation.ToFormulae.Types
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
@@ -13,7 +13,7 @@
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.Logic.Translation.Types
+module Apia.Logic.Translation.ToFormulae.Types
   ( agdaDomTypeToFormula
   , agdaTypeToFormula
   ) where
@@ -37,10 +37,10 @@ import Agda.Syntax.Internal as I
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Apia.Logic.Translation.Terms ( agdaTermToFormula )
-import Apia.Logic.Types             ( LFormula )
-import Apia.Monad.Base              ( T )
-import Apia.Monad.Reports           ( reportSLn )
+import Apia.Logic.Translation.ToFormulae.Terms ( agdaTermToFormula )
+import Apia.Logic.Types                        ( LFormula )
+import Apia.Monad.Base                         ( T )
+import Apia.Monad.Reports                      ( reportSLn )
 
 #include "undefined.h"
 

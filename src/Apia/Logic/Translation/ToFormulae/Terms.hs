@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.Logic.Translation.Internal.Terms
+-- Module      : Apia.Logic.Translation.ToFormulae.Internal.Terms
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
@@ -14,7 +14,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE UnicodeSyntax     #-}
 
-module Apia.Logic.Translation.Terms
+module Apia.Logic.Translation.ToFormulae.Terms
   ( agdaTermToFormula
   , agdaTermToTerm
   ) where
@@ -73,7 +73,7 @@ import Apia.Logic.Constants
 
 import Apia.Logic.Primitives ( appF, appP, equal )
 
-import {-# source #-} Apia.Logic.Translation.Types
+import {-# source #-} Apia.Logic.Translation.ToFormulae.Types
   ( agdaDomTypeToFormula
   , agdaTypeToFormula
   )

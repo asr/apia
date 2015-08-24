@@ -32,7 +32,7 @@ import Agda.Syntax.Common        ( NameId(NameId) )
 import Agda.Utils.Impossible     ( Impossible(Impossible), throwImpossible )
 
 import Apia.Logic.Types ( LFormula, LTerm(Fun, Var) )
-import Apia.Utils.Names ( freshName )
+import Apia.Utils.Name  ( freshName )
 import Apia.Utils.Text  ( (+++), toUpperFirst )
 
 import Control.Monad.Trans.State

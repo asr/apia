@@ -71,8 +71,7 @@ import Apia.Logic.Constants
   , lEquals
   )
 
-import Apia.Logic.Primitives       ( appF, appP, equal )
-import Apia.Logic.Translation.Name ( concatName )
+import Apia.Logic.Primitives ( appF, appP, equal )
 
 import {-# source #-} Apia.Logic.Translation.Types
   ( agdaDomTypeToFormula
@@ -119,6 +118,7 @@ import Apia.Utils.AgdaAPI.Interface     ( isATPDefinition, qNameDefinition )
 
 import qualified Apia.Utils.Except as E
 
+import Apia.Utils.Name        ( concatName )
 import Apia.Utils.PrettyPrint ( (<>), Doc, squotes, text )
 
 import Control.Monad ( liftM2, when )

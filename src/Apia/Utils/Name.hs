@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.Utils.Names
+-- Module      : Apia.Utils.Name
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
@@ -13,17 +13,22 @@
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.Utils.Names ( freshName ) where
+module Apia.Utils.Name
+  ( concatName
+  , freshName
+  ) where
 
 ------------------------------------------------------------------------------
 
-import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
+import Agda.Syntax.Concrete.Name ( NamePart(Id, Hole) )
+import Agda.Utils.Impossible     ( Impossible(Impossible), throwImpossible )
 
 import Control.Monad.Trans.State ( get, put, State )
 
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
+-- Generation of fresh names
 
 chars ∷ String
 chars = ['a'..'z']
@@ -45,3 +50,15 @@ freshName = do
       newName = findFreeName names freeNames
   put $ newName : names
   return newName
+
+------------------------------------------------------------------------------
+-- Auxiliary functions
+
+takeId ∷ NamePart → String
+takeId Hole         = []
+takeId (Id strName) = strName
+
+-- | Use the parts of a name to produce a new function name, e.g. the
+-- function @if_then_else_@ is called @ifthenelseq@.
+concatName ∷ [NamePart] → String
+concatName = concatMap takeId

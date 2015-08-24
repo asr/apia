@@ -41,7 +41,7 @@ import Apia.Options           ( Options )
 
 import qualified Apia.Utils.Except as E
 
-import Apia.Utils.Names       ( freshName )
+import Apia.Utils.Name        ( freshName )
 import Apia.Utils.PrettyPrint ( Doc )
 
 import Control.Monad.Trans.Class ( MonadTrans(lift) )

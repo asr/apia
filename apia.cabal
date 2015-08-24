@@ -55,7 +55,6 @@ executable apia
     Apia.Logic.Primitives
     Apia.Logic.Translation.ClauseBody
     Apia.Logic.Translation.Functions
-    Apia.Logic.Translation.Name
     Apia.Logic.Translation.Terms
     Apia.Logic.Translation.Types
     Apia.Logic.Types
@@ -80,7 +79,7 @@ executable apia
     Apia.Utils.Except
     Apia.Utils.List
     Apia.Utils.Monad
-    Apia.Utils.Names
+    Apia.Utils.Name
     Apia.Utils.PrettyPrint
     Apia.Utils.Show
     Apia.Utils.String

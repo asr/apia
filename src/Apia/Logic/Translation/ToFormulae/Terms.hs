@@ -95,6 +95,7 @@ import Apia.Logic.Types as L
 import Apia.Monad.Base
   ( askTOpt
   , getTVars
+  , newTVar
   , popTVar
   , pushTNewVar
   , T
@@ -242,9 +243,11 @@ agdaTermToFormula term = case ignoreSharing term of
              isCNameLogicConst lForAll → do
                fm ← agdaArgTermToFormula a
 
+               freshVar ← newTVar
+
                return $ if isCNameLogicConst lExists
-                        then Exists $ const fm
-                        else ForAll $ const fm
+                        then Exists freshVar $ const fm
+                        else ForAll freshVar $ const fm
 
            | otherwise → predicate qName elims
 
@@ -331,7 +334,7 @@ agdaTermToFormula term = case ignoreSharing term of
       El (Type (Max [])) (Def _ []) → do
         reportSLn "t2f" 20 $
           "Adding universal quantification on variable " ++ show freshVar
-        return $ ForAll $ const f
+        return $ ForAll freshVar $ const f
 
       -- The bounded variable is quantified on a proof. Due to we have
       -- drop the quantification on proofs terms, this case is
@@ -354,7 +357,7 @@ agdaTermToFormula term = case ignoreSharing term of
              (NoAbs _ (El (Type (Max [])) (Def _ [])))) → do
         reportSLn "t2f" 20
           "Removing a quantification on a function of a Set to a Set"
-        return $ ForAll $ const f
+        return $ ForAll freshVar $ const f
 
       -- N.B. The next case is just a generalization to various
       -- arguments of the previous case.
@@ -400,7 +403,7 @@ agdaTermToFormula term = case ignoreSharing term of
 
       El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → do
         reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
-        return $ ForAll $ const f
+        return $ ForAll freshVar $ const f
 
       -- Non-FOL translation: First-order logic universal quantified
       -- propositional symbols.
@@ -445,8 +448,9 @@ agdaTermToFormula term = case ignoreSharing term of
           -- The variable @x@ is an universal quantified variable not
           -- used, thefefore we generate a quantified first-order
           -- logic formula.
-          El (Type (Max [])) (Def _ []) →
-            return $ ForAll $ const f2
+          El (Type (Max [])) (Def _ []) → do
+            freshVar ← newTVar
+            return $ ForAll freshVar $ const f2
 
           -- The variable @x@ is a proof term, therefore we erase the
           -- quantification on it.

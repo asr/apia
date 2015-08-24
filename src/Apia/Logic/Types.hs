@@ -54,8 +54,8 @@ data LFormula = TRUE
               | Or LFormula LFormula
               | Implies LFormula LFormula
               | Equiv LFormula LFormula
-              | ForAll (LTerm → LFormula)
-              | Exists (LTerm → LFormula)
+              | ForAll String (LTerm → LFormula)
+              | Exists String (LTerm → LFormula)
 
 instance Pretty LFormula where
   pretty TRUE                = sspaces "TRUE"
@@ -66,7 +66,5 @@ instance Pretty LFormula where
   pretty (Or f1 f2)          = sspaces "Or" <> pretty f1 <> pretty f2
   pretty (Implies f1 f2)     = sspaces "Implies" <> pretty f1 <> pretty f2
   pretty (Equiv f1 f2)       = sspaces "Equiv" <> pretty f1 <> pretty f2
-  -- pretty (ForAll var f)      = " ForAll " <> pretty var <> pretty (f $ Var var)
-  -- pretty (Exists var f)      = " Exists " <> pretty var <> pretty (f $ Var var)
-  pretty (ForAll _)          = sspaces "ForAll" <> pretty "TODO"
-  pretty (Exists _)          = sspaces "Exists" <> pretty "TODO"
+  pretty (ForAll var f)      = sspaces "ForAll" <> pretty var <> pretty (f $ Var var)
+  pretty (Exists var f)      = sspaces "Exists " <> pretty var <> pretty (f $ Var var)

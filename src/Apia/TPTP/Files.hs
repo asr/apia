@@ -42,7 +42,6 @@ import Apia.Common                     ( Lang(FOF, TFF0) )
 import Apia.Monad.Base                 ( askTOpt, T )
 import Apia.Monad.Reports              ( reportS, reportSLn )
 import Apia.Options                    ( Options(optOnlyFiles, optOutputDir) )
-import Apia.TPTP.ConcreteSyntax.Common ( runG )
 import Apia.TPTP.ConcreteSyntax.FOF    ( ToFOF(toFOF) )
 import Apia.TPTP.ConcreteSyntax.TFF0   ( ToTFF0(toTFF0) )
 
@@ -136,13 +135,10 @@ agdaOriginalTerm qName role =
 
 addRole ∷ Lang → FilePath → AF → IO ()
 addRole lang file af@(AFor qName afRole _) = do
-
-  af_ ← case lang of
-    FOF  → runG $ toFOF af
-    TFF0 → runG $ toTFF0 af
-
   T.appendFile file $ agdaOriginalTerm qName afRole
-  T.appendFile file af_
+  case lang of
+   FOF  → T.appendFile file $ toFOF af
+   TFF0 → T.appendFile file $ toTFF0 af
 
 addRoles ∷ Lang → FilePath → [AF] → Text → IO ()
 addRoles _    _    []  _   = return ()
@@ -184,21 +180,19 @@ createConjectureFile lang file generalRoles conjectureSet = do
   liftIO $ do
     conjectureH ← conjectureHeader
     T.writeFile file conjectureH
-
     addRoles lang file commonDefs "common required definition(s)"
     addRoles lang file (axioms newGeneralRoles) "general axiom(s)"
     addRoles lang file (defsAxioms newGeneralRoles)
-      "required definition(s) by the general axiom(s)"
+             "required definition(s) by the general axiom(s)"
     addRoles lang file (hints newGeneralRoles) "general hint(s)"
     addRoles lang file (defsHints newGeneralRoles)
-      "required definition(s) by the general hint(s)"
+             "required definition(s) by the general hint(s)"
     addRoles lang file (localHintsConjecture  newConjectureSet) "local hint(s)"
     addRoles lang file (defsLocalHints newConjectureSet)
-      "required definition(s) by the local hint(s)"
+             "required definition(s) by the local hint(s)"
     addRoles lang file (defsConjecture newConjectureSet)
-      "required definition(s) by the conjecture"
+             "required definition(s) by the conjecture"
     addRoles lang file [ theConjecture newConjectureSet ] "conjecture"
-
     T.appendFile file conjectureFooter
 
   whenM (askTOpt optOnlyFiles) $ reportS "" 1 $ "Created " ++ file

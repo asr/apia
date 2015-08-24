@@ -41,13 +41,12 @@ import Apia.Logic.Types
             , Predicate
             , TRUE
            )
+  , LTerm(Var)
   )
 
 import Apia.TPTP.ConcreteSyntax.Common
   ( CFP(P)
   , cfpNameToTPTP
-  , G
-  , quantifierHelper
   , ToTPTP(toTPTP)
   )
 
@@ -65,91 +64,57 @@ type TFF0 = Text
 
 -- | Translation to TFF0 concrete syntax.
 class ToTFF0 a where
-  toTFF0 ∷ a → G TFF0
+  toTFF0 ∷ a → TFF0
 
 ------------------------------------------------------------------------------
 
 instance ToTFF0 LFormula where
   -- We translate the hard-coded logic predicate @equal_@ as the
   -- predefined equality in the ATP.
-  toTFF0 (Predicate "equal_" [t1, t2] ) = do
-    t1_ ← toTPTP t1
-    t2_ ← toTPTP t2
-    return $ "( " +++ t1_ +++ " = " +++ t2_ +++ " )"
+  toTFF0 (Predicate "equal_" [t1, t2] ) =
+    "( " +++ toTPTP t1 +++ " = " +++ toTPTP t2 +++ " )"
 
   toTFF0 (Predicate "equal_" _) = __IMPOSSIBLE__
 
   -- If the predicate represents a propositional logic variable,
   -- following the TPTP syntax, we do not print the internal
   -- parenthesis.
-  toTFF0 (Predicate name []) = do
-    name_ ← cfpNameToTPTP P name
-    return $ "( " +++ name_ +++ " )"
+  toTFF0 (Predicate name []) = "( " +++ cfpNameToTPTP P name +++ " )"
 
-  toTFF0 (Predicate name terms) = do
-    terms_ ← toTPTP terms
-    name_ ← cfpNameToTPTP P name
-    return $ "( " +++ name_ +++ "(" +++ terms_ +++ ")" +++ " )"
+  toTFF0 (Predicate name terms) =
+    "( " +++ cfpNameToTPTP P name +++ "(" +++ toTPTP terms +++ ")" +++ " )"
 
-  toTFF0 (And f1 f2) = do
-    f1_ ← toTFF0 f1
-    f2_ ← toTFF0 f2
-    return $ "( " +++ f1_ +++ " & " +++ f2_ +++ " )"
+  toTFF0 (And f1 f2)     = "( " +++ toTFF0 f1 +++ " & " +++ toTFF0 f2 +++ " )"
+  toTFF0 (Or f1 f2)      = "( " +++ toTFF0 f1 +++ " | " +++ toTFF0 f2 +++ " )"
+  toTFF0 (Not f)         = "( " +++ T.cons '~' (toTFF0 f) +++ " )"
+  toTFF0 (Implies f1 f2) = "( " +++ toTFF0 f1 +++ " => " +++ toTFF0 f2 +++ " )"
+  toTFF0 (Equiv f1 f2)   = "( " +++ toTFF0 f1 +++ " <=> " +++ toTFF0 f2 +++ " )"
 
-  toTFF0 (Or f1 f2) = do
-    f1_ ← toTFF0 f1
-    f2_ ← toTFF0 f2
-    return $ "( " +++ f1_ +++ " | " +++ f2_ +++ " )"
+  toTFF0 (ForAll var f) =
+    "( ! [" +++ toUpperFirst (T.pack var) +++ "] : "
+    +++ toTFF0 (f (Var var))
+    +++ " )"
 
-  toTFF0 (Not f) = do
-    f_ ← toTFF0 f
-    return $ "( " +++ T.cons '~' f_ +++ " )"
+  toTFF0 (Exists var f) =
+    "( ? [" +++ toUpperFirst (T.pack var) +++ "] : "
+    +++ toTFF0 (f (Var var))
+    +++ " )"
 
-  toTFF0 (Implies f1 f2) = do
-    f1_ ← toTFF0 f1
-    f2_ ← toTFF0 f2
-    return $ "( " +++ f1_ +++ " => " +++ f2_ +++ " )"
-
-  toTFF0 (Equiv f1 f2) = do
-    f1_ ← toTFF0 f1
-    f2_ ← toTFF0 f2
-    return $ "( " +++ f1_ +++ " <=> " +++ f2_ +++ " )"
-
-  toTFF0 (ForAll f) = do
-    (freshVar, f_) ← quantifierHelper toTFF0 f
-
-    return $
-      "( ! [" +++ toUpperFirst (T.pack freshVar) +++ "] : "
-      +++ f_
-      +++ " )"
-
-  toTFF0 (Exists f) = do
-    (freshVar, f_) ← quantifierHelper toTFF0 f
-
-    return $
-      "( ? [" +++ toUpperFirst (T.pack freshVar) +++ "] : "
-      +++ f_
-      +++ " )"
-
-  toTFF0 TRUE  = return $ "( " +++ "$true" +++ " )"
-  toTFF0 FALSE = return $ "( " +++ "$false" +++ " )"
+  toTFF0 TRUE  = "( " +++ "$true" +++ " )"
+  toTFF0 FALSE = "( " +++ "$false" +++ " )"
 
 instance ToTFF0 TPTPRole where
-  toTFF0 TPTPAxiom      = return "axiom"
-  toTFF0 TPTPConjecture = return "conjecture"
-  toTFF0 TPTPDefinition = return "definition"
-  toTFF0 TPTPHint       = return "hypothesis"
-  toTFF0 TPTPType       = return "type"
+  toTFF0 TPTPAxiom      = "axiom"
+  toTFF0 TPTPConjecture = "conjecture"
+  toTFF0 TPTPDefinition = "definition"
+  toTFF0 TPTPHint       = "hypothesis"
+  toTFF0 TPTPType       = "type"
 
 -- Translation of annotated formulae to TFF0 concrete syntax.
 instance ToTFF0 AF where
-  toTFF0 (AFor qName atpRole formula) = do
-    qName_   ← toTPTP qName
-    atpRole_ ← toTFF0 atpRole
-    formula_ ← toTFF0 formula
-
-    return $ "tff("
-      +++ qName_ +++ ", "
-      +++ atpRole_ +++ ", "
-      +++ formula_ +++ ")."
-      +++ "\n\n"
+  toTFF0 (AFor qName atpRole formula) =
+    "tff("
+    +++ toTPTP qName +++ ", "
+    +++ toTFF0 atpRole +++ ", "
+    +++ toTFF0 formula
+    +++ ")." +++ "\n\n"

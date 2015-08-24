@@ -141,12 +141,12 @@ clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy cc) =
     ExtendTel (Dom _ (El (Type (Max [])) (Def _ []))) (Abs x tels) → do
       reportSLn "def2f" 20 $ "Processing variable " ++ show x
 
-      _ ← pushTNewVar
+      freshVar ← pushTNewVar
       -- We process forward in the telescope and the pattern.
       f ← clauseToFormula qName ty (Clause r tels perm pats cBody cTy cc)
       popTVar
 
-      return $ ForAll $ const f
+      return $ ForAll freshVar $ const f
 
     -- The bounded variable is quantified on a proof,
     --
@@ -263,8 +263,8 @@ clauseToFormula qName ty (Clause _ _ _ [] cBody _ _) = do
             -- equaliy.
             let helper ∷ [String] → LFormula
                 helper []       = __IMPOSSIBLE__
-                helper [_]      = ForAll $ \_ → equal tLHS tRHS
-                helper (_ : xs) = ForAll $ \_ → helper xs
+                helper [x]      = ForAll x $ \_ → equal tLHS tRHS
+                helper (x : xs) = ForAll x $ \_ → helper xs
 
             return $ helper freshVars
           else __IMPOSSIBLE__

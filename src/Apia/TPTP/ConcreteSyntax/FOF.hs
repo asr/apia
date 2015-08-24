@@ -40,13 +40,12 @@ import Apia.Logic.Types
             , Predicate
             , TRUE
            )
+  , LTerm(Var)
   )
 
 import Apia.TPTP.ConcreteSyntax.Common
   ( CFP(P)
   , cfpNameToTPTP
-  , G
-  , quantifierHelper
   , ToTPTP(toTPTP)
   )
 
@@ -64,91 +63,58 @@ type FOF = Text
 
 -- | Translation to FOF concrete syntax.
 class ToFOF a where
-  toFOF ∷ a → G FOF
+  toFOF ∷ a → FOF
 
 ------------------------------------------------------------------------------
 
 instance ToFOF LFormula where
   -- We translate the hard-coded logic predicate @equal_@ as the
   -- predefined equality in the ATP.
-  toFOF (Predicate "equal_" [t1, t2] ) = do
-    t1_ ← toTPTP t1
-    t2_ ← toTPTP t2
-    return $ "( " +++ t1_ +++ " = " +++ t2_ +++ " )"
+  toFOF (Predicate "equal_" [t1, t2] ) =
+    "( " +++ toTPTP t1 +++ " = " +++ toTPTP t2 +++ " )"
 
   toFOF (Predicate "equal_" _) = __IMPOSSIBLE__
 
   -- If the predicate represents a propositional logic variable,
   -- following the TPTP syntax, we do not print the internal
   -- parenthesis.
-  toFOF (Predicate name []) = do
-    name_ ← cfpNameToTPTP P name
-    return $ "( " +++ name_ +++ " )"
+  toFOF (Predicate name []) = "( " +++ cfpNameToTPTP P name +++ " )"
 
-  toFOF (Predicate name terms) = do
-    terms_ ← toTPTP terms
-    name_ ← cfpNameToTPTP P name
-    return $ "( " +++ name_ +++ "(" +++ terms_ +++ ")" +++ " )"
+  toFOF (Predicate name terms) =
+    "( " +++ cfpNameToTPTP P name +++ "(" +++ toTPTP terms +++ ")" +++ " )"
 
-  toFOF (And f1 f2) = do
-    f1_ ← toFOF f1
-    f2_ ← toFOF f2
-    return $ "( " +++ f1_ +++ " & " +++ f2_ +++ " )"
+  toFOF (And f1 f2)     = "( " +++ toFOF f1 +++ " & " +++ toFOF f2 +++ " )"
+  toFOF (Or f1 f2)      = "( " +++ toFOF f1 +++ " | " +++ toFOF f2 +++ " )"
+  toFOF (Not f)         = "( " +++ T.cons '~' (toFOF f) +++ " )"
+  toFOF (Implies f1 f2) = "( " +++ toFOF f1 +++ " => " +++ toFOF f2 +++ " )"
+  toFOF (Equiv f1 f2)   = "( " +++ toFOF f1 +++ " <=> " +++ toFOF f2 +++ " )"
 
-  toFOF (Or f1 f2) = do
-    f1_ ← toFOF f1
-    f2_ ← toFOF f2
-    return $ "( " +++ f1_ +++ " | " +++ f2_ +++ " )"
+  toFOF (ForAll var f) =
+    "( ! [" +++ toUpperFirst (T.pack var) +++ "] : "
+    +++ toFOF (f (Var var))
+    +++ " )"
 
-  toFOF (Not f) = do
-    f_ ← toFOF f
-    return $ "( " +++ T.cons '~' f_ +++ " )"
+  toFOF (Exists var f) =
+    "( ? [" +++ toUpperFirst (T.pack var) +++ "] : "
+    +++ toFOF (f (Var var))
+    +++ " )"
 
-  toFOF (Implies f1 f2) = do
-    f1_ ← toFOF f1
-    f2_ ← toFOF f2
-    return $ "( " +++ f1_ +++ " => " +++ f2_ +++ " )"
-
-  toFOF (Equiv f1 f2) = do
-    f1_ ← toFOF f1
-    f2_ ← toFOF f2
-    return $ "( " +++ f1_ +++ " <=> " +++ f2_ +++ " )"
-
-  toFOF (ForAll f) = do
-    (freshVar, f_) ← quantifierHelper toFOF f
-
-    return $
-      "( ! [" +++ toUpperFirst (T.pack freshVar) +++ "] : "
-      +++ f_
-      +++ " )"
-
-  toFOF (Exists f) = do
-    (freshVar, f_) ← quantifierHelper toFOF f
-
-    return $
-      "( ? [" +++ toUpperFirst (T.pack freshVar) +++ "] : "
-      +++ f_
-      +++ " )"
-
-  toFOF TRUE  = return $ "( " +++ "$true" +++ " )"
-  toFOF FALSE = return $ "( " +++ "$false" +++ " )"
+  toFOF TRUE  = "( " +++ "$true" +++ " )"
+  toFOF FALSE = "( " +++ "$false" +++ " )"
 
 instance ToFOF TPTPRole where
-  toFOF TPTPAxiom      = return "axiom"
-  toFOF TPTPConjecture = return "conjecture"
-  toFOF TPTPDefinition = return "definition"
-  toFOF TPTPHint       = return "hypothesis"
+  toFOF TPTPAxiom      = "axiom"
+  toFOF TPTPConjecture = "conjecture"
+  toFOF TPTPDefinition = "definition"
+  toFOF TPTPHint       = "hypothesis"
   toFOF _              = __IMPOSSIBLE__
 
 -- Translation of annotated formulae to FOF concrete syntax.
 instance ToFOF AF where
-  toFOF (AFor qName atpRole formula) = do
-    qName_   ← toTPTP qName
-    atpRole_ ← toFOF atpRole
-    formula_ ← toFOF formula
+  toFOF (AFor qName atpRole formula) =
+    "fof("
+    +++ toTPTP qName +++ ", "
+    +++ toFOF atpRole +++ ", "
+    +++ toFOF formula
+    +++ ")." +++ "\n\n"
 
-    return $ "fof("
-      +++ qName_ +++ ", "
-      +++ atpRole_ +++ ", "
-      +++ formula_ +++ ")."
-      +++ "\n\n"

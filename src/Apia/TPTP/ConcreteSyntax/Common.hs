@@ -101,7 +101,7 @@ type TPTP = Text
 class ToTPTP a where
   toTPTP ∷ a → G TPTP
 
--- Constant, function or predicate.
+-- | Constant, function or predicate.
 data CFP = C | F | P
 
 ------------------------------------------------------------------------------
@@ -124,7 +124,8 @@ prefixLetter name =
 -- functors either start with lower case and contain alphanumerics and
 -- underscore ...
 
--- Constants, functions and predicates names to TPTP
+-- | Constants, functions and predicates names to TPTP concrete
+-- syntax.
 cfpNameToTPTP ∷ CFP → String → G TPTP
 cfpNameToTPTP cfp name = do
   name_ ← toTPTP name

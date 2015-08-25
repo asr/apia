@@ -122,11 +122,14 @@ instance ToTPTP Char where
     | c == '{'  = __IMPOSSIBLE__
     | c == '}'  = __IMPOSSIBLE__
     | c == '@'  = __IMPOSSIBLE__
+
     -- We use the character @_@ to separate the Agda NameId (see
     -- below).
     | c == '_' = T.singleton c
+
     -- The character is a subscript digit (i.e. ₀, ₁, ..., ₉).
     | ord c `elem` [8320 .. 8329]  = T.singleton $ chr (ord c - 8272)
+
     | isDigit c || isAsciiUpper c || isAsciiLower c = T.singleton c
     | otherwise  = T.pack $ show $ ord c
 

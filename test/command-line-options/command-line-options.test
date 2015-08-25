@@ -9,7 +9,7 @@ Usage: apia [OPTIONS] FILE
            --check                              Check the syntax of the generated TPTP files using the
                                                 tptp4X program from the TPTP library
            --dump-agdai                         Dump the Agda interface file to stdout
-           --dump-qnames                        Dump Agda QNames information to stdout
+           --dump-types                         Dump Agda types information to stdout
            --function-constant                  Use a hard-coded binary function symbol for the translation
                                                 of functions (required for handling currying)
            --help                               Show this help
@@ -124,8 +124,8 @@ Interface
 >>>2
 >>>= 0
 
-#8. --dump-qnames
-dist/build/apia/apia -itest/command-line-options --dump-qnames test/command-line-options/Foo.agda
+#8. --dump-types
+dist/build/apia/apia -itest/command-line-options --dump-types test/command-line-options/Foo.agda
 <<<
 >>>
 Qname: Foo.foo

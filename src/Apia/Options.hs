@@ -21,7 +21,7 @@ module Apia.Options
            , optATP
            , optCheck
            , optDumpAgdai
-           , optDumpQNames
+           , optDumpTypes
            , optFnConstant
            , optHelp
            , optInputFile
@@ -103,7 +103,7 @@ data Options = Options
   { optATP                             ∷ [String]
   , optCheck                           ∷ Bool
   , optDumpAgdai                       ∷ Bool
-  , optDumpQNames                      ∷ Bool
+  , optDumpTypes                       ∷ Bool
   , optFnConstant                      ∷ Bool
   , optHelp                            ∷ Bool
   , optIncludePath                     ∷ [FilePath]
@@ -143,7 +143,7 @@ defaultOptions = Options
   { optATP                             = []
   , optCheck                           = False
   , optDumpAgdai                       = False
-  , optDumpQNames                      = False
+  , optDumpTypes                       = False
   , optFnConstant                      = False
   , optHelp                            = False
   , optIncludePath                     = []
@@ -189,8 +189,8 @@ checkOpt opts = Right opts { optCheck = True }
 dumpAgdaiOpt ∷ MOptions
 dumpAgdaiOpt opts = Right opts { optDumpAgdai = True }
 
-dumpQNamesOpt ∷ MOptions
-dumpQNamesOpt opts = Right opts { optDumpQNames = True }
+dumpTypesOpt ∷ MOptions
+dumpTypesOpt opts = Right opts { optDumpTypes = True }
 
 fnConstantOpt ∷ MOptions
 fnConstantOpt opts = Right opts { optFnConstant = True }
@@ -360,8 +360,8 @@ options =
                ++ "tptp4X program from the TPTP library"
   , Option []  ["dump-agdai"] (NoArg dumpAgdaiOpt)
                "Dump the Agda interface file to stdout"
-  , Option []  ["dump-qnames"] (NoArg dumpQNamesOpt)
-               "Dump Agda QNames information to stdout"
+  , Option []  ["dump-types"] (NoArg dumpTypesOpt)
+               "Dump Agda types information to stdout"
   , Option []  ["function-constant"] (NoArg fnConstantOpt) $
                "Use a hard-coded binary function symbol for the translation\n"
                ++ "of functions (required for handling currying)"

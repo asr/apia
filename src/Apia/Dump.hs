@@ -14,7 +14,7 @@
 
 module Apia.Dump
   ( dumpAgdai
-  , dumpQNames
+  , dumpTypes
   ) where
 
 ------------------------------------------------------------------------------
@@ -69,9 +69,9 @@ dumpQNameInformation (qName, def) = do
   liftIO $ putStrLn $ "nameBindingSite range: "
                       ++ (show . qNameNameBindingSiteRange) qName ++ "\n"
 
--- | Print 'QName's information to stdout.
-dumpQNames ∷ FilePath → T ()
-dumpQNames file = do
+-- | Print Agda types information to stdout.
+dumpTypes ∷ FilePath → T ()
+dumpTypes file = do
 
   i ← readInterface file
 

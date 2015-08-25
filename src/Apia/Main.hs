@@ -32,7 +32,7 @@ import Agda.Utils.Impossible ( catchImpossible )
 
 import Apia.ATPs      ( callATPs, selectedATPs )
 import Apia.CheckTPTP ( checkTPTP )
-import Apia.Dump      ( dumpAgdai, dumpQNames )
+import Apia.Dump      ( dumpAgdai, dumpTypes )
 
 import Apia.Monad.Base
   ( modifyTDefs
@@ -45,7 +45,7 @@ import Apia.Monad.Reports ( reportSLn )
 import Apia.Options
   ( Options( optCheck
            , optDumpAgdai
-           , optDumpQNames
+           , optDumpTypes
            , optHelp
            , optInputFile
            , optLang
@@ -121,8 +121,8 @@ runApia = do
         case () of
           _ | -- Dump the Agda interface file to stdout.
               optDumpAgdai opts → dumpAgdai file
-            | -- Dump Agda QNames information to stdout.
-              optDumpQNames opts → dumpQNames file
+            | -- Dump Agda types information to stdout.
+              optDumpTypes opts → dumpTypes file
             | otherwise → do
 
               -- The ATP pragmas are translated to annotated formulae.

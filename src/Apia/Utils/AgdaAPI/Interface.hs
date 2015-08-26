@@ -321,10 +321,8 @@ qNameType qName = ignoreSharing . defType <$> qNameDefinition qName
 qNameLine ∷ QName → Int32
 qNameLine qName =
   case rangeToInterval $ qNameConcreteNameRange qName of
-  -- See Issue 13.
-  --
-  -- Using Agda (after 18 July 2015) we can use @__IMPOSSIBLE__@.
-    Nothing              → __IMPOSSIBLE__
+    -- See Issues 13 and 18.
+    Nothing              → -1
     Just (Interval s _)  → posLine s
 
 -- | Return the 'Range' of the concrete name of a 'QName'.

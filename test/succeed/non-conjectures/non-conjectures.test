@@ -1,0 +1,21 @@
+#1. Issue 18
+dist/build/apia/apia -itest/succeed/non-conjectures --dump-types test/succeed/non-conjectures/Issue18.agda
+<<<
+>>>
+Qname: Issue18.∃
+Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi []r(El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi []r(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (NoAbs "_" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}) (NoAbs "A" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}
+Concrete name range: 
+nameBindingSite range: /home/asr/code/phd/repos/apia/test/succeed/non-conjectures/Issue18.agda:6,6-7
+
+Qname: Issue18.D
+Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}
+Concrete name range: /home/asr/code/phd/repos/apia/test/succeed/non-conjectures/Issue18.agda:4,3-4
+nameBindingSite range: /home/asr/code/phd/repos/apia/test/succeed/non-conjectures/Issue18.agda:4,3-4
+
+Qname: Issue18.∃._,_
+Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi []r{El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi []r(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (NoAbs "_" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}} (Abs "A" El {_getSort = Type (Max []), unEl = Pi []r(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (Abs "witness" El {_getSort = Type (Max []), unEl = Pi []r(El {_getSort = Type (Max []), unEl = Var 1 [Apply []r(Var 0 [])]}) (NoAbs "_" El {_getSort = Type (Max []), unEl = Def Issue18.∃ [Apply []r(Var 1 [])]})})})}
+Concrete name range: /home/asr/code/phd/repos/apia/test/succeed/non-conjectures/Issue18.agda:7,3-6
+nameBindingSite range: /home/asr/code/phd/repos/apia/test/succeed/non-conjectures/Issue18.agda:7,3-6
+
+>>>2
+>>>= 0

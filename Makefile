@@ -4,11 +4,12 @@ SHELL := /bin/bash
 # Paths
 
 # Tests paths.
+command_line_options_path = test/command-line-options
+errors_path               = test/fail/errors
 fol_theorems_path         = test/succeed/fol-theorems
+non_conjectures_path      = test/succeed//non-conjectures
 non_fol_theorems_path     = test/succeed/non-fol-theorems
 non_theorems_path         = test/fail/non-theorems
-errors_path               = test/fail/errors
-command_line_options_path = test/command-line-options
 
 # Output directory for the TPTP files.
 output_dir = /tmp/apia
@@ -43,6 +44,12 @@ my_pathsubst = $(patsubst %.agda, %.$(1), \
 
 # Tests
 
+command_line_options_files = \
+  $(patsubst %.agda, %.command_line_options,\
+    $(shell find $(command_line_options_path) -name '*.agda' | sort))
+
+errors_files = $(call my_pathsubst,errors,$(errors_path))
+
 generated_fol_theorems_files = \
   $(call my_pathsubst,generated_fol_theorems,$(fol_theorems_path))
 
@@ -52,6 +59,10 @@ generated_non_fol_theorems_files = \
 
 generated_non_theorems_files = \
   $(call my_pathsubst,generated_non_theorems,$(non_theorems_path))
+
+non_conjectures_files = \
+  $(patsubst %.agda, %.non_conjectures,\
+    $(shell find $(non_conjectures_path) -name '*.agda' | sort))
 
 only_fol_theorems_files = \
   $(call my_pathsubst,only_fol_theorems,$(fol_theorems_path))
@@ -69,12 +80,6 @@ prove_non_fol_theorems_files = \
 
 refute_theorems_files = \
   $(call my_pathsubst,refute_theorems,$(non_theorems_path))
-
-errors_files = $(call my_pathsubst,errors,$(errors_path))
-
-command_line_options_files = \
-  $(patsubst %.agda, %.command_line_options,\
-    $(shell find $(command_line_options_path) -name '*.agda' | sort))
 
 # Notes
 
@@ -339,6 +344,19 @@ refute_theorems : $(refute_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
+# Test suite: Non-conjectures
+
+%.non_conjectures :
+	@$(AGDA) -i$(non_conjectures_path) $*.agda
+
+# Tested with shelltestrunner 1.3.5.
+non_conjectures : $(non_conjectures_files)
+	shelltest --color --precise \
+                  $(non_conjectures_path)/non-conjectures.test
+	@echo "$@ succeeded!"
+
+
+##############################################################################
 # Test suite: Command-line options
 
 %.command_line_options :
@@ -424,6 +442,7 @@ apia_changed : clean
 	cabal configure
 	cabal build
 	make generated_all
+	make non_conjectures
 	make errors
 	make command_line_options
 	make type_check_notes

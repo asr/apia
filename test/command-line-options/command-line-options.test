@@ -114,7 +114,7 @@ Interface
         names
           foo --> [Foo.foo]
 
-  signature: Sig {sigSections = fromList [(Foo,Section {secTelescope = EmptyTel, secFreeVars = 0})], sigDefinitions = fromList [(Foo.foo,Defn {defArgInfo = ArgInfo {argInfoHiding = NotHidden, argInfoRelevance = Relevant, argInfoColors = []}, defName = Foo.foo, defType = El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}, defPolarity = [], defArgOccurrences = [], defDisplay = [], defMutual = MutId 0, defCompiledRep = CompiledRep {compiledHaskell = Nothing, exportHaskell = Nothing, compiledEpic = Nothing, compiledJS = Nothing, compiledCore = Nothing}, defRewriteRules = [], defInstance = Nothing, theDef = Axiom {axTPTPRole = Nothing, axTPTPHints = []}})]}
+  signature: Sig {sigSections = fromList [(Foo,Section {secTelescope = EmptyTel, secFreeVars = 0})], sigDefinitions = fromList [(Foo.foo,Defn {defArgInfo = ArgInfo {argInfoHiding = NotHidden, argInfoRelevance = Relevant, argInfoColors = []}, defName = Foo.foo, defType = El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}, defPolarity = [], defArgOccurrences = [], defDisplay = [], defMutual = MutId 0, defCompiledRep = CompiledRep {compiledHaskell = Nothing, exportHaskell = Nothing, compiledEpic = Nothing, compiledJS = Nothing, compiledCore = Nothing}, defInstance = Nothing, theDef = Axiom {axTPTPRole = Nothing, axTPTPHints = []}})], sigRewriteRules = fromList []}
   builtin: fromList []
   Haskell imports: fromList []
   Haskell imports UHC: fromList []

@@ -1,4 +1,142 @@
-#1. Issue 18
+#1. --help
+dist/build/apia/apia --help
+<<<
+>>>
+Usage: apia [OPTIONS] FILE
+
+           --atp=NAME                           Set the ATP (cvc4, e, equinox, ileancop, metis, spass, vampire or z3)
+                                                (default: e, equinox and vampire)
+           --check                              Check the syntax of the generated TPTP files using the
+                                                tptp4X program from the TPTP library
+           --dump-agdai                         Dump the Agda interface file to stdout
+           --dump-types                         Dump Agda types information to stdout
+           --function-constant                  Use a hard-coded binary function symbol for the translation
+                                                of functions (required for handling currying)
+           --help                               Show this help
+  -i DIR   --include-path=DIR                   Look for imports in DIR
+  -L LANG  --lang=LANG                          TPTP output language (fof or tff0)
+                                                (default: fof)
+           --no-internal-equality               Do not translate _≡_ to the ATPs equality
+           --no-predicate-constants             Do not use hard-coded (n+1)-ary predicate symbols for the
+                                                translation of n-ary predicates
+           --only-files                         Do not call the ATPs, only to create the TPTP files
+           --output-dir=DIR                     Directory in which the TPTP files are placed (default: /tmp)
+           --schematic-propositional-functions  Enable translation of universal quantified FOL propositional functions
+           --schematic-propositional-symbols    Enable translation of universal quantified FOL propositional symbols
+           --snapshot-dir=DIR                   Directory where is the snapshot of the TPTP files
+                                                (default: snapshot)
+           --snapshot-no-error                  A difference in the snapshot-test does not generate an error
+                                                (implies --snapshot-test)
+           --snapshot-test                      Compare the generated TPTP files against a snapshot of them
+           --time=NUM                           Set timeout for the ATPs in seconds (default: 240)
+           --unproven-conjecture-no-error       An unproven TPTP conjecture does not generate an error
+  -v N     --verbose=N                          Set verbosity level to N
+           --version                            Show version number
+           --with-cvc4=PATH                     Give the path to CVC4
+           --with-e=PATH                        Give the path to E
+           --with-equinox=PATH                  Give the path to Equinox
+           --with-ileancop=PATH                 Give the path to IleanCoP
+           --with-metis=PATH                    Give the path to Metis
+           --with-spass=PATH                    Give the path to SPASS
+           --with-tptp2X=PATH                   Give the path to tptp2X
+           --with-tptp4X=PATH                   Give the path to tptp4X
+           --with-vampire=PATH                  Give the path to Vampire
+           --with-z3=PATH                       Give the path to Z3
+
+>>>2
+>>>= 0
+
+#2. --only-files
+dist/build/apia/apia -itest/succeed/non-conjectures --only-files test/succeed/non-conjectures/TrivialTheorem.agda
+<<<
+>>>
+Created /tmp/TrivialTheorem/20-foo.fof
+>>>2
+>>>= 0
+
+#3. --verbose
+dist/build/apia/apia -itest/succeed/non-conjectures -v1 --only-files test/succeed/non-conjectures/TrivialTheorem.agda
+<<<
+>>>
+Created /tmp/TrivialTheorem/20-foo.fof
+>>>2
+>>>= 0
+
+#4. --version
+dist/build/apia/apia --version
+<<<
+>>>
+Apia version 0.9.1
+>>>2
+>>>= 0
+
+#5. --unproven-conjecture-no-error
+dist/build/apia/apia -itest/succeed/non-conjectures --atp=e --unproven-conjecture-no-error test/succeed/non-conjectures/NoTheorem.agda
+<<<
+>>>
+Proving the conjecture in /tmp/NoTheorem/17-foo.fof
+E 1.9 Sourenee *did not* prove the conjecture
+the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
+>>>2
+>>>= 0
+
+#6. --snapshot-no-error
+dist/build/apia/apia -itest/succeed/non-conjectures --only-files --output-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/succeed/non-conjectures --snapshot-no-error --snapshot-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda
+<<<
+>>>
+Created /tmp/snapshot/TrivialTheorem/20-foo.fof
+the files are different:
+/tmp/TrivialTheorem/20-foo.fof
+/tmp/snapshot/TrivialTheorem/20-foo.fof
+>>>2
+>>>= 0
+
+#7. --dump-agdai
+dist/build/apia/apia -itest/succeed/non-conjectures --dump-agdai test/succeed/non-conjectures/Foo.agda
+<<<
+>>>
+Interface
+  source hash: 16987302680121282013
+  imported modules: []
+  module name: Foo
+  scope: fromList [(Foo,scope Foo
+  public
+    names
+      foo --> [Foo.foo]
+)]
+  inside scope: ScopeInfo
+  current = Foo
+  context = TopCtx
+  modules
+    scope 
+    scope Foo
+      public
+        names
+          foo --> [Foo.foo]
+
+  signature: Sig {sigSections = fromList [(Foo,Section {secTelescope = EmptyTel, secFreeVars = 0})], sigDefinitions = fromList [(Foo.foo,Defn {defArgInfo = ArgInfo {argInfoHiding = NotHidden, argInfoRelevance = Relevant, argInfoColors = []}, defName = Foo.foo, defType = El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}, defPolarity = [], defArgOccurrences = [], defDisplay = [], defMutual = MutId 0, defCompiledRep = CompiledRep {compiledHaskell = Nothing, exportHaskell = Nothing, compiledEpic = Nothing, compiledJS = Nothing, compiledCore = Nothing}, defInstance = Nothing, theDef = Axiom {axTPTPRole = Nothing, axTPTPHints = []}})], sigRewriteRules = fromList []}
+  builtin: fromList []
+  Haskell imports: fromList []
+  Haskell imports UHC: fromList []
+  highlighting: CompressedFile {ranges = [(Range {from = 1, to = 79},Aspects {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 80, to = 93},Aspects {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 94, to = 172},Aspects {aspect = Just Comment, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 174, to = 177},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 178, to = 185},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 213, to = 216},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 217, to = 220},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 221, to = 228},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 256, to = 259},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 260, to = 263},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 264, to = 271},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 299, to = 302},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 303, to = 306},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 307, to = 314},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 342, to = 345},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 347, to = 353},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 354, to = 357},Aspects {aspect = Just (Name (Just Module) False), otherAspects = [], note = Nothing, definitionSite = Just (TopLevelModuleName {moduleNameParts = ["Foo"]},1)}),(Range {from = 358, to = 363},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 365, to = 374},Aspects {aspect = Just Keyword, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 375, to = 378},Aspects {aspect = Just (Name (Just Postulate) False), otherAspects = [], note = Nothing, definitionSite = Just (TopLevelModuleName {moduleNameParts = ["Foo"]},375)}),(Range {from = 379, to = 380},Aspects {aspect = Just Symbol, otherAspects = [], note = Nothing, definitionSite = Nothing}),(Range {from = 381, to = 384},Aspects {aspect = Just PrimitiveType, otherAspects = [], note = Nothing, definitionSite = Nothing})]}
+  pragma options: [["--exact-split"],["--no-sized-types"],["--no-universe-polymorphism"],["--without-K"]]
+  pattern syns: fromList []
+>>>2
+>>>= 0
+
+#8. --dump-types
+dist/build/apia/apia -itest/succeed/non-conjectures --dump-types test/succeed/non-conjectures/Foo.agda
+<<<
+>>>
+Qname: Foo.foo
+Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}
+Concrete name range: /home/asr/code/phd/repos/apia/test/succeed/non-conjectures/Foo.agda:12,11-14
+nameBindingSite range: /home/asr/code/phd/repos/apia/test/succeed/non-conjectures/Foo.agda:12,11-14
+
+>>>2
+>>>= 0
+
+#9. Issue 18
 dist/build/apia/apia -itest/succeed/non-conjectures --dump-types test/succeed/non-conjectures/Issue18.agda
 <<<
 >>>

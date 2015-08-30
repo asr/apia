@@ -4,10 +4,9 @@ SHELL := /bin/bash
 # Paths
 
 # Tests paths.
-command_line_options_path = test/command-line-options
 errors_path               = test/fail/errors
 fol_theorems_path         = test/succeed/fol-theorems
-non_conjectures_path      = test/succeed//non-conjectures
+non_conjectures_path      = test/succeed/non-conjectures
 non_fol_theorems_path     = test/succeed/non-fol-theorems
 non_theorems_path         = test/fail/non-theorems
 
@@ -43,10 +42,6 @@ my_pathsubst = $(patsubst %.agda, %.$(1), \
 # Files
 
 # Tests
-
-command_line_options_files = \
-  $(patsubst %.agda, %.command_line_options,\
-    $(shell find $(command_line_options_path) -name '*.agda' | sort))
 
 errors_files = $(call my_pathsubst,errors,$(errors_path))
 
@@ -355,19 +350,6 @@ non_conjectures : $(non_conjectures_files)
                   $(non_conjectures_path)/non-conjectures.test
 	@echo "$@ succeeded!"
 
-
-##############################################################################
-# Test suite: Command-line options
-
-%.command_line_options :
-	@$(AGDA) -i$(command_line_options_path) $*.agda
-
-# Tested with shelltestrunner 1.3.5.
-command_line_options : $(command_line_options_files)
-	shelltest --color --precise \
-                  $(command_line_options_path)/command-line-options.test
-	@echo "$@ succeeded!"
-
 ##############################################################################
 # Test suite: Error messages
 
@@ -444,7 +426,6 @@ apia_changed : clean
 	make generated_all
 	make non_conjectures
 	make errors
-	make command_line_options
 	make type_check_notes
 	make prove_notes
 	@echo "$@ succeeded!"
@@ -486,7 +467,7 @@ hpc : hpc_clean
 	make prove_all_theorem
 	make refute_theorems
 	make errors
-	make command_line_options
+	make non_conjectures
 	hpc markup --exclude=Paths_apia \
 	           --destdir=$(hpc_html_dir) \
 	           --srcdir=$(apia_path) \

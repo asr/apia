@@ -24,7 +24,12 @@ module Apia.TPTP.ConcreteSyntax.Common
 ------------------------------------------------------------------------------
 
 import Agda.Syntax.Abstract.Name ( Name(nameId), QName(QName) )
-import Agda.Syntax.Common        ( NameId(NameId) )
+
+import Agda.Syntax.Common
+  ( NameId(NameId)
+  , TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint, TPTPType)
+  )
+
 import Agda.Utils.Impossible     ( Impossible(Impossible), throwImpossible )
 
 import Apia.Logic.Types ( LTerm(Fun, Var) )
@@ -170,3 +175,11 @@ instance ToTPTP [LTerm] where
   toTPTP []       = __IMPOSSIBLE__
   toTPTP [a]      = toTPTP a
   toTPTP (a : as) = toTPTP a +++ "," +++ toTPTP as
+
+instance ToTPTP TPTPRole where
+  toTPTP TPTPAxiom      = "axiom"
+  toTPTP TPTPConjecture = "conjecture"
+  toTPTP TPTPDefinition = "definition"
+  toTPTP TPTPHint       = "hypothesis"
+  -- This role is translated in FOF or TFF0.
+  toTPTP TPTPType = __IMPOSSIBLE__

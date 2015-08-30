@@ -23,9 +23,7 @@ module Apia.TPTP.ConcreteSyntax.TFF0
 
 ------------------------------------------------------------------------------
 
-import Agda.Syntax.Common
-  ( TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint, TPTPType)
-  )
+import Agda.Syntax.Common ( TPTPRole(TPTPType) )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
@@ -104,11 +102,8 @@ instance ToTFF0 LFormula where
   toTFF0 FALSE = "( " +++ "$false" +++ " )"
 
 instance ToTFF0 TPTPRole where
-  toTFF0 TPTPAxiom      = "axiom"
-  toTFF0 TPTPConjecture = "conjecture"
-  toTFF0 TPTPDefinition = "definition"
-  toTFF0 TPTPHint       = "hypothesis"
-  toTFF0 TPTPType       = "type"
+  toTFF0 TPTPType = "type"
+  toTFF0 r        = toTPTP r
 
 -- Translation of annotated formulae to TFF0 concrete syntax.
 instance ToTFF0 AF where

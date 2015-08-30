@@ -32,11 +32,14 @@ module Apia.Logic.Types
 import Apia.Utils.PrettyPrint ( (<>), hcat, Pretty(pretty), space, sspaces )
 
 ------------------------------------------------------------------------------
+
+type VarName = String
+
 -- Adapted from AgdaLight (Plugins.FOL.Types).
 
 -- | Target logic terms.
 data LTerm = Fun String [LTerm]
-           | Var String
+           | Var VarName
 
 instance Pretty LTerm where
   pretty (Fun f ts) = sspaces "Fun" <> pretty f <> pretty ts
@@ -54,8 +57,8 @@ data LFormula = TRUE
               | Or LFormula LFormula
               | Implies LFormula LFormula
               | Equiv LFormula LFormula
-              | ForAll String (LTerm → LFormula)
-              | Exists String (LTerm → LFormula)
+              | ForAll VarName (LTerm → LFormula)
+              | Exists VarName (LTerm → LFormula)
 
 instance Pretty LFormula where
   pretty TRUE                = sspaces "TRUE"

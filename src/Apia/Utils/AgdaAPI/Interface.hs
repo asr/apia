@@ -320,9 +320,9 @@ qNameType qName = ignoreSharing . defType <$> qNameDefinition qName
 -- | Return the line where a 'QName' is defined.
 qNameLine ∷ QName → Int32
 qNameLine qName =
-  case rangeToInterval $ qNameConcreteNameRange qName of
+  case rangeToInterval $ qNameNameBindingSiteRange qName of
     -- See Issues 13 and 18.
-    Nothing              → -1
+    Nothing              → __IMPOSSIBLE__
     Just (Interval s _)  → posLine s
 
 -- | Return the 'Range' of the concrete name of a 'QName'.

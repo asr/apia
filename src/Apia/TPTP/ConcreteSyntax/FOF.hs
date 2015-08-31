@@ -39,6 +39,7 @@ import Apia.Logic.Types
             , TRUE
            )
   , LTerm(Var)
+  , VarName
   )
 
 import Apia.TPTP.ConcreteSyntax.Common
@@ -65,6 +66,11 @@ class ToFOF a where
 
 ------------------------------------------------------------------------------
 
+quantifierBodyToFOF ∷ VarName → (LTerm → LFormula) → FOF
+quantifierBodyToFOF var f =
+  "[" +++ toUpperFirst (T.pack var) +++ "] : "
+  +++ toFOF (f (Var var))
+
 instance ToFOF LFormula where
   -- We translate the hard-coded logic predicate @equal_@ as the
   -- predefined equality in the ATP.
@@ -86,19 +92,10 @@ instance ToFOF LFormula where
   toFOF (Not f)         = parens $ T.cons '~' (toFOF f)
   toFOF (Implies f1 f2) = parens $ toFOF f1 +++ " => " +++ toFOF f2
   toFOF (Equiv f1 f2)   = parens $ toFOF f1 +++ " <=> " +++ toFOF f2
-
-  toFOF (ForAll var f) =
-    "( ! [" +++ toUpperFirst (T.pack var) +++ "] : "
-    +++ toFOF (f (Var var))
-    +++ " )"
-
-  toFOF (Exists var f) =
-    "( ? [" +++ toUpperFirst (T.pack var) +++ "] : "
-    +++ toFOF (f (Var var))
-    +++ " )"
-
-  toFOF TRUE  = parens "$true"
-  toFOF FALSE = parens "$false"
+  toFOF (ForAll var f)  = "( ! " +++ quantifierBodyToFOF var f +++ " )"
+  toFOF (Exists var f)  = "( ? " +++ quantifierBodyToFOF var f +++ " )"
+  toFOF TRUE            = parens "$true"
+  toFOF FALSE           = parens "$false"
 
 instance ToFOF TPTPRole where
   toFOF TPTPType = __IMPOSSIBLE__

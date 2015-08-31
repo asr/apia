@@ -40,6 +40,7 @@ import Apia.Logic.Types
             , TRUE
            )
   , LTerm(Var)
+  , VarName
   )
 
 import Apia.TPTP.ConcreteSyntax.Common
@@ -66,6 +67,11 @@ class ToTFF0 a where
 
 ------------------------------------------------------------------------------
 
+quantifierBodyToTFF0 ∷ VarName → (LTerm → LFormula) → TFF0
+quantifierBodyToTFF0 var f =
+  "[" +++ toUpperFirst (T.pack var) +++ "] : "
+  +++ toTFF0 (f (Var var))
+
 instance ToTFF0 LFormula where
   -- We translate the hard-coded logic predicate @equal_@ as the
   -- predefined equality in the ATP.
@@ -87,19 +93,10 @@ instance ToTFF0 LFormula where
   toTFF0 (Not f)         = parens $ T.cons '~' (toTFF0 f)
   toTFF0 (Implies f1 f2) = parens $ toTFF0 f1 +++ " => " +++ toTFF0 f2
   toTFF0 (Equiv f1 f2)   = parens $ toTFF0 f1 +++ " <=> " +++ toTFF0 f2
-
-  toTFF0 (ForAll var f) =
-    "( ! [" +++ toUpperFirst (T.pack var) +++ "] : "
-    +++ toTFF0 (f (Var var))
-    +++ " )"
-
-  toTFF0 (Exists var f) =
-    "( ? [" +++ toUpperFirst (T.pack var) +++ "] : "
-    +++ toTFF0 (f (Var var))
-    +++ " )"
-
-  toTFF0 TRUE  = parens "$true"
-  toTFF0 FALSE = parens "$false"
+  toTFF0 (ForAll var f)  = "( ! " +++ quantifierBodyToTFF0 var f +++ " )"
+  toTFF0 (Exists var f)  = "( ? " +++ quantifierBodyToTFF0 var f +++ " )"
+  toTFF0 TRUE            = parens "$true"
+  toTFF0 FALSE           = parens "$false"
 
 instance ToTFF0 TPTPRole where
   toTFF0 TPTPType = "type"

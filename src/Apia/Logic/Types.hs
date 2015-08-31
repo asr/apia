@@ -27,6 +27,7 @@ module Apia.Logic.Types
             , TRUE
            )
   , LTerm(Fun, Var)
+  , VarName
   ) where
 
 import Apia.Utils.PrettyPrint ( (<>), hcat, Pretty(pretty), space, sspaces )

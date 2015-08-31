@@ -9,7 +9,7 @@
 % Name: PropositionalFunction.id₂
 % Role: prove
 % Line: 17
-fof(n16_94491769, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ( kp2_(A,B,C) ) => ( kp2_(A,B,C) ) ) ) ) )).
+fof(n16_94491769, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : (kp2_(A,B,C) => kp2_(A,B,C)) ) ) )).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: Issue1.Functions.foo
 % Role: axiom
 % Line: 20
-fof(n12_82241428, axiom, ( ! [A] : ( kp1_(cNAME,A) ) )).
+fof(n12_82241428, axiom, ( ! [A] : kp1_(cNAME,A) )).
 
 % End general axiom(s).
 
@@ -20,7 +20,7 @@ fof(n12_82241428, axiom, ( ! [A] : ( kp1_(cNAME,A) ) )).
 % Name: Issue1.Functions.bar
 % Role: prove
 % Line: 24
-fof(n16_82241428, conjecture, ( ! [A] : ( kp1_(nAME,A) ) )).
+fof(n16_82241428, conjecture, ( ! [A] : kp1_(nAME,A) )).
 
 % End conjecture.
 

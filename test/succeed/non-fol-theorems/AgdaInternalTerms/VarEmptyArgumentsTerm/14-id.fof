@@ -9,7 +9,7 @@
 % Name: AgdaInternalTerms.VarEmptyArgumentsTerm.id
 % Role: prove
 % Line: 14
-fof(n10_40428322, conjecture, ( ! [A] : ( ! [B] : ( ( kp1_(A,B) ) => ( kp1_(A,B) ) ) ) )).
+fof(n10_40428322, conjecture, ( ! [A] : ( ! [B] : (kp1_(A,B) => kp1_(A,B)) ) )).
 
 % End conjecture.
 

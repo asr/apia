@@ -9,7 +9,7 @@
 % Name: ImplicitArguments.a≡b
 % Role: axiom
 % Line: 22
-fof(n16_60938615, axiom, ( a = b )).
+fof(n16_60938615, axiom, (a = b)).
 
 % End general axiom(s).
 
@@ -20,7 +20,7 @@ fof(n16_60938615, axiom, ( a = b )).
 % Name: ImplicitArguments._.prf
 % Role: prove
 % Line: 28
-fof(n26_60938615, conjecture, ( ! [A] : ( b = a ) )).
+fof(n26_60938615, conjecture, ( ! [A] : (b = a) )).
 
 % End conjecture.
 

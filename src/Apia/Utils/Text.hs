@@ -10,10 +10,15 @@
 -- Utilities on text.
 ------------------------------------------------------------------------------
 
-{-# LANGUAGE CPP           #-}
-{-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE CPP               #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE UnicodeSyntax     #-}
 
-module Apia.Utils.Text ( (+++), toUpperFirst ) where
+module Apia.Utils.Text
+  ( (+++)
+  , parens
+  , toUpperFirst
+  ) where
 
 ------------------------------------------------------------------------------
 
@@ -37,3 +42,7 @@ toUpperFirst xs =
   case T.uncons xs of
     Just (x', xs') → T.cons (toUpper x') xs'
     Nothing        → __IMPOSSIBLE__
+
+-- | Wrap text in ( ... ).
+parens ∷ Text → Text
+parens t = "(" +++ t +++ ")"

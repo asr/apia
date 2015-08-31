@@ -9,13 +9,13 @@
 % Name: Where3.+-0x
 % Role: axiom
 % Line: 34
-fof(n44_188531139, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
+fof(n44_188531139, axiom, ( ! [A] : (n43(zero,A) = A) )).
 
 % The original Agda term was:
 % Name: Where3.+-Sx
 % Role: axiom
 % Line: 35
-fof(n50_188531139, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
+fof(n50_188531139, axiom, ( ! [A] : ( ! [B] : (n43(succ(A),B) = succ(n43(A,B))) ) )).
 
 % End general axiom(s).
 
@@ -26,7 +26,7 @@ fof(n50_188531139, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) 
 % Name: Where3.Helper.is
 % Role: prove
 % Line: 48
-fof(n68_188531139, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( n43(B,zero) = B ) => ( n43(succ(B),zero) = succ(B) ) ) ) ) )).
+fof(n68_188531139, conjecture, ( ! [A] : (kp1_(cN,A) => ( ! [B] : ((n43(B,zero) = B) => (n43(succ(B),zero) = succ(B))) )) )).
 
 % End conjecture.
 

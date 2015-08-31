@@ -9,7 +9,7 @@
 % Name: ProjectionLikeFunction._.P
 % Role: definition
 % Line: 41
-fof(n20_90809832, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(cP_20_90809832,A,B) ) <=> ( B = B ) ) ) ) )).
+fof(n20_90809832, definition, ( ! [A] : (kp1_(cN,A) => ( ! [B] : (kp2_(cP_20_90809832,A,B) <=> (B = B)) )) )).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n20_90809832, definition, ( ! [A] : ( ( kp1_(cN,A) ) => ( ! [B] : ( ( kp2_(c
 % Name: ProjectionLikeFunction._.bar
 % Role: prove
 % Line: 45
-fof(n24_90809832, conjecture, ( ! [A] : ( ( kp1_(cN,A) ) => ( kp2_(cP_20_90809832,A,A) ) ) )).
+fof(n24_90809832, conjecture, ( ! [A] : (kp1_(cN,A) => kp2_(cP_20_90809832,A,A)) )).
 
 % End conjecture.
 

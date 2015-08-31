@@ -9,7 +9,7 @@
 % Name: Eta3.P
 % Role: definition
 % Line: 26
-fof(n16_156166027, definition, ( ! [A] : ( ( kp1_(cP_16_156166027,A) ) <=> ( ? [B] : ( kp2_(cP178,A,B) ) ) ) )).
+fof(n16_156166027, definition, ( ! [A] : (kp1_(cP_16_156166027,A) <=> ( ? [B] : kp2_(cP178,A,B) )) )).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n16_156166027, definition, ( ! [A] : ( ( kp1_(cP_16_156166027,A) ) <=> ( ? [
 % Name: Eta3.bar
 % Role: prove
 % Line: 30
-fof(n26_156166027, conjecture, ( ! [A] : ( ( kp1_(cP_16_156166027,A) ) => ( ? [B] : ( kp2_(cP178,A,B) ) ) ) )).
+fof(n26_156166027, conjecture, ( ! [A] : (kp1_(cP_16_156166027,A) => ( ? [B] : kp2_(cP178,A,B) )) )).
 
 % End conjecture.
 

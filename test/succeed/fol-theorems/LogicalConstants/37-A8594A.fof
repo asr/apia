@@ -9,7 +9,7 @@
 % Name: LogicalConstants.A→A
 % Role: prove
 % Line: 37
-fof(n24_143722291, conjecture, ( ( pA ) => ( pA ) )).
+fof(n24_143722291, conjecture, ((pA) => (pA))).
 
 % End conjecture.
 

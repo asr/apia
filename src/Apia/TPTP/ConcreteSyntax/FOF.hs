@@ -48,7 +48,7 @@ import Apia.TPTP.ConcreteSyntax.Common
   )
 
 import Apia.TPTP.Types ( AF(AFor) )
-import Apia.Utils.Text ( (+++), toUpperFirst )
+import Apia.Utils.Text ( (+++), parens, toUpperFirst )
 
 import Data.Text ( Text )
 import qualified Data.Text as T
@@ -69,23 +69,23 @@ instance ToFOF LFormula where
   -- We translate the hard-coded logic predicate @equal_@ as the
   -- predefined equality in the ATP.
   toFOF (Predicate "equal_" [t1, t2] ) =
-    "( " +++ toTPTP t1 +++ " = " +++ toTPTP t2 +++ " )"
+    parens $ toTPTP t1 +++ " = " +++ toTPTP t2
 
   toFOF (Predicate "equal_" _) = __IMPOSSIBLE__
 
   -- If the predicate represents a propositional logic variable,
   -- following the TPTP syntax, we do not print the internal
   -- parenthesis.
-  toFOF (Predicate name []) = "( " +++ cfpNameToTPTP P name +++ " )"
+  toFOF (Predicate name []) = parens $ cfpNameToTPTP P name
 
   toFOF (Predicate name terms) =
-    "( " +++ cfpNameToTPTP P name +++ "(" +++ toTPTP terms +++ ")" +++ " )"
+    cfpNameToTPTP P name +++ parens (toTPTP terms)
 
-  toFOF (And f1 f2)     = "( " +++ toFOF f1 +++ " & " +++ toFOF f2 +++ " )"
-  toFOF (Or f1 f2)      = "( " +++ toFOF f1 +++ " | " +++ toFOF f2 +++ " )"
-  toFOF (Not f)         = "( " +++ T.cons '~' (toFOF f) +++ " )"
-  toFOF (Implies f1 f2) = "( " +++ toFOF f1 +++ " => " +++ toFOF f2 +++ " )"
-  toFOF (Equiv f1 f2)   = "( " +++ toFOF f1 +++ " <=> " +++ toFOF f2 +++ " )"
+  toFOF (And f1 f2)     = parens $ toFOF f1 +++ " & " +++ toFOF f2
+  toFOF (Or f1 f2)      = parens $ toFOF f1 +++ " | " +++ toFOF f2
+  toFOF (Not f)         = parens $ T.cons '~' (toFOF f)
+  toFOF (Implies f1 f2) = parens $ toFOF f1 +++ " => " +++ toFOF f2
+  toFOF (Equiv f1 f2)   = parens $ toFOF f1 +++ " <=> " +++ toFOF f2
 
   toFOF (ForAll var f) =
     "( ! [" +++ toUpperFirst (T.pack var) +++ "] : "
@@ -97,8 +97,8 @@ instance ToFOF LFormula where
     +++ toFOF (f (Var var))
     +++ " )"
 
-  toFOF TRUE  = "( " +++ "$true" +++ " )"
-  toFOF FALSE = "( " +++ "$false" +++ " )"
+  toFOF TRUE  = parens "$true"
+  toFOF FALSE = parens "$false"
 
 instance ToFOF TPTPRole where
   toFOF TPTPType = __IMPOSSIBLE__
@@ -112,4 +112,3 @@ instance ToFOF AF where
     +++ toFOF atpRole +++ ", "
     +++ toFOF formula
     +++ ")." +++ "\n\n"
-

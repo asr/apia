@@ -9,7 +9,7 @@
 % Name: Let.bar
 % Role: prove
 % Line: 19
-fof(n12_244693702, conjecture, ( ! [A] : ( ! [B] : ( ( A = B ) => ( B = A ) ) ) )).
+fof(n12_244693702, conjecture, ( ! [A] : ( ! [B] : ((A = B) => (B = A)) ) )).
 
 % End conjecture.
 

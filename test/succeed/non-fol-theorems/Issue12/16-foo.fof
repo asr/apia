@@ -9,7 +9,7 @@
 % Name: Issue12.foo
 % Role: prove
 % Line: 16
-fof(n12_253550555, conjecture, ( ! [A] : ( ( ? [B] : ( kp1_(A,B) ) ) => ( ? [B] : ( kp1_(A,B) ) ) ) )).
+fof(n12_253550555, conjecture, ( ! [A] : (( ? [B] : kp1_(A,B) ) => ( ? [B] : kp1_(A,B) )) )).
 
 % End conjecture.
 

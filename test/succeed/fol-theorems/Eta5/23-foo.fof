@@ -9,7 +9,7 @@
 % Name: Eta5.P
 % Role: definition
 % Line: 19
-fof(n16_19183374, definition, ( ! [A] : ( ( kp1_(cP_16_19183374,A) ) <=> ( ? [B] : ( kp2_(n_8776_,A,B) ) ) ) )).
+fof(n16_19183374, definition, ( ! [A] : (kp1_(cP_16_19183374,A) <=> ( ? [B] : kp2_(n_8776_,A,B) )) )).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n16_19183374, definition, ( ! [A] : ( ( kp1_(cP_16_19183374,A) ) <=> ( ? [B]
 % Name: Eta5.foo
 % Role: prove
 % Line: 23
-fof(n26_19183374, conjecture, ( ! [A] : ( ( kp1_(cP_16_19183374,A) ) => ( ? [B] : ( kp2_(n_8776_,A,B) ) ) ) )).
+fof(n26_19183374, conjecture, ( ! [A] : (kp1_(cP_16_19183374,A) => ( ? [B] : kp2_(n_8776_,A,B) )) )).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: LogicalConstants.∨E
 % Role: prove
 % Line: 50
-fof(n40_143722291, conjecture, ( ( ( pA ) => ( pC ) ) => ( ( ( pB ) => ( pC ) ) => ( ( ( pA ) | ( pB ) ) => ( pC ) ) ) )).
+fof(n40_143722291, conjecture, (((pA) => (pC)) => (((pB) => (pC)) => (((pA) | (pB)) => (pC))))).
 
 % End conjecture.
 

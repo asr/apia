@@ -9,13 +9,13 @@
 % Name: Definition4.+-0x
 % Role: axiom
 % Line: 34
-fof(n44_92201930, axiom, ( ! [A] : ( n43(zero,A) = A ) )).
+fof(n44_92201930, axiom, ( ! [A] : (n43(zero,A) = A) )).
 
 % The original Agda term was:
 % Name: Definition4.+-Sx
 % Role: axiom
 % Line: 35
-fof(n50_92201930, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) ) ) )).
+fof(n50_92201930, axiom, ( ! [A] : ( ! [B] : (n43(succ(A),B) = succ(n43(A,B))) ) )).
 
 % End general axiom(s).
 
@@ -26,7 +26,7 @@ fof(n50_92201930, axiom, ( ! [A] : ( ! [B] : ( n43(succ(A),B) = succ(n43(A,B)) )
 % Name: Definition4.A
 % Role: definition
 % Line: 40
-fof(n52_92201930, definition, ( ! [A] : ( ( kp1_(cA_52_92201930,A) ) <=> ( n43(zero,A) = A ) ) )).
+fof(n52_92201930, definition, ( ! [A] : (kp1_(cA_52_92201930,A) <=> (n43(zero,A) = A)) )).
 
 % End required definition(s) by the conjecture.
 
@@ -37,7 +37,7 @@ fof(n52_92201930, definition, ( ! [A] : ( ( kp1_(cA_52_92201930,A) ) <=> ( n43(z
 % Name: Definition4.A0
 % Role: prove
 % Line: 44
-fof(n56_92201930, conjecture, ( kp1_(cA_52_92201930,zero) )).
+fof(n56_92201930, conjecture, kp1_(cA_52_92201930,zero)).
 
 % End conjecture.
 

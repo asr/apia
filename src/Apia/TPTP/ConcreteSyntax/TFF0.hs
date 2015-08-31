@@ -49,7 +49,7 @@ import Apia.TPTP.ConcreteSyntax.Common
   )
 
 import Apia.TPTP.Types ( AF(AFor) )
-import Apia.Utils.Text ( (+++), toUpperFirst )
+import Apia.Utils.Text ( (+++), parens, toUpperFirst )
 
 import Data.Text ( Text )
 import qualified Data.Text as T
@@ -70,23 +70,23 @@ instance ToTFF0 LFormula where
   -- We translate the hard-coded logic predicate @equal_@ as the
   -- predefined equality in the ATP.
   toTFF0 (Predicate "equal_" [t1, t2] ) =
-    "( " +++ toTPTP t1 +++ " = " +++ toTPTP t2 +++ " )"
+    parens $ toTPTP t1 +++ " = " +++ toTPTP t2
 
   toTFF0 (Predicate "equal_" _) = __IMPOSSIBLE__
 
   -- If the predicate represents a propositional logic variable,
   -- following the TPTP syntax, we do not print the internal
   -- parenthesis.
-  toTFF0 (Predicate name []) = "( " +++ cfpNameToTPTP P name +++ " )"
+  toTFF0 (Predicate name []) = parens $ cfpNameToTPTP P name
 
   toTFF0 (Predicate name terms) =
-    "( " +++ cfpNameToTPTP P name +++ "(" +++ toTPTP terms +++ ")" +++ " )"
+    cfpNameToTPTP P name +++ parens (toTPTP terms)
 
-  toTFF0 (And f1 f2)     = "( " +++ toTFF0 f1 +++ " & " +++ toTFF0 f2 +++ " )"
-  toTFF0 (Or f1 f2)      = "( " +++ toTFF0 f1 +++ " | " +++ toTFF0 f2 +++ " )"
-  toTFF0 (Not f)         = "( " +++ T.cons '~' (toTFF0 f) +++ " )"
-  toTFF0 (Implies f1 f2) = "( " +++ toTFF0 f1 +++ " => " +++ toTFF0 f2 +++ " )"
-  toTFF0 (Equiv f1 f2)   = "( " +++ toTFF0 f1 +++ " <=> " +++ toTFF0 f2 +++ " )"
+  toTFF0 (And f1 f2)     = parens $ toTFF0 f1 +++ " & " +++ toTFF0 f2
+  toTFF0 (Or f1 f2)      = parens $ toTFF0 f1 +++ " | " +++ toTFF0 f2
+  toTFF0 (Not f)         = parens $ T.cons '~' (toTFF0 f)
+  toTFF0 (Implies f1 f2) = parens $ toTFF0 f1 +++ " => " +++ toTFF0 f2
+  toTFF0 (Equiv f1 f2)   = parens $ toTFF0 f1 +++ " <=> " +++ toTFF0 f2
 
   toTFF0 (ForAll var f) =
     "( ! [" +++ toUpperFirst (T.pack var) +++ "] : "
@@ -98,8 +98,8 @@ instance ToTFF0 LFormula where
     +++ toTFF0 (f (Var var))
     +++ " )"
 
-  toTFF0 TRUE  = "( " +++ "$true" +++ " )"
-  toTFF0 FALSE = "( " +++ "$false" +++ " )"
+  toTFF0 TRUE  = parens "$true"
+  toTFF0 FALSE = parens "$false"
 
 instance ToTFF0 TPTPRole where
   toTFF0 TPTPType = "type"

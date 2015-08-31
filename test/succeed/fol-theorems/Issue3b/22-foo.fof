@@ -9,7 +9,7 @@
 % Name: Issue3b.A.p
 % Role: axiom
 % Line: 14
-fof(n12_185084262, axiom, ( a = b )).
+fof(n12_185084262, axiom, (a = b)).
 
 % End general axiom(s).
 
@@ -20,7 +20,7 @@ fof(n12_185084262, axiom, ( a = b )).
 % Name: Issue3b.foo
 % Role: prove
 % Line: 22
-fof(n16_185084262, conjecture, ( a = b )).
+fof(n16_185084262, conjecture, (a = b)).
 
 % End conjecture.
 

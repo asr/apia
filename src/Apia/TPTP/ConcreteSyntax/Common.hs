@@ -30,10 +30,10 @@ import Agda.Syntax.Common
   , TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint, TPTPType)
   )
 
-import Agda.Utils.Impossible     ( Impossible(Impossible), throwImpossible )
+import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
 import Apia.Logic.Types ( LTerm(Fun, Var) )
-import Apia.Utils.Text  ( (+++), toUpperFirst )
+import Apia.Utils.Text  ( (+++), parens, toUpperFirst )
 
 import Data.Char
   ( chr
@@ -167,7 +167,7 @@ instance ToTPTP String where
 instance ToTPTP LTerm where
   toTPTP (Fun name []) = cfpNameToTPTP C name
   toTPTP (Fun name terms) =
-    cfpNameToTPTP F name +++ "(" +++ toTPTP terms +++ ")"
+    cfpNameToTPTP F name +++ parens (toTPTP terms)
   toTPTP (Var name) = toUpperFirst $ T.pack name
 
 -- Requires @FlexibleInstances@.

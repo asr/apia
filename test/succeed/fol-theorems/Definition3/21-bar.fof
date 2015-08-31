@@ -9,7 +9,7 @@
 % Name: Definition3.foo
 % Role: definition
 % Line: 17
-fof(n6_272600597, definition, ( ! [A] : ( ! [B] : ( foo(A,B) = A ) ) )).
+fof(n6_272600597, definition, ( ! [A] : ( ! [B] : (foo(A,B) = A) ) )).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n6_272600597, definition, ( ! [A] : ( ! [B] : ( foo(A,B) = A ) ) )).
 % Name: Definition3.bar
 % Role: prove
 % Line: 21
-fof(n16_272600597, conjecture, ( ! [A] : ( ! [B] : ( A = foo(A,B) ) ) )).
+fof(n16_272600597, conjecture, ( ! [A] : ( ! [B] : (A = foo(A,B)) ) )).
 
 % End conjecture.
 

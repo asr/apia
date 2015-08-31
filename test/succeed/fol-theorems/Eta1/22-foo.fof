@@ -9,7 +9,7 @@
 % Name: Eta1.foo
 % Role: prove
 % Line: 22
-fof(n14_17544139, conjecture, ( ! [A] : ( ( kp1_(cA,A) ) => ( ? [B] : ( kp1_(cA,B) ) ) ) )).
+fof(n14_17544139, conjecture, ( ! [A] : (kp1_(cA,A) => ( ? [B] : kp1_(cA,B) )) )).
 
 % End conjecture.
 

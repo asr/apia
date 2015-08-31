@@ -9,7 +9,7 @@
 % Name: LogicalConstants.⊥E
 % Role: prove
 % Line: 51
-fof(n42_143722291, conjecture, ( ( $false ) => ( pA ) )).
+fof(n42_143722291, conjecture, (($false) => (pA))).
 
 % End conjecture.
 

@@ -16,9 +16,7 @@
 {-# LANGUAGE UnicodeSyntax     #-}
 
 module Apia.TPTP.ConcreteSyntax
-  ( CFP(P)
-  , cfpNameToTPTP
-  , ToTPTP(toTPTP)
+  ( ToTPTP(toTPTP)
   ) where
 
 ------------------------------------------------------------------------------

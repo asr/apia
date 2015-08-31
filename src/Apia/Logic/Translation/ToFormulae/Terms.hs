@@ -246,8 +246,8 @@ agdaTermToFormula term = case ignoreSharing term of
                freshVar ← newTVar
 
                return $ if isCNameLogicConst lExists
-                        then Exists freshVar $ const fm
-                        else ForAll freshVar $ const fm
+                        then Exists freshVar Nothing $ const fm
+                        else ForAll freshVar Nothing $ const fm
 
            | otherwise → predicate qName elims
 
@@ -334,7 +334,7 @@ agdaTermToFormula term = case ignoreSharing term of
       El (Type (Max [])) (Def _ []) → do
         reportSLn "t2f" 20 $
           "Adding universal quantification on variable " ++ show freshVar
-        return $ ForAll freshVar $ const f
+        return $ ForAll freshVar Nothing $ const f
 
       -- The bounded variable is quantified on a proof. Due to we have
       -- drop the quantification on proofs terms, this case is
@@ -357,7 +357,7 @@ agdaTermToFormula term = case ignoreSharing term of
              (NoAbs _ (El (Type (Max [])) (Def _ [])))) → do
         reportSLn "t2f" 20
           "Removing a quantification on a function of a Set to a Set"
-        return $ ForAll freshVar $ const f
+        return $ ForAll freshVar Nothing $ const f
 
       -- N.B. The next case is just a generalization to various
       -- arguments of the previous case.
@@ -403,7 +403,7 @@ agdaTermToFormula term = case ignoreSharing term of
 
       El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → do
         reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
-        return $ ForAll freshVar $ const f
+        return $ ForAll freshVar Nothing $ const f
 
       -- Non-FOL translation: First-order logic universal quantified
       -- propositional symbols.
@@ -450,7 +450,7 @@ agdaTermToFormula term = case ignoreSharing term of
           -- logic formula.
           El (Type (Max [])) (Def _ []) → do
             freshVar ← newTVar
-            return $ ForAll freshVar $ const f2
+            return $ ForAll freshVar Nothing $ const f2
 
           -- The variable @x@ is a proof term, therefore we erase the
           -- quantification on it.

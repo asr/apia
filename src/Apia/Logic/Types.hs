@@ -27,12 +27,27 @@ module Apia.Logic.Types
             , TRUE
            )
   , LTerm(Fun, Var)
+  , LType(LType)
   , VarName
   ) where
 
-import Apia.Utils.PrettyPrint ( (<>), hcat, Pretty(pretty), space, sspaces )
+import Apia.Utils.PrettyPrint
+  ( (<>)
+  , Doc
+  , hcat
+  , Pretty(pretty)
+  , space
+  , sspaces
+  )
 
 ------------------------------------------------------------------------------
+
+-- | Target logic types.
+newtype LType = LType String
+
+instance Pretty (Maybe LType) where
+  pretty (Just (LType ty)) = pretty ty
+  pretty Nothing           = pretty "Nothing"
 
 type VarName = String
 
@@ -50,6 +65,11 @@ instance Pretty [LTerm] where
   pretty = hcat . map pretty
 
 -- | Target logic formulae.
+
+-- When @Maybe LType@ is equal to @Nothing@, we have mono-sorted
+-- first-order logic, otherwise, we have many-sorted first-order
+-- logic.
+
 data LFormula = TRUE
               | FALSE
               | Predicate String [LTerm]
@@ -58,8 +78,12 @@ data LFormula = TRUE
               | Or LFormula LFormula
               | Implies LFormula LFormula
               | Equiv LFormula LFormula
-              | ForAll VarName (LTerm → LFormula)
-              | Exists VarName (LTerm → LFormula)
+              | ForAll VarName (Maybe LType) (LTerm → LFormula)
+              | Exists VarName (Maybe LType) (LTerm → LFormula)
+
+prettyQuantifierBody ∷ VarName → Maybe LType → (LTerm → LFormula) → Doc
+prettyQuantifierBody var ty f =
+  pretty var <> sspaces ":" <> pretty ty <> pretty (f $ Var var)
 
 instance Pretty LFormula where
   pretty TRUE                = sspaces "TRUE"
@@ -70,5 +94,5 @@ instance Pretty LFormula where
   pretty (Or f1 f2)          = sspaces "Or" <> pretty f1 <> pretty f2
   pretty (Implies f1 f2)     = sspaces "Implies" <> pretty f1 <> pretty f2
   pretty (Equiv f1 f2)       = sspaces "Equiv" <> pretty f1 <> pretty f2
-  pretty (ForAll var f)      = sspaces "ForAll" <> pretty var <> pretty (f $ Var var)
-  pretty (Exists var f)      = sspaces "Exists " <> pretty var <> pretty (f $ Var var)
+  pretty (ForAll var ty f)   = sspaces "ForAll" <> prettyQuantifierBody var ty f
+  pretty (Exists var ty f)   = sspaces "Exists" <> prettyQuantifierBody var ty f

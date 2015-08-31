@@ -146,7 +146,7 @@ clauseToFormula qName ty (Clause r tel perm (_ : pats) cBody cTy cc) =
       f ← clauseToFormula qName ty (Clause r tels perm pats cBody cTy cc)
       popTVar
 
-      return $ ForAll freshVar $ const f
+      return $ ForAll freshVar Nothing $ const f
 
     -- The bounded variable is quantified on a proof,
     --
@@ -263,8 +263,8 @@ clauseToFormula qName ty (Clause _ _ _ [] cBody _ _) = do
             -- equaliy.
             let helper ∷ [String] → LFormula
                 helper []       = __IMPOSSIBLE__
-                helper [x]      = ForAll x $ \_ → equal tLHS tRHS
-                helper (x : xs) = ForAll x $ \_ → helper xs
+                helper [x]      = ForAll x Nothing $ \_ → equal tLHS tRHS
+                helper (x : xs) = ForAll x Nothing $ \_ → helper xs
 
             return $ helper freshVars
           else __IMPOSSIBLE__

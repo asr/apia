@@ -45,6 +45,7 @@ import Apia.Logic.Types
             , TRUE
            )
   , LTerm(Fun, Var)
+  , LType(LType)
   , VarName
   )
 
@@ -74,8 +75,8 @@ type TPTP = Text
 class ToTPTP a where
   toTPTP ∷ Lang → a → TPTP
 
--- | Constant, function or predicate.
-data CFP = C | F | P
+-- | Constant, function, predicate or type.
+data CFPT = C | F | P | T
 
 ------------------------------------------------------------------------------
 -- Auxiliary functions
@@ -97,13 +98,13 @@ prefixLetter name =
 -- functors either start with lower case and contain alphanumerics and
 -- underscore ...
 
--- | Constants, functions and predicates names to TPTP concrete
+-- | Constants, functions, predicates and types names to TPTP concrete
 -- syntax.
-cfpNameToTPTP ∷ Lang → CFP → String → TPTP
-cfpNameToTPTP lang cfp name =
+cfptNameToTPTP ∷ Lang → CFPT → String → TPTP
+cfptNameToTPTP lang cfp name =
   if isUpper (T.head nameTPTP) then T.cons (symbol cfp) nameTPTP else nameTPTP
   where
-  symbol ∷ CFP → Char
+  symbol ∷ CFPT → Char
   -- If a function is applied to zero arguments, then if the function
   -- name start by an uppper case letter, we add a @'c'@.
   symbol C = 'c'
@@ -112,6 +113,8 @@ cfpNameToTPTP lang cfp name =
   symbol F = 'f'
   -- If a predicate name start by an uppper case letter, we add a @'p'@.
   symbol P = 'p'
+  -- If a type name start by an uppper case letter, we add a @'t'@.
+  symbol T = 't'
 
   nameTPTP ∷ Text
   nameTPTP = toTPTP lang name
@@ -128,10 +131,18 @@ cfpNameToTPTP lang cfp name =
 --   nameTPTP ∷ String
 --   nameTPTP = toTPTP name
 
-quantifierBodyToTPTP ∷ Lang → VarName → (LTerm → LFormula) → TPTP
-quantifierBodyToTPTP lang var f =
+quantifierBodyToTPTP ∷ Lang → Maybe LType → VarName → (LTerm → LFormula) →
+                       TPTP
+quantifierBodyToTPTP FOF _ var f =
   "[" +++ toUpperFirst (T.pack var) +++ "] : "
-  +++ toTPTP lang (f (Var var))
+  +++ toTPTP FOF (f (Var var))
+
+quantifierBodyToTPTP TFF0 (Just (LType ty)) var f =
+  "[" +++ toUpperFirst (T.pack var) +++ " : " +++ cfptNameToTPTP TFF0 T ty
+  +++ "] : "
+  +++ toTPTP TFF0 (f (Var var))
+
+quantifierBodyToTPTP TFF0 Nothing _ _ = __IMPOSSIBLE__
 
 ------------------------------------------------------------------------------
 -- Translation of Agda/Haskell types to TPTP concrete syntax.
@@ -187,9 +198,9 @@ instance ToTPTP String where
   toTPTP lang = prefixLetter . T.concat . map (toTPTP lang)
 
 instance ToTPTP LTerm where
-  toTPTP lang (Fun name []) = cfpNameToTPTP lang C name
+  toTPTP lang (Fun name []) = cfptNameToTPTP lang C name
   toTPTP lang (Fun name terms) =
-    cfpNameToTPTP lang F name +++ parens (toTPTP lang terms)
+    cfptNameToTPTP lang F name +++ parens (toTPTP lang terms)
   toTPTP _ (Var name) = toUpperFirst $ T.pack name
 
 -- Requires @FlexibleInstances@.
@@ -209,20 +220,20 @@ instance ToTPTP LFormula where
   -- If the predicate represents a propositional logic variable,
   -- following the TPTP syntax, we do not print the internal
   -- parenthesis.
-  toTPTP lang (Predicate name []) = parens $ cfpNameToTPTP lang P name
+  toTPTP lang (Predicate name []) = parens $ cfptNameToTPTP lang P name
 
   toTPTP lang (Predicate name terms) =
-    cfpNameToTPTP lang P name +++ parens (toTPTP lang terms)
+    cfptNameToTPTP lang P name +++ parens (toTPTP lang terms)
 
-  toTPTP lang (And f1 f2)     = parens $ toTPTP lang f1 +++ " & " +++ toTPTP lang f2
-  toTPTP lang (Or f1 f2)      = parens $ toTPTP lang f1 +++ " | " +++ toTPTP lang f2
-  toTPTP lang (Not f)         = parens $ T.cons '~' (toTPTP lang f)
-  toTPTP lang (Implies f1 f2) = parens $ toTPTP lang f1 +++ " => " +++ toTPTP lang f2
-  toTPTP lang (Equiv f1 f2)   = parens $ toTPTP lang f1 +++ " <=> " +++ toTPTP lang f2
-  toTPTP lang (ForAll var f)  = "( ! " +++ quantifierBodyToTPTP lang var f +++ " )"
-  toTPTP lang (Exists var f)  = "( ? " +++ quantifierBodyToTPTP lang var f +++ " )"
-  toTPTP _    TRUE            = parens "$true"
-  toTPTP _    FALSE           = parens "$false"
+  toTPTP lang (And f1 f2)        = parens $ toTPTP lang f1 +++ " & " +++ toTPTP lang f2
+  toTPTP lang (Or f1 f2)         = parens $ toTPTP lang f1 +++ " | " +++ toTPTP lang f2
+  toTPTP lang (Not f)            = parens $ T.cons '~' (toTPTP lang f)
+  toTPTP lang (Implies f1 f2)    = parens $ toTPTP lang f1 +++ " => " +++ toTPTP lang f2
+  toTPTP lang (Equiv f1 f2)      = parens $ toTPTP lang f1 +++ " <=> " +++ toTPTP lang f2
+  toTPTP lang (ForAll var ty f)  = "( ! " +++ quantifierBodyToTPTP lang ty var f +++ " )"
+  toTPTP lang (Exists var ty f)  = "( ? " +++ quantifierBodyToTPTP lang ty var f +++ " )"
+  toTPTP _    TRUE               = parens "$true"
+  toTPTP _    FALSE              = parens "$false"
 
 instance ToTPTP TPTPRole where
   toTPTP _    TPTPAxiom      = "axiom"

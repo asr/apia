@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Definition11._.P
 % Role: definition
 % Line: 24
@@ -16,7 +16,7 @@ fof(n30_90119102, definition, ( ! [A] : (kp1_(cN,A) => ( ! [B] : (kp2_(cP_30_901
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Definition11._.bar
 % Role: prove
 % Line: 28

@@ -38,16 +38,21 @@ import Agda.Utils.Monad      ( ifM )
 
 import qualified Agda.Utils.Pretty as AP
 
+import Apia.Common                                 ( Lang(FOF, TFF0) )
 import Apia.Logic.Translation.ToFormulae.Functions ( fnToFormula )
 import Apia.Logic.Translation.ToFormulae.Types     ( agdaTypeToFormula )
-import Apia.Monad.Base                             ( getTDefs, isTVarsEmpty, T)
-import Apia.Monad.Reports                          ( reportDLn, reportSLn )
+
+import Apia.Monad.Base    ( askTOpt, getTDefs, isTVarsEmpty, T)
+import Apia.Monad.Reports ( reportDLn, reportSLn )
+import Apia.Options       ( Options(optLang) )
 
 import Apia.TPTP.Types
   ( AF(AFor)
   , ConjectureSet(ConjectureSet)
   , GeneralRoles(GeneralRoles)
   )
+
+import Apia.TPTP.TypesSelector ( typesInConjecture )
 
 import Apia.Utils.AgdaAPI.EtaExpansion     ( EtaExpandible(etaExpand) )
 import Apia.Utils.AgdaAPI.RemoveProofTerms ( removeProofTerm )
@@ -227,11 +232,21 @@ requiredATPDefsByLocalHints def = do
   fmap (nub . concat) (mapM requiredATPDefsByDefinition hintsDefs)
 
 conjectureToAFor ∷ QName → Definition → T ConjectureSet
-conjectureToAFor qName def = liftM4 ConjectureSet
-                                    (toAFor TPTPConjecture qName def)
-                                    (requiredATPDefsByDefinition def)
-                                    (localHintsToAFors def)
-                                    (requiredATPDefsByLocalHints def)
+conjectureToAFor qName def = do
+
+  lang ← askTOpt optLang
+
+  aFor ← toAFor TPTPConjecture qName def
+
+  liftM4 (ConjectureSet aFor)
+         (case lang of
+            -- We don't use types with the FOF language.
+            FOF  → return []
+            TFF0 → typesInConjecture aFor
+         )
+         (requiredATPDefsByDefinition def)
+         (localHintsToAFors def)
+         (requiredATPDefsByLocalHints def)
 
 -- | Translate the ATP conjectures and their local hints in the top
 -- level module to annotated formulae.

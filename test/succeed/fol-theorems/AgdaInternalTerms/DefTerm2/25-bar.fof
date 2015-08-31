@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: AgdaInternalTerms.DefTerm2.foo
 % Role: axiom
 % Line: 21
@@ -16,7 +16,7 @@ fof(n16_152941666, axiom, kp3_(cP179,a,b,c)).
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: AgdaInternalTerms.DefTerm2.bar
 % Role: prove
 % Line: 25

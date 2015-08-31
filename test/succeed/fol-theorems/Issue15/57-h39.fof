@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Issue15.Conat-out
 % Role: axiom
 % Line: 37
@@ -16,7 +16,7 @@ fof(n60_142322921, axiom, ( ! [A] : (kp1_(cConat,A) => ((A = zero) | ( ? [B] : (
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Issue15._.A
 % Role: definition
 % Line: 53
@@ -27,7 +27,7 @@ fof(n84_142322921, definition, ( ! [A] : (((A = zero) | ( ? [B] : ((A = succ(B))
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Issue15._.h'
 % Role: prove
 % Line: 57

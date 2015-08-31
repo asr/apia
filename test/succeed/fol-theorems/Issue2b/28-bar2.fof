@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Issue2b.foo₂
 % Role: definition
 % Line: 21
@@ -16,7 +16,7 @@ fof(n10_18507689, definition, ( ! [A] : ( ! [B] : (foo2(A,B) = A) ) )).
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Issue2b.bar₂
 % Role: prove
 % Line: 28

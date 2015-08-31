@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The local hint(s).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Instance.schema
 % Role: hint
 % Line: 16
@@ -16,7 +16,7 @@ fof(n10_126135238, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(A,C) => kp1_(
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Instance.instanceC
 % Role: prove
 % Line: 23

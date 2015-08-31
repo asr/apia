@@ -5,13 +5,13 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Definition9.+-0x
 % Role: axiom
 % Line: 34
 fof(n44_17022218, axiom, ( ! [A] : (n43(zero,A) = A) )).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Definition9.+-Sx
 % Role: axiom
 % Line: 35
@@ -22,7 +22,7 @@ fof(n50_17022218, axiom, ( ! [A] : ( ! [B] : (n43(succ(A),B) = succ(n43(A,B))) )
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Definition9._.A
 % Role: definition
 % Line: 43
@@ -33,7 +33,7 @@ fof(n62_17022218, definition, ( ! [A] : (kp1_(cN,A) => ( ! [B] : (kp2_(cA_62_170
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Definition9._.is
 % Role: prove
 % Line: 50

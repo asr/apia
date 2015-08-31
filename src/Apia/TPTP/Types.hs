@@ -13,14 +13,15 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Apia.TPTP.Types
-  ( AF(AFor)
+  ( AF(AFor, AType)
   , allRequiredDefs
   , commonRequiredDefs
-  , ConjectureSet(defsConjecture
+  , ConjectureSet( defsConjecture
                  , defsLocalHints
                  , localHintsConjecture
                  , ConjectureSet
                  , theConjecture
+                 , typesConjecture
                  )
   , dropCommonRequiredDefs
   , GeneralRoles(axioms, defsAxioms, defsHints, hints, GeneralRoles)
@@ -31,7 +32,7 @@ module Apia.TPTP.Types
 import Agda.Syntax.Abstract.Name ( QName )
 import Agda.Syntax.Common        ( TPTPRole )
 
-import Apia.Logic.Types  ( LFormula )
+import Apia.Logic.Types  ( LFormula, LType )
 import Apia.Utils.List   ( duplicate, duplicatesElements )
 
 import Data.List ( (\\), sort )
@@ -46,15 +47,22 @@ import Data.List ( (\\), sort )
 -- The annotated formulae are not in TPTP (FOF or TFF0) concrete
 -- syntax.
 data AF = AFor QName TPTPRole LFormula
+        | AType QName TPTPRole LType
 
 instance Eq AF where
-  (AFor qName1 _ _) == (AFor qName2 _ _) = qName1 == qName2
+  (AFor qName1 _ _)  == (AFor qName2 _ _)  = qName1 == qName2
+  (AType qName1 _ _) == (AType qName2 _ _) = qName1 == qName2
+  _                  == _                  = False
 
 instance Ord AF where
-  compare (AFor qName1 _ _) (AFor qName2 _ _) = compare qName1 qName2
+  compare (AFor qName1 _ _)  (AFor qName2 _ _)  = compare qName1 qName2
+  compare AFor{}             AType{}            = LT
+  compare AType{}            AFor{}             = GT
+  compare (AType qName1 _ _) (AType qName2 _ _) = compare qName1 qName2
 
 instance Show AF where
-  show (AFor qname _ _) = show qname
+  show (AFor qName _ _)  = show qName
+  show (AType qName _ _) = show qName
 
 -- | The 'ATPRole's share by all the conjetures in an Agda module.
 data GeneralRoles = GeneralRoles
@@ -67,6 +75,7 @@ data GeneralRoles = GeneralRoles
 -- | The 'ATPRole's associated with a conjecture.
 data ConjectureSet = ConjectureSet
   { theConjecture        ∷ AF    -- ^ The conjecture.
+  , typesConjecture      ∷ [AF]  -- ^ Conjecture's types.
   , defsConjecture       ∷ [AF]  -- ^ ATP definitions used by the conjecture.
   , localHintsConjecture ∷ [AF]  -- ^ The conjecture local hints.
   , defsLocalHints       ∷ [AF]  -- ^ ATP definitions used by the local hints.

@@ -56,3 +56,7 @@ instance Pretty Doc where
 
 instance Pretty String where
   pretty = text
+
+instance Pretty a ⇒ Pretty (Maybe a) where
+  pretty (Just a) = pretty "Just" <> pretty a
+  pretty Nothing  = pretty "Nothing"

@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Definition12.if-true
 % Role: axiom
 % Line: 21
@@ -16,7 +16,7 @@ fof(n16_163400516, axiom, ( ! [A] : ( ! [B] : (n183(n183(n183(if,true),A),B) = A
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Definition12.if_then_else_
 % Role: definition
 % Line: 24
@@ -27,7 +27,7 @@ fof(n18_163400516, definition, ( ! [A] : ( ! [B] : ( ! [C] : (ifthenelse(A,B,C) 
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Definition12.foo
 % Role: prove
 % Line: 29

@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: RemoveVar.LamTerm.≈-gfp₁
 % Role: axiom
 % Line: 46
@@ -16,7 +16,7 @@ fof(n64_227209975, axiom, ( ! [A] : ( ! [B] : (kp2_(n_8776_,A,B) => ( ? [C] : ( 
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: RemoveVar.LamTerm._.P
 % Role: definition
 % Line: 53
@@ -27,7 +27,7 @@ fof(n82_227209975, definition, ( ! [A] : ( ! [B] : (kp2_(n_8776_,A,B) => ( ! [C]
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: RemoveVar.LamTerm._.helper
 % Role: prove
 % Line: 57

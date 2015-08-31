@@ -5,19 +5,19 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: NestedAxioms.B.b≡c
 % Role: axiom
 % Line: 18
 fof(n6_54399210, axiom, (b = c)).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: NestedAxioms.C.c≡d
 % Role: axiom
 % Line: 29
 fof(n6_245270019, axiom, (c = d)).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: NestedAxioms.A.a≡b
 % Role: axiom
 % Line: 20
@@ -28,7 +28,7 @@ fof(n12_139132942, axiom, (a = b)).
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: NestedAxioms.C.foo
 % Role: prove
 % Line: 32

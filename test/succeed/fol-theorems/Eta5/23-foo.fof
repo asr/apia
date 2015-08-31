@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Eta5.P
 % Role: definition
 % Line: 19
@@ -16,7 +16,7 @@ fof(n16_19183374, definition, ( ! [A] : (kp1_(cP_16_19183374,A) <=> ( ? [B] : kp
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Eta5.foo
 % Role: prove
 % Line: 23

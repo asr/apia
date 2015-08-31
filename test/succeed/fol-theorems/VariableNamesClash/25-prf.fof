@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: VariableNamesClash.a≡b
 % Role: axiom
 % Line: 17
@@ -16,7 +16,7 @@ fof(n10_167217889, axiom, (a = b)).
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: VariableNamesClash._.prf
 % Role: prove
 % Line: 25

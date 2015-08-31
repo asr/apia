@@ -27,9 +27,12 @@ module Apia.Logic.Types
             , TRUE
            )
   , LTerm(Fun, Var)
-  , LType(LType)
+  , LType(AtomicType, QuantifierType)
+  , TypeName
   , VarName
   ) where
+
+import Agda.Syntax.Abstract.Name ( QName )
 
 import Apia.Utils.PrettyPrint
   ( (<>)
@@ -42,12 +45,15 @@ import Apia.Utils.PrettyPrint
 
 ------------------------------------------------------------------------------
 
--- | Target logic types.
-newtype LType = LType String
+type TypeName = String
 
-instance Pretty (Maybe LType) where
-  pretty (Just (LType ty)) = pretty ty
-  pretty Nothing           = pretty "Nothing"
+-- | Target logic types.
+data LType = AtomicType TypeName            -- ^ Atomic type.
+           | QuantifierType TypeName QName  -- ^ Type used in the quantified formulae.
+
+instance Pretty LType where
+  pretty (AtomicType     tyName)   = pretty tyName
+  pretty (QuantifierType tyName _) = pretty tyName
 
 type VarName = String
 
@@ -82,8 +88,8 @@ data LFormula = TRUE
               | Exists VarName (Maybe LType) (LTerm → LFormula)
 
 prettyQuantifierBody ∷ VarName → Maybe LType → (LTerm → LFormula) → Doc
-prettyQuantifierBody var ty f =
-  pretty var <> sspaces ":" <> pretty ty <> pretty (f $ Var var)
+prettyQuantifierBody vName ty f =
+  pretty vName <> sspaces ":" <> pretty ty <> pretty (f $ Var vName)
 
 instance Pretty LFormula where
   pretty TRUE                = sspaces "TRUE"
@@ -94,5 +100,5 @@ instance Pretty LFormula where
   pretty (Or f1 f2)          = sspaces "Or" <> pretty f1 <> pretty f2
   pretty (Implies f1 f2)     = sspaces "Implies" <> pretty f1 <> pretty f2
   pretty (Equiv f1 f2)       = sspaces "Equiv" <> pretty f1 <> pretty f2
-  pretty (ForAll var ty f)   = sspaces "ForAll" <> prettyQuantifierBody var ty f
-  pretty (Exists var ty f)   = sspaces "Exists" <> prettyQuantifierBody var ty f
+  pretty (ForAll vName ty f) = sspaces "ForAll" <> prettyQuantifierBody vName ty f
+  pretty (Exists vName ty f) = sspaces "Exists" <> prettyQuantifierBody vName ty f

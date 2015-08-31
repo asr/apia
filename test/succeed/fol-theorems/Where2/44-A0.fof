@@ -5,13 +5,13 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Where2.+-0x
 % Role: axiom
 % Line: 34
 fof(n44_21954566, axiom, ( ! [A] : (n43(zero,A) = A) )).
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Where2.+-Sx
 % Role: axiom
 % Line: 35
@@ -22,7 +22,7 @@ fof(n50_21954566, axiom, ( ! [A] : ( ! [B] : (n43(succ(A),B) = succ(n43(A,B))) )
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Where2._.A0
 % Role: prove
 % Line: 44

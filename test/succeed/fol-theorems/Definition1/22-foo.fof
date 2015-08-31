@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Definition1.e
 % Role: definition
 % Line: 18
@@ -16,7 +16,7 @@ fof(n8_82188849, definition, (e = d)).
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The source Agda term was:
 % Name: Definition1.foo
 % Role: prove
 % Line: 22

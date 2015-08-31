@@ -63,9 +63,7 @@ executable apia
     Apia.Monad.Reports
     Apia.Options
     Apia.Snapshot
-    Apia.TPTP.ConcreteSyntax.Common
-    Apia.TPTP.ConcreteSyntax.FOF
-    Apia.TPTP.ConcreteSyntax.TFF0
+    Apia.TPTP.ConcreteSyntax
     Apia.TPTP.Files
     Apia.TPTP.Translation
     Apia.TPTP.Types

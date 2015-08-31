@@ -38,12 +38,11 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( whenM )
 import Agda.Utils.Pretty     ( prettyShow )
 
-import Apia.Common                     ( Lang(FOF, TFF0) )
-import Apia.Monad.Base                 ( askTOpt, T )
-import Apia.Monad.Reports              ( reportS, reportSLn )
-import Apia.Options                    ( Options(optOnlyFiles, optOutputDir) )
-import Apia.TPTP.ConcreteSyntax.FOF    ( ToFOF(toFOF) )
-import Apia.TPTP.ConcreteSyntax.TFF0   ( ToTFF0(toTFF0) )
+import Apia.Common              ( Lang(FOF, TFF0) )
+import Apia.Monad.Base          ( askTOpt, T )
+import Apia.Monad.Reports       ( reportS, reportSLn )
+import Apia.Options             ( Options(optOnlyFiles, optOutputDir) )
+import Apia.TPTP.ConcreteSyntax ( ToTPTP(toTPTP) )
 
 import Apia.TPTP.Types
   ( AF(AFor)
@@ -136,9 +135,7 @@ agdaOriginalTerm qName role =
 addRole ∷ Lang → FilePath → AF → IO ()
 addRole lang file af@(AFor qName afRole _) = do
   T.appendFile file $ agdaOriginalTerm qName afRole
-  case lang of
-   FOF  → T.appendFile file $ toFOF af
-   TFF0 → T.appendFile file $ toTFF0 af
+  T.appendFile file $ toTPTP lang af
 
 addRoles ∷ Lang → FilePath → [AF] → Text → IO ()
 addRoles _    _    []  _   = return ()

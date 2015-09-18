@@ -1,5 +1,5 @@
 name:          apia
-version:       0.9.1
+version:       1.0
 build-type:    Simple
 cabal-version: >= 1.8
 author:        Andrés Sicard-Ramírez

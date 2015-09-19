@@ -36,6 +36,7 @@ import Apia.Monad.Reports ( reportSLn )
 
 ------------------------------------------------------------------------------
 
+-- | Translation from Agda types to the target logic types.
 agdaTypeToType ∷ TypeName → Type → T LType
 agdaTypeToType tyName ty@(El (Type (Max [ClosedLevel 1])) term) = do
   reportSLn "agdaTypeToType" 10 $ "Processing type ty:\n" ++ show ty

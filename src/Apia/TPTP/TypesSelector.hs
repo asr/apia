@@ -99,5 +99,6 @@ toAType (tyName, qName) = do
 
   return $ AType qName TPTPType lTy
 
+-- | Returns the types used by a TPTP conjecture.
 typesInConjecture ∷ AF → T [AF]
 typesInConjecture af = mapM toAType $ agdaTypesInConjecture af

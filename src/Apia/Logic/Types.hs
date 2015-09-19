@@ -46,6 +46,7 @@ import Apia.Utils.PrettyPrint
 
 ------------------------------------------------------------------------------
 
+-- | Types names.
 type TypeName = String
 
 -- | Target logic types.
@@ -56,6 +57,7 @@ instance Pretty LType where
   pretty (AtomicType     tyName)   = pretty tyName
   pretty (QuantifierType tyName _) = pretty tyName
 
+-- | Variables names.
 type VarName = String
 
 -- Adapted from AgdaLight (Plugins.FOL.Types).

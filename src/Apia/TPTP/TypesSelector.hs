@@ -34,6 +34,7 @@ import qualified Agda.Utils.Pretty as AP
 import Apia.Logic.Translation.ToTypes ( agdaTypeToType )
 import Apia.Logic.Types
   ( LFormula( And
+            , Eq
             , Equiv
             , Exists
             , FALSE
@@ -61,7 +62,10 @@ import Apia.Utils.AgdaAPI.Interface ( qNameDefinition )
 agdaTypesInFormula ∷ LFormula → [(TypeName, QName)]
 agdaTypesInFormula TRUE            = []
 agdaTypesInFormula FALSE           = []
+
 agdaTypesInFormula (Predicate _ _) = []  -- TODO (18 September 2015).
+agdaTypesInFormula (Eq _ _)        = []
+
 agdaTypesInFormula (Not f)         = agdaTypesInFormula f
 agdaTypesInFormula (And f1 f2)     = agdaTypesInFormula f1 ++ agdaTypesInFormula f2
 agdaTypesInFormula (Or f1 f2)      = agdaTypesInFormula f1 ++ agdaTypesInFormula f2

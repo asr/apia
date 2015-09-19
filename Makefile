@@ -4,11 +4,12 @@ SHELL := /bin/bash
 # Paths
 
 # Tests paths.
-errors_path               = test/fail/errors
-fol_theorems_path         = test/succeed/fol-theorems
-non_conjectures_path      = test/succeed/non-conjectures
-non_fol_theorems_path     = test/succeed/non-fol-theorems
-non_theorems_path         = test/fail/non-theorems
+errors_path                   = test/fail/errors
+fol_theorems_path             = test/succeed/fol-theorems
+many_sorted_fol_theorems_path = test/succeed/many-sorted-fol-theorems
+non_conjectures_path          = test/succeed/non-conjectures
+non_fol_theorems_path         = test/succeed/non-fol-theorems
+non_theorems_path             = test/fail/non-theorems
 
 # Output directory for the TPTP files.
 output_dir = /tmp/apia
@@ -28,7 +29,10 @@ APIA = dist/build/apia/apia --check
 
 # Supported ATPs.
 # Missing ileancop
-ATPs = cvc4 e equinox metis spass vampire z3
+FOF_ATPs = cvc4 e equinox metis spass vampire z3
+
+# Supported SMTs.
+TFF0_ATPs = cvc4 z3
 
 ##############################################################################
 # Auxiliary functions
@@ -52,6 +56,10 @@ generated_non_fol_theorems_files = \
   $(call my_pathsubst,generated_non_fol_theorems,\
          $(non_fol_theorems_path))
 
+generated_many_sorted_fol_theorems_files = \
+  $(call my_pathsubst,generated_many_sorted_fol_theorems,\
+         $(many_sorted_fol_theorems_path))
+
 generated_non_theorems_files = \
   $(call my_pathsubst,generated_non_theorems,$(non_theorems_path))
 
@@ -73,6 +81,10 @@ prove_non_fol_theorems_files = \
   $(call my_pathsubst,prove_non_fol_theorems,\
          $(non_fol_theorems_path))
 
+prove_many_sorted_fol_theorems_files = \
+  $(call my_pathsubst,prove_many_sorted_fol_theorems,\
+         $(many_sorted_fol_theorems_path))
+
 refute_theorems_files = \
   $(call my_pathsubst,refute_theorems,$(non_theorems_path))
 
@@ -88,8 +100,9 @@ prove_notes_files = $(call my_pathsubst,prove_notes,$(notes_path))
 # Test suite: Generated FOL theorems
 
 GENERATED_FOL_THEOREMS_FLAGS = \
-  -v 0\
-  -i$(fol_theorems_path) --only-files \
+  -v 0 \
+  -i$(fol_theorems_path) \
+  --only-files \
   --output-dir=$(output_dir)/$(fol_theorems_path)
 
 %.generated_fol_theorems :
@@ -158,6 +171,30 @@ generated_non_fol_theorems :
 	@echo "$@ succeeded!"
 
 ##############################################################################
+# Test suite: Generated many-sorted FOL theorems
+
+GENERATED_MANY_SORTED_FOL_THEOREMS_FLAGS = \
+  -v 0 \
+  -i$(many_sorted_fol_theorems_path) \
+  --only-files \
+  --lang=tff0 \
+  --output-dir=$(output_dir)/$(many_sorted_fol_theorems_path)
+
+%.generated_many_sorted_fol_theorems :
+	@echo "Comparing $*.agda"
+	@$(AGDA) -i$(many_sorted_fol_theorems_path) $*.agda
+	$(APIA) $(GENERATED_MANY_SORTED_FOL_THEOREMS_FLAGS) $*.agda
+	@diff -r $* $(output_dir)/$*
+
+generated_many_sorted_fol_theorems_aux : \
+  $(generated_many_sorted_fol_theorems_files)
+
+generated_many_sorted_fol_theorems :
+	rm -r -f $(output_dir)
+	make generated_many_sorted_fol_theorems_aux
+	@echo "$@ succeeded!"
+
+##############################################################################
 # Test suite: Generated non-theorems
 
 GENERATED_NON_THEOREMS_FLAGS = \
@@ -185,6 +222,7 @@ generated_non_theorems : $(generated_non_theorems_files)
 generated_all :
 	make generated_fol_theorems
 	make generated_non_fol_theorems
+	make generated_many_sorted_fol_theorems
 	make generated_non_theorems
 	@echo "$@ succeeded!"
 
@@ -254,11 +292,11 @@ only_non_fol_theorems : \
 PROVE_FOL_THEOREMS_FLAGS = \
   -i$(fol_theorems_path) \
   --output-dir=$(output_dir) \
-  --time=10 \
+  --time=10
 
 %.prove_fol_theorems :
 	$(AGDA) -i$(fol_theorems_path) $*.agda
-	@for atp in ${ATPs} ; do \
+	@for atp in ${FOF_ATPs} ; do \
 	  case $*.agda in \
             "${fol_theorems_path}/NonInternalEquality.agda") \
               $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
@@ -286,7 +324,7 @@ PROVE_NON_FOL_THEOREMS_FLAGS = \
 
 %.prove_non_fol_theorems :
 	$(AGDA) -i$(non_fol_theorems_path) $*.agda
-	@for atp in ${ATPs} ; do \
+	@for atp in ${FOF_ATPs} ; do \
 	  case $*.agda in \
             "${non_fol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
             "${non_fol_theorems_path}/Eta-Issue8.agda" | \
@@ -317,11 +355,32 @@ prove_non_fol_theorems : \
 	@echo "$@ succeeded!"
 
 ##############################################################################
+# Test suite: Prove many-sorted FOL theorems
+
+PROVE_MANY_SORTED_FOL_THEOREMS_FLAGS = \
+  -i$(many_sorted_fol_theorems_path) \
+  --lang=tff0 \
+  --output-dir=$(output_dir) \
+  --time=10
+
+%.prove_many_sorted_fol_theorems :
+	$(AGDA) -i$(many_sorted_fol_theorems_path) $*.agda
+	@for atp in ${TFF0_ATPs} ; do \
+          $(APIA) ${PROVE_MANY_SORTED_FOL_THEOREMS_FLAGS} \
+                  --atp=$$atp \
+                  $*.agda ; \
+        done
+
+prove_many_sorted_fol_theorems : $(prove_many_sorted_fol_theorems_files)
+	@echo "$@ succeeded!"
+
+##############################################################################
 # Test suite: Prove all theorems
 
 prove_all_theorems :
 	make prove_fol_theorems
 	make prove_non_fol_theorems
+	make prove_many_sorted_fol_theorems
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -396,7 +455,7 @@ prove_notes_path = -i$(notes_path) \
 %.prove_notes :
 	echo $(prove_notes_files)
 	$(AGDA) $(prove_notes_path) $*.agda
-	@for atp in ${ATPs} ; do \
+	@for atp in ${FOF_ATPs} ; do \
           $(APIA) $(prove_notes_path) \
                   --atp=$$atp \
 	          --output-dir=$(output_dir) \
@@ -426,7 +485,6 @@ apia_changed : clean
 	make generated_all
 	make non_conjectures
 	make errors
-	make type_check_notes
 	make prove_notes
 	@echo "$@ succeeded!"
 

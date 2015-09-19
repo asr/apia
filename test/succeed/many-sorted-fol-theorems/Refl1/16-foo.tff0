@@ -1,0 +1,28 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The required types by the conjecture.
+
+% The source Agda type was:
+% Name: Refl1.Ty
+% Role: type
+% Line: 13
+tff(n2_274982880, type, tTy : $tType).
+
+% End required types by the conjecture.
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The source Agda term was:
+% Name: Refl1.foo
+% Role: prove
+% Line: 16
+tff(n8_274982880, conjecture, ( ! [A : tTy] : (A = A) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

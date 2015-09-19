@@ -70,7 +70,7 @@ import Apia.Utils.List        ( duplicate )
 import Apia.Utils.String      ( removeString )
 import Apia.Utils.Text        ( (+++), toUpperFirst )
 
-import Control.Monad           ( when )
+import Control.Monad           ( when, unless )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
 import Data.Char ( chr, isAsciiUpper, isAsciiLower, isDigit, ord )
@@ -195,7 +195,7 @@ createConjectureFile file generalRoles conjectureSet = do
     T.writeFile file conjectureH
 
     case lang of
-      FOF  → return ()
+      FOF  → unless (null $ typesConjecture conjectureSet) (__IMPOSSIBLE__)
       TFF0 → addRoles lang file (nub $ typesConjecture conjectureSet)
                "required types by the conjecture"
 

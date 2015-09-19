@@ -6,9 +6,9 @@ SHELL := /bin/bash
 # Tests paths.
 errors_path                   = test/fail/errors
 fol_theorems_path             = test/succeed/fol-theorems
+hol_theorems_path             = test/succeed/hol-theorems
 many_sorted_fol_theorems_path = test/succeed/many-sorted-fol-theorems
 non_conjectures_path          = test/succeed/non-conjectures
-non_fol_theorems_path         = test/succeed/non-fol-theorems
 non_theorems_path             = test/fail/non-theorems
 
 # Output directory for the TPTP files.
@@ -52,9 +52,9 @@ errors_files = $(call my_pathsubst,errors,$(errors_path))
 generated_fol_theorems_files = \
   $(call my_pathsubst,generated_fol_theorems,$(fol_theorems_path))
 
-generated_non_fol_theorems_files = \
-  $(call my_pathsubst,generated_non_fol_theorems,\
-         $(non_fol_theorems_path))
+generated_hol_theorems_files = \
+  $(call my_pathsubst,generated_hol_theorems,\
+         $(hol_theorems_path))
 
 generated_many_sorted_fol_theorems_files = \
   $(call my_pathsubst,generated_many_sorted_fol_theorems,\
@@ -70,16 +70,16 @@ non_conjectures_files = \
 only_fol_theorems_files = \
   $(call my_pathsubst,only_fol_theorems,$(fol_theorems_path))
 
-only_non_fol_theorems_files = \
-  $(call my_pathsubst,only_non_fol_theorems,\
-         $(non_fol_theorems_path))
+only_hol_theorems_files = \
+  $(call my_pathsubst,only_hol_theorems,\
+         $(hol_theorems_path))
 
 prove_fol_theorems_files = \
   $(call my_pathsubst,prove_fol_theorems,$(fol_theorems_path))
 
-prove_non_fol_theorems_files = \
-  $(call my_pathsubst,prove_non_fol_theorems,\
-         $(non_fol_theorems_path))
+prove_hol_theorems_files = \
+  $(call my_pathsubst,prove_hol_theorems,\
+         $(hol_theorems_path))
 
 prove_many_sorted_fol_theorems_files = \
   $(call my_pathsubst,prove_many_sorted_fol_theorems,\
@@ -128,32 +128,32 @@ generated_fol_theorems :
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test suite: Generated non-FOL theorems
+# Test suite: Generated HOL theorems
 
-GENERATED_NON_FOL_THEOREMS_FLAGS = \
+GENERATED_HOL_THEOREMS_FLAGS = \
   -v 0 \
-  -i$(non_fol_theorems_path) \
+  -i$(hol_theorems_path) \
   --only-files \
-  --output-dir=$(output_dir)/$(non_fol_theorems_path)
+  --output-dir=$(output_dir)/$(hol_theorems_path)
 
-%.generated_non_fol_theorems :
+%.generated_hol_theorems :
 	@echo "Comparing $*.agda"
-	@$(AGDA) -i$(non_fol_theorems_path) $*.agda
+	@$(AGDA) -i$(hol_theorems_path) $*.agda
 	@case $*.agda in \
-          "${non_fol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
-          "${non_fol_theorems_path}/Eta-Issue8.agda" | \
-          "${non_fol_theorems_path}/Existential.agda" | \
-          "${non_fol_theorems_path}/Instance.agda" | \
-          "${non_fol_theorems_path}/Issue12.agda" | \
-          "${non_fol_theorems_path}/OptionsLList.agda" | \
-          "${non_fol_theorems_path}/P11.agda" | \
-          "${non_fol_theorems_path}/PropositionalFunction.agda") \
-	    $(APIA) $(GENERATED_NON_FOL_THEOREMS_FLAGS) \
+          "${hol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
+          "${hol_theorems_path}/Eta-Issue8.agda" | \
+          "${hol_theorems_path}/Existential.agda" | \
+          "${hol_theorems_path}/Instance.agda" | \
+          "${hol_theorems_path}/Issue12.agda" | \
+          "${hol_theorems_path}/OptionsLList.agda" | \
+          "${hol_theorems_path}/P11.agda" | \
+          "${hol_theorems_path}/PropositionalFunction.agda") \
+	    $(APIA) $(GENERATED_HOL_THEOREMS_FLAGS) \
 	            --schematic-propositional-functions \
 	            $*.agda \
             ;; \
-          "${non_fol_theorems_path}/PropositionalSymbol.agda") \
-	    $(APIA) $(GENERATED_NON_FOL_THEOREMS_FLAGS) \
+          "${hol_theorems_path}/PropositionalSymbol.agda") \
+	    $(APIA) $(GENERATED_HOL_THEOREMS_FLAGS) \
 	            --schematic-propositional-symbols \
 	            $*.agda \
             ;; \
@@ -162,12 +162,12 @@ GENERATED_NON_FOL_THEOREMS_FLAGS = \
         esac
 	@diff -r $* $(output_dir)/$*
 
-generated_non_fol_theorems_aux : \
-  $(generated_non_fol_theorems_files)
+generated_hol_theorems_aux : \
+  $(generated_hol_theorems_files)
 
-generated_non_fol_theorems :
+generated_hol_theorems :
 	rm -r -f $(output_dir)
-	make generated_non_fol_theorems_aux
+	make generated_hol_theorems_aux
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -221,7 +221,7 @@ generated_non_theorems : $(generated_non_theorems_files)
 
 generated_all :
 	make generated_fol_theorems
-	make generated_non_fol_theorems
+	make generated_hol_theorems
 	make generated_many_sorted_fol_theorems
 	make generated_non_theorems
 	@echo "$@ succeeded!"
@@ -251,30 +251,30 @@ only_fol_theorems : $(only_fol_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test suite: Only non-FOL theorems files
+# Test suite: Only HOL theorems files
 
-ONLY_NON_FOL_THEOREMS_FLAGS = \
-  -i$(non_fol_theorems_path) \
+ONLY_HOL_THEOREMS_FLAGS = \
+  -i$(hol_theorems_path) \
   --only-files \
   --output-dir=$(output_dir)
 
-%.only_non_fol_theorems :
-	$(AGDA) -i$(non_fol_theorems_path) $*.agda
+%.only_hol_theorems :
+	$(AGDA) -i$(hol_theorems_path) $*.agda
 	@case $*.agda in \
-          "${non_fol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
-          "${non_fol_theorems_path}/Eta-Issue8.agda" | \
-          "${non_fol_theorems_path}/Existential.agda" | \
-          "${non_fol_theorems_path}/Instance.agda" | \
-          "${non_fol_theorems_path}/Issue12.agda" | \
-          "${non_fol_theorems_path}/OptionsLList.agda" | \
-          "${non_fol_theorems_path}/P11.agda" | \
-          "${non_fol_theorems_path}/PropositionalFunction.agda") \
-	    $(APIA) ${ONLY_NON_FOL_THEOREMS_FLAGS} \
+          "${hol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
+          "${hol_theorems_path}/Eta-Issue8.agda" | \
+          "${hol_theorems_path}/Existential.agda" | \
+          "${hol_theorems_path}/Instance.agda" | \
+          "${hol_theorems_path}/Issue12.agda" | \
+          "${hol_theorems_path}/OptionsLList.agda" | \
+          "${hol_theorems_path}/P11.agda" | \
+          "${hol_theorems_path}/PropositionalFunction.agda") \
+	    $(APIA) ${ONLY_HOL_THEOREMS_FLAGS} \
 	            --schematic-propositional-functions \
                     $*.agda \
             ;; \
-          "${non_fol_theorems_path}/PropositionalSymbol.agda") \
-	    $(APIA) ${ONLY_NON_FOL_THEOREMS_FLAGS} \
+          "${hol_theorems_path}/PropositionalSymbol.agda") \
+	    $(APIA) ${ONLY_HOL_THEOREMS_FLAGS} \
 	            --schematic-propositional-symbols \
                     $*.agda \
             ;; \
@@ -282,8 +282,8 @@ ONLY_NON_FOL_THEOREMS_FLAGS = \
              ;; \
         esac
 
-only_non_fol_theorems : \
-  $(only_non_fol_theorems_files)
+only_hol_theorems : \
+  $(only_hol_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -315,32 +315,32 @@ prove_fol_theorems : $(prove_fol_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test suite: Prove non-FOL theorems
+# Test suite: Prove HOL theorems
 
-PROVE_NON_FOL_THEOREMS_FLAGS = \
-  -i$(non_fol_theorems_path) \
+PROVE_HOL_THEOREMS_FLAGS = \
+  -i$(hol_theorems_path) \
   --output-dir=$(output_dir) \
   --time=10
 
-%.prove_non_fol_theorems :
-	$(AGDA) -i$(non_fol_theorems_path) $*.agda
+%.prove_hol_theorems :
+	$(AGDA) -i$(hol_theorems_path) $*.agda
 	@for atp in ${FOF_ATPs} ; do \
 	  case $*.agda in \
-            "${non_fol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
-            "${non_fol_theorems_path}/Eta-Issue8.agda" | \
-            "${non_fol_theorems_path}/Existential.agda" | \
-            "${non_fol_theorems_path}/Instance.agda" | \
-            "${non_fol_theorems_path}/Issue12.agda" | \
-            "${non_fol_theorems_path}/OptionsLList.agda" | \
-            "${non_fol_theorems_path}/P11.agda" | \
-            "${non_fol_theorems_path}/PropositionalFunction.agda") \
-	      $(APIA) ${PROVE_NON_FOL_THEOREMS_FLAGS} \
+            "${hol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
+            "${hol_theorems_path}/Eta-Issue8.agda" | \
+            "${hol_theorems_path}/Existential.agda" | \
+            "${hol_theorems_path}/Instance.agda" | \
+            "${hol_theorems_path}/Issue12.agda" | \
+            "${hol_theorems_path}/OptionsLList.agda" | \
+            "${hol_theorems_path}/P11.agda" | \
+            "${hol_theorems_path}/PropositionalFunction.agda") \
+	      $(APIA) ${PROVE_HOL_THEOREMS_FLAGS} \
                       --atp=$$atp \
                       --schematic-propositional-functions \
 		      $*.agda ; \
             ;; \
-            "${non_fol_theorems_path}/PropositionalSymbol.agda") \
-	      $(APIA) ${PROVE_NON_FOL_THEOREMS_FLAGS} \
+            "${hol_theorems_path}/PropositionalSymbol.agda") \
+	      $(APIA) ${PROVE_HOL_THEOREMS_FLAGS} \
                       --atp=$$atp \
                       --schematic-propositional-symbols \
 		      $*.agda ; \
@@ -350,8 +350,8 @@ PROVE_NON_FOL_THEOREMS_FLAGS = \
           esac ; \
         done
 
-prove_non_fol_theorems : \
-  $(prove_non_fol_theorems_files)
+prove_hol_theorems : \
+  $(prove_hol_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -379,7 +379,7 @@ prove_many_sorted_fol_theorems : $(prove_many_sorted_fol_theorems_files)
 
 prove_all_theorems :
 	make prove_fol_theorems
-	make prove_non_fol_theorems
+	make prove_hol_theorems
 	make prove_many_sorted_fol_theorems
 	@echo "$@ succeeded!"
 

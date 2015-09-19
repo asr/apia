@@ -52,8 +52,6 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
 import qualified Agda.Utils.Pretty as AP
 
-import Apia.Logic.Primitives ( equal )
-
 import Apia.Logic.Translation.ToFormulae.ClauseBody
   ( cBodyToFormula
   , cBodyToTerm
@@ -67,7 +65,7 @@ import Apia.Logic.Translation.ToFormulae.Terms
 
 import Apia.Logic.Translation.ToFormulae.Types ( agdaTypeToFormula )
 
-import Apia.Logic.Types ( LFormula(Implies, Equiv, ForAll) )
+import Apia.Logic.Types ( LFormula(Implies, Eq, Equiv, ForAll) )
 
 import Apia.Monad.Base
   ( getTVars
@@ -239,7 +237,7 @@ clauseToFormula qName ty (Clause _ _ _ [] cBody _ _) = do
         -- @foo d = ...
         --
         -- so we don't need to add new fresh variables.
-        then liftM2 equal (agdaTermToTerm lhs) (cBodyToTerm cBody)
+        then liftM2 Eq (agdaTermToTerm lhs) (cBodyToTerm cBody)
         -- The definition is of the form
         --
         -- @foo ∷ D → D@
@@ -263,7 +261,7 @@ clauseToFormula qName ty (Clause _ _ _ [] cBody _ _) = do
             -- equaliy.
             let helper ∷ [String] → LFormula
                 helper []       = __IMPOSSIBLE__
-                helper [x]      = ForAll x $ \_ → equal tLHS tRHS
+                helper [x]      = ForAll x $ \_ → Eq tLHS tRHS
                 helper (x : xs) = ForAll x $ \_ → helper xs
 
             return $ helper freshVars

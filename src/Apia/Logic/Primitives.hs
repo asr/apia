@@ -19,7 +19,6 @@
 module Apia.Logic.Primitives
   ( appF
   , appP
-  , equal
   ) where
 
 ------------------------------------------------------------------------------
@@ -53,15 +52,3 @@ appP _ [] = __IMPOSSIBLE__
 appP p ts = Predicate name (p : ts)
   where name ∷ String
         name = "kp" ++ show (length ts) ++ "_"
-
--- The constant @kEqual@ refers to the predefined equality in the
--- ATPs.
---
--- N.B. The value of @kEqual@ is ***hard-coded*** in the module
--- TPTP.ConcreteSyntax.
-kEqual ∷ String
-kEqual = "equal_"
-
--- | Translation of the target logic equality.
-equal ∷ LTerm → LTerm → LFormula
-equal t1 t2 = Predicate kEqual [t1, t2]

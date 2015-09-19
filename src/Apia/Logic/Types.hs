@@ -16,6 +16,7 @@
 
 module Apia.Logic.Types
   ( LFormula( And
+            , Eq
             , Equiv
             , Exists
             , FALSE
@@ -86,6 +87,7 @@ data LFormula = TRUE
               | Equiv LFormula LFormula
               | ForAll VarName (Maybe LType) (LTerm → LFormula)
               | Exists VarName (Maybe LType) (LTerm → LFormula)
+              | Eq LTerm LTerm
 
 prettyQuantifierBody ∷ VarName → Maybe LType → (LTerm → LFormula) → Doc
 prettyQuantifierBody vName ty f =
@@ -102,3 +104,4 @@ instance Pretty LFormula where
   pretty (Equiv f1 f2)       = sspaces "Equiv" <> pretty f1 <> pretty f2
   pretty (ForAll vName ty f) = sspaces "ForAll" <> prettyQuantifierBody vName ty f
   pretty (Exists vName ty f) = sspaces "Exists" <> prettyQuantifierBody vName ty f
+  pretty (Eq t1 t2)          = sspaces "Eq" <> pretty t1 <> pretty t2

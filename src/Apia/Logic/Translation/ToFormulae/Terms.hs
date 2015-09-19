@@ -70,7 +70,7 @@ import Apia.Logic.Constants
   , lEquals
   )
 
-import Apia.Logic.Primitives ( appF, appP, equal )
+import Apia.Logic.Primitives ( appF, appP )
 
 import {-# source #-} Apia.Logic.Translation.ToFormulae.Types
   ( agdaDomTypeToFormula
@@ -78,16 +78,17 @@ import {-# source #-} Apia.Logic.Translation.ToFormulae.Types
   )
 
 import Apia.Logic.Types as L
-  ( LFormula( TRUE
-            , FALSE
-            , Predicate
-            , Not
-            , And
-            , Or
-            , Implies
+  ( LFormula( And
+            , Eq
             , Equiv
-            , ForAll
             , Exists
+            , FALSE
+            , ForAll
+            , Implies
+            , Not
+            , Or
+            , Predicate
+            , TRUE
             )
   , LTerm(Fun, Var)
   , LType(QuantifierType)
@@ -268,7 +269,7 @@ agdaTermToFormula term = case ignoreSharing term of
                    -- Not using the ATPs internal equality.
                    (predicate qName elims)
                    -- Using the ATPs internal equality.
-                   (liftM2 equal (agdaArgTermToTerm a1) (agdaArgTermToTerm a2))
+                   (liftM2 Eq (agdaArgTermToTerm a1) (agdaArgTermToTerm a2))
 
            | otherwise → predicate qName elims
 

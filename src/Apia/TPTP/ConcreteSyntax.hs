@@ -34,6 +34,7 @@ import Apia.Common ( Lang(FOF, TFF0) )
 
 import Apia.Logic.Types
   ( LFormula( And
+            , Eq
             , Equiv
             , Exists
             , FALSE
@@ -43,7 +44,7 @@ import Apia.Logic.Types
             , Or
             , Predicate
             , TRUE
-           )
+            )
   , LTerm(Fun, Var)
   , LType(AtomicType, QuantifierType)
   , VarName
@@ -210,13 +211,6 @@ instance ToTPTP [LTerm] where
   toTPTP lang (a : as) = toTPTP lang a +++ "," +++ toTPTP lang as
 
 instance ToTPTP LFormula where
-  -- We translate the hard-coded logic predicate @equal_@ as the
-  -- predefined equality in the ATP.
-  toTPTP lang (Predicate "equal_" [t1, t2] ) =
-    parens $ toTPTP lang t1 +++ " = " +++ toTPTP lang t2
-
-  toTPTP _ (Predicate "equal_" _) = __IMPOSSIBLE__
-
   -- If the predicate represents a propositional logic variable,
   -- following the TPTP syntax, we do not print the internal
   -- parenthesis.
@@ -239,6 +233,9 @@ instance ToTPTP LFormula where
     "( ! " +++ quantifierBodyToTPTP lang ty vName f +++ " )"
   toTPTP lang (Exists vName ty f) =
     "( ? " +++ quantifierBodyToTPTP lang ty vName f +++ " )"
+
+  toTPTP lang (Eq t1 t2) =
+    parens $ toTPTP lang t1 +++ " = " +++ toTPTP lang t2
 
 instance ToTPTP LType where
   toTPTP lang (AtomicType tyName) =

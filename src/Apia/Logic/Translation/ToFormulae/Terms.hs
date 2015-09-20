@@ -91,7 +91,7 @@ import Apia.Logic.Types as L
             , TRUE
             )
   , LTerm(Fun, Var)
-  , LType(QuantifierType)
+  , LType(AType)
   )
 
 import Apia.Monad.Base
@@ -337,7 +337,7 @@ agdaTermToFormula term = case ignoreSharing term of
         reportSLn "t2f" 20 $
           "Adding universal quantification on variable " ++ show freshVar
         tyName ← qName2String qName
-        return $ ForAll freshVar (Just (QuantifierType tyName qName)) $ const f
+        return $ ForAll freshVar (Just (AType tyName qName)) $ const f
 
       -- The bounded variable is quantified on a proof. Due to we have
       -- drop the quantification on proofs terms, this case is

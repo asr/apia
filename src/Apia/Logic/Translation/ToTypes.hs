@@ -28,7 +28,7 @@ import Agda.Syntax.Internal as I
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Apia.Logic.Types   ( LType(AtomicType), TypeName )
+import Apia.Logic.Types   ( LType(BType), TypeName )
 import Apia.Monad.Base    ( T )
 import Apia.Monad.Reports ( reportSLn )
 
@@ -45,7 +45,7 @@ agdaTypeToType tyName ty@(El (Type (Max [ClosedLevel 1])) term) = do
 agdaTypeToType _ _ = __IMPOSSIBLE__
 
 agdaTermToType ∷ TypeName → Term → T LType
-agdaTermToType tyName (Sort (Type (Max []))) = return $ AtomicType tyName
+agdaTermToType tyName (Sort (Type (Max []))) = return $ BType tyName
 
 agdaTermToType _ term = do
   reportSLn "agdaTermToType" 10 $ "Processing term:\n" ++ show term

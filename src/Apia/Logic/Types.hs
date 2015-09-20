@@ -28,7 +28,7 @@ module Apia.Logic.Types
             , TRUE
            )
   , LTerm(Fun, Var)
-  , LType(AtomicType, QuantifierType)
+  , LType(AType, BType)
   , TypeName
   , VarName
   ) where
@@ -50,12 +50,12 @@ import Apia.Utils.PrettyPrint
 type TypeName = String
 
 -- | Target logic types.
-data LType = AtomicType TypeName            -- ^ Atomic type.
-           | QuantifierType TypeName QName  -- ^ Type used in the quantified formulae.
+data LType = BType TypeName        -- ^ Base type.
+           | AType TypeName QName  -- ^ Atomic type.
 
 instance Pretty LType where
-  pretty (AtomicType tyName)       = pretty tyName
-  pretty (QuantifierType tyName _) = pretty tyName
+  pretty (BType tyName)   = pretty tyName
+  pretty (AType tyName _) = pretty tyName
 
 -- | Variables names.
 type VarName = String

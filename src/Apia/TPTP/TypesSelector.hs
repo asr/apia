@@ -46,13 +46,13 @@ import Apia.Logic.Types
             , TRUE
            )
   , LTerm(Var)
-  , LType(QuantifierType)
+  , LType(AType)
   , TypeName
   )
 
 import Apia.Monad.Base              ( T )
 import Apia.Monad.Reports           ( reportDLn )
-import Apia.TPTP.Types              ( AF(AFor, AType) )
+import Apia.TPTP.Types              ( AnF(AnFor, AnType) )
 import Apia.Utils.PrettyPrint       ( (<>), Pretty(pretty) )
 import Apia.Utils.AgdaAPI.Interface ( qNameDefinition )
 
@@ -73,32 +73,32 @@ agdaTypesInFormula (Implies f1 f2) = agdaTypesInFormula f1 ++ agdaTypesInFormula
 agdaTypesInFormula (Equiv f1 f2)   = agdaTypesInFormula f1 ++ agdaTypesInFormula f2
 
 agdaTypesInFormula (ForAll _ Nothing _) = __IMPOSSIBLE__
-agdaTypesInFormula (ForAll vName (Just (QuantifierType tyName qName)) f) =
+agdaTypesInFormula (ForAll vName (Just (AType tyName qName)) f) =
   (tyName, qName) : agdaTypesInFormula (f $ Var vName)
 agdaTypesInFormula ForAll{} = __IMPOSSIBLE__
 
 agdaTypesInFormula (Exists _ Nothing _) = __IMPOSSIBLE__
-agdaTypesInFormula (Exists vName (Just (QuantifierType tyName qName)) f) =
+agdaTypesInFormula (Exists vName (Just (AType tyName qName)) f) =
   (tyName, qName) : agdaTypesInFormula (f $ Var vName)
 agdaTypesInFormula Exists{} = __IMPOSSIBLE__
 
-agdaTypesInConjecture ∷ AF → [(TypeName, QName)]
-agdaTypesInConjecture (AFor _ TPTPConjecture f) = agdaTypesInFormula f
-agdaTypesInConjecture _                         = __IMPOSSIBLE__
+agdaTypesInConjecture ∷ AnF → [(TypeName, QName)]
+agdaTypesInConjecture (AnFor _ TPTPConjecture f) = agdaTypesInFormula f
+agdaTypesInConjecture _                          = __IMPOSSIBLE__
 
-toAType ∷ (TypeName, QName) → T AF
-toAType (tyName, qName) = do
+toAnType ∷ (TypeName, QName) → T AnF
+toAnType (tyName, qName) = do
   ty ∷ Type ← defType <$> qNameDefinition qName
 
   -- We run the translation from Agda types to the target logic types.
   lTy ← agdaTypeToType tyName ty
 
-  reportDLn "toAType" 10 $
+  reportDLn "toAnType" 10 $
     pretty "The logical type of " <> AP.pretty qName
     <> pretty " is:\n" <> pretty lTy
 
-  return $ AType qName TPTPType lTy
+  return $ AnType qName TPTPType lTy
 
 -- | Returns the types used by a TPTP conjecture.
-typesInConjecture ∷ AF → T [AF]
-typesInConjecture af = mapM toAType $ agdaTypesInConjecture af
+typesInConjecture ∷ AnF → T [AnF]
+typesInConjecture af = mapM toAnType $ agdaTypesInConjecture af

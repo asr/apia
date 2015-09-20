@@ -47,7 +47,7 @@ import Apia.Options ( Options(optLang, optOnlyFiles, optOutputDir) )
 import Apia.TPTP.ConcreteSyntax ( ToTPTP(toTPTP) )
 
 import Apia.TPTP.Types
-  ( AF(AFor, AType)
+  ( AnF(AnFor, AnType)
   , allRequiredDefs
   , ConjectureSet( defsConjecture
                  , defsLocalHints
@@ -142,16 +142,16 @@ agdaSourceType qName role =
   +++ "% Role: " +++ (T.pack . prettyShow) role +++ "\n"
   +++ "% Line: " +++ (T.pack . prettyShow . qNameLine) qName +++ "\n"
 
-addRole ∷ Lang → FilePath → AF → IO ()
-addRole lang file af@(AFor qName role _) = do
+addRole ∷ Lang → FilePath → AnF → IO ()
+addRole lang file af@(AnFor qName role _) = do
   T.appendFile file $ agdaSourceTerm qName role
   T.appendFile file $ toTPTP lang af
 
-addRole lang file af@(AType qName role _) = do
+addRole lang file af@(AnType qName role _) = do
   T.appendFile file $ agdaSourceType qName role
   T.appendFile file $ toTPTP lang af
 
-addRoles ∷ Lang → FilePath → [AF] → Text → IO ()
+addRoles ∷ Lang → FilePath → [AnF] → Text → IO ()
 addRoles _    _    []  _   = return ()
 addRoles lang file afs str = do
 
@@ -175,7 +175,7 @@ createConjectureFile file generalRoles conjectureSet = do
   when (duplicate (localHintsConjecture conjectureSet)) (__IMPOSSIBLE__)
   when (duplicate (defsLocalHints conjectureSet))       (__IMPOSSIBLE__)
 
-  let commonDefs ∷ [AF]
+  let commonDefs ∷ [AnF]
       commonDefs = commonRequiredDefs generalRoles conjectureSet
 
   reportSLn "createConjectureFile" 20 $ "commonDefs: " ++ show commonDefs
@@ -227,8 +227,8 @@ tptpFileName conjectureSet = do
 
   let qName ∷ QName
       qName = case theConjecture conjectureSet of
-                AFor _qName _ _ → _qName
-                AType{}         → __IMPOSSIBLE__
+                AnFor _qName _ _ → _qName
+                AnType{}         → __IMPOSSIBLE__
 
       moduleDir ∷ FilePath
       moduleDir = ((`moduleNameToFileName` [])

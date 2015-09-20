@@ -46,11 +46,11 @@ import Apia.Logic.Types
             , TRUE
             )
   , LTerm(Fun, Var)
-  , LType(AtomicType, QuantifierType)
+  , LType(AType, BType)
   , VarName
   )
 
-import Apia.TPTP.Types ( AF(AFor, AType) )
+import Apia.TPTP.Types ( AnF(AnFor, AnType) )
 
 import Apia.Utils.Text ( (+++), parens, toUpperFirst )
 
@@ -138,7 +138,7 @@ quantifierBodyToTPTP FOF _ vName f =
   "[" +++ toUpperFirst (T.pack vName) +++ "] : "
   +++ toTPTP FOF (f (Var vName))
 
-quantifierBodyToTPTP TFF0 (Just (QuantifierType tyName _)) vName f =
+quantifierBodyToTPTP TFF0 (Just (AType tyName _)) vName f =
   "[" +++ toUpperFirst (T.pack vName) +++ " : " +++ cfptNameToTPTP TFF0 T tyName
   +++ "] : "
   +++ toTPTP TFF0 (f (Var vName))
@@ -240,10 +240,10 @@ instance ToTPTP LFormula where
 instance ToTPTP LType where
   toTPTP FOF _ = __IMPOSSIBLE__
 
-  toTPTP TFF0 (AtomicType tyName) =
+  toTPTP TFF0 (BType tyName) =
     cfptNameToTPTP TFF0 T tyName +++ " : " +++ "$tType"
 
-  toTPTP TFF0 (QuantifierType tyName _) = toTPTP TFF0 tyName
+  toTPTP TFF0 (AType tyName _) = toTPTP TFF0 tyName
 
 instance ToTPTP TPTPRole where
   toTPTP _    TPTPAxiom      = "axiom"
@@ -259,8 +259,8 @@ instance ToTPTP Lang where
 
 -- Translation of annotated formulae and types to TPTP concrete
 -- syntax.
-instance ToTPTP AF where
-  toTPTP lang (AFor qName role for) =
+instance ToTPTP AnF where
+  toTPTP lang (AnFor qName role for) =
     toTPTP lang lang
     +++ "("
     +++ toTPTP lang qName +++ ", "
@@ -268,7 +268,7 @@ instance ToTPTP AF where
     +++ toTPTP lang for
     +++ ")." +++ "\n\n"
 
-  toTPTP lang (AType qName role ty) =
+  toTPTP lang (AnType qName role ty) =
     toTPTP lang lang
     +++ "("
     +++ toTPTP lang qName +++ ", "

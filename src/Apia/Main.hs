@@ -57,7 +57,7 @@ import Apia.Options
 
 import Apia.Snapshot         ( snapshotTest )
 import Apia.TPTP.Files       ( createConjectureTPTPFile )
-import Apia.TPTP.Translation ( conjecturesToAFors, generalRolesToAFors )
+import Apia.TPTP.Translation ( conjecturesToAnFors, generalRolesToAnFors )
 import Apia.TPTP.Types       ( ConjectureSet, GeneralRoles )
 
 import qualified Apia.Utils.Except as E
@@ -102,7 +102,7 @@ translation agdaFile = do
   -- We add @allDefs@ the translation monad state.
   modifyTDefs allDefs
 
-  pair generalRolesToAFors $ conjecturesToAFors topLevelDefs
+  pair generalRolesToAnFors $ conjecturesToAnFors topLevelDefs
 
 -- | The main function.
 runApia ∷ T ()
@@ -125,7 +125,7 @@ runApia = do
             | otherwise → do
 
               -- The ATP pragmas are translated to annotated formulae.
-              allAFs ← translation file
+              allAnFs ← translation file
 
               -- The selected ATPs are added to the translation monad
               -- state.
@@ -133,7 +133,7 @@ runApia = do
 
               -- Creation of the TPTP files.
               tptpFiles ←
-                mapM (createConjectureTPTPFile (fst allAFs)) (snd allAFs)
+                mapM (createConjectureTPTPFile (fst allAnFs)) (snd allAnFs)
 
               -- Check the generated TPTP files using the tptp4X
               -- program from the TPTP library.

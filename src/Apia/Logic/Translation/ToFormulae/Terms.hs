@@ -189,16 +189,16 @@ elimToTerm (Proj _)    = __IMPOSSIBLE__
 -- Translation of predicates.
 predicate ∷ QName → Elims → T LFormula
 predicate qName elims = do
-  lName  ← qName2String qName
+  pName  ← qName2String qName
   lTerms ← mapM elimToTerm elims
 
   case length elims of
     0 → __IMPOSSIBLE__
     _ → ifM (askTOpt optNoPredicateConstants)
             -- Direct translation.
-            (return $ Predicate lName lTerms)
+            (return $ Predicate pName lTerms)
             -- Translation using Koen's suggestion.
-            (return $ appP (Fun lName []) lTerms)
+            (return $ appP (Fun pName []) lTerms)
 
 propositionalFunctionScheme ∷ [String] → Nat → Elims → T LFormula
 propositionalFunctionScheme vars n elims = do

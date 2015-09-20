@@ -49,6 +49,6 @@ appF t1 t2 = Fun kApp [t1, t2]
 -- predicates are translated directly.
 appP ∷ LTerm → [LTerm] → LFormula
 appP _ [] = __IMPOSSIBLE__
-appP p ts = Predicate name (p : ts)
-  where name ∷ String
-        name = "kp" ++ show (length ts) ++ "_"
+appP p ts = Predicate pName (p : ts)
+  where pName ∷ String
+        pName = "kp" ++ show (length ts) ++ "_"

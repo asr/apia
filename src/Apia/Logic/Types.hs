@@ -51,9 +51,13 @@ instance Pretty [LTerm] where
   pretty = hcat . map pretty
 
 -- | Target logic formulae.
+
+-- | Predicates names.
+type PredicateName = String
+
 data LFormula = TRUE
               | FALSE
-              | Predicate String [LTerm]
+              | Predicate PredicateName [LTerm]
               | Not LFormula
               | And LFormula LFormula
               | Or LFormula LFormula
@@ -64,9 +68,12 @@ data LFormula = TRUE
               | Eq LTerm LTerm
 
 instance Pretty LFormula where
-  pretty TRUE                = sspaces "TRUE"
-  pretty FALSE               = sspaces "FALSE"
-  pretty (Predicate name ts) = sspaces "Predicate" <> pretty name <> space <> pretty ts
+  pretty TRUE  = sspaces "TRUE"
+  pretty FALSE = sspaces "FALSE"
+
+  pretty (Predicate pName ts) =
+    sspaces "Predicate" <> pretty pName <> space <> pretty ts
+
   pretty (Not f)             = sspaces "Not" <> pretty f
   pretty (And f1 f2)         = sspaces "And" <> pretty f1 <> pretty f2
   pretty (Or f1 f2)          = sspaces "Or" <> pretty f1 <> pretty f2

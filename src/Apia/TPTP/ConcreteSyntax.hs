@@ -203,10 +203,10 @@ instance ToTPTP LFormula where
   -- If the predicate represents a propositional logic variable,
   -- following the TPTP syntax, we do not print the internal
   -- parenthesis.
-  toTPTP lang (Predicate name []) = parens $ cfpNameToTPTP lang P name
+  toTPTP lang (Predicate pname []) = parens $ cfpNameToTPTP lang P pname
 
-  toTPTP lang (Predicate name terms) =
-    cfpNameToTPTP lang P name +++ parens (toTPTP lang terms)
+  toTPTP lang (Predicate pname terms) =
+    cfpNameToTPTP lang P pname +++ parens (toTPTP lang terms)
 
   toTPTP lang (And f1 f2)     = parens $ toTPTP lang f1 +++ " & " +++ toTPTP lang f2
   toTPTP lang (Or f1 f2)      = parens $ toTPTP lang f1 +++ " | " +++ toTPTP lang f2

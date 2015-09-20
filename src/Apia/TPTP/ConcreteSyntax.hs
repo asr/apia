@@ -238,10 +238,12 @@ instance ToTPTP LFormula where
     parens $ toTPTP lang t1 +++ " = " +++ toTPTP lang t2
 
 instance ToTPTP LType where
-  toTPTP lang (AtomicType tyName) =
-    cfptNameToTPTP lang T tyName +++ " : " +++ "$tType"
+  toTPTP FOF _ = __IMPOSSIBLE__
 
-  toTPTP lang (QuantifierType tyName _) = toTPTP lang tyName
+  toTPTP TFF0 (AtomicType tyName) =
+    cfptNameToTPTP TFF0 T tyName +++ " : " +++ "$tType"
+
+  toTPTP TFF0 (QuantifierType tyName _) = toTPTP TFF0 tyName
 
 instance ToTPTP TPTPRole where
   toTPTP _    TPTPAxiom      = "axiom"

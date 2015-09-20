@@ -54,7 +54,7 @@ data LType = AtomicType TypeName            -- ^ Atomic type.
            | QuantifierType TypeName QName  -- ^ Type used in the quantified formulae.
 
 instance Pretty LType where
-  pretty (AtomicType     tyName)   = pretty tyName
+  pretty (AtomicType tyName)       = pretty tyName
   pretty (QuantifierType tyName _) = pretty tyName
 
 -- | Variables names.

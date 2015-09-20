@@ -73,14 +73,14 @@ agdaTypesInFormula (Implies f1 f2) = agdaTypesInFormula f1 ++ agdaTypesInFormula
 agdaTypesInFormula (Equiv f1 f2)   = agdaTypesInFormula f1 ++ agdaTypesInFormula f2
 
 agdaTypesInFormula (ForAll _ Nothing _) = __IMPOSSIBLE__
-agdaTypesInFormula (Exists _ Nothing _) = __IMPOSSIBLE__
-
 agdaTypesInFormula (ForAll vName (Just (QuantifierType tyName qName)) f) =
   (tyName, qName) : agdaTypesInFormula (f $ Var vName)
+agdaTypesInFormula ForAll{} = __IMPOSSIBLE__
+
+agdaTypesInFormula (Exists _ Nothing _) = __IMPOSSIBLE__
 agdaTypesInFormula (Exists vName (Just (QuantifierType tyName qName)) f) =
   (tyName, qName) : agdaTypesInFormula (f $ Var vName)
-
-agdaTypesInFormula _ = __IMPOSSIBLE__
+agdaTypesInFormula Exists{} = __IMPOSSIBLE__
 
 agdaTypesInConjecture ∷ AF → [(TypeName, QName)]
 agdaTypesInConjecture (AFor _ TPTPConjecture f) = agdaTypesInFormula f

@@ -19,13 +19,10 @@ module Apia.TPTP.TypesSelector ( typesInConjecture ) where
 ------------------------------------------------------------------------------
 
 import Agda.Syntax.Abstract.Name ( QName )
-import Agda.Syntax.Internal      ( Type )
 
 import Agda.Syntax.Common
   ( TPTPRole(TPTPConjecture, TPTPType)
   )
-
-import Agda.TypeChecking.Monad.Base ( Definition(defType) )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
@@ -54,7 +51,7 @@ import Apia.Monad.Base              ( T )
 import Apia.Monad.Reports           ( reportDLn )
 import Apia.TPTP.Types              ( AnF(AnFor, AnType) )
 import Apia.Utils.PrettyPrint       ( (<>), Pretty(pretty) )
-import Apia.Utils.AgdaAPI.Interface ( qNameDefinition )
+import Apia.Utils.AgdaAPI.Interface ( qNameType )
 
 #if !MIN_VERSION_base(4,8,0)
 import Control.Applicative ( (<$>) )
@@ -92,10 +89,8 @@ agdaTypesInConjecture _                          = __IMPOSSIBLE__
 
 toAnType ∷ (TypeName, QName) → T AnF
 toAnType (tyName, qName) = do
-  ty ∷ Type ← defType <$> qNameDefinition qName
-
   -- We run the translation from Agda types to the target logic types.
-  lTy ← agdaTypeToType tyName ty
+  lTy ← agdaTypeToType tyName =<< qNameType qName
 
   reportDLn "toAnType" 10 $
     pretty "The logical type of " <> AP.pretty qName

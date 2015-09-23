@@ -56,6 +56,10 @@ import Apia.TPTP.Types              ( AnF(AnFor, AnType) )
 import Apia.Utils.PrettyPrint       ( (<>), Pretty(pretty) )
 import Apia.Utils.AgdaAPI.Interface ( qNameDefinition )
 
+#if !MIN_VERSION_base(4,8,0)
+import Control.Applicative ( (<$>) )
+#endif
+
 #include "undefined.h"
 ------------------------------------------------------------------------------
 

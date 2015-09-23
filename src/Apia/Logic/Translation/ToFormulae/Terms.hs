@@ -20,14 +20,13 @@ module Apia.Logic.Translation.ToFormulae.Terms
 
 ------------------------------------------------------------------------------
 
-import Agda.Syntax.Abstract.Name ( Name(nameConcrete, nameId) , QName(QName) )
+import Agda.Syntax.Abstract.Name ( Name(nameConcrete) , QName(QName) )
 
 import Agda.Syntax.Common
   ( Arg(Arg, argInfo, unArg)
   , ArgInfo(ArgInfo, argInfoHiding)
   , Dom(Dom, unDom)
   , Hiding(Hidden, NotHidden)
-  , NameId(NameId)
   , Nat
   )
 
@@ -116,7 +115,7 @@ import Apia.Options
   )
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
-import Apia.Utils.AgdaAPI.Interface     ( isATPDefinition, qNameDefinition )
+import Apia.Utils.AgdaAPI.Interface     ( qNameToString )
 
 import qualified Apia.Utils.Except as E
 
@@ -143,24 +142,6 @@ universalQuantificationErrorMsg p =
         "--schematic-propositional-symbols"   → "propositional symbols"
         "--schematic-propositional-functions" → "propositional functions"
         _                                     → __IMPOSSIBLE__
-
-qName2String ∷ QName → T String
-qName2String qName@(QName _ name) = do
-  def ← qNameDefinition qName
-
-  -- See note [Unique name].
-  if isATPDefinition def
-    then do
-      let qNameId ∷ NameId
-          qNameId = nameId name
-
-      reportSLn "qName2String" 20 $ "qNameId : " ++ show qNameId
-
-      case qNameId of
-        NameId x i → return $ (show . nameConcrete) name ++ "_"
-                              ++ show x ++ "_"
-                              ++ show i
-    else return $ show $ nameConcrete name
 
 agdaArgTermToFormula ∷ I.Arg Term → T LFormula
 agdaArgTermToFormula Arg {argInfo = info, unArg = t} =
@@ -189,7 +170,7 @@ elimToTerm (Proj _)    = __IMPOSSIBLE__
 -- Translation of predicates.
 predicate ∷ QName → Elims → T LFormula
 predicate qName elims = do
-  pName  ← qName2String qName
+  pName  ← qNameToString qName
   lTerms ← mapM elimToTerm elims
 
   case length elims of
@@ -235,7 +216,7 @@ agdaTermToFormula term = case ignoreSharing term of
                  | otherwise → do
                    -- In this guard we translate 0-ary predicates, i.e.
                    -- propositional functions, for example, A : Set.
-                   lName ← qName2String qName
+                   lName ← qNameToString qName
                    return $ Predicate lName []
 
          Just [a]
@@ -336,7 +317,7 @@ agdaTermToFormula term = case ignoreSharing term of
       El (Type (Max [])) (Def qName []) → do
         reportSLn "t2f" 20 $
           "Adding universal quantification on variable " ++ show freshVar
-        tyName ← qName2String qName
+        tyName ← qNameToString qName
         return $ ForAll freshVar (Just (AType tyName qName)) $ const f
 
       -- The bounded variable is quantified on a proof. Due to we have
@@ -646,10 +627,3 @@ agdaTermToTerm term = case ignoreSharing term of
 -- Agda is using (Pi _ (NoAbs _ _)) for the non-dependent
 -- functions. In a later patch, Agda changed somes (Pi _ (Abs _ _))
 -- to (Pi _ (NoAbs _ _)). The solution below works for *all* our cases.
-
-------------------------------------------------------------------------------
--- Note [Unique name]
-
--- Because the ATP pragma definitions are global, we need an unique
--- name. In this case, we append to the @qName@ the @qName@'s id (it
--- generates long TPTP name for the definitions).

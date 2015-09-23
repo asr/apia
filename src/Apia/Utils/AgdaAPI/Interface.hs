@@ -30,6 +30,7 @@ module Apia.Utils.AgdaAPI.Interface
   , QNamesIn(qNamesIn)
   , qNameLine
   , qNameNameBindingSiteRange
+  , qNameToString
   , qNameType
   , readInterface
   ) where
@@ -49,13 +50,14 @@ import Agda.Interaction.Options
 
 import Agda.Syntax.Abstract.Name
   ( ModuleName
-  , Name(nameBindingSite, nameConcrete)
-  , QName(qnameName)
+  , Name(nameBindingSite, nameConcrete, nameId)
+  , QName(QName, qnameName)
   )
 
 import Agda.Syntax.Common
   ( Arg(Arg)
   , Dom(Dom)
+  , NameId(NameId)
   , TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint, TPTPType)
   )
 
@@ -333,6 +335,26 @@ qNameConcreteNameRange = getRange . nameConcrete . qnameName
 qNameNameBindingSiteRange ∷ QName → Range
 qNameNameBindingSiteRange = getRange . nameBindingSite . qnameName
 
+-- | Return a 'String' for a 'QName'.
+qNameToString ∷ QName → T String
+qNameToString qName@(QName _ name) = do
+  def ← qNameDefinition qName
+
+  -- See note [Unique name].
+  if isATPDefinition def
+    then do
+      let qNameId ∷ NameId
+          qNameId = nameId name
+
+      reportSLn "qName2String" 20 $ "qNameId : " ++ show qNameId
+
+      case qNameId of
+        NameId x i → return $ (show . nameConcrete) name ++ "_"
+                              ++ show x ++ "_"
+                              ++ show i
+    else return $ show $ nameConcrete name
+
+
 -- | Return the 'Clause's associted with an Agda 'Definition'.
 getClauses ∷ Definition → [Clause]
 getClauses def =
@@ -445,3 +467,11 @@ getImportedInterfaces i = do
 -- interpreted as @["."]@ (from
 -- Agda.TypeChecking.Monad.Options). Therefore the default of
 -- Options.optAgdaIncludePath is @[]@.
+
+
+------------------------------------------------------------------------------
+-- Note [Unique name]
+
+-- Because the ATP pragma definitions are global, we need an unique
+-- name. In this case, we append to the @qName@ the @qName@'s id (it
+-- generates long TPTP name for the definitions).

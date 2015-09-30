@@ -35,7 +35,6 @@ import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , ClauseBody
   , ClauseBodyF(Bind, Body)
-  , Dom
   , Elim
   , Elim'(Apply, Proj)
   , Elims
@@ -101,8 +100,8 @@ instance DecIndex Elim where
 instance DecIndex a ⇒ DecIndex [a] where
   decIndex = map decIndex
 
-instance DecIndex a ⇒ DecIndex (I.Dom a) where
-  decIndex (Dom info e) = Dom info $ decIndex e
+instance DecIndex a ⇒ DecIndex (Dom a) where
+  decIndex (Dom ai e) = Dom ai $ decIndex e
 
 instance DecIndex a ⇒ DecIndex (Abs a) where
   decIndex (Abs name body) = Abs name $ decIndex body

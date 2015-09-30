@@ -63,12 +63,10 @@ import Agda.Syntax.Common
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
-  , Arg
   , Clause(Clause)
   , ClauseBody
   , ClauseBodyF(Bind, Body, NoBody)
   , ConHead(ConHead)
-  , Dom
   , Elim
   , Elim'(Apply, Proj)
   , Term(Con, Def, Lam, Pi, Sort, Var)
@@ -409,12 +407,10 @@ instance QNamesIn Definition where
 instance QNamesIn a ⇒ QNamesIn [a] where
   qNamesIn = concatMap qNamesIn
 
--- Requires TypeSynonymInstances and FlexibleInstances.
-instance QNamesIn a ⇒ QNamesIn (I.Arg a) where
+instance QNamesIn a ⇒ QNamesIn (Arg a) where
   qNamesIn (Arg _ e) = qNamesIn e
 
--- Requires TypeSynonymInstances and FlexibleInstances.
-instance QNamesIn a ⇒ QNamesIn (I.Dom a) where
+instance QNamesIn a ⇒ QNamesIn (Dom a) where
   qNamesIn (Dom _ e) = qNamesIn e
 
 instance QNamesIn a ⇒ QNamesIn (Abs a) where

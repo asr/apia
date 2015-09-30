@@ -31,7 +31,6 @@ import Agda.Syntax.Common
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
-  , Arg
   , ClauseBody
   , ClauseBodyF(Bind, Body, NoBody)
   , Elim
@@ -69,8 +68,7 @@ instance BoundedVars Elim where
   boundedVars (Apply (Arg _ term)) = boundedVars term
   boundedVars (Proj _)             = __IMPOSSIBLE__
 
--- Requires TypeSynonymInstances and FlexibleInstances.
-instance BoundedVars a ⇒ BoundedVars (I.Arg a) where
+instance BoundedVars a ⇒ BoundedVars (Arg a) where
   boundedVars (Arg _ e) = boundedVars e
 
 instance BoundedVars a ⇒ BoundedVars [a] where
@@ -118,8 +116,7 @@ instance BoundedVarsType Elim where
   boundedVarsType (Apply (Arg _ term)) = boundedVarsType term
   boundedVarsType (Proj _)             = __IMPOSSIBLE__
 
--- Requires TypeSynonymInstances and FlexibleInstances.
-instance BoundedVarsType a ⇒ BoundedVarsType (I.Arg a) where
+instance BoundedVarsType a ⇒ BoundedVarsType (Arg a) where
   boundedVarsType (Arg _ e) = boundedVarsType e
 
 instance BoundedVarsType a ⇒ BoundedVarsType [a] where

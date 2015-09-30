@@ -7,12 +7,13 @@ module Apia.Logic.Translation.ToFormulae.Types
 
 ------------------------------------------------------------------------------
 
-import Agda.Syntax.Internal as I ( Dom, Type )
+import Agda.Syntax.Common   ( Dom )
+import Agda.Syntax.Internal ( Type )
 
 import Apia.Logic.Types ( LFormula )
 import Apia.Monad.Base  ( T )
 
 ------------------------------------------------------------------------------
 
-agdaDomTypeToFormula ∷ I.Dom Type → T LFormula
+agdaDomTypeToFormula ∷ Dom Type → T LFormula
 agdaTypeToFormula    ∷ Type → T LFormula

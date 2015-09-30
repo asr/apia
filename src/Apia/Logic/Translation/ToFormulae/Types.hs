@@ -27,8 +27,7 @@ import Agda.Syntax.Common
   )
 
 import Agda.Syntax.Internal as I
-  ( Dom
-  , Level(Max)
+  ( Level(Max)
   , PlusLevel(ClosedLevel)
   , Sort(Type)
   , Type
@@ -47,7 +46,7 @@ import Apia.Monad.Reports                      ( reportSLn )
 ------------------------------------------------------------------------------
 -- | Translate an Agda internal 'Dom' 'Type' to a target logic
 -- formula.
-agdaDomTypeToFormula ∷ I.Dom Type → T LFormula
+agdaDomTypeToFormula ∷ Dom Type → T LFormula
 agdaDomTypeToFormula Dom {domInfo = info, unDom = ty} =
   case info of
     ArgInfo { argInfoHiding = NotHidden } → agdaTypeToFormula ty

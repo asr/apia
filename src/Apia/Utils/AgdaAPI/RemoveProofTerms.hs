@@ -67,7 +67,6 @@ import Agda.Syntax.Common ( Arg(Arg), Dom(Dom), Nat )
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
-  , Dom
   , Elim'(Apply)
   , Elims
   , Level(Max)
@@ -152,8 +151,8 @@ instance RemoveVar Term where
     reportSLn "removeVar" 20 $ "The term is: " ++ show term
     __IMPOSSIBLE__
 
-instance RemoveVar a ⇒ RemoveVar (I.Dom a) where
-  removeVar (Dom info e) x = Dom info <$> removeVar e x
+instance RemoveVar a ⇒ RemoveVar (Dom a) where
+  removeVar (Dom ai e) x = Dom ai <$> removeVar e x
 
 -- In the Agda source code (Agda.Syntax.Internal) we have
 -- type Elims = [Elim], however we cannot create the instance of Elims

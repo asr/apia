@@ -11,7 +11,7 @@
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP                 #-}
-{-# LANGUAGE FlexibleInstances   #-}  -- Implies TypeSynonymInstances.
+{-# LANGUAGE FlexibleInstances   #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
@@ -28,9 +28,7 @@ import Agda.Syntax.Common
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
-  , Arg
   , arity
-  , Dom
   , Elim
   , Elim'(Apply, Proj)
   , Elims
@@ -116,7 +114,7 @@ instance EtaExpandible Term where
                    (Var 0 []) → do
                      freshVar ← newTVar
 
-                     let newArg ∷ I.Arg Term
+                     let newArg ∷ Arg Term
                          newArg = Arg defaultArgInfo
                                     (Lam defaultArgInfo
                                     (Abs freshVar (Var 1 [Apply (Arg defaultArgInfo (var 0))])))
@@ -147,7 +145,7 @@ instance EtaExpandible Term where
           -- in the arguments.
           incVarsEtaExpanded ∷ Elims ← map incIndex <$> etaExpand elims
 
-          let newVar ∷ I.Arg Term
+          let newVar ∷ Arg Term
               newVar = Arg defaultArgInfo (var 0)
 
           freshVar ← newTVar
@@ -183,9 +181,8 @@ instance EtaExpandible Elim where
   etaExpand (Apply (Arg color term)) = Apply . Arg color <$> etaExpand term
   etaExpand (Proj _)                 = __IMPOSSIBLE__
 
--- Requires TypeSynonymInstances and FlexibleInstances.
-instance EtaExpandible a ⇒ EtaExpandible (I.Dom a) where
-  etaExpand (Dom info e) = Dom info <$> etaExpand e
+instance EtaExpandible a ⇒ EtaExpandible (Dom a) where
+  etaExpand (Dom ai e) = Dom ai <$> etaExpand e
 
 instance EtaExpandible a ⇒ EtaExpandible [a] where
   etaExpand = mapM etaExpand

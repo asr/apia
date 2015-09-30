@@ -38,7 +38,6 @@ import qualified Agda.Syntax.Concrete.Name as C
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , allApplyElims
-  , Arg
   , Args
   , ConHead(ConHead)
   , Elim
@@ -143,13 +142,13 @@ universalQuantificationErrorMsg p =
         "--schematic-propositional-functions" → "propositional functions"
         _                                     → __IMPOSSIBLE__
 
-agdaArgTermToFormula ∷ I.Arg Term → T LFormula
+agdaArgTermToFormula ∷ Arg Term → T LFormula
 agdaArgTermToFormula Arg {argInfo = info, unArg = t} =
   case info of
     ArgInfo { argInfoHiding = NotHidden } → agdaTermToFormula t
     _                                     → __IMPOSSIBLE__
 
-agdaArgTermToTerm ∷ I.Arg Term → T LTerm
+agdaArgTermToTerm ∷ Arg Term → T LTerm
 agdaArgTermToTerm Arg {argInfo = info, unArg = t} =
   case info of
     ArgInfo { argInfoHiding = Hidden }    → agdaTermToTerm t
@@ -157,8 +156,8 @@ agdaArgTermToTerm Arg {argInfo = info, unArg = t} =
     _                                     → __IMPOSSIBLE__
 
 binConst ∷ (LFormula → LFormula → LFormula) →
-           I.Arg Term →
-           I.Arg Term →
+           Arg Term →
+           Arg Term →
            T LFormula
 binConst op arg1 arg2 =
   liftM2 op (agdaArgTermToFormula arg1) (agdaArgTermToFormula arg2)

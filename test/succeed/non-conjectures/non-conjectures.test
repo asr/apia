@@ -8,7 +8,6 @@ Usage: apia [OPTIONS] FILE
                                                 (default: e, equinox and vampire)
            --check                              Check the syntax of the generated TPTP files using the
                                                 tptp4X program from the TPTP library
-           --dump-agdai                         Dump the Agda interface file to stdout
            --dump-types                         Dump Agda types information to stdout
            --function-constant                  Use a hard-coded binary function symbol for the translation
                                                 of functions (required for handling currying)
@@ -91,8 +90,8 @@ the files are different:
 >>>2
 >>>= 0
 
-#7. --dump-agdai
-dist/build/apia/apia -itest/succeed/non-conjectures --dump-agdai test/succeed/non-conjectures/Foo.agda
+#7. Interface file
+agda -itest/succeed/non-conjectures -v 0 -v "main:50" test/succeed/non-conjectures/Foo.agda
 <<<
 >>>
 Interface

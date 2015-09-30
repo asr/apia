@@ -19,7 +19,6 @@ module Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) ) where
 
 import Agda.Syntax.Common
   ( Arg(Arg)
-  , ArgInfo(ArgInfo)
   , Dom(Dom)
   )
 
@@ -59,18 +58,15 @@ instance IgnoreSharing Term where
 
   ignoreSharing term = term
 
-instance (IgnoreSharing c, IgnoreSharing e) ⇒ IgnoreSharing (Dom c e) where
-  ignoreSharing (Dom c e) = Dom (ignoreSharing c) (ignoreSharing e)
-
-instance IgnoreSharing c ⇒ IgnoreSharing (ArgInfo c) where
-  ignoreSharing (ArgInfo h r xs) = ArgInfo h r (ignoreSharing xs)
+instance IgnoreSharing a ⇒ IgnoreSharing (Dom a) where
+  ignoreSharing (Dom ai e) = Dom ai (ignoreSharing e)
 
 instance IgnoreSharing a ⇒ IgnoreSharing (Elim' a) where
   ignoreSharing (Apply a)    = Apply $ ignoreSharing a
   ignoreSharing (Proj qname) = Proj qname
 
-instance (IgnoreSharing c, IgnoreSharing e) ⇒ IgnoreSharing (Arg c e) where
-  ignoreSharing (Arg c e) = Arg (ignoreSharing c) (ignoreSharing e)
+instance IgnoreSharing a ⇒ IgnoreSharing (Arg a) where
+  ignoreSharing (Arg ai e) = Arg ai (ignoreSharing e)
 
 instance IgnoreSharing a ⇒ IgnoreSharing (Tele a) where
   ignoreSharing EmptyTel        = EmptyTel

@@ -20,7 +20,6 @@ module Apia.Options
   , Options( Options --Improve Haddock information.
            , optATP
            , optCheck
-           , optDumpAgdai
            , optDumpTypes
            , optFnConstant
            , optHelp
@@ -102,7 +101,6 @@ import System.Environment ( getProgName )
 data Options = Options
   { optATP                             ∷ [String]
   , optCheck                           ∷ Bool
-  , optDumpAgdai                       ∷ Bool
   , optDumpTypes                       ∷ Bool
   , optFnConstant                      ∷ Bool
   , optHelp                            ∷ Bool
@@ -142,7 +140,6 @@ defaultOptions ∷ Options
 defaultOptions = Options
   { optATP                             = []
   , optCheck                           = False
-  , optDumpAgdai                       = False
   , optDumpTypes                       = False
   , optFnConstant                      = False
   , optHelp                            = False
@@ -185,9 +182,6 @@ atpOpt name opts = Right opts { optATP = optATP opts ++ [name] }
 
 checkOpt ∷ MOptions
 checkOpt opts = Right opts { optCheck = True }
-
-dumpAgdaiOpt ∷ MOptions
-dumpAgdaiOpt opts = Right opts { optDumpAgdai = True }
 
 dumpTypesOpt ∷ MOptions
 dumpTypesOpt opts = Right opts { optDumpTypes = True }
@@ -358,8 +352,6 @@ options =
   , Option []  ["check"] (NoArg checkOpt) $
                "Check the syntax of the generated TPTP files using the\n"
                ++ "tptp4X program from the TPTP library"
-  , Option []  ["dump-agdai"] (NoArg dumpAgdaiOpt)
-               "Dump the Agda interface file to stdout"
   , Option []  ["dump-types"] (NoArg dumpTypesOpt)
                "Dump Agda types information to stdout"
   , Option []  ["function-constant"] (NoArg fnConstantOpt) $

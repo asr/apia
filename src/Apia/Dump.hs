@@ -13,8 +13,7 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Apia.Dump
-  ( dumpAgdai
-  , dumpTypes
+  ( dumpTypes
   ) where
 
 ------------------------------------------------------------------------------
@@ -79,7 +78,3 @@ dumpTypes file = do
       defs = sigDefinitions $ iSignature i
 
   mapM_ dumpQNameInformation $ sortBy compareQNameDefinition $ HashMap.toList defs
-
--- | Print the Agda interface file to stdout.
-dumpAgdai ∷ FilePath → T ()
-dumpAgdai file =  liftIO . putStrLn . prettyShow =<< readInterface file

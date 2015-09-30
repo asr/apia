@@ -32,7 +32,7 @@ import Agda.Utils.Impossible ( catchImpossible )
 
 import Apia.ATPs      ( callATPs, selectedATPs )
 import Apia.CheckTPTP ( checkTPTP )
-import Apia.Dump      ( dumpAgdai, dumpTypes )
+import Apia.Dump      ( dumpTypes )
 
 import Apia.Monad.Base
   ( modifyTDefs
@@ -44,7 +44,6 @@ import Apia.Monad.Reports ( reportSLn )
 
 import Apia.Options
   ( Options( optCheck
-           , optDumpAgdai
            , optDumpTypes
            , optHelp
            , optInputFile
@@ -118,10 +117,9 @@ runApia = do
                  Just f  → return f
 
         case () of
-          _ | -- Dump the Agda interface file to stdout.
-              optDumpAgdai opts → dumpAgdai file
-            | -- Dump Agda types information to stdout.
+          _ | -- Dump Agda types information to stdout.
               optDumpTypes opts → dumpTypes file
+
             | otherwise → do
 
               -- The ATP pragmas are translated to annotated formulae.

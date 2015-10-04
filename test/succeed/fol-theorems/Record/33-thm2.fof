@@ -9,19 +9,19 @@
 % Name: Record.P.is
 % Role: axiom
 % Line: 18
-fof(n26_96484415, axiom, ( ! [A] : ( ! [B] : (kp1_(cP1,A) => (kp2_(cP2,A,B) => kp2_(cP,A,B))) ) )).
+fof(n26_96484415, axiom, ( ! [A] : ( ! [B] : (kp1_(cP1_4_96484415,A) => (kp2_(cP2_6_96484415,A,B) => kp2_(cP_12_96484415,A,B))) ) )).
 
 % The source Agda term was:
 % Name: Record.p₁
 % Role: axiom
 % Line: 25
-fof(n30_96484415, axiom, ( ! [A] : kp1_(cP1,A) )).
+fof(n30_96484415, axiom, ( ! [A] : kp1_(cP1_4_96484415,A) )).
 
 % The source Agda term was:
 % Name: Record.p₂
 % Role: axiom
 % Line: 26
-fof(n36_96484415, axiom, ( ! [A] : ( ! [B] : kp2_(cP2,A,B) ) )).
+fof(n36_96484415, axiom, ( ! [A] : ( ! [B] : kp2_(cP2_6_96484415,A,B) ) )).
 
 % End general axiom(s).
 
@@ -32,7 +32,7 @@ fof(n36_96484415, axiom, ( ! [A] : ( ! [B] : kp2_(cP2,A,B) ) )).
 % Name: Record.thm₂
 % Role: prove
 % Line: 33
-fof(n52_96484415, conjecture, ( ! [A] : ( ! [B] : kp2_(cP,A,B) ) )).
+fof(n52_96484415, conjecture, ( ! [A] : ( ! [B] : kp2_(cP_12_96484415,A,B) ) )).
 
 % End conjecture.
 

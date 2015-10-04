@@ -9,7 +9,7 @@
 % Name: PropositionalFunction2.A
 % Role: definition
 % Line: 20
-fof(n10_1676460, definition, ( ! [A] : (kp1_(cA_10_1676460,A) <=> (kp1_(cP,A) | kp1_(cP,A))) )).
+fof(n10_1676460, definition, ( ! [A] : (kp1_(cA_10_1676460,A) <=> (kp1_(cP_4_1676460,A) | kp1_(cP_4_1676460,A))) )).
 
 % End required definition(s) by the conjecture.
 

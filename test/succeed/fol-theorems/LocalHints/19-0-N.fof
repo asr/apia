@@ -9,7 +9,7 @@
 % Name: LocalHints.N.zN
 % Role: hint
 % Line: 17
-fof(n8_274736842, hypothesis, kp1_(cN,zero)).
+fof(n8_274736842, hypothesis, kp1_(cN_6_274736842,zero)).
 
 % End local hint(s).
 
@@ -20,7 +20,7 @@ fof(n8_274736842, hypothesis, kp1_(cN,zero)).
 % Name: LocalHints.0-N
 % Role: prove
 % Line: 19
-fof(n10_274736842, conjecture, kp1_(cN,zero)).
+fof(n10_274736842, conjecture, kp1_(cN_6_274736842,zero)).
 
 % End conjecture.
 

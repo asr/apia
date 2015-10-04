@@ -26,7 +26,7 @@ fof(n50_17022218, axiom, ( ! [A] : ( ! [B] : (n43(succ(A),B) = succ(n43(A,B))) )
 % Name: Definition9._.A
 % Role: definition
 % Line: 43
-fof(n62_17022218, definition, ( ! [A] : (kp1_(cN,A) => ( ! [B] : (kp2_(cA_62_17022218,A,B) <=> (n43(B,zero) = B)) )) )).
+fof(n62_17022218, definition, ( ! [A] : (kp1_(cN_10_17022218,A) => ( ! [B] : (kp2_(cA_62_17022218,A,B) <=> (n43(B,zero) = B)) )) )).
 
 % End required definition(s) by the conjecture.
 
@@ -37,7 +37,7 @@ fof(n62_17022218, definition, ( ! [A] : (kp1_(cN,A) => ( ! [B] : (kp2_(cA_62_170
 % Name: Definition9._.A0
 % Role: prove
 % Line: 47
-fof(n66_17022218, conjecture, ( ! [A] : (kp1_(cN,A) => kp2_(cA_62_17022218,A,zero)) )).
+fof(n66_17022218, conjecture, ( ! [A] : (kp1_(cN_10_17022218,A) => kp2_(cA_62_17022218,A,zero)) )).
 
 % End conjecture.
 

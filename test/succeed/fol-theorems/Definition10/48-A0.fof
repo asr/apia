@@ -26,7 +26,7 @@ fof(n50_16837688, axiom, ( ! [A] : ( ! [B] : (n43(succ(A),B) = succ(n43(A,B))) )
 % Name: Definition10._.A
 % Role: definition
 % Line: 44
-fof(n74_16837688, definition, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(cN,A) => (kp1_(cN,B) => (kp1_(cN,C) => ( ! [D] : (kp4_(cA_74_16837688,A,B,C,D) <=> (n43(n43(D,B),C) = n43(D,n43(B,C)))) )))) ) ) )).
+fof(n74_16837688, definition, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(cN_10_16837688,A) => (kp1_(cN_10_16837688,B) => (kp1_(cN_10_16837688,C) => ( ! [D] : (kp4_(cA_74_16837688,A,B,C,D) <=> (n43(n43(D,B),C) = n43(D,n43(B,C)))) )))) ) ) )).
 
 % End required definition(s) by the conjecture.
 
@@ -37,7 +37,7 @@ fof(n74_16837688, definition, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(cN,A) => (kp1_
 % Name: Definition10._.A0
 % Role: prove
 % Line: 48
-fof(n78_16837688, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(cN,A) => (kp1_(cN,B) => (kp1_(cN,C) => kp4_(cA_74_16837688,A,B,C,zero)))) ) ) )).
+fof(n78_16837688, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(cN_10_16837688,A) => (kp1_(cN_10_16837688,B) => (kp1_(cN_10_16837688,C) => kp4_(cA_74_16837688,A,B,C,zero)))) ) ) )).
 
 % End conjecture.
 

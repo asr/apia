@@ -9,7 +9,7 @@
 % Name: DuplicateAgdaDefinitions1.Eq
 % Role: definition
 % Line: 20
-fof(n6_273427573, definition, ( ! [A] : ( ! [B] : (kp2_(cEq_6_273427573,A,B) <=> kp2_(n_8776_,A,B)) ) )).
+fof(n6_273427573, definition, ( ! [A] : ( ! [B] : (kp2_(cEq_6_273427573,A,B) <=> kp2_(n_8776__4_273427573,A,B)) ) )).
 
 % End common required definition(s).
 

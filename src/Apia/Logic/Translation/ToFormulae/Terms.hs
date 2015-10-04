@@ -114,7 +114,7 @@ import Apia.Options
   )
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
-import Apia.Utils.AgdaAPI.Interface     ( qNameToString )
+import Apia.Utils.AgdaAPI.Interface     ( qNameToString, qNameToUniqueString )
 
 import qualified Apia.Utils.Except as E
 
@@ -169,7 +169,7 @@ elimToTerm (Proj _)    = __IMPOSSIBLE__
 -- Translation of predicates.
 predicate ∷ QName → Elims → T LFormula
 predicate qName elims = do
-  pName  ← qNameToString qName
+  pName  ← qNameToUniqueString qName
   lTerms ← mapM elimToTerm elims
 
   case length elims of
@@ -215,7 +215,7 @@ agdaTermToFormula term = case ignoreSharing term of
                  | otherwise →
                    -- In this guard we translate 0-ary predicates, i.e.
                    -- propositional functions, for example, A : Set.
-                   liftM (flip Predicate []) (qNameToString qName)
+                   liftM (flip Predicate []) (qNameToUniqueString qName)
 
          Just [a]
            | isCNameHoleRight lNot → fmap Not (agdaArgTermToFormula a)

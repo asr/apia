@@ -20,13 +20,13 @@ fof(n52_49333747, definition, ( ! [A] : ( ! [B] : (n8804(A,B) = n60(A,succ(B))) 
 % Name: DuplicateAgdaDefinitions2.Bool.tB
 % Role: axiom
 % Line: 31
-fof(n30_49333747, axiom, kp1_(cBool,true)).
+fof(n30_49333747, axiom, kp1_(cBool_28_49333747,true)).
 
 % The original Agda term was:
 % Name: DuplicateAgdaDefinitions2.Bool.fB
 % Role: axiom
 % Line: 32
-fof(n32_49333747, axiom, kp1_(cBool,false)).
+fof(n32_49333747, axiom, kp1_(cBool_28_49333747,false)).
 
 % End general axiom(s).
 
@@ -37,7 +37,7 @@ fof(n32_49333747, axiom, kp1_(cBool,false)).
 % Name: DuplicateAgdaDefinitions2.Sx≰0
 % Role: hint
 % Line: 50
-fof(n66_49333747, hypothesis, ( ! [A] : (kp1_(cN,A) => kp2_(cNLE_58_49333747,succ(A),zero)) )).
+fof(n66_49333747, hypothesis, ( ! [A] : (kp1_(cN_20_49333747,A) => kp2_(cNLE_58_49333747,succ(A),zero)) )).
 
 % End local hint(s).
 
@@ -59,7 +59,7 @@ fof(n58_49333747, definition, ( ! [A] : ( ! [B] : (kp2_(cNLE_58_49333747,A,B) <=
 % Name: DuplicateAgdaDefinitions2._.prf
 % Role: prove
 % Line: 56
-fof(n92_49333747, conjecture, ( ! [A] : (kp1_(cN,A) => kp1_(cBool,n8804(succ(A),zero))) )).
+fof(n92_49333747, conjecture, ( ! [A] : (kp1_(cN_20_49333747,A) => kp1_(cBool_28_49333747,n8804(succ(A),zero))) )).
 
 % End conjecture.
 

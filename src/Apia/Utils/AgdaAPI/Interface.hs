@@ -111,7 +111,7 @@ import Agda.Utils.FileName
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
-import Agda.Utils.Monad      ( ifM, unlessM )
+import Agda.Utils.Monad      ( unlessM )
 
 import qualified Agda.Utils.Trie as Trie ( singleton )
 
@@ -335,7 +335,9 @@ qNameNameBindingSiteRange ∷ QName → Range
 qNameNameBindingSiteRange = getRange . nameBindingSite . qnameName
 
 -- | Return an unique 'String' for a 'QName'.
+
 qNameToUniqueString ∷ QName → T String
+-- See note [Unique name]
 qNameToUniqueString (QName _ name) = do
   let qNameId ∷ NameId
       qNameId = nameId name
@@ -349,11 +351,7 @@ qNameToUniqueString (QName _ name) = do
 
 -- | Return a 'String' for a 'QName'.
 qNameToString ∷ QName → T String
-qNameToString qName@(QName _ name) =
-  -- See note [Unique name].
-  ifM (isATPDefinition <$> qNameDefinition qName)
-      (qNameToUniqueString qName)
-      (return $ show $ nameConcrete name)
+qNameToString (QName _ name) = return $ show $ nameConcrete name
 
 -- | Return the 'Clause's associted with an Agda 'Definition'.
 getClauses ∷ Definition → [Clause]
@@ -470,7 +468,6 @@ getImportedInterfaces i = do
 ------------------------------------------------------------------------------
 -- Note [Unique name]
 
--- Because the ATP pragma definitions can be global o local, we use an
--- unique name for the local ones. In this case, we append to the
--- @qName@ the @qName@'s id (it generates long TPTP names for the
--- lcoal definitions).
+-- Because Agda predicates can be global or local, we use an unique
+-- name for translating them. We append to the @qName@ the @qName@'s
+-- id (which generates long TPTP names).

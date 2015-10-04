@@ -9,13 +9,13 @@
 % Name: Definition8._.c
 % Role: definition
 % Line: 24
-fof(n22_197420885, definition, ( ! [A] : ( ! [B] : (kp1_(cP,B) => (c(A,B) = A)) ) )).
+fof(n22_197420885, definition, ( ! [A] : ( ! [B] : (kp1_(cP_6_197420885,B) => (c(A,B) = A)) ) )).
 
 % The original Agda term was:
 % Name: Definition8._.d
 % Role: definition
 % Line: 28
-fof(n24_197420885, definition, ( ! [A] : ( ! [B] : (kp1_(cP,B) => (d(A,B) = op(c(A,B)))) ) )).
+fof(n24_197420885, definition, ( ! [A] : ( ! [B] : (kp1_(cP_6_197420885,B) => (d(A,B) = op(c(A,B)))) ) )).
 
 % End required definition(s) by the conjecture.
 
@@ -26,7 +26,7 @@ fof(n24_197420885, definition, ( ! [A] : ( ! [B] : (kp1_(cP,B) => (d(A,B) = op(c
 % Name: Definition8._.bar
 % Role: prove
 % Line: 32
-fof(n26_197420885, conjecture, ( ! [A] : ( ! [B] : (kp1_(cP,B) => (d(A,B) = op(A))) ) )).
+fof(n26_197420885, conjecture, ( ! [A] : ( ! [B] : (kp1_(cP_6_197420885,B) => (d(A,B) = op(A))) ) )).
 
 % End conjecture.
 

@@ -26,7 +26,7 @@ fof(n50_130982534, axiom, ( ! [A] : ( ! [B] : (n43(succ(A),B) = succ(n43(A,B))) 
 % Name: Where1._.is
 % Role: prove
 % Line: 47
-fof(n70_130982534, conjecture, ( ! [A] : (kp1_(cN,A) => ( ! [B] : ((n43(B,zero) = B) => (n43(succ(B),zero) = succ(B))) )) )).
+fof(n70_130982534, conjecture, ( ! [A] : (kp1_(cN_10_130982534,A) => ( ! [B] : ((n43(B,zero) = B) => (n43(succ(B),zero) = succ(B))) )) )).
 
 % End conjecture.
 

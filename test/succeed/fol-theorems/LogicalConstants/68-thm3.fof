@@ -9,7 +9,7 @@
 % Name: LogicalConstants.thm₃
 % Role: prove
 % Line: 68
-fof(n50_143722291, conjecture, ((pA) <=> (pA))).
+fof(n50_143722291, conjecture, ((pA_18_143722291) <=> (pA_18_143722291))).
 
 % End conjecture.
 

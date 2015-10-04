@@ -9,7 +9,7 @@
 % Name: LogicalConstants.∧E₁
 % Role: prove
 % Line: 46
-fof(n32_143722291, conjecture, (((pA) & (pB)) => (pA))).
+fof(n32_143722291, conjecture, (((pA_18_143722291) & (pB_20_143722291)) => (pA_18_143722291))).
 
 % End conjecture.
 

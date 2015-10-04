@@ -20,7 +20,7 @@ fof(n10_126135238, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(A,C) => kp1_(
 % Name: Instance.instanceC
 % Role: prove
 % Line: 23
-fof(n18_126135238, conjecture, (kp1_(cA_14_126135238,d) => kp1_(cB_16_126135238,d))).
+fof(n18_126135238, conjecture, (kp1_(cA_14_126135238,d_12_126135238) => kp1_(cB_16_126135238,d_12_126135238))).
 
 % End conjecture.
 

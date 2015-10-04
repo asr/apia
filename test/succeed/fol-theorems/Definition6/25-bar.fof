@@ -9,7 +9,7 @@
 % Name: Definition6.foo
 % Role: hint
 % Line: 22
-fof(n12_7009137, hypothesis, (c = b)).
+fof(n12_7009137, hypothesis, (c_8_7009137 = b_10_7009137)).
 
 % End local hint(s).
 
@@ -20,7 +20,7 @@ fof(n12_7009137, hypothesis, (c = b)).
 % Name: Definition6.b
 % Role: definition
 % Line: 17
-fof(n10_7009137, definition, (b = a)).
+fof(n10_7009137, definition, (b_10_7009137 = a_6_7009137)).
 
 % End required definition(s) by the local hint(s).
 
@@ -31,7 +31,7 @@ fof(n10_7009137, definition, (b = a)).
 % Name: Definition6.bar
 % Role: prove
 % Line: 25
-fof(n14_7009137, conjecture, (c = a)).
+fof(n14_7009137, conjecture, (c_8_7009137 = a_6_7009137)).
 
 % End conjecture.
 

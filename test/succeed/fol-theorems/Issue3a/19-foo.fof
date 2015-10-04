@@ -9,7 +9,7 @@
 % Name: Issue3a.A.p
 % Role: axiom
 % Line: 14
-fof(n12_222160140, axiom, (a = b)).
+fof(n12_222160140, axiom, (a_8_222160140 = b_10_222160140)).
 
 % End general axiom(s).
 
@@ -20,7 +20,7 @@ fof(n12_222160140, axiom, (a = b)).
 % Name: Issue3a.foo
 % Role: prove
 % Line: 19
-fof(n14_222160140, conjecture, (a = b)).
+fof(n14_222160140, conjecture, (a_8_222160140 = b_10_222160140)).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: Eta4._*_
 % Role: definition
 % Line: 28
-fof(n16_225476971, definition, ( ! [A] : ( ! [B] : (n42(A,B) = rec(A,zero,lam(n4245helper2(B)))) ) )).
+fof(n16_225476971, definition, ( ! [A] : ( ! [B] : (n_42__16_225476971(A,B) = rec_12_225476971(A,zero_4_225476971,lam_10_225476971(n4245helper2_14_225476971(B)))) ) )).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n16_225476971, definition, ( ! [A] : ( ! [B] : (n42(A,B) = rec(A,zero,lam(n4
 % Name: Eta4.foo
 % Role: prove
 % Line: 33
-fof(n24_225476971, conjecture, ( ! [A] : (n42(A,A) = n42(A,A)) )).
+fof(n24_225476971, conjecture, ( ! [A] : (n_42__16_225476971(A,A) = n_42__16_225476971(A,A)) )).
 
 % End conjecture.
 

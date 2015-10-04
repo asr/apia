@@ -9,7 +9,7 @@
 % Name: Definition7._.c
 % Role: definition
 % Line: 22
-fof(n26_102215011, definition, ( ! [A] : ( ! [B] : (kp1_(cP_6_102215011,A) => (kp1_(cP_6_102215011,B) => (c(A,B) = A))) ) )).
+fof(n26_102215011, definition, ( ! [A] : ( ! [B] : (kp1_(cP_6_102215011,A) => (kp1_(cP_6_102215011,B) => (c_26_102215011(A,B) = A))) ) )).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n26_102215011, definition, ( ! [A] : ( ! [B] : (kp1_(cP_6_102215011,A) => (k
 % Name: Definition7._.bar
 % Role: prove
 % Line: 26
-fof(n28_102215011, conjecture, ( ! [A] : ( ! [B] : (kp1_(cP_6_102215011,A) => (kp1_(cP_6_102215011,B) => (c(A,B) = A))) ) )).
+fof(n28_102215011, conjecture, ( ! [A] : ( ! [B] : (kp1_(cP_6_102215011,A) => (kp1_(cP_6_102215011,B) => (c_26_102215011(A,B) = A))) ) )).
 
 % End conjecture.
 

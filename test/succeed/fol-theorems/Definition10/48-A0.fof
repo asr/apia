@@ -9,13 +9,13 @@
 % Name: Definition10.+-0x
 % Role: axiom
 % Line: 35
-fof(n44_16837688, axiom, ( ! [A] : (n43(zero,A) = A) )).
+fof(n44_16837688, axiom, ( ! [A] : (n_43__40_16837688(zero_4_16837688,A) = A) )).
 
 % The original Agda term was:
 % Name: Definition10.+-Sx
 % Role: axiom
 % Line: 36
-fof(n50_16837688, axiom, ( ! [A] : ( ! [B] : (n43(succ(A),B) = succ(n43(A,B))) ) )).
+fof(n50_16837688, axiom, ( ! [A] : ( ! [B] : (n_43__40_16837688(succ_6_16837688(A),B) = succ_6_16837688(n_43__40_16837688(A,B))) ) )).
 
 % End general axiom(s).
 
@@ -26,7 +26,7 @@ fof(n50_16837688, axiom, ( ! [A] : ( ! [B] : (n43(succ(A),B) = succ(n43(A,B))) )
 % Name: Definition10._.A
 % Role: definition
 % Line: 44
-fof(n74_16837688, definition, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(cN_10_16837688,A) => (kp1_(cN_10_16837688,B) => (kp1_(cN_10_16837688,C) => ( ! [D] : (kp4_(cA_74_16837688,A,B,C,D) <=> (n43(n43(D,B),C) = n43(D,n43(B,C)))) )))) ) ) )).
+fof(n74_16837688, definition, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(cN_10_16837688,A) => (kp1_(cN_10_16837688,B) => (kp1_(cN_10_16837688,C) => ( ! [D] : (kp4_(cA_74_16837688,A,B,C,D) <=> (n_43__40_16837688(n_43__40_16837688(D,B),C) = n_43__40_16837688(D,n_43__40_16837688(B,C)))) )))) ) ) )).
 
 % End required definition(s) by the conjecture.
 
@@ -37,7 +37,7 @@ fof(n74_16837688, definition, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(cN_10_16837688
 % Name: Definition10._.A0
 % Role: prove
 % Line: 48
-fof(n78_16837688, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(cN_10_16837688,A) => (kp1_(cN_10_16837688,B) => (kp1_(cN_10_16837688,C) => kp4_(cA_74_16837688,A,B,C,zero)))) ) ) )).
+fof(n78_16837688, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(cN_10_16837688,A) => (kp1_(cN_10_16837688,B) => (kp1_(cN_10_16837688,C) => kp4_(cA_74_16837688,A,B,C,zero_4_16837688)))) ) ) )).
 
 % End conjecture.
 

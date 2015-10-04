@@ -9,7 +9,7 @@
 % Name: Names.funnyFV
 % Role: axiom
 % Line: 31
-fof(n12_45017211, axiom, ( ! [A] : (fFUN33(A) = A) )).
+fof(n12_45017211, axiom, ( ! [A] : (fFUN33_6_45017211(A) = A) )).
 
 % The original Agda term was:
 % Name: Names.funnyP

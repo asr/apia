@@ -9,19 +9,19 @@
 % Name: VariousArguments.a≡b
 % Role: axiom
 % Line: 16
-fof(n14_144333317, axiom, (a = b)).
+fof(n14_144333317, axiom, (a_6_144333317 = b_8_144333317)).
 
 % The original Agda term was:
 % Name: VariousArguments.b≡c
 % Role: axiom
 % Line: 17
-fof(n16_144333317, axiom, (b = c)).
+fof(n16_144333317, axiom, (b_8_144333317 = c_10_144333317)).
 
 % The original Agda term was:
 % Name: VariousArguments.c≡d
 % Role: axiom
 % Line: 18
-fof(n18_144333317, axiom, (c = d)).
+fof(n18_144333317, axiom, (c_10_144333317 = d_12_144333317)).
 
 % End general axiom(s).
 
@@ -32,7 +32,7 @@ fof(n18_144333317, axiom, (c = d)).
 % Name: VariousArguments.a≡d
 % Role: prove
 % Line: 21
-fof(n20_144333317, conjecture, (a = d)).
+fof(n20_144333317, conjecture, (a_6_144333317 = d_12_144333317)).
 
 % End conjecture.
 

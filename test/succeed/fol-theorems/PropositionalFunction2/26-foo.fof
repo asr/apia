@@ -20,7 +20,7 @@ fof(n10_1676460, definition, ( ! [A] : (kp1_(cA_10_1676460,A) <=> (kp1_(cP_4_167
 % Name: PropositionalFunction2.foo
 % Role: prove
 % Line: 26
-fof(n14_1676460, conjecture, (kp1_(cA_10_1676460,a) => kp1_(cA_10_1676460,a))).
+fof(n14_1676460, conjecture, (kp1_(cA_10_1676460,a_6_1676460) => kp1_(cA_10_1676460,a_6_1676460))).
 
 % End conjecture.
 

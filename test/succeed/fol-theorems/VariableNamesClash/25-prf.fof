@@ -9,7 +9,7 @@
 % Name: VariableNamesClash.a≡b
 % Role: axiom
 % Line: 17
-fof(n10_167217889, axiom, (a = b)).
+fof(n10_167217889, axiom, (a_6_167217889 = b_8_167217889)).
 
 % End general axiom(s).
 
@@ -20,7 +20,7 @@ fof(n10_167217889, axiom, (a = b)).
 % Name: VariableNamesClash._.prf
 % Role: prove
 % Line: 25
-fof(n24_167217889, conjecture, ( ! [A] : ( ! [B] : (a = b) ) )).
+fof(n24_167217889, conjecture, ( ! [A] : ( ! [B] : (a_6_167217889 = b_8_167217889) ) )).
 
 % End conjecture.
 

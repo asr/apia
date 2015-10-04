@@ -28,7 +28,12 @@ APIA = dist/build/apia/apia --check
 
 # Supported ATPs.
 # Missing ileancop
-ATPs = cvc4 e equinox metis spass vampire z3
+
+# TODO (04 October 2015): Missing Z3 because it cannot prove some
+# theorems after we are using unique names for the translation.
+
+ATPs = cvc4 e equinox metis spass vampire
+# ATPs = cvc4 e equinox metis spass vampire z3
 
 ##############################################################################
 # Auxiliary functions

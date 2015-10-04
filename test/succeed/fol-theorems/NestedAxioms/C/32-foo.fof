@@ -9,19 +9,19 @@
 % Name: NestedAxioms.B.b≡c
 % Role: axiom
 % Line: 18
-fof(n6_54399210, axiom, (b = c)).
+fof(n6_54399210, axiom, (b_10_139132942 = c_4_54399210)).
 
 % The original Agda term was:
 % Name: NestedAxioms.C.c≡d
 % Role: axiom
 % Line: 29
-fof(n6_245270019, axiom, (c = d)).
+fof(n6_245270019, axiom, (c_4_54399210 = d_4_245270019)).
 
 % The original Agda term was:
 % Name: NestedAxioms.A.a≡b
 % Role: axiom
 % Line: 20
-fof(n12_139132942, axiom, (a = b)).
+fof(n12_139132942, axiom, (a_8_139132942 = b_10_139132942)).
 
 % End general axiom(s).
 
@@ -32,7 +32,7 @@ fof(n12_139132942, axiom, (a = b)).
 % Name: NestedAxioms.C.foo
 % Role: prove
 % Line: 32
-fof(n8_245270019, conjecture, (d = a)).
+fof(n8_245270019, conjecture, (d_4_245270019 = a_8_139132942)).
 
 % End conjecture.
 

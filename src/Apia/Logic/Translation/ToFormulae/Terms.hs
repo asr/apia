@@ -120,7 +120,7 @@ import qualified Apia.Utils.Except as E
 import Apia.Utils.Name        ( concatName )
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
 
-import Control.Monad ( liftM2, when )
+import Control.Monad ( liftM, liftM2, when )
 import Data.List     ( foldl' )
 
 #include "undefined.h"
@@ -211,11 +211,10 @@ agdaTermToFormula term = case ignoreSharing term of
 
                  | isCNameLogicConst lFalse → return FALSE
 
-                 | otherwise → do
+                 | otherwise →
                    -- In this guard we translate 0-ary predicates, i.e.
                    -- propositional functions, for example, A : Set.
-                   lName ← qNameToString qName
-                   return $ Predicate lName []
+                   liftM (flip Predicate []) (qNameToString qName)
 
          Just [a]
            | isCNameHoleRight lNot → fmap Not (agdaArgTermToFormula a)

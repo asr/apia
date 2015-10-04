@@ -31,6 +31,7 @@ module Apia.Utils.AgdaAPI.Interface
   , qNameLine
   , qNameNameBindingSiteRange
   , qNameToString
+  , qNameToUniqueString
   , qNameType
   , readInterface
   ) where
@@ -110,7 +111,7 @@ import Agda.Utils.FileName
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
-import Agda.Utils.Monad      ( unlessM )
+import Agda.Utils.Monad      ( ifM, unlessM )
 
 import qualified Agda.Utils.Trie as Trie ( singleton )
 
@@ -333,24 +334,26 @@ qNameConcreteNameRange = getRange . nameConcrete . qnameName
 qNameNameBindingSiteRange ∷ QName → Range
 qNameNameBindingSiteRange = getRange . nameBindingSite . qnameName
 
+-- | Return an unique 'String' for a 'QName'.
+qNameToUniqueString ∷ QName → T String
+qNameToUniqueString (QName _ name) = do
+  let qNameId ∷ NameId
+      qNameId = nameId name
+
+  reportSLn "qNameToUniqueString" 20 $ "qNameId : " ++ show qNameId
+
+  case qNameId of
+    NameId x i → return $ (show . nameConcrete) name ++ "_"
+                          ++ show x ++ "_"
+                          ++ show i
+
 -- | Return a 'String' for a 'QName'.
 qNameToString ∷ QName → T String
-qNameToString qName@(QName _ name) = do
-  def ← qNameDefinition qName
-
+qNameToString qName@(QName _ name) =
   -- See note [Unique name].
-  if isATPDefinition def
-    then do
-      let qNameId ∷ NameId
-          qNameId = nameId name
-
-      reportSLn "qNameToString" 20 $ "qNameId : " ++ show qNameId
-
-      case qNameId of
-        NameId x i → return $ (show . nameConcrete) name ++ "_"
-                              ++ show x ++ "_"
-                              ++ show i
-    else return $ show $ nameConcrete name
+  ifM (isATPDefinition <$> qNameDefinition qName)
+      (qNameToUniqueString qName)
+      (return $ show $ nameConcrete name)
 
 -- | Return the 'Clause's associted with an Agda 'Definition'.
 getClauses ∷ Definition → [Clause]

@@ -9,7 +9,7 @@
 % Name: DuplicateAgdaDefinitions2._≤_
 % Role: definition
 % Line: 42
-fof(n52_49333747, definition, ( ! [A] : ( ! [B] : (n8804(A,B) = n60(A,succ(B))) ) )).
+fof(n52_49333747, definition, ( ! [A] : ( ! [B] : (n_8804__52_49333747(A,B) = n_60__34_49333747(A,succ_10_49333747(B))) ) )).
 
 % End common required definition(s).
 
@@ -20,13 +20,13 @@ fof(n52_49333747, definition, ( ! [A] : ( ! [B] : (n8804(A,B) = n60(A,succ(B))) 
 % Name: DuplicateAgdaDefinitions2.Bool.tB
 % Role: axiom
 % Line: 31
-fof(n30_49333747, axiom, kp1_(cBool_28_49333747,true)).
+fof(n30_49333747, axiom, kp1_(cBool_28_49333747,true_6_49333747)).
 
 % The source Agda term was:
 % Name: DuplicateAgdaDefinitions2.Bool.fB
 % Role: axiom
 % Line: 32
-fof(n32_49333747, axiom, kp1_(cBool_28_49333747,false)).
+fof(n32_49333747, axiom, kp1_(cBool_28_49333747,false_8_49333747)).
 
 % End general axiom(s).
 
@@ -37,7 +37,7 @@ fof(n32_49333747, axiom, kp1_(cBool_28_49333747,false)).
 % Name: DuplicateAgdaDefinitions2.Sx≰0
 % Role: hint
 % Line: 50
-fof(n66_49333747, hypothesis, ( ! [A] : (kp1_(cN_20_49333747,A) => kp2_(cNLE_58_49333747,succ(A),zero)) )).
+fof(n66_49333747, hypothesis, ( ! [A] : (kp1_(cN_20_49333747,A) => kp2_(cNLE_58_49333747,succ_10_49333747(A),zero_4_49333747)) )).
 
 % End local hint(s).
 
@@ -48,7 +48,7 @@ fof(n66_49333747, hypothesis, ( ! [A] : (kp1_(cN_20_49333747,A) => kp2_(cNLE_58_
 % Name: DuplicateAgdaDefinitions2.NLE
 % Role: definition
 % Line: 46
-fof(n58_49333747, definition, ( ! [A] : ( ! [B] : (kp2_(cNLE_58_49333747,A,B) <=> (n8804(A,B) = false)) ) )).
+fof(n58_49333747, definition, ( ! [A] : ( ! [B] : (kp2_(cNLE_58_49333747,A,B) <=> (n_8804__52_49333747(A,B) = false_8_49333747)) ) )).
 
 % End required definition(s) by the local hint(s).
 
@@ -59,7 +59,7 @@ fof(n58_49333747, definition, ( ! [A] : ( ! [B] : (kp2_(cNLE_58_49333747,A,B) <=
 % Name: DuplicateAgdaDefinitions2._.prf
 % Role: prove
 % Line: 56
-fof(n92_49333747, conjecture, ( ! [A] : (kp1_(cN_20_49333747,A) => kp1_(cBool_28_49333747,n8804(succ(A),zero))) )).
+fof(n92_49333747, conjecture, ( ! [A] : (kp1_(cN_20_49333747,A) => kp1_(cBool_28_49333747,n_8804__52_49333747(succ_10_49333747(A),zero_4_49333747))) )).
 
 % End conjecture.
 

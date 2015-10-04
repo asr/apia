@@ -9,13 +9,13 @@
 % Name: Definition5.b
 % Role: definition
 % Line: 18
-fof(n10_187407804, definition, (b = a)).
+fof(n10_187407804, definition, (b_10_187407804 = a_8_187407804)).
 
 % The source Agda term was:
 % Name: Definition5.c
 % Role: definition
 % Line: 22
-fof(n12_187407804, definition, (c = op(b))).
+fof(n12_187407804, definition, (c_12_187407804 = op_6_187407804(b_10_187407804))).
 
 % End required definition(s) by the conjecture.
 
@@ -26,7 +26,7 @@ fof(n12_187407804, definition, (c = op(b))).
 % Name: Definition5.foo
 % Role: prove
 % Line: 27
-fof(n14_187407804, conjecture, (c = op(a))).
+fof(n14_187407804, conjecture, (c_12_187407804 = op_6_187407804(a_8_187407804))).
 
 % End conjecture.
 

@@ -118,7 +118,6 @@ import Apia.Utils.AgdaAPI.Interface     ( qNameToString, qNameToUniqueString )
 
 import qualified Apia.Utils.Except as E
 
-import Apia.Utils.Name        ( concatName )
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
 
 import Control.Monad ( liftM, liftM2, when )
@@ -537,7 +536,7 @@ agdaTermToTerm term = case ignoreSharing term of
       --     [] → __IMPOSSIBLE__
       --     _  → appArgsFn (concatName parts) args
 
-  term'@(Def (QName _ name) elims) → do
+  term'@(Def qName@(QName _ name) elims) → do
     reportSLn "t2t" 10 $ "agdaTermToTerm Def:\n" ++ show term'
 
     let cName ∷ C.Name
@@ -550,19 +549,19 @@ agdaTermToTerm term = case ignoreSharing term of
 
       -- The term @Def@ doesn't have holes. It is translated as a
       -- first-order logic function.
-      C.Name _ [C.Id str] →
+      C.Name _ [C.Id _] →
        case allApplyElims elims of
          Nothing    → __IMPOSSIBLE__
-         Just []    → return $ Fun str []
-         Just args  → appArgsF str args
+         Just []    → liftM (flip Fun []) (qNameToUniqueString qName)
+         Just args  → qNameToUniqueString qName >>= flip appArgsF args
 
       -- The term @Def@ has holes. It is translated as a first-order
       -- logic function.
-      C.Name _ parts →
+      C.Name _ _ →
         case allApplyElims elims of
           Nothing    → __IMPOSSIBLE__
           Just []    → __IMPOSSIBLE__
-          Just args  → appArgsF (concatName parts) args
+          Just args  → qNameToUniqueString qName >>= flip appArgsF args
 
   term'@(Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ termLam)) → do
     reportSLn "t2f" 10 $ "agdaTermToTerm Lam:\n" ++ show term'

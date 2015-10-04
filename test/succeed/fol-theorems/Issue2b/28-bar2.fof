@@ -9,7 +9,7 @@
 % Name: Issue2b.foo₂
 % Role: definition
 % Line: 21
-fof(n10_18507689, definition, ( ! [A] : ( ! [B] : (foo2(A,B) = A) ) )).
+fof(n10_18507689, definition, ( ! [A] : ( ! [B] : (foo2_10_18507689(A,B) = A) ) )).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n10_18507689, definition, ( ! [A] : ( ! [B] : (foo2(A,B) = A) ) )).
 % Name: Issue2b.bar₂
 % Role: prove
 % Line: 28
-fof(n26_18507689, conjecture, ( ! [A] : ( ! [B] : (A = foo2(A,B)) ) )).
+fof(n26_18507689, conjecture, ( ! [A] : ( ! [B] : (A = foo2_10_18507689(A,B)) ) )).
 
 % End conjecture.
 

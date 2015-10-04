@@ -9,13 +9,13 @@
 % Name: Where1.+-0x
 % Role: axiom
 % Line: 34
-fof(n44_130982534, axiom, ( ! [A] : (n43(zero,A) = A) )).
+fof(n44_130982534, axiom, ( ! [A] : (n_43__40_130982534(zero_4_130982534,A) = A) )).
 
 % The source Agda term was:
 % Name: Where1.+-Sx
 % Role: axiom
 % Line: 35
-fof(n50_130982534, axiom, ( ! [A] : ( ! [B] : (n43(succ(A),B) = succ(n43(A,B))) ) )).
+fof(n50_130982534, axiom, ( ! [A] : ( ! [B] : (n_43__40_130982534(succ_6_130982534(A),B) = succ_6_130982534(n_43__40_130982534(A,B))) ) )).
 
 % End general axiom(s).
 
@@ -26,7 +26,7 @@ fof(n50_130982534, axiom, ( ! [A] : ( ! [B] : (n43(succ(A),B) = succ(n43(A,B))) 
 % Name: Where1._.A0
 % Role: prove
 % Line: 44
-fof(n66_130982534, conjecture, ( ! [A] : (kp1_(cN_10_130982534,A) => (n43(zero,zero) = zero)) )).
+fof(n66_130982534, conjecture, ( ! [A] : (kp1_(cN_10_130982534,A) => (n_43__40_130982534(zero_4_130982534,zero_4_130982534) = zero_4_130982534)) )).
 
 % End conjecture.
 

@@ -344,14 +344,13 @@ qNameToString qName@(QName _ name) = do
       let qNameId ∷ NameId
           qNameId = nameId name
 
-      reportSLn "qName2String" 20 $ "qNameId : " ++ show qNameId
+      reportSLn "qNameToString" 20 $ "qNameId : " ++ show qNameId
 
       case qNameId of
         NameId x i → return $ (show . nameConcrete) name ++ "_"
                               ++ show x ++ "_"
                               ++ show i
     else return $ show $ nameConcrete name
-
 
 -- | Return the 'Clause's associted with an Agda 'Definition'.
 getClauses ∷ Definition → [Clause]
@@ -468,6 +467,7 @@ getImportedInterfaces i = do
 ------------------------------------------------------------------------------
 -- Note [Unique name]
 
--- Because the ATP pragma definitions are global, we need an unique
--- name. In this case, we append to the @qName@ the @qName@'s id (it
--- generates long TPTP name for the definitions).
+-- Because the ATP pragma definitions can be global o local, we use an
+-- unique name for the local ones. In this case, we append to the
+-- @qName@ the @qName@'s id (it generates long TPTP names for the
+-- lcoal definitions).

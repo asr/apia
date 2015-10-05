@@ -154,7 +154,7 @@ atpOk Metis = "SZS status Theorem"
 atpOk SPASS = "Proof found"
 -- Vampire 0.6 (revision 903).
 atpOk Vampire = "Termination reason: Refutation\n"
--- Z3 4.4.0.
+-- Z3 4.4.1.
 atpOk Z3 = "unsat"
 
 atpVersion ∷ ATP → T String

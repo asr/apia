@@ -36,7 +36,7 @@ Prerequisites
   [Metis](http://www.gilith.com/software/metis/) | Metis 2.3 (release 20150303)
   [SPASS](http://www.spass-prover.org/) | SPASS 3.7
   [Vampire](http://www.vprover.org/) | Vampire 0.6 (revision 903)
-  [Z3](https://github.com/Z3Prover/z3/wiki) | Z3 4.4.0
+  [Z3](https://github.com/Z3Prover/z3/wiki) | Z3 4.4.1
 
 * The tptp2X program
 

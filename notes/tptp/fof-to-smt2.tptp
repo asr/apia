@@ -45,6 +45,6 @@ fof(prove_left_zero_h,conjecture,
 % $ tptp2X -fsmt2 -d/tmp fof-to-smt2.tptp
 % $ cd /tmp
 % $ z3 --version
-% Z3 version 4.4.0
+% Z3 version 4.4.1
 % $ z3 fof-to-smt2.smt2
 % unsat

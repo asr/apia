@@ -114,7 +114,7 @@ import Apia.Options
   )
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
-import Apia.Utils.AgdaAPI.Interface     ( qNameToString, qNameToUniqueString )
+import Apia.Utils.AgdaAPI.Interface     ( qNameToUniqueString )
 
 import qualified Apia.Utils.Except as E
 
@@ -314,7 +314,7 @@ agdaTermToFormula term = case ignoreSharing term of
       El (Type (Max [])) (Def qName []) → do
         reportSLn "t2f" 20 $
           "Adding universal quantification on variable " ++ show freshVar
-        tyName ← qNameToString qName
+        tyName ← qNameToUniqueString qName
         return $ ForAll freshVar (Just (AType tyName qName)) $ const f
 
       -- The bounded variable is quantified on a proof. Due to we have

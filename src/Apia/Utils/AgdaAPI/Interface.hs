@@ -30,7 +30,6 @@ module Apia.Utils.AgdaAPI.Interface
   , QNamesIn(qNamesIn)
   , qNameLine
   , qNameNameBindingSiteRange
-  , qNameToString
   , qNameToUniqueString
   , qNameType
   , readInterface
@@ -349,9 +348,10 @@ qNameToUniqueString (QName _ name) = do
                           ++ show x ++ "_"
                           ++ show i
 
+-- Removed (05 October 2015).
 -- | Return a 'String' for a 'QName'.
-qNameToString ∷ QName → T String
-qNameToString (QName _ name) = return $ show $ nameConcrete name
+-- qNameToString ∷ QName → T String
+-- qNameToString (QName _ name) = return $ show $ nameConcrete name
 
 -- | Return the 'Clause's associted with an Agda 'Definition'.
 getClauses ∷ Definition → [Clause]
@@ -464,10 +464,10 @@ getImportedInterfaces i = do
 -- Agda.TypeChecking.Monad.Options). Therefore the default of
 -- Options.optAgdaIncludePath is @[]@.
 
-
 ------------------------------------------------------------------------------
 -- Note [Unique name]
 
--- Because Agda predicates can be global or local, we use an unique
--- name for translating them. We append to the @qName@ the @qName@'s
--- id (which generates long TPTP names).
+-- Because Agda predicates can be global or local, functions with
+-- different arity can have the same name, etc., we use an unique name
+-- for translating of all Agda entities. We append to the @qName@ the
+-- @qName@'s id (which generates long TPTP names).

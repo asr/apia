@@ -9,7 +9,7 @@
 % Name: Refl2.Ty
 % Role: type
 % Line: 16
-tff(n2_22292409, type, tTy : $tType).
+tff(n2_22292409, type, tTy_2_22292409 : $tType).
 
 % End required types by the conjecture.
 
@@ -20,7 +20,7 @@ tff(n2_22292409, type, tTy : $tType).
 % Name: Refl2.foo
 % Role: prove
 % Line: 20
-tff(n12_22292409, conjecture, ( ! [A : tTy] : ( ! [B : tTy] : ((A = A) & (B = B)) ) )).
+tff(n12_22292409, conjecture, ( ! [A : tTy_2_22292409] : ( ! [B : tTy_2_22292409] : ((A = A) & (B = B)) ) )).
 
 % End conjecture.
 

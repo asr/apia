@@ -7,7 +7,7 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module TPTP4XError where
+module DuplicateFormulaTPTP4XError where
 
 postulate
   D          : Set

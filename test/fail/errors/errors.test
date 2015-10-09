@@ -285,12 +285,12 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/HigherOrderDefinition.a
 apia: the translation of HigherOrderDefinition.twice failed because it is a higher-order definition
 >>>= 1
 
-#36. ChechTPTP.hs: tptp4X yields an error
-dist/build/apia/apia -itest/fail/errors --check test/fail/errors/TPTP4XError.agda
+#36. ChechTPTP.hs: tptp4X yields an error because there is a duplicate formulate
+dist/build/apia/apia -itest/fail/errors --check test/fail/errors/DuplicateFormulaTPTP4XError.agda
 <<<
 >>>
 >>>2
-apia: tptp4X found an error in the file /tmp/TPTP4XError/22-foo.fof
+apia: tptp4X found an error in the file /tmp/DuplicateFormulaTPTP4XError/22-foo.fof
 Please report this as a bug
 
 Error:
@@ -302,16 +302,16 @@ Error:
 % The general axiom(s).
 
 % The source Agda term was:
-% Name: TPTP4XError.false
+% Name: DuplicateFormulaTPTP4XError.false
 % Role: axiom
 % Line: 14
-fof(n6_75010623,axiom,( pD_2_75010623 )).
+fof(n6_54442073,axiom,( pD_2_54442073 )).
 
 % The source Agda term was:
-% Name: TPTP4XError.Bool.btrue
+% Name: DuplicateFormulaTPTP4XError.Bool.btrue
 % Role: axiom
 % Line: 18
-fof(n12_75010623,axiom,( kp1_(cBool_10_75010623,true_4_75010623) )).
+fof(n12_54442073,axiom,( kp1_(cBool_10_54442073,true_4_54442073) )).
 
 % End general axiom(s).
 
@@ -319,10 +319,10 @@ fof(n12_75010623,axiom,( kp1_(cBool_10_75010623,true_4_75010623) )).
 % The local hint(s).
 
 % The source Agda term was:
-% Name: TPTP4XError.Bool.btrue
+% Name: DuplicateFormulaTPTP4XError.Bool.btrue
 % Role: hint
 % Line: 18
-ERROR: Duplicate annotated formula name "n12_75010623"
+ERROR: Duplicate annotated formula name "n12_54442073"
 
 >>>= 1
 

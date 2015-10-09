@@ -47,24 +47,22 @@ checkTPTP file = do
 
   checkExecutable tptp4XExec msgError
 
-  (exitCode, out, _) ←
-    liftIO $ readProcessWithExitCode tptp4XExec
-                                     ["-ftptp", "-umachine" , "-w", file]
-                                     []
+  (exitCode, out, _) ← liftIO $
+    readProcessWithExitCode tptp4XExec
+                            ["-ftptp", "-umachine" , "-w", "-q3", file]
+                            []
 
-  let errorOrWarningMsg ∷ Doc → Doc
-      errorOrWarningMsg ew = pretty tptp4XExec
-                             <> sspaces "found an error in the file"
-                             <> pretty file
-                             <> "\nPlease report this as a bug\n"
-                             <> "\n" <> ew <> ":" <> "\n"
-                             <> pretty out
+  let errorOrWarningMsg ∷ Doc
+      errorOrWarningMsg = pretty tptp4XExec
+                          <> sspaces "found an error/warning in the file"
+                          <> pretty file
+                          <> "\nPlease report this as a bug\n\n"
+                          <> pretty out
 
   case exitCode of
     ExitFailure _ →
-      E.throwE $ errorOrWarningMsg "Error"
+      E.throwE errorOrWarningMsg
 
     -- TODO (11 December 2012). How add a test case for this case?
     ExitSuccess →
-      when ("WARNING" `isInfixOf` out) $
-        E.throwE $ errorOrWarningMsg "Warning"
+      when ("WARNING" `isInfixOf` out) $ E.throwE errorOrWarningMsg

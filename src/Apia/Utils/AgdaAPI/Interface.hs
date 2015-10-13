@@ -42,7 +42,7 @@ import Agda.Interaction.FindFile ( toIFile )
 import qualified Agda.Interaction.Imports as A ( getInterface, readInterface )
 
 import Agda.Interaction.Options
-  ( CommandLineOptions(optIncludeDirs, optPragmaOptions)
+  ( CommandLineOptions(optIncludePaths, optPragmaOptions)
   , defaultOptions
   , defaultPragmaOptions
   , PragmaOptions(optVerbose)
@@ -188,13 +188,11 @@ noVerbosity = let agdaOptVerbose ∷ Verbosity
                   agdaOptVerbose = Trie.singleton [] 0
               in defaultPragmaOptions { optVerbose = agdaOptVerbose }
 
-
--- See note [Default @optIncludePath@].
 agdaCommandLineOptions ∷ T CommandLineOptions
 agdaCommandLineOptions = do
   agdaIncludePaths ← askTOpt optIncludePath
 
-  return $ defaultOptions { optIncludeDirs   = Left agdaIncludePaths
+  return $ defaultOptions { optIncludePaths   = agdaIncludePaths
                           , optPragmaOptions = noVerbosity
                           }
 
@@ -455,15 +453,6 @@ getImportedInterfaces i = do
   reportSLn "ii" 20 $
     "Imported module names: " ++ show (map iModuleName iInterfaces)
   return iInterfaces
-
-------------------------------------------------------------------------------
--- Note [Default @optIncludePath@].
-
--- An empty list of relative include directories @(Left [])@ is
--- interpreted as @["."]@ (from
--- Agda.TypeChecking.Monad.Options). Therefore the default of
--- Options.optAgdaIncludePath is @[]@.
-
 
 ------------------------------------------------------------------------------
 -- Note [Unique name]

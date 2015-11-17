@@ -26,9 +26,10 @@ import Agda.TypeChecking.Monad.Base
   , Definitions
   , defType
   , Interface(iSignature)
-  , Signature(sigDefinitions)
+  , sigDefinitions
   )
 
+import Agda.Utils.Lens   ( (^.) )
 import Agda.Utils.Pretty ( prettyShow )
 
 import Apia.Monad.Base ( T )
@@ -75,6 +76,6 @@ dumpTypes file = do
   i ← readInterface file
 
   let defs ∷ Definitions
-      defs = sigDefinitions $ iSignature i
+      defs = iSignature i ^. sigDefinitions
 
   mapM_ dumpQNameInformation $ sortBy compareQNameDefinition $ HashMap.toList defs

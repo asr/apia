@@ -25,10 +25,11 @@ module Main
 import Agda.TypeChecking.Monad.Base
   ( Definitions
   , Interface(iSignature)
-  , Signature(sigDefinitions)
+  , sigDefinitions
   )
 
 import Agda.Utils.Impossible ( catchImpossible )
+import Agda.Utils.Lens       ( (^.) )
 
 import Apia.ATPs      ( callATPs, selectedATPs )
 import Apia.CheckTPTP ( checkTPTP )
@@ -89,10 +90,10 @@ translation agdaFile = do
   iInterfaces ← getImportedInterfaces i
 
   let topLevelDefs ∷ Definitions
-      topLevelDefs = sigDefinitions $ iSignature i
+      topLevelDefs = iSignature i ^. sigDefinitions
 
       importedDefs ∷ [Definitions]
-      importedDefs = map (sigDefinitions . iSignature) iInterfaces
+      importedDefs = map (\t → iSignature t ^. sigDefinitions) iInterfaces
 
       allDefs ∷ Definitions
       allDefs = HashMap.unions (topLevelDefs : importedDefs)

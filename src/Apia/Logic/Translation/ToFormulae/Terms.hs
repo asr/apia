@@ -563,7 +563,7 @@ agdaTermToTerm term = case ignoreSharing term of
           Just []    → __IMPOSSIBLE__
           Just args  → qNameToUniqueString qName >>= flip appArgsF args
 
-  term'@(Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ termLam)) → do
+  term'@(Lam ArgInfo{argInfoHiding = NotHidden} (Abs _ termLam)) → do
     reportSLn "t2f" 10 $ "agdaTermToTerm Lam:\n" ++ show term'
 
     _ ← pushTNewVar

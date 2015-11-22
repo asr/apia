@@ -56,7 +56,7 @@ instance BoundedVars Term where
   boundedVars term = case ignoreSharing term of
     Def _ elims → boundedVars elims
 
-    Lam (ArgInfo {argInfoHiding = NotHidden}) (Abs _ absTerm) →
+    Lam ArgInfo{argInfoHiding = NotHidden} (Abs _ absTerm) →
       1 + boundedVars absTerm
 
     Var n _ | n >= 0    → 0

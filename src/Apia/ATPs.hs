@@ -265,8 +265,8 @@ atpArgs Z3 timeout file = return [ "-T:" ++ show timeout
                                  , file
                                  ]
 
--- tptp2X from TPTP 6.2.0 is returing exit status 1 instead of 0
--- (bug), so we need to handle the exception raised.
+-- The tptp2X program (from TPTP 6.3.0) is returing exit status 1
+-- instead of 0 (bug), so we need to handle the exception raised.
 createSMT2file ∷ FilePath → T ()
 createSMT2file file = do
 

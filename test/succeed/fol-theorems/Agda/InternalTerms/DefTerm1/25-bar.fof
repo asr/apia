@@ -6,10 +6,10 @@
 % The general axiom(s).
 
 % The original Agda term was:
-% Name: AgdaInternalTerms.DefTerm1.foo
+% Name: Agda.InternalTerms.DefTerm1.foo
 % Role: axiom
 % Line: 21
-fof(n12_100727391, axiom, kp1_(cP_8_100727391,a_10_100727391)).
+fof(n14_147637808, axiom, kp1_(cP_10_147637808,a_12_147637808)).
 
 % End general axiom(s).
 
@@ -17,10 +17,10 @@ fof(n12_100727391, axiom, kp1_(cP_8_100727391,a_10_100727391)).
 % The conjecture.
 
 % The original Agda term was:
-% Name: AgdaInternalTerms.DefTerm1.bar
+% Name: Agda.InternalTerms.DefTerm1.bar
 % Role: prove
 % Line: 25
-fof(n16_100727391, conjecture, ( ! [A] : (A = A) )).
+fof(n18_147637808, conjecture, ( ! [A] : (A = A) )).
 
 % End conjecture.
 

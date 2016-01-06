@@ -6,10 +6,10 @@
 % The conjecture.
 
 % The original Agda term was:
-% Name: AgdaInternalTerms.LamTerm.∃-intro
+% Name: Agda.InternalTerms.LamTerm.∃-intro
 % Role: prove
 % Line: 19
-fof(n12_194085439, conjecture, ( ! [A] : (kp1_(cA_8_194085439,A) => ( ? [B] : kp1_(cA_8_194085439,B) )) )).
+fof(n14_160023169, conjecture, ( ! [A] : (kp1_(cA_10_160023169,A) => ( ? [B] : kp1_(cA_10_160023169,B) )) )).
 
 % End conjecture.
 

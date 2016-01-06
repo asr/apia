@@ -7,7 +7,7 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module AgdaInternalTerms.DefTerm2 where
+module Agda.InternalTerms.DefTerm2 where
 
 ------------------------------------------------------------------------------
 

@@ -6,10 +6,10 @@
 % The conjecture.
 
 % The original Agda term was:
-% Name: AgdaInternalTerms.PiNoAbsTerm.foo₁
+% Name: Agda.InternalTerms.PiNoAbsTerm.foo₁
 % Role: prove
 % Line: 25
-fof(n12_188711488, conjecture, (( ! [A] : (pA_8_188711488) ) => (pA_8_188711488))).
+fof(n14_145494183, conjecture, (( ! [A] : (pA_10_145494183) ) => (pA_10_145494183))).
 
 % End conjecture.
 

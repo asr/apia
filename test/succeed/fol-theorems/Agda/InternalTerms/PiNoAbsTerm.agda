@@ -15,7 +15,7 @@
 -- Agda is using @Pi _ (NoAbs _ _)@ for the non-dependent
 -- functions. We test some translations of non-dependent functions.
 
-module AgdaInternalTerms.PiNoAbsTerm where
+module Agda.InternalTerms.PiNoAbsTerm where
 
 postulate
   _↔_ : Set → Set → Set

@@ -1,0 +1,46 @@
+%-----------------------------------------------------------------------------
+% This file was generated automatically by Apia.
+%-----------------------------------------------------------------------------
+
+%-----------------------------------------------------------------------------
+% The general axiom(s).
+
+% The source Agda term was:
+% Name: Agda.NewUnifier.List.lnil
+% Role: axiom
+% Line: 36
+fof(n34_65828061, axiom, kp1_(cList_32_65828061,n9193_16_65828061)).
+
+% The source Agda term was:
+% Name: Agda.NewUnifier.List.lcons
+% Role: axiom
+% Line: 37
+fof(n40_65828061, axiom, ( ! [A] : ( ! [B] : (kp1_(cList_32_65828061,B) => kp1_(cList_32_65828061,n_8759__26_65828061(A,B))) ) )).
+
+% The source Agda term was:
+% Name: Agda.NewUnifier.++-[]
+% Role: axiom
+% Line: 42
+fof(n46_65828061, axiom, ( ! [A] : (n_4343__42_65828061(n9193_16_65828061,A) = A) )).
+
+% The source Agda term was:
+% Name: Agda.NewUnifier.++-∷
+% Role: axiom
+% Line: 43
+fof(n54_65828061, axiom, ( ! [A] : ( ! [B] : ( ! [C] : (n_4343__42_65828061(n_8759__26_65828061(A,B),C) = n_8759__26_65828061(A,n_4343__42_65828061(B,C))) ) ) )).
+
+% End general axiom(s).
+
+%-----------------------------------------------------------------------------
+% The conjecture.
+
+% The source Agda term was:
+% Name: Agda.NewUnifier._.prf
+% Role: prove
+% Line: 48
+fof(n70_65828061, conjecture, ( ! [A] : (kp1_(cList_32_65828061,A) => kp1_(cList_32_65828061,n_4343__42_65828061(n9193_16_65828061,A))) )).
+
+% End conjecture.
+
+%-----------------------------------------------------------------------------
+% End TPTP file.

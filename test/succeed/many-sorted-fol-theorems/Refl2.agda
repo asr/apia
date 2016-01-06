@@ -14,7 +14,7 @@ infix  4 _≡_
 
 postulate
   Ty  : Set
-  _≡_ :  Ty → Ty → Set
+  _≡_ : Ty → Ty → Set
   _∧_ : Set → Set → Set
 
 postulate foo : (t t' : Ty) → t ≡ t ∧ t' ≡ t'

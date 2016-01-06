@@ -3,24 +3,13 @@
 %-----------------------------------------------------------------------------
 
 %-----------------------------------------------------------------------------
-% The general axiom(s).
-
-% The source Agda term was:
-% Name: AgdaInternalTerms.DefTerm2.foo
-% Role: axiom
-% Line: 21
-fof(n16_152941666, axiom, kp3_(cP179_8_152941666,a_10_152941666,b_12_152941666,c_14_152941666)).
-
-% End general axiom(s).
-
-%-----------------------------------------------------------------------------
 % The conjecture.
 
 % The source Agda term was:
-% Name: AgdaInternalTerms.DefTerm2.bar
+% Name: Agda.InternalTerms.PiNoAbsTerm.foo₃
 % Role: prove
-% Line: 25
-fof(n20_152941666, conjecture, ( ! [A] : (A = A) )).
+% Line: 31
+fof(n22_145494183, conjecture, (( ! [A] : (pA_10_145494183) ) <=> (pA_10_145494183))).
 
 % End conjecture.
 

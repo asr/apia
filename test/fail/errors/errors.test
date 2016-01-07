@@ -92,7 +92,7 @@ dist/build/apia/apia -itest/fail/errors --atp=foo test/fail/errors/TrivialTheore
 <<<
 >>>
 >>>2
-apia: ATP foo unknown
+apia: the ATP ‘foo’ is unknown
 >>>= 1
 
 #13. ATP.hs: Bad ATP executable name
@@ -119,7 +119,7 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/OnlyOneClause.agda
 <<<
 >>>
 >>>2
-apia: the translation of OnlyOneClause._+_ failed because its definition only can have a clause
+apia: the translation of ‘OnlyOneClause._+_’ failed because its definition only can have a clause
 >>>= 1
 
 #16. Interface.hs: Missing interface file
@@ -282,7 +282,7 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/HigherOrderDefinition.a
 <<<
 >>>
 >>>2
-apia: the translation of HigherOrderDefinition.twice failed because it is a higher-order definition
+apia: the translation of ‘HigherOrderDefinition.twice’ failed because it is a higher-order definition
 >>>= 1
 
 #36. ChechTPTP.hs: tptp4X yields an error because there is a duplicate formulate

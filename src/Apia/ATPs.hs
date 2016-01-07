@@ -142,7 +142,7 @@ optATP2ATP "spass"    = return SPASS
 optATP2ATP "vampire"  = return Vampire
 optATP2ATP "z3"       = return Z3
 optATP2ATP other =
-  E.throwE $ pretty "ATP " <> pretty other <> pretty " unknown"
+  E.throwE $ pretty "the ATP " <> squotes other <> pretty " is unknown"
 
 -- | Default ATPs.
 defaultATPs ∷ [String]

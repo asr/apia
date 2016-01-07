@@ -15,6 +15,7 @@
 
 module Apia.Utils.PrettyPrint
   ( module Text.PrettyPrint
+  , bquotes
   , Pretty(pretty)
   , prettyShow
   , sspaces

@@ -82,7 +82,7 @@ import Apia.Utils.AgdaAPI.Vars     ( BoundedVars(boundedVars) )
 import qualified Apia.Utils.Except as E
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
-import Apia.Utils.PrettyPrint           ( (<>), Pretty(pretty) )
+import Apia.Utils.PrettyPrint           ( (<>), bquotes, Pretty(pretty) )
 
 import Control.Monad ( liftM2, replicateM, replicateM_, when )
 
@@ -106,7 +106,7 @@ fnToFormula ∷ QName → Type → [Clause] → T LFormula
 fnToFormula _      _  []   = __IMPOSSIBLE__
 fnToFormula qName  ty [cl] = clauseToFormula qName ty cl
 fnToFormula qName  _  _    =
-  E.throwE $ pretty "the translation of " <> AP.pretty qName
+  E.throwE $ pretty "the translation of " <> bquotes (AP.pretty qName)
              <> pretty " failed because its definition only can have a clause"
 
 -- A Clause is defined by (Agda.Syntax.Internal)
@@ -188,7 +188,7 @@ clauseToFormula qName ty (Clause r tel (_ : pats) cBody cTy cc) =
       return $ Implies f1 f2
 
     ExtendTel (Dom _ (El (Type (Max [])) (Pi _ _))) _ →
-      E.throwE $ pretty "the translation of " <> AP.pretty qName
+      E.throwE $ pretty "the translation of " <> bquotes (AP.pretty qName)
                  <> pretty " failed because it is a higher-order definition"
 
     _ → do

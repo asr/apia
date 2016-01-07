@@ -7,7 +7,7 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module Refl2 where
+module ForAll2 where
 
 infixr 2 _∧_
 infix  4 _≡_

@@ -6,10 +6,10 @@
 % The required types by the conjecture.
 
 % The source Agda type was:
-% Name: Refl1.Ty
+% Name: ForAll2.Ty
 % Role: type
-% Line: 13
-tff(n2_274982880, type, tTy_2_274982880 : $tType).
+% Line: 16
+tff(n2_239698316, type, tTy_2_239698316 : $tType).
 
 % End required types by the conjecture.
 
@@ -17,10 +17,10 @@ tff(n2_274982880, type, tTy_2_274982880 : $tType).
 % The conjecture.
 
 % The source Agda term was:
-% Name: Refl1.foo
+% Name: ForAll2.foo
 % Role: prove
-% Line: 16
-tff(n8_274982880, conjecture, ( ! [A : tTy_2_274982880] : (A = A) )).
+% Line: 20
+tff(n12_239698316, conjecture, ( ! [A : tTy_2_239698316] : ( ! [B : tTy_2_239698316] : ((A = A) & (B = B)) ) )).
 
 % End conjecture.
 

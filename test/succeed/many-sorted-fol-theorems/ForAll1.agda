@@ -7,7 +7,7 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module Refl1 where
+module ForAll1 where
 
 postulate
   Ty  : Set

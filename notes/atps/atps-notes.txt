@@ -14,9 +14,7 @@ $ equinox --time xxx file_name
 
 $ ileancop file_name time
 
-$ ulimit -S -t xxx
-$ metis file_name
-$ ulimit -S -t unlimited
+$ metis --time-limit xxx file_name
 
 $ SPASS -TPTP=1 -TimeLimit=xxx file_name
 

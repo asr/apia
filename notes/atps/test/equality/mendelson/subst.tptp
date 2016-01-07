@@ -14,9 +14,7 @@
 % $ ileancop file_name
 
 % Metis 2.3 (release 20160102)
-% $ ulimit -S -t 240
-% $ metis file_name
-% $ ulimit -S -t unlimited
+% $ metis --time-limit 240 file_name
 
 % Vampire 0.6 (revision 903)
 % $ vampire_lin64 -t 240 --input_file file_name

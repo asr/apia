@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing many-sorted predicates
+-- Testing many-sorted predicates inside quantifiers
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}
@@ -7,12 +7,11 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module Predicate where
+module Predicate4 where
 
 postulate
   Ty : Set
   P  : Ty → Set
-  a  : Ty
 
-postulate foo : P a → P a
+postulate foo : (t : Ty) → P t → P t
 {-# ATP prove foo #-}

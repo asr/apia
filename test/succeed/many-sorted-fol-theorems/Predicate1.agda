@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing many-sorted for all
+-- Testing many-sorted predicates
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}
@@ -7,11 +7,12 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module ForAll where
+module Predicate1 where
 
 postulate
   Ty : Set
   P  : Ty → Set
+  a  : Ty
 
-postulate foo : (t : Ty) → P t → P t
+postulate foo : P a → P a
 {-# ATP prove foo #-}

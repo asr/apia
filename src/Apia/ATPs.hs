@@ -95,13 +95,22 @@ import System.Process
     , CreateProcess
     , cmdspec
     , cwd
-#if MIN_VERSION_process(1,2,0)
-    , delegate_ctlc
-#endif
     , env
     , std_err
     , std_in
     , std_out
+#if MIN_VERSION_process(1,2,0)
+    , delegate_ctlc
+#endif
+#if MIN_VERSION_process(1,3,0)
+    , create_new_console
+    , detach_console
+    , new_session
+#endif
+#if MIN_VERSION_process(1,4,0)
+    , child_group
+    , child_user
+#endif
     )
   , interruptProcessGroupOf
   , ProcessHandle
@@ -315,16 +324,25 @@ runATP atp outputMVar timeout fileTPTP = do
   -- @System.Process.proc@.
   (_, outputH, _, atpPH) ← liftIO $
     createProcess CreateProcess
-                    { cmdspec       = RawCommand cmd args
-                    , cwd           = Nothing
-                    , env           = Nothing
-                    , std_in        = Inherit
-                    , std_out       = CreatePipe
-                    , std_err       = Inherit
-                    , close_fds     = False
-                    , create_group  = True
+                    { cmdspec            = RawCommand cmd args
+                    , cwd                = Nothing
+                    , env                = Nothing
+                    , std_in             = Inherit
+                    , std_out            = CreatePipe
+                    , std_err            = Inherit
+                    , close_fds          = False
+                    , create_group       = True
 #if MIN_VERSION_process(1,2,0)
-                    , delegate_ctlc = False
+                    , delegate_ctlc      = False
+#endif
+#if MIN_VERSION_process(1,3,0)
+                    , create_new_console = False
+                    , detach_console     = False
+                    , new_session        = False
+#endif
+#if MIN_VERSION_process(1,4,0)
+                    , child_group        = Nothing
+                    , child_user         = Nothing
 #endif
                     }
   output ← liftIO $ hGetContents $ fromMaybe (__IMPOSSIBLE__) outputH

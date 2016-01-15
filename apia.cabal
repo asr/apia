@@ -156,6 +156,13 @@ executable apia
   if impl(ghc >= 7.10) && impl(ghc < 8.0)
     ghc-options: -fwarn-context-quantification
 
+  if impl(ghc >= 8.0)
+    ghc-options: -Wmissing-pat-syn-sigs
+                 -Wnoncanonical-monad-instances
+                 -Wnoncanonical-monoid-instances
+                 -Wredundant-constraints
+                 -Wsemigroup
+
   -- From Agda.cabal: If someone installs Agda with the setuid bit
   -- set, then the presence of +RTS may be a security problem (see GHC
   -- bug #3910).  However, we sometimes recommend people to use +RTS

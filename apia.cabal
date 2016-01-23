@@ -133,7 +133,6 @@ executable apia
                   -fwarn-inline-rule-shadowing
                   -fwarn-overflowed-literals
                   -fwarn-typed-holes
-                  -fwarn-unrecognised-pragmas
                   -fwarn-unsupported-llvm-version
 
   -- The following option generates warnings with GHC 7.10.1.

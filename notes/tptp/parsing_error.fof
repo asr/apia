@@ -11,6 +11,6 @@ fof(test, conjecture, ! [A] : A = B).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% $ tptp4X parsing_error.tptp
+% $ tptp4X parsing_error.fof
 % ...
 % ERROR: Line 10 Char 36 Token ")" continuing with ".

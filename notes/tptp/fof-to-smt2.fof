@@ -42,7 +42,7 @@ fof(prove_left_zero_h,conjecture,
 
 % Testing conversion from FOF to SMT2:
 %
-% $ tptp2X -fsmt2 -d/tmp fof-to-smt2.tptp
+% $ tptp2X -fsmt2 -d/tmp fof-to-smt2.fof
 % $ cd /tmp
 % $ z3 --version
 % Z3 version 4.4.1

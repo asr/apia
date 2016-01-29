@@ -3,11 +3,11 @@
 fof(test, conjecture, ((! [A] : p) => p)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% $ equinox erase-universal-quantifier.tptp
+% $ equinox erase-universal-quantifier.fof
 % Equinox, version 5.0alpha, 2010-06-29.
-% +++ PROBLEM: erase-universal-quantifier.tptp
-% Reading 'erase-universal-quantifier.tptp' ... OK
-% +++ SOLVING: erase-universal-quantifier.tptp
+% +++ PROBLEM: erase-universal-quantifier.fof
+% Reading 'erase-universal-quantifier.fof' ... OK
+% +++ SOLVING: erase-universal-quantifier.fof
 % #elt|m|#instances
 % +++ RESULT: Theorem
 
@@ -15,5 +15,5 @@ fof(test, conjecture, ((! [A] : p) => p)).
 % $ metis --version
 % metis 2.3 (release 20160102)
 
-% $ metis erase-universal-quantifier.tptp
-% SZS status Theorem for erase-universal-quantifier.tptp
+% $ metis erase-universal-quantifier.fof
+% SZS status Theorem for erase-universal-quantifier.fof

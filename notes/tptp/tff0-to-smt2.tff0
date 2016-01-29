@@ -41,7 +41,7 @@ tff(check_list,conjecture,(
 
 % Testing conversion from TFF0 to SMT2:
 %
-% $ tptp2X -fsmt2 -d/tmp tff0-to-smt2.tptp
+% $ tptp2X -fsmt2 -d/tmp tff0-to-smt2.tff0
 % $ cd /tmp
 % $ z3 --version
 % Z3 version 4.4.1

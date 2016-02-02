@@ -119,7 +119,7 @@ import qualified Apia.Utils.Except as E
 
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
 
-import Control.Monad ( liftM, liftM2, when )
+import Control.Monad ( liftM2, when )
 import Data.List     ( foldl' )
 
 #include "undefined.h"
@@ -213,7 +213,7 @@ agdaTermToFormula term = case ignoreSharing term of
                  | otherwise →
                    -- In this guard we translate 0-ary predicates, i.e.
                    -- propositional functions, for example, A : Set.
-                   liftM (flip Predicate []) (qNameToUniqueString qName)
+                   flip Predicate [] <$> qNameToUniqueString qName
 
          Just [a]
            | isCNameHoleRight lNot → fmap Not (agdaArgTermToFormula a)
@@ -550,7 +550,7 @@ agdaTermToTerm term = case ignoreSharing term of
       C.Name _ [C.Id _] →
        case allApplyElims elims of
          Nothing    → __IMPOSSIBLE__
-         Just []    → liftM (flip Fun []) (qNameToUniqueString qName)
+         Just []    → flip Fun [] <$> qNameToUniqueString qName
          Just args  → qNameToUniqueString qName >>= flip appArgsF args
 
       -- The term @Def@ has holes. It is translated as a first-order

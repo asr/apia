@@ -22,6 +22,8 @@ module Apia.Utils.AgdaAPI.Vars
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Common
   ( Arg(Arg)
   , ArgInfo(ArgInfo, argInfoHiding)

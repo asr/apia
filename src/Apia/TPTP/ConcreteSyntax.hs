@@ -21,6 +21,8 @@ module Apia.TPTP.ConcreteSyntax
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Abstract.Name ( Name(nameId), QName(QName) )
 
 import Agda.Syntax.Common
@@ -52,15 +54,6 @@ import Apia.Logic.Types
 import Apia.TPTP.Types ( AF(AFor) )
 
 import Apia.Utils.Text ( (+++), parens, toUpperFirst )
-
-import Data.Char
-  ( chr
-  , isAsciiLower
-  , isAsciiUpper
-  , isDigit
-  , isUpper
-  , ord
-  )
 
 import Data.Text ( Text )
 import qualified Data.Text as T

@@ -22,9 +22,9 @@ module Apia.Utils.Text
 
 ------------------------------------------------------------------------------
 
-import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
+import Apia.Prelude
 
-import Data.Char ( toUpper )
+import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
 import Data.Text ( Text )
 import qualified Data.Text as T

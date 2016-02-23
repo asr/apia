@@ -19,6 +19,8 @@ module Apia.Utils.AgdaAPI.EtaExpansion ( EtaExpandible(etaExpand) ) where
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude hiding ( sort )
+
 import Agda.Syntax.Common
   ( Arg(Arg)
   , Dom(Dom)
@@ -51,12 +53,6 @@ import Apia.Monad.Reports               ( reportSLn )
 import Apia.Utils.AgdaAPI.DeBruijn      ( IncIndex(incIndex) )
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
 import Apia.Utils.AgdaAPI.Interface     ( isProjection, qNameType )
-
-#if !MIN_VERSION_base(4,8,0)
-import Control.Applicative ( (<$>) )
-#endif
-
-import Control.Monad ( when )
 
 #include "undefined.h"
 

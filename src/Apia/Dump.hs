@@ -18,6 +18,8 @@ module Apia.Dump
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Abstract.Name ( QName, qnameToConcrete )
 import Agda.Syntax.Internal      ( Type )
 
@@ -42,9 +44,6 @@ import Apia.Utils.AgdaAPI.Interface
   )
 
 import qualified Data.HashMap.Strict as HashMap ( toList )
-
-import Data.Function ( on )
-import Data.List     ( sortBy )
 
 import Control.Monad.IO.Class ( MonadIO(liftIO) )
 

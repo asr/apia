@@ -17,6 +17,8 @@ module Apia.Snapshot ( snapshotTest ) where
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Utils.FileName ( doesFileExistCaseSensitive )
 import Agda.Utils.Monad    ( ifM, unlessM, whenM )
 

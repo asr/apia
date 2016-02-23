@@ -16,6 +16,8 @@ module Apia.Utils.Version ( progNameVersion ) where
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Apia.Utils.String ( toUpperFirst )
 
 import Data.Version       ( showVersion )

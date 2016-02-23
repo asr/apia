@@ -63,6 +63,8 @@ module Apia.Utils.AgdaAPI.RemoveProofTerms ( removeProofTerm ) where
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Common ( Arg(Arg), Dom(Dom), Nat )
 
 import Agda.Syntax.Internal as I
@@ -85,15 +87,6 @@ import Apia.Monad.Reports ( reportSLn )
 
 import qualified Apia.Utils.Except as E
 import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
-
-#if !MIN_VERSION_base(4,8,0)
-import Control.Applicative ( (<$>) )
-#endif
-
-import Control.Monad ( liftM2, when )
-
-import Data.List  ( elemIndex )
-import Data.Maybe ( fromMaybe )
 
 #include "undefined.h"
 

@@ -20,6 +20,8 @@ module Apia.Logic.Translation.ToFormulae.Terms
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Abstract.Name ( Name(nameConcrete) , QName(QName) )
 
 import Agda.Syntax.Common
@@ -118,9 +120,6 @@ import Apia.Utils.AgdaAPI.Interface     ( qNameToUniqueString )
 import qualified Apia.Utils.Except as E
 
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
-
-import Control.Monad ( liftM2, when )
-import Data.List     ( foldl' )
 
 #include "undefined.h"
 

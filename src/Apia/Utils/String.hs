@@ -20,9 +20,10 @@ module Apia.Utils.String
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Data.Char  ( toUpper )
 import Text.Regex ( mkRegex, subRegex )
 
 #include "undefined.h"

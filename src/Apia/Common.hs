@@ -16,6 +16,10 @@ module Apia.Common
   )
   where
 
+------------------------------------------------------------------------------
+
+import Apia.Prelude
+
 import Apia.Utils.PrettyPrint ( Pretty(pretty), text )
 
 ------------------------------------------------------------------------------

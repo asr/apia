@@ -17,6 +17,8 @@ module Apia.CheckTPTP ( checkTPTP ) where
 
 -----------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Apia.Monad.Base      ( askTOpt, T )
 import Apia.Options         ( Options(optWithtptp4X) )
 import Apia.Utils.Directory ( checkExecutable )
@@ -25,10 +27,7 @@ import qualified Apia.Utils.Except as E
 
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), sspaces )
 
-import Control.Monad           ( when )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
-
-import Data.List ( isInfixOf )
 
 import System.Exit    ( ExitCode(ExitSuccess, ExitFailure) )
 import System.Process ( readProcessWithExitCode )

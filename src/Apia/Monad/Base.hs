@@ -32,6 +32,8 @@ module Apia.Monad.Base
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.TypeChecking.Monad.Base ( Definitions )
 import Agda.Utils.Impossible        ( Impossible(Impossible), throwImpossible )
 

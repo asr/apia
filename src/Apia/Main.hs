@@ -22,6 +22,8 @@ module Main
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.TypeChecking.Monad.Base
   ( Definitions
   , Interface(iSignature)
@@ -69,7 +71,6 @@ import Apia.Utils.PrettyPrint       ( Doc )
 import Apia.Utils.Monad   ( failureMsg, pair )
 import Apia.Utils.Version ( progNameVersion )
 
-import Control.Monad              ( when )
 import Control.Monad.IO.Class     ( MonadIO(liftIO) )
 import Control.Monad.Trans.Class  ( MonadTrans(lift) )
 import Control.Monad.Trans.Reader ( ask )
@@ -77,7 +78,6 @@ import Control.Monad.Trans.Reader ( ask )
 import qualified Data.HashMap.Strict as HashMap ( unions )
 
 import System.Exit ( exitFailure, exitSuccess )
-import System.IO   ( hPrint, stderr )
 
 ------------------------------------------------------------------------------
 

@@ -23,6 +23,8 @@ module Apia.Logic.Primitives
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Utils.Impossible ( Impossible(Impossible) , throwImpossible )
 
 import Apia.Logic.Types ( LFormula(Predicate), LTerm(Fun) )

@@ -30,6 +30,10 @@ module Apia.Logic.Constants
   ) where
 
 ------------------------------------------------------------------------------
+
+import Apia.Prelude
+
+------------------------------------------------------------------------------
 -- | Identifiers recognized by the logic translator.
 lTrue
   , lFalse

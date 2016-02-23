@@ -20,6 +20,8 @@ module Apia.Utils.Name
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Concrete.Name ( NamePart(Id, Hole) )
 import Agda.Utils.Impossible     ( Impossible(Impossible), throwImpossible )
 

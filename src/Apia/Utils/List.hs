@@ -21,9 +21,9 @@ module Apia.Utils.List
 
 ------------------------------------------------------------------------------
 
-import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
+import Apia.Prelude
 
-import Data.List ( nub )
+import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
 #include "undefined.h"
 

@@ -22,6 +22,8 @@ module Apia.ATPs
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Utils.Impossible ( Impossible(Impossible) , throwImpossible )
 import Agda.Utils.Monad      ( ifM )
 
@@ -68,22 +70,14 @@ import Apia.Utils.PrettyPrint
 
 import qualified Apia.Utils.Except as E
 
-#if !MIN_VERSION_base(4,8,0)
-import Control.Applicative ( (<$>) )
-#endif
-
 import Control.Exception.Base  ( catch, evaluate, IOException )
 import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
-import Data.List  ( isInfixOf )
-import Data.Maybe ( fromMaybe )
-
 import Safe ( initDef )
 
 import System.FilePath ( dropFileName, replaceExtension )
-import System.IO       ( hGetContents )
 
 import System.Process
   ( callProcess

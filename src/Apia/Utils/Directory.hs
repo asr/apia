@@ -20,6 +20,8 @@ module Apia.Utils.Directory
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Utils.Maybe ( caseMaybeM )
 import Agda.Utils.Monad ( ifM )
 
@@ -29,7 +31,6 @@ import Apia.Utils.PrettyPrint ( Doc )
 
 import qualified Data.ByteString.Lazy as BL ( readFile )
 
-import Control.Monad          ( liftM2 )
 import Control.Monad.IO.Class ( MonadIO(liftIO) )
 
 import System.Directory ( doesFileExist, findExecutable )

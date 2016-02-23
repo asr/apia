@@ -57,6 +57,8 @@ module Apia.Options
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Interaction.Options ( Verbosity )
 import Agda.Utils.Impossible    ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.List          ( wordsBy )
@@ -77,9 +79,6 @@ import Apia.Common
   )
 
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
-
-import Data.Char ( isDigit )
-import Data.List ( foldl' )
 
 import Safe ( initDef )
 

@@ -22,6 +22,8 @@ module Apia.Logic.Translation.ToFormulae.Functions ( fnToFormula ) where
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Common
   ( Arg(Arg)
   , defaultArgInfo
@@ -83,8 +85,6 @@ import qualified Apia.Utils.Except as E
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
 import Apia.Utils.PrettyPrint           ( (<>), bquotes, Pretty(pretty) )
-
-import Control.Monad ( liftM2, replicateM, replicateM_, when )
 
 #include "undefined.h"
 

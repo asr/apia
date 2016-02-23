@@ -31,7 +31,17 @@ module Apia.Logic.Types
   , VarName
   ) where
 
-import Apia.Utils.PrettyPrint ( (<>), hcat, Pretty(pretty), space, sspaces )
+------------------------------------------------------------------------------
+
+import Apia.Prelude
+
+import Apia.Utils.PrettyPrint
+  ( (<>)
+  , hcat
+  , Pretty(pretty)
+  , space
+  , sspaces
+  )
 
 ------------------------------------------------------------------------------
 

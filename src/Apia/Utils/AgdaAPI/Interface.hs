@@ -38,6 +38,8 @@ module Apia.Utils.AgdaAPI.Interface
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Interaction.FindFile ( toIFile )
 import qualified Agda.Interaction.Imports as A ( getInterface, readInterface )
 
@@ -125,19 +127,11 @@ import qualified Apia.Utils.Except as E
 
 import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
 
-#if !MIN_VERSION_base(4,8,0)
-import Control.Applicative ( (<$>) )
-#endif
-
 import Control.Monad.IO.Class    ( MonadIO(liftIO) )
 import Control.Monad.Trans.Class ( MonadTrans(lift) )
 import Control.Monad.Trans.State ( evalStateT, get, put, StateT )
 
-import Data.Int ( Int32 )
-
 import qualified Data.HashMap.Strict as HashMap ( filter, lookup )
-
-import Data.Maybe ( fromMaybe )
 
 #include "undefined.h"
 

@@ -17,6 +17,10 @@ module Apia.Logic.Translation.ToTypes
   ( agdaTypeToType
   ) where
 
+------------------------------------------------------------------------------
+
+import Apia.Prelude
+
 import Agda.Syntax.Internal as I
   ( Level(Max)
   , PlusLevel(ClosedLevel)

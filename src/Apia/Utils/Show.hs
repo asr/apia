@@ -19,6 +19,10 @@ module Apia.Utils.Show
   ) where
 
 ------------------------------------------------------------------------------
+
+import Apia.Prelude
+
+------------------------------------------------------------------------------
 -- | Version of 'show' adding a newline character.
 showLn ∷ Show a ⇒ a → String
 showLn = (++ "\n") . show

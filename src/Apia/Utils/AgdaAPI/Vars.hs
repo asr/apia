@@ -22,6 +22,8 @@ module Apia.Utils.AgdaAPI.Vars
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Common
   ( Arg(Arg)
   , ArgInfo(ArgInfo, argInfoHiding)
@@ -44,6 +46,8 @@ import Agda.Syntax.Internal as I
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
+
+import Prelude ( (+) )
 
 #include "undefined.h"
 

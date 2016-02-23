@@ -22,7 +22,12 @@ module Apia.Utils.PrettyPrint
   , squotes
   ) where
 
+------------------------------------------------------------------------------
+
+import Apia.Prelude
+
 import Text.PrettyPrint
+
 ------------------------------------------------------------------------------
 -- Auxiliary functions
 

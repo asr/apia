@@ -19,6 +19,8 @@ module Apia.TPTP.Files ( createConjectureTPTPFile ) where
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Abstract.Name
   ( mnameToConcrete
   , Name(nameConcrete)
@@ -70,11 +72,7 @@ import Apia.Utils.List        ( duplicate )
 import Apia.Utils.String      ( removeString )
 import Apia.Utils.Text        ( (+++), toUpperFirst )
 
-import Control.Monad           ( when, unless )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
-
-import Data.Char ( chr, isAsciiUpper, isAsciiLower, isDigit, ord )
-import Data.List ( nub, sort )
 
 import Data.Text ( Text )
 import qualified Data.Text as T
@@ -83,6 +81,8 @@ import qualified Data.Text.IO as T
 import System.Directory   ( createDirectoryIfMissing )
 import System.Environment ( getProgName )
 import System.FilePath    ( (</>), addExtension )
+
+import Prelude ( (-) )
 
 #include "undefined.h"
 

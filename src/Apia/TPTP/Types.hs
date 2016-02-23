@@ -29,13 +29,13 @@ module Apia.TPTP.Types
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Abstract.Name ( QName )
 import Agda.Syntax.Common        ( TPTPRole )
 
 import Apia.Logic.Types  ( LFormula, LType )
 import Apia.Utils.List   ( duplicate, duplicatesElements )
-
-import Data.List ( (\\), sort )
 
 ------------------------------------------------------------------------------
 -- Note: We don't import the module TPTP.ConcreteSyntax to avoid a circular

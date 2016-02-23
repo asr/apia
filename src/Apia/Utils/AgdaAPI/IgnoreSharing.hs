@@ -17,6 +17,8 @@ module Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) ) where
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude hiding ( sort )
+
 import Agda.Syntax.Common
   ( Arg(Arg)
   , Dom(Dom)

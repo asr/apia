@@ -21,6 +21,8 @@ module Apia.TPTP.Translation
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Abstract.Name ( QName )
 
 import Agda.Syntax.Common
@@ -72,14 +74,6 @@ import Apia.Utils.AgdaAPI.Interface
 
 import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
 import Apia.Utils.Show        ( showListLn, showLn )
-
-#if !MIN_VERSION_base(4,8,0)
-import Control.Applicative ( (<$>) )
-#endif
-
-import Control.Monad ( foldM, liftM2, liftM4, zipWithM )
-
-import Data.List ( nub )
 
 import qualified Data.HashMap.Strict as HashMap ( elems, keys )
 

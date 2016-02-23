@@ -18,6 +18,8 @@ module Apia.TPTP.TypesSelector ( typesInConjecture ) where
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Abstract.Name ( QName )
 
 import Agda.Syntax.Common

@@ -17,6 +17,8 @@ module Apia.Monad.Environment ( env ) where
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Apia.Options     ( Options, processOptions )
 import Apia.Utils.Monad ( die )
 

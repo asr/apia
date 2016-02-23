@@ -20,11 +20,12 @@ module Apia.Utils.Monad
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Apia.Utils.PrettyPrint ( Doc, prettyShow )
 
 import System.Environment ( getProgName )
 import System.Exit        ( exitFailure )
-import System.IO          ( hPutStrLn, stderr )
 
 ------------------------------------------------------------------------------
 -- | Sequences a pair of monadic computations.

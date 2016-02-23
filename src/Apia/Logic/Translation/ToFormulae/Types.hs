@@ -20,6 +20,8 @@ module Apia.Logic.Translation.ToFormulae.Types
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Common
   ( ArgInfo(ArgInfo, argInfoHiding)
   , Dom(Dom, domInfo, unDom)

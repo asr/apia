@@ -33,6 +33,10 @@ module Apia.Logic.Types
   , VarName
   ) where
 
+------------------------------------------------------------------------------
+
+import Apia.Prelude
+
 import Agda.Syntax.Abstract.Name ( QName )
 
 import Apia.Utils.PrettyPrint

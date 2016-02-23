@@ -29,6 +29,8 @@ module Apia.Utils.AgdaAPI.DeBruijn
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Common ( Arg(Arg), Dom(Dom), Nat )
 
 import Agda.Syntax.Internal as I
@@ -51,8 +53,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
 
-import Data.List  ( elemIndex )
-import Data.Maybe ( fromMaybe )
+import Prelude ( (+), (-) )
 
 #include "undefined.h"
 

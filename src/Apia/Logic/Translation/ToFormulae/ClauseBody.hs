@@ -22,6 +22,8 @@ module Apia.Logic.Translation.ToFormulae.ClauseBody
 
 ------------------------------------------------------------------------------
 
+import Apia.Prelude
+
 import Agda.Syntax.Common ( Nat )
 
 import Agda.Syntax.Internal

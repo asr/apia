@@ -10,8 +10,7 @@
 -- Apia prelude
 -----------------------------------------------------------------------------
 
-module Apia.Prelude ( module YAP )
-  where
+module Apia.Prelude ( module YAP ) where
 
 import Data.Bool as YAP
 
@@ -34,8 +33,7 @@ import Data.List      as YAP
 import Data.Maybe     as YAP
 import Data.Ord       as YAP
 import Data.String    as YAP
-
-import Data.Tuple as YAP
+import Data.Tuple     as YAP
 
 import Control.Applicative as YAP
 import Control.Monad       as YAP

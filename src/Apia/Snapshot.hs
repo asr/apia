@@ -33,6 +33,8 @@ import qualified Apia.Utils.Except as E
 import Apia.Utils.Directory   ( notEqualFiles )
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), prettyShow, squotes )
 
+import qualified Data.Text as T ( pack )
+
 import Control.Monad.IO.Class ( MonadIO(liftIO) )
 import Safe.Exact             ( dropExact )
 import System.FilePath        ( combine, joinPath, splitPath )
@@ -67,5 +69,5 @@ snapshotTest file = do
                   <> pretty file <> pretty "\n" <> pretty snapshotFile
 
         ifM (askTOpt optSnapshotNoError)
-            (liftIO $ putStrLn $ prettyShow msg)
+            (putStrLn $ T.pack $ prettyShow msg)
             (E.throwE msg)

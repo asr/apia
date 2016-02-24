@@ -74,6 +74,8 @@ import Control.Monad.IO.Class     ( MonadIO(liftIO) )
 import Control.Monad.Trans.Class  ( MonadTrans(lift) )
 import Control.Monad.Trans.Reader ( ask )
 
+import qualified Data.Text as T ( pack )
+
 import qualified Data.HashMap.Strict as HashMap ( unions )
 
 import System.Exit ( exitFailure, exitSuccess )
@@ -109,9 +111,13 @@ runApia ∷ T ()
 runApia = do
   opts ← lift $ lift ask
   case () of
-    _ | optHelp opts    → liftIO printUsage
-      | optVersion opts → liftIO $ progNameVersion >>= putStrLn
-      | otherwise       → do
+    _ | optHelp opts → liftIO printUsage
+
+      | optVersion opts → liftIO $ do
+          v ← progNameVersion
+          putStrLn $ T.pack v
+
+      | otherwise → do
 
         file ← case optInputFile opts of
                  Nothing → E.throwE "missing input file (try --help)"

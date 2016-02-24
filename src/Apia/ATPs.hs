@@ -75,6 +75,8 @@ import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
+import qualified Data.Text as T ( pack )
+
 import Safe ( initDef )
 
 import System.FilePath ( dropFileName, replaceExtension )
@@ -358,7 +360,7 @@ atpsAnswer atps outputMVar atpsPH file n =
                 <> pretty file
 
       ifM (askTOpt optUnprovenNoError)
-          (liftIO $ putStrLn $ prettyShow msg)
+          (putStrLn $ T.pack $ prettyShow msg)
           (E.throwE msg)
     else do
       output ← liftIO $ takeMVar outputMVar

@@ -80,6 +80,8 @@ import Apia.Common
 
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
 
+import qualified Data.Text as T ( pack )
+
 import Safe ( initDef )
 
 import System.Console.GetOpt
@@ -423,7 +425,7 @@ usageHeader prgName = "Usage: " ++ prgName ++ " [OPTIONS] FILE\n"
 printUsage ∷ IO ()
 printUsage = do
   progName ← getProgName
-  putStrLn $ usageInfo (usageHeader progName) options
+  putStrLn . T.pack $ usageInfo (usageHeader progName) options
 
 processOptionsHelper ∷ [String] → (FilePath → MOptions) → MOptions
 processOptionsHelper argv f defaults =

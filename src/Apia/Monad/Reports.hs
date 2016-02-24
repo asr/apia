@@ -34,7 +34,7 @@ import Apia.Monad.Base        ( askTOpt, T )
 import Apia.Options           ( Options(optVerbose) )
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), prettyShow )
 
-import Control.Monad.IO.Class ( MonadIO(liftIO) )
+import qualified Data.Text as T ( pack )
 
 #include "undefined.h"
 
@@ -59,13 +59,13 @@ verboseS k n action | n < 0     =  __IMPOSSIBLE__
 
 -- | Print debug information via the @--verbose@ option.
 reportS ∷ VerboseKey → Int → String → T ()
-reportS k n s = verboseS k n $ liftIO $ putStr (s ++ "\n")
+reportS k n s = verboseS k n $ putStr $ T.pack (s ++ "\n")
 
 -- | Print debug information via the @--verbose@ option.
 reportSLn ∷ VerboseKey → Int → String → T ()
-reportSLn k n s = verboseS k n $ liftIO $ putStrLn (s ++ "\n")
+reportSLn k n s = verboseS k n $ putStrLn $ T.pack (s ++ "\n")
 
 -- | Print debug information via the @--verbose@ option.
 reportDLn ∷ VerboseKey → Int → Doc → T ()
 reportDLn k n s =
-  verboseS k n $ liftIO $ putStrLn $ prettyShow (s <> pretty "\n")
+  verboseS k n $ putStrLn $ T.pack $ prettyShow (s <> pretty "\n")

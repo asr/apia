@@ -45,7 +45,7 @@ import Apia.Utils.AgdaAPI.Interface
 
 import qualified Data.HashMap.Strict as HashMap ( toList )
 
-import Control.Monad.IO.Class ( MonadIO(liftIO) )
+import qualified Data.Text as T ( pack )
 
 ------------------------------------------------------------------------------
 -- We sort the 'QName's by its position in the Agda module.
@@ -61,11 +61,11 @@ dumpQNameInformation (qName, def) = do
   let ty ∷ Type
       ty = defType def
 
-  liftIO $ putStrLn $ "Qname: " ++ (prettyShow . qnameToConcrete) qName
-  liftIO $ putStrLn $ "Type: "  ++ show ty
-  liftIO $ putStrLn $ "Concrete name range: "
+  putStrLn $ T.pack $ "Qname: " ++ (prettyShow . qnameToConcrete) qName
+  putStrLn $ T.pack $ "Type: "  ++ show ty
+  putStrLn $ T.pack $ "Concrete name range: "
                       ++ (show . qNameConcreteNameRange) qName
-  liftIO $ putStrLn $ "nameBindingSite range: "
+  putStrLn $ T.pack $ "nameBindingSite range: "
                       ++ (show . qNameNameBindingSiteRange) qName ++ "\n"
 
 -- | Print Agda types information to stdout.

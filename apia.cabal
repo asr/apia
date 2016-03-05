@@ -46,7 +46,7 @@ executable apia
                  , transformers >= 0.3 && < 0.4 || >= 0.4.1.0 && < 0.6
                  , unordered-containers >= 0.2.5.0 && < 0.3
 
-  build-tools: cpphs >= 1.19 && < 1.20
+  build-tools: cpphs >= 1.19
 
   other-modules:
     Apia.ATPs

@@ -5,13 +5,13 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: ChangeIndex.DefTerm.+-0x
 % Role: axiom
 % Line: 39
 fof(n52_176481003, axiom, ( ! [A] : (n_43__48_176481003(zero_6_176481003,A) = A) )).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: ChangeIndex.DefTerm.+-Sx
 % Role: axiom
 % Line: 40
@@ -22,7 +22,7 @@ fof(n58_176481003, axiom, ( ! [A] : ( ! [B] : (n_43__48_176481003(succ_8_1764810
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: ChangeIndex.DefTerm._.A
 % Role: definition
 % Line: 46
@@ -33,7 +33,7 @@ fof(n70_176481003, definition, ( ! [A] : (kp1_(cN_10_176481003,A) => ( ! [B] : (
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: ChangeIndex.DefTerm._.is
 % Role: prove
 % Line: 53

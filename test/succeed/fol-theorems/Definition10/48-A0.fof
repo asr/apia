@@ -5,13 +5,13 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Definition10.+-0x
 % Role: axiom
 % Line: 35
 fof(n44_16837688, axiom, ( ! [A] : (n_43__40_16837688(zero_4_16837688,A) = A) )).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Definition10.+-Sx
 % Role: axiom
 % Line: 36
@@ -22,7 +22,7 @@ fof(n50_16837688, axiom, ( ! [A] : ( ! [B] : (n_43__40_16837688(succ_6_16837688(
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Definition10._.A
 % Role: definition
 % Line: 44
@@ -33,7 +33,7 @@ fof(n74_16837688, definition, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(cN_10_16837688
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Definition10._.A0
 % Role: prove
 % Line: 48

@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: ProjectionLikeFunction._.P
 % Role: definition
 % Line: 41
@@ -16,7 +16,7 @@ fof(n20_90809832, definition, ( ! [A] : (kp1_(cN_6_90809832,A) => ( ! [B] : (kp2
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: ProjectionLikeFunction._.bar
 % Role: prove
 % Line: 45

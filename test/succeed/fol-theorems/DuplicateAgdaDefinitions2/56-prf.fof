@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The common required definition(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DuplicateAgdaDefinitions2._≤_
 % Role: definition
 % Line: 42
@@ -16,13 +16,13 @@ fof(n52_49333747, definition, ( ! [A] : ( ! [B] : (n_8804__52_49333747(A,B) = n_
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DuplicateAgdaDefinitions2.Bool.tB
 % Role: axiom
 % Line: 31
 fof(n30_49333747, axiom, kp1_(cBool_28_49333747,true_6_49333747)).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DuplicateAgdaDefinitions2.Bool.fB
 % Role: axiom
 % Line: 32
@@ -33,7 +33,7 @@ fof(n32_49333747, axiom, kp1_(cBool_28_49333747,false_8_49333747)).
 %-----------------------------------------------------------------------------
 % The local hint(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DuplicateAgdaDefinitions2.Sx≰0
 % Role: hint
 % Line: 50
@@ -44,7 +44,7 @@ fof(n66_49333747, hypothesis, ( ! [A] : (kp1_(cN_20_49333747,A) => kp2_(cNLE_58_
 %-----------------------------------------------------------------------------
 % The required definition(s) by the local hint(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DuplicateAgdaDefinitions2.NLE
 % Role: definition
 % Line: 46
@@ -55,7 +55,7 @@ fof(n58_49333747, definition, ( ! [A] : ( ! [B] : (kp2_(cNLE_58_49333747,A,B) <=
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DuplicateAgdaDefinitions2._.prf
 % Role: prove
 % Line: 56

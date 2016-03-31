@@ -125,7 +125,7 @@ conjectureFooter = commentLine +++ "% End TPTP file.\n"
 
 agdaOriginalTerm ∷ QName → TPTPRole → Text
 agdaOriginalTerm qName role =
-  "% The original Agda term was:\n"
+  "% The Agda term was:\n"
   +++ "% Name: " +++ (T.pack . prettyShow . qnameToConcrete) qName +++ "\n"
   +++ "% Role: " +++ (T.pack . prettyShow) role +++ "\n"
   +++ "% Line: " +++ (T.pack . prettyShow . qNameLine) qName +++ "\n"

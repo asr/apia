@@ -5,19 +5,19 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Record.P.is
 % Role: axiom
 % Line: 18
 fof(n26_96484415, axiom, ( ! [A] : ( ! [B] : (kp1_(cP1_4_96484415,A) => (kp2_(cP2_6_96484415,A,B) => kp2_(cP_12_96484415,A,B))) ) )).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Record.p₁
 % Role: axiom
 % Line: 25
 fof(n30_96484415, axiom, ( ! [A] : kp1_(cP1_4_96484415,A) )).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Record.p₂
 % Role: axiom
 % Line: 26
@@ -28,7 +28,7 @@ fof(n36_96484415, axiom, ( ! [A] : ( ! [B] : kp2_(cP2_6_96484415,A,B) ) )).
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Record.thm₂
 % Role: prove
 % Line: 33

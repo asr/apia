@@ -5,13 +5,13 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DataConstructorsAxioms.N.zN
 % Role: axiom
 % Line: 18
 fof(n10_16080198, axiom, kp1_(cN_8_16080198,zero_4_16080198)).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DataConstructorsAxioms.N.sN
 % Role: axiom
 % Line: 19
@@ -22,7 +22,7 @@ fof(n14_16080198, axiom, ( ! [A] : (kp1_(cN_8_16080198,A) => kp1_(cN_8_16080198,
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DataConstructorsAxioms.0-N
 % Role: prove
 % Line: 22

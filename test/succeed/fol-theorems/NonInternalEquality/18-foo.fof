@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: NonInternalEquality._≡_.refl
 % Role: axiom
 % Line: 15
@@ -16,7 +16,7 @@ fof(n10_50240794, axiom, ( ! [A] : kp2_(n_8801__6_50240794,A,A) )).
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: NonInternalEquality.foo
 % Role: prove
 % Line: 18

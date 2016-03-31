@@ -5,13 +5,13 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Where2.+-0x
 % Role: axiom
 % Line: 34
 fof(n44_21954566, axiom, ( ! [A] : (n_43__40_21954566(zero_4_21954566,A) = A) )).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Where2.+-Sx
 % Role: axiom
 % Line: 35
@@ -22,7 +22,7 @@ fof(n50_21954566, axiom, ( ! [A] : ( ! [B] : (n_43__40_21954566(succ_6_21954566(
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Where2._.is
 % Role: prove
 % Line: 47

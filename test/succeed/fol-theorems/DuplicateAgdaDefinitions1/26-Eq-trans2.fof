@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The common required definition(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DuplicateAgdaDefinitions1.Eq
 % Role: definition
 % Line: 20
@@ -16,7 +16,7 @@ fof(n6_273427573, definition, ( ! [A] : ( ! [B] : (kp2_(cEq_6_273427573,A,B) <=>
 %-----------------------------------------------------------------------------
 % The local hint(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DuplicateAgdaDefinitions1.Eq-trans
 % Role: hint
 % Line: 24
@@ -27,7 +27,7 @@ fof(n18_273427573, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : (kp2_(cEq_6_2734275
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: DuplicateAgdaDefinitions1.Eq-trans₂
 % Role: prove
 % Line: 26

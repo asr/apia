@@ -5,13 +5,13 @@
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Definition8._.c
 % Role: definition
 % Line: 24
 fof(n22_197420885, definition, ( ! [A] : ( ! [B] : (kp1_(cP_6_197420885,B) => (c_22_197420885(A,B) = A)) ) )).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Definition8._.d
 % Role: definition
 % Line: 28
@@ -22,7 +22,7 @@ fof(n24_197420885, definition, ( ! [A] : ( ! [B] : (kp1_(cP_6_197420885,B) => (d
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Definition8._.bar
 % Role: prove
 % Line: 32

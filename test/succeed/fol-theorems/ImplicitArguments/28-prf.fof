@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: ImplicitArguments.a≡b
 % Role: axiom
 % Line: 22
@@ -16,7 +16,7 @@ fof(n16_60938615, axiom, (a_4_60938615 = b_6_60938615)).
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: ImplicitArguments._.prf
 % Role: prove
 % Line: 28

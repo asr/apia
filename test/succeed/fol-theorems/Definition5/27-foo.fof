@@ -5,13 +5,13 @@
 %-----------------------------------------------------------------------------
 % The required definition(s) by the conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Definition5.b
 % Role: definition
 % Line: 18
 fof(n10_187407804, definition, (b_10_187407804 = a_8_187407804)).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Definition5.c
 % Role: definition
 % Line: 22
@@ -22,7 +22,7 @@ fof(n12_187407804, definition, (c_12_187407804 = op_6_187407804(b_10_187407804))
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Definition5.foo
 % Role: prove
 % Line: 27

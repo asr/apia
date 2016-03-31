@@ -5,7 +5,7 @@
 %-----------------------------------------------------------------------------
 % The general axiom(s).
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Issue3b.A.p
 % Role: axiom
 % Line: 14
@@ -16,7 +16,7 @@ fof(n12_185084262, axiom, (a_8_185084262 = b_10_185084262)).
 %-----------------------------------------------------------------------------
 % The conjecture.
 
-% The original Agda term was:
+% The Agda term was:
 % Name: Issue3b.foo
 % Role: prove
 % Line: 22

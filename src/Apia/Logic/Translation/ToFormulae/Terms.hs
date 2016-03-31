@@ -113,7 +113,7 @@ import Apia.Options
   )
 
 import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
-import Apia.Utils.AgdaAPI.Interface     ( qNameToString, qNameToUniqueString )
+import Apia.Utils.AgdaAPI.Interface     ( qNameToUniqueString )
 
 import qualified Apia.Utils.Except as E
 

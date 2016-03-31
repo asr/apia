@@ -65,7 +65,7 @@ Created /tmp/TrivialTheorem/20-foo.fof
 dist/build/apia/apia --version
 <<<
 >>>
-Apia version 0.9.1
+Apia version 1.0.0
 >>>2
 >>>= 0
 

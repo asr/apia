@@ -114,7 +114,7 @@ import Apia.Options
             )
   )
 
-import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
+-- import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
 import Apia.Utils.AgdaAPI.Interface     ( qNameToUniqueString )
 
 import qualified Apia.Utils.Except as E
@@ -188,309 +188,307 @@ propositionalFunctionScheme vars n elims = do
 
 -- | Translate an Agda internal 'Term' to a target logic formula.
 agdaTermToFormula ∷ Term → T LFormula
-agdaTermToFormula term = case ignoreSharing term of
+agdaTermToFormula term'@(Def qName@(QName _ name) elims) = do
+  reportSLn "t2f" 10 $ "agdaTermToFormula Def:\n" ++ show term'
 
-  term'@(Def qName@(QName _ name) elims) → do
-    reportSLn "t2f" 10 $ "agdaTermToFormula Def:\n" ++ show term'
+  let cName ∷ C.Name
+      cName = nameConcrete name
 
-    let cName ∷ C.Name
-        cName = nameConcrete name
+  case cName of
+    C.NoName{} → __IMPOSSIBLE__
 
-    case cName of
-      C.NoName{} → __IMPOSSIBLE__
+    C.Name _ [] → __IMPOSSIBLE__
 
-      C.Name _ [] → __IMPOSSIBLE__
+    C.Name{} →
+     case allApplyElims elims of
+       Nothing → __IMPOSSIBLE__
 
-      C.Name{} →
-       case allApplyElims elims of
-         Nothing → __IMPOSSIBLE__
+       Just [] | isCNameLogicConst lTrue  → return TRUE
 
-         Just [] | isCNameLogicConst lTrue  → return TRUE
+               | isCNameLogicConst lFalse → return FALSE
 
-                 | isCNameLogicConst lFalse → return FALSE
+               | otherwise →
+                 -- In this guard we translate 0-ary predicates, i.e.
+                 -- propositional functions, for example, A : Set.
+                 flip Predicate [] <$> qNameToUniqueString qName
 
-                 | otherwise →
-                   -- In this guard we translate 0-ary predicates, i.e.
-                   -- propositional functions, for example, A : Set.
-                   flip Predicate [] <$> qNameToUniqueString qName
+       Just [a]
+         | isCNameHoleRight lNot → fmap Not (agdaArgTermToFormula a)
 
-         Just [a]
-           | isCNameHoleRight lNot → fmap Not (agdaArgTermToFormula a)
+         | isCNameLogicConst lExists ||
+           isCNameLogicConst lForAll → do
+             fm ← agdaArgTermToFormula a
 
-           | isCNameLogicConst lExists ||
-             isCNameLogicConst lForAll → do
-               fm ← agdaArgTermToFormula a
+             freshVar ← newTVar
 
-               freshVar ← newTVar
+             return $ if isCNameLogicConst lExists
+                      then Exists freshVar $ const fm
+                      else ForAll freshVar $ const fm
 
-               return $ if isCNameLogicConst lExists
-                        then Exists freshVar $ const fm
-                        else ForAll freshVar $ const fm
+         | otherwise → predicate qName elims
 
-           | otherwise → predicate qName elims
+       Just [a1, a2]
+         | isCNameTwoHoles lAnd → binConst And a1 a2
 
-         Just [a1, a2]
-           | isCNameTwoHoles lAnd → binConst And a1 a2
+         | isCNameTwoHoles lOr → binConst Or a1 a2
 
-           | isCNameTwoHoles lOr → binConst Or a1 a2
+         | isCNameTwoHoles lCond → binConst Implies a1 a2
 
-           | isCNameTwoHoles lCond → binConst Implies a1 a2
+         | isCNameTwoHoles lBicond1
+           || isCNameTwoHoles lBicond2 → binConst Equiv a1 a2
 
-           | isCNameTwoHoles lBicond1
-             || isCNameTwoHoles lBicond2 → binConst Equiv a1 a2
+         | isCNameTwoHoles lEquals → do
+             reportSLn "t2f" 20 "Processing equals"
+             ifM (askTOpt optNoInternalEquality)
+                 -- Not using the ATPs internal equality.
+                 (predicate qName elims)
+                 -- Using the ATPs internal equality.
+                 (liftM2 Eq (agdaArgTermToTerm a1) (agdaArgTermToTerm a2))
 
-           | isCNameTwoHoles lEquals → do
-               reportSLn "t2f" 20 "Processing equals"
-               ifM (askTOpt optNoInternalEquality)
-                   -- Not using the ATPs internal equality.
-                   (predicate qName elims)
-                   -- Using the ATPs internal equality.
-                   (liftM2 Eq (agdaArgTermToTerm a1) (agdaArgTermToTerm a2))
+         | otherwise → predicate qName elims
 
-           | otherwise → predicate qName elims
+       _ → predicate qName elims
 
-         _ → predicate qName elims
+       where
+       isCNameLogicConst ∷ String → Bool
+       isCNameLogicConst lConst =
+         -- The equality on the data type @C.Name@ is defined to
+         -- ignore ranges, so we use @noRange@.
+         cName == C.Name noRange [C.Id lConst]
 
-         where
-         isCNameLogicConst ∷ String → Bool
-         isCNameLogicConst lConst =
-           -- The equality on the data type @C.Name@ is defined to
-           -- ignore ranges, so we use @noRange@.
-           cName == C.Name noRange [C.Id lConst]
+       isCNameHoleRight ∷ String → Bool
+       isCNameHoleRight lConst =
+         -- The operators are represented by a list with @Hole@'s.
+         -- See the documentation for @C.Name@.
+         cName == C.Name noRange [C.Id lConst, C.Hole]
 
-         isCNameHoleRight ∷ String → Bool
-         isCNameHoleRight lConst =
-           -- The operators are represented by a list with @Hole@'s.
-           -- See the documentation for @C.Name@.
-           cName == C.Name noRange [C.Id lConst, C.Hole]
+       isCNameTwoHoles ∷ String → Bool
+       isCNameTwoHoles lConst =
+         -- The operators are represented by a list with @Hole@'s.  See
+         -- the documentation for @C.Name@.
+         cName == C.Name noRange [C.Hole, C.Id lConst, C.Hole]
 
-         isCNameTwoHoles ∷ String → Bool
-         isCNameTwoHoles lConst =
-           -- The operators are represented by a list with @Hole@'s.  See
-           -- the documentation for @C.Name@.
-           cName == C.Name noRange [C.Hole, C.Id lConst, C.Hole]
+agdaTermToFormula term'@(Lam _ (Abs _ termLam)) = do
+  reportSLn "t2f" 10 $ "agdaTermToFormula Lam:\n" ++ show term'
 
-  term'@(Lam _ (Abs _ termLam)) → do
-    reportSLn "t2f" 10 $ "agdaTermToFormula Lam:\n" ++ show term'
+  _ ← pushTNewVar
+  f ← agdaTermToFormula termLam
+  popTVar
 
-    _ ← pushTNewVar
-    f ← agdaTermToFormula termLam
-    popTVar
+  return f
 
-    return f
+agdaTermToFormula (Pi domTy (Abs x absTy)) = do
+  reportSLn "t2f" 10 $
+    "agdaTermToFormula Pi _ (Abs _ _):\n"
+    ++ "domTy: " ++ show domTy ++ "\n"
+    ++ "absTy: " ++ show (Abs x absTy)
 
-  Pi domTy (Abs x absTy) → do
-    reportSLn "t2f" 10 $
-      "agdaTermToFormula Pi _ (Abs _ _):\n"
-      ++ "domTy: " ++ show domTy ++ "\n"
-      ++ "absTy: " ++ show (Abs x absTy)
+  freshVar ← pushTNewVar
 
-    freshVar ← pushTNewVar
+  reportSLn "t2f" 20 $
+    "Starting processing in local environment with fresh variable "
+    ++ show freshVar ++ " and type:\n" ++ show absTy
 
-    reportSLn "t2f" 20 $
-      "Starting processing in local environment with fresh variable "
-      ++ show freshVar ++ " and type:\n" ++ show absTy
+  f ← agdaTypeToFormula absTy
+  popTVar
 
-    f ← agdaTypeToFormula absTy
-    popTVar
+  reportSLn "t2f" 20 $
+    "Finalized processing in local environment with fresh variable "
+    ++ show freshVar ++ " and type:\n" ++ show absTy
 
-    reportSLn "t2f" 20 $
-      "Finalized processing in local environment with fresh variable "
-      ++ show freshVar ++ " and type:\n" ++ show absTy
+  reportDLn "t2f" 20 $ pretty "The formula f is: " <> pretty f
 
-    reportDLn "t2f" 20 $ pretty "The formula f is: " <> pretty f
+  case unDom domTy of
+    -- The bounded variable is quantified on a @Set@,
+    --
+    -- e.g. the bounded variable is @d : D@ where @D : Set@,
+    --
+    -- so we can create a fresh variable and quantify on it without
+    -- any problem.
+    --
+    -- N.B. the pattern matching on @(Def _ [])@.
+    El (Type (Max [])) (Def _ []) → do
+      reportSLn "t2f" 20 $
+        "Adding universal quantification on variable " ++ show freshVar
+      return $ ForAll freshVar $ const f
 
-    case unDom domTy of
-      -- The bounded variable is quantified on a @Set@,
+    -- The bounded variable is quantified on a proof. Due to we have
+    -- drop the quantification on proofs terms, this case is
+    -- impossible.
+    El (Type (Max [])) (Def _ _) → __IMPOSSIBLE__
+
+    -- Non-FOL translation: First-order logic universal quantified
+    -- functions term.
+    --
+    -- The bounded variable is quantified on a function of a @Set@
+    -- to a @Set@,
+    --
+    -- e.g. the bounded variable is @f : D → D@, where @D : Set@.
+    --
+    -- In this case we handle the bounded variable/function as a FOL
+    -- variable in @agdaTermToTerm (Var n args)@, which is processed
+    -- first due to lazyness. We quantified on this variable.
+    El (Type (Max []))
+       (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
+           (NoAbs _ (El (Type (Max [])) (Def _ [])))) → do
+      reportSLn "t2f" 20
+        "Removing a quantification on a function of a Set to a Set"
+      return $ ForAll freshVar $ const f
+
+    -- N.B. The next case is just a generalization to various
+    -- arguments of the previous case.
+
+    -- Non-FOL translation: First-order logic universal quantified
+    -- functions term.
+    --
+    -- The bounded variable is quantified on a function of a @Set@
+    -- to a @Set@,
+    --
+    -- e.g. the bounded variable is @f : D → D → D@, where
+    -- @D : Set@.
+    --
+    -- In this case we handle the bounded variable/function as a FOL
+    -- variable in @agdaTermToTerm (Var n args)@, which is processed
+    -- first due to lazyness. We quantified on this variable.
+    El (Type (Max []))
+       (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
+           (NoAbs _ (El (Type (Max [])) (Pi _ (NoAbs _ _))))) → do
+      reportSLn "t2f" 20
+        "Removing a quantification on a function of a Set to a Set"
+      -- 31 May 2012. We don't have an example of this case.
       --
-      -- e.g. the bounded variable is @d : D@ where @D : Set@,
-      --
-      -- so we can create a fresh variable and quantify on it without
-      -- any problem.
-      --
-      -- N.B. the pattern matching on @(Def _ [])@.
-      El (Type (Max [])) (Def _ []) → do
-        reportSLn "t2f" 20 $
-          "Adding universal quantification on variable " ++ show freshVar
-        return $ ForAll freshVar $ const f
+      -- return $ ForAll freshVar (\_ → f)
+      __IMPOSSIBLE__
 
-      -- The bounded variable is quantified on a proof. Due to we have
-      -- drop the quantification on proofs terms, this case is
-      -- impossible.
-      El (Type (Max [])) (Def _ _) → __IMPOSSIBLE__
+    El (Type (Max [])) someTerm → do
+      reportSLn "t2f" 20 $ "The term someterm is: " ++ show someTerm
+      __IMPOSSIBLE__
 
-      -- Non-FOL translation: First-order logic universal quantified
-      -- functions term.
-      --
-      -- The bounded variable is quantified on a function of a @Set@
-      -- to a @Set@,
-      --
-      -- e.g. the bounded variable is @f : D → D@, where @D : Set@.
-      --
-      -- In this case we handle the bounded variable/function as a FOL
-      -- variable in @agdaTermToTerm (Var n args)@, which is processed
-      -- first due to lazyness. We quantified on this variable.
-      El (Type (Max []))
-         (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
-             (NoAbs _ (El (Type (Max [])) (Def _ [])))) → do
-        reportSLn "t2f" 20
-          "Removing a quantification on a function of a Set to a Set"
-        return $ ForAll freshVar $ const f
+    -- Non-FOL translation: First-order logic universal quantified
+    -- propositional functions.
+    --
+    -- The bounded variable is quantified on a @Set₁@,
+    --
+    -- e.g. the bounded variable is @A : D → D → Set@.
+    --
+    -- In this case we return a forall bind on the fresh variable. We
+    -- use this case for translate logic schemata such as
+    --
+    --   ∨-comm₂ : {A₂ B₂ : D → D → Set}{x y : D} →
+    --             A₂ x y ∨ B₂ x y → A₂ x y ∨ B₂ x y.
 
-      -- N.B. The next case is just a generalization to various
-      -- arguments of the previous case.
+    El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → do
+      reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
+      return $ ForAll freshVar $ const f
 
-      -- Non-FOL translation: First-order logic universal quantified
-      -- functions term.
-      --
-      -- The bounded variable is quantified on a function of a @Set@
-      -- to a @Set@,
-      --
-      -- e.g. the bounded variable is @f : D → D → D@, where
-      -- @D : Set@.
-      --
-      -- In this case we handle the bounded variable/function as a FOL
-      -- variable in @agdaTermToTerm (Var n args)@, which is processed
-      -- first due to lazyness. We quantified on this variable.
-      El (Type (Max []))
-         (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
-             (NoAbs _ (El (Type (Max [])) (Pi _ (NoAbs _ _))))) → do
-        reportSLn "t2f" 20
-          "Removing a quantification on a function of a Set to a Set"
-        -- 31 May 2012. We don't have an example of this case.
-        --
-        -- return $ ForAll freshVar (\_ → f)
-        __IMPOSSIBLE__
+    -- Non-FOL translation: First-order logic universal quantified
+    -- propositional symbols.
+    --
+    -- The bounded variable is quantified on a @Set₁@,
+    --
+    -- e.g. the bounded variable is @A : Set@,
+    --
+    -- so we just return the consequent. We use this case for
+    -- translating logical schemata such
+    --
+    -- @∨-comm  : {A B : Set} → A ∨ B → B ∨ A@.
+    --
+    -- In this case we handle the bounded variable/function in
+    -- @agdaTermToFormula (Var n args)@, which is processed first due to
+    -- lazyness.
 
-      El (Type (Max [])) someTerm → do
-        reportSLn "t2f" 20 $ "The term someterm is: " ++ show someTerm
-        __IMPOSSIBLE__
+    El (Type (Max [ClosedLevel 1])) (Sort _) → do
+      reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
 
-      -- Non-FOL translation: First-order logic universal quantified
-      -- propositional functions.
-      --
-      -- The bounded variable is quantified on a @Set₁@,
-      --
-      -- e.g. the bounded variable is @A : D → D → Set@.
-      --
-      -- In this case we return a forall bind on the fresh variable. We
-      -- use this case for translate logic schemata such as
-      --
-      --   ∨-comm₂ : {A₂ B₂ : D → D → Set}{x y : D} →
-      --             A₂ x y ∨ B₂ x y → A₂ x y ∨ B₂ x y.
+      let p ∷ String
+          p = "--schematic-propositional-symbols"
 
-      El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → do
-        reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
-        return $ ForAll freshVar $ const f
+      ifM (askTOpt optSchematicPropositionalSymbols)
+          (return f)
+          (E.throwE $ universalQuantificationErrorMsg p)
 
-      -- Non-FOL translation: First-order logic universal quantified
-      -- propositional symbols.
-      --
-      -- The bounded variable is quantified on a @Set₁@,
-      --
-      -- e.g. the bounded variable is @A : Set@,
-      --
-      -- so we just return the consequent. We use this case for
-      -- translating logical schemata such
-      --
-      -- @∨-comm  : {A B : Set} → A ∨ B → B ∨ A@.
-      --
-      -- In this case we handle the bounded variable/function in
-      -- @agdaTermToFormula (Var n args)@, which is processed first due to
-      -- lazyness.
+    someType → do
+      reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
+      __IMPOSSIBLE__
 
-      El (Type (Max [ClosedLevel 1])) (Sort _) → do
-        reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
+agdaTermToFormula (Pi domTy (NoAbs x absTy)) = do
+  reportSLn "t2f" 10 $
+    "agdaTermToFormula Pi _ (NoAbs _ _):\n"
+    ++ "domTy: " ++ show domTy ++ "\n"
+    ++ "absTy: " ++ show (NoAbs x absTy)
+  f2 ← agdaTypeToFormula absTy
 
-        let p ∷ String
-            p = "--schematic-propositional-symbols"
+  if x /= "_"
+    then
+      case unDom domTy of
+        -- The variable @x@ is an universal quantified variable not
+        -- used, thefefore we generate a quantified first-order
+        -- logic formula.
+        El (Type (Max [])) (Def _ []) → do
+          freshVar ← newTVar
+          return $ ForAll freshVar $ const f2
 
-        ifM (askTOpt optSchematicPropositionalSymbols)
-            (return f)
-            (E.throwE $ universalQuantificationErrorMsg p)
+        -- The variable @x@ is a proof term, therefore we erase the
+        -- quantification on it.
+        El (Type (Max [])) (Def _ _) → do
+          f1 ← agdaDomTypeToFormula domTy
+          return $ Implies f1 f2
 
-      someType → do
-        reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
-        __IMPOSSIBLE__
+        -- The variable in @domTy@ has type @Set₁@
+        -- (e.g. A : D → Set) and it isn't used, so we omit it.
+        El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → return f2
 
-  Pi domTy (NoAbs x absTy) → do
-    reportSLn "t2f" 10 $
-      "agdaTermToFormula Pi _ (NoAbs _ _):\n"
-      ++ "domTy: " ++ show domTy ++ "\n"
-      ++ "absTy: " ++ show (NoAbs x absTy)
-    f2 ← agdaTypeToFormula absTy
+        someType → do
+          reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
+          __IMPOSSIBLE__
 
-    if x /= "_"
-      then
-        case unDom domTy of
-          -- The variable @x@ is an universal quantified variable not
-          -- used, thefefore we generate a quantified first-order
-          -- logic formula.
-          El (Type (Max [])) (Def _ []) → do
-            freshVar ← newTVar
-            return $ ForAll freshVar $ const f2
+    else do
+      f1 ← agdaDomTypeToFormula domTy
+      return $ Implies f1 f2
 
-          -- The variable @x@ is a proof term, therefore we erase the
-          -- quantification on it.
-          El (Type (Max [])) (Def _ _) → do
-            f1 ← agdaDomTypeToFormula domTy
-            return $ Implies f1 f2
+agdaTermToFormula term'@(I.Var n elims) = do
+  reportSLn "t2f" 10 $ "agdaTermToFormula Var: " ++ show term'
 
-          -- The variable in @domTy@ has type @Set₁@
-          -- (e.g. A : D → Set) and it isn't used, so we omit it.
-          El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → return f2
+  when (n < 0) (__IMPOSSIBLE__)
+  vars ← getTVars
+  when (length vars <= n) (__IMPOSSIBLE__)
 
-          someType → do
-            reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
-            __IMPOSSIBLE__
+  case elims of
+    -- N.B. In this case we *don't* use Koen's approach.
+    [] → return $ Predicate (vars !! n) []
 
-      else do
-        f1 ← agdaDomTypeToFormula domTy
-        return $ Implies f1 f2
+    -- Non-FOL translation: First-order logic universal quantified
+    -- propositional functions.
 
-  term'@(I.Var n elims) → do
-    reportSLn "t2f" 10 $ "agdaTermToFormula Var: " ++ show term'
+    -- If we have a bounded variable quantified on a function of a
+    -- @Set@ to a @Set₁@, for example, the variable/function @A@ in
+    --
+    -- @(A : D → Set) → (x : D) → A x → A x@
+    --
+    -- we are quantifying on this variable/function
+    --
+    -- (see @agdaTermToFormula (Pi domTy (Abs _ absTy))@),
+    --
+    -- therefore we need to apply this variable/function to the
+    -- others variables.
+    _ → do
+      let p ∷ String
+          p = "--schematic-propositional-functions"
 
-    when (n < 0) (__IMPOSSIBLE__)
-    vars ← getTVars
-    when (length vars <= n) (__IMPOSSIBLE__)
+      ifM (askTOpt optSchematicPropositionalFunctions)
+          (ifM (askTOpt optNoPredicateConstants)
+               (E.throwE $
+                 pretty "the " <> squotes "--schematic-propositional-functions"
+                 <> pretty " and "
+                 <> squotes "--no-predicate-constants"
+                 <> pretty " options are incompatible")
+               (propositionalFunctionScheme vars n elims)
+          )
+          (E.throwE $ universalQuantificationErrorMsg p)
 
-    case elims of
-      -- N.B. In this case we *don't* use Koen's approach.
-      [] → return $ Predicate (vars !! n) []
-
-      -- Non-FOL translation: First-order logic universal quantified
-      -- propositional functions.
-
-      -- If we have a bounded variable quantified on a function of a
-      -- @Set@ to a @Set₁@, for example, the variable/function @A@ in
-      --
-      -- @(A : D → Set) → (x : D) → A x → A x@
-      --
-      -- we are quantifying on this variable/function
-      --
-      -- (see @agdaTermToFormula (Pi domTy (Abs _ absTy))@),
-      --
-      -- therefore we need to apply this variable/function to the
-      -- others variables.
-      _ → do
-        let p ∷ String
-            p = "--schematic-propositional-functions"
-
-        ifM (askTOpt optSchematicPropositionalFunctions)
-            (ifM (askTOpt optNoPredicateConstants)
-                 (E.throwE $
-                   pretty "the " <> squotes "--schematic-propositional-functions"
-                   <> pretty " and "
-                   <> squotes "--no-predicate-constants"
-                   <> pretty " options are incompatible")
-                 (propositionalFunctionScheme vars n elims)
-            )
-            (E.throwE $ universalQuantificationErrorMsg p)
-
-  term' → do
-    reportSLn "t2f" 20 $ "term: " ++ show term'
-    __IMPOSSIBLE__
+agdaTermToFormula term' = do
+  reportSLn "t2f" 20 $ "term: " ++ show term'
+  __IMPOSSIBLE__
 
 -- Translate the function @foo x1 ... xn@.
 appArgsF ∷ String → Args → T LTerm
@@ -504,111 +502,109 @@ appArgsF fn args = do
 
 -- | Translate an Agda internal 'Term' to a target logic term.
 agdaTermToTerm ∷ Term → T LTerm
-agdaTermToTerm term = case ignoreSharing term of
+agdaTermToTerm term'@(Con (ConHead (QName _ name) _ _) args) = do
+  reportSLn "t2t" 10 $ "agdaTermToTerm Con:\n" ++ show term'
 
-  term'@(Con (ConHead (QName _ name) _ _) args) → do
-    reportSLn "t2t" 10 $ "agdaTermToTerm Con:\n" ++ show term'
+  let cName ∷ C.Name
+      cName = nameConcrete name
 
-    let cName ∷ C.Name
-        cName = nameConcrete name
+  case cName of
+    C.NoName{}  → __IMPOSSIBLE__
 
-    case cName of
-      C.NoName{}  → __IMPOSSIBLE__
+    C.Name _ [] → __IMPOSSIBLE__
 
-      C.Name _ [] → __IMPOSSIBLE__
+    -- The term @Con@ doesn't have holes. It should be translated as
+    -- a first-order logic function.
+    C.Name _ [C.Id str] →
+     case args of
+       [] → return $ Fun str []
+       _  → appArgsF str args
 
-      -- The term @Con@ doesn't have holes. It should be translated as
-      -- a first-order logic function.
-      C.Name _ [C.Id str] →
-       case args of
-         [] → return $ Fun str []
-         _  → appArgsF str args
+    -- The term @Con@ has holes. It is translated as a first-order
+    -- logic function.
+    C.Name _ _ → __IMPOSSIBLE__
+    -- 2012-04-22: We do not have an example of it.
+    -- C.Name _ parts →
+    --   case args of
+    --     [] → __IMPOSSIBLE__
+    --     _  → appArgsFn (concatName parts) args
 
-      -- The term @Con@ has holes. It is translated as a first-order
-      -- logic function.
-      C.Name _ _ → __IMPOSSIBLE__
-      -- 2012-04-22: We do not have an example of it.
-      -- C.Name _ parts →
-      --   case args of
-      --     [] → __IMPOSSIBLE__
-      --     _  → appArgsFn (concatName parts) args
+agdaTermToTerm term'@(Def qName@(QName _ name) elims) = do
+  reportSLn "t2t" 10 $ "agdaTermToTerm Def:\n" ++ show term'
 
-  term'@(Def qName@(QName _ name) elims) → do
-    reportSLn "t2t" 10 $ "agdaTermToTerm Def:\n" ++ show term'
+  let cName ∷ C.Name
+      cName = nameConcrete name
 
-    let cName ∷ C.Name
-        cName = nameConcrete name
+  case cName of
+    C.NoName{}  → __IMPOSSIBLE__
 
-    case cName of
-      C.NoName{}  → __IMPOSSIBLE__
+    C.Name _ [] → __IMPOSSIBLE__
 
-      C.Name _ [] → __IMPOSSIBLE__
+    -- The term @Def@ doesn't have holes. It is translated as a
+    -- first-order logic function.
+    C.Name _ [C.Id _] →
+     case allApplyElims elims of
+       Nothing    → __IMPOSSIBLE__
+       Just []    → flip Fun [] <$> qNameToUniqueString qName
+       Just args  → qNameToUniqueString qName >>= flip appArgsF args
 
-      -- The term @Def@ doesn't have holes. It is translated as a
-      -- first-order logic function.
-      C.Name _ [C.Id _] →
-       case allApplyElims elims of
-         Nothing    → __IMPOSSIBLE__
-         Just []    → flip Fun [] <$> qNameToUniqueString qName
-         Just args  → qNameToUniqueString qName >>= flip appArgsF args
+    -- The term @Def@ has holes. It is translated as a first-order
+    -- logic function.
+    C.Name _ _ →
+      case allApplyElims elims of
+        Nothing    → __IMPOSSIBLE__
+        Just []    → __IMPOSSIBLE__
+        Just args  → qNameToUniqueString qName >>= flip appArgsF args
 
-      -- The term @Def@ has holes. It is translated as a first-order
-      -- logic function.
-      C.Name _ _ →
-        case allApplyElims elims of
-          Nothing    → __IMPOSSIBLE__
-          Just []    → __IMPOSSIBLE__
-          Just args  → qNameToUniqueString qName >>= flip appArgsF args
+agdaTermToTerm term'@(Lam ArgInfo{argInfoHiding = NotHidden} (Abs _ termLam)) = do
+  reportSLn "t2f" 10 $ "agdaTermToTerm Lam:\n" ++ show term'
 
-  term'@(Lam ArgInfo{argInfoHiding = NotHidden} (Abs _ termLam)) → do
-    reportSLn "t2f" 10 $ "agdaTermToTerm Lam:\n" ++ show term'
+  _ ← pushTNewVar
+  f ← agdaTermToTerm termLam
+  popTVar
 
-    _ ← pushTNewVar
-    f ← agdaTermToTerm termLam
-    popTVar
+  return f
 
-    return f
+agdaTermToTerm term'@(I.Var n args) = do
+  reportSLn "t2t" 10 $ "agdaTermToTerm Var:\n" ++ show term'
 
-  term'@(I.Var n args) → do
-    reportSLn "t2t" 10 $ "agdaTermToTerm Var:\n" ++ show term'
+  when (n < 0) (__IMPOSSIBLE__)
+  vars ← getTVars
+  when (length vars <= n) (__IMPOSSIBLE__)
 
-    when (n < 0) (__IMPOSSIBLE__)
-    vars ← getTVars
-    when (length vars <= n) (__IMPOSSIBLE__)
+  case args of
+    [] → return $ L.Var (vars !! n)
 
-    case args of
-      [] → return $ L.Var (vars !! n)
+    -- Non-FOL translation: First-order logic universal quantified
+    -- functions term.
 
-      -- Non-FOL translation: First-order logic universal quantified
-      -- functions term.
+    -- If we have a bounded variable quantified on a function of a
+    -- Set to a Set, for example, the variable/function @f@ in
+    --
+    -- @(f : D → D) → (a : D) → (lam f) ∙ a ≡ f a@
+    --
+    -- we are quantifying on this variable/function
+    --
+    -- (see @agdaTermToFormula (Pi domTy (Abs _ absTy))@),
+    --
+    -- therefore we need to apply this variable/function to the
+    -- others variables. See an example in
+    -- Test.Succeed.AgdaInternalTerms.Var2.agda
+    _varArgs → do
+      let p ∷ String
+          p = "--schematic-functions"
 
-      -- If we have a bounded variable quantified on a function of a
-      -- Set to a Set, for example, the variable/function @f@ in
-      --
-      -- @(f : D → D) → (a : D) → (lam f) ∙ a ≡ f a@
-      --
-      -- we are quantifying on this variable/function
-      --
-      -- (see @agdaTermToFormula (Pi domTy (Abs _ absTy))@),
-      --
-      -- therefore we need to apply this variable/function to the
-      -- others variables. See an example in
-      -- Test.Succeed.AgdaInternalTerms.Var2.agda
-      _varArgs → do
-        let p ∷ String
-            p = "--schematic-functions"
+      ifM (askTOpt optSchematicFunctions)
+          -- TODO (24 March 2013). Implementation.
+          (E.throwE $ pretty "the option " <> squotes "--schematic-functions"
+                      <> pretty " is not implemented")
+          -- (do lTerms ← mapM agdaArgTermToTerm varArgs
+          --     ifM (askTOpt optAppF)
+          --         (return $ foldl' app (Var (vars !! n)) lTerms)
+          --         (return $ Fun (vars !! n) lTerms))
+          (E.throwE $ universalQuantificationErrorMsg p)
 
-        ifM (askTOpt optSchematicFunctions)
-            -- TODO (24 March 2013). Implementation.
-            (E.throwE $ pretty "the option " <> squotes "--schematic-functions"
-                        <> pretty " is not implemented")
-            -- (do lTerms ← mapM agdaArgTermToTerm varArgs
-            --     ifM (askTOpt optAppF)
-            --         (return $ foldl' app (Var (vars !! n)) lTerms)
-            --         (return $ Fun (vars !! n) lTerms))
-            (E.throwE $ universalQuantificationErrorMsg p)
-
-  _ → __IMPOSSIBLE__
+agdaTermToTerm _ = __IMPOSSIBLE__
 
 ------------------------------------------------------------------------------
 -- Note [Non-dependent functions]

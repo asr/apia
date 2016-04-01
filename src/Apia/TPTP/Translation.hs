@@ -52,8 +52,7 @@ import Apia.TPTP.Types
   )
 
 import Apia.Utils.AgdaAPI.EtaExpansion     ( EtaExpandible(etaExpand) )
-import Apia.Utils.AgdaAPI.RemoveProofTerms ( removeProofTerm )
-import Apia.Utils.AgdaAPI.Vars             ( BoundedVarsType(boundedVarsType) )
+-- import Apia.Utils.AgdaAPI.IgnoreSharing    ( IgnoreSharing(ignoreSharing) )
 
 import Apia.Utils.AgdaAPI.Interface
   ( getATPAxioms
@@ -66,6 +65,9 @@ import Apia.Utils.AgdaAPI.Interface
   , QNamesIn(qNamesIn)
   , qNameConcreteNameRange
   )
+
+import Apia.Utils.AgdaAPI.RemoveProofTerms ( removeProofTerm )
+import Apia.Utils.AgdaAPI.Vars             ( BoundedVarsType(boundedVarsType) )
 
 import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
 import Apia.Utils.Show        ( showListLn, showLn )
@@ -87,6 +89,8 @@ toAFor role qName def = do
      ++ "Role: " ++ showLn role ++ "\n"
      ++ "Position: " ++ (showLn . qNameConcreteNameRange) qName
 
+  -- Note (2016-04-01): The Agda current default is not sharing.
+  --
   -- We ignore sharing before the translation.
   -- let tyIgnoredSharing ∷ Type
   --     tyIgnoredSharing = ignoreSharing ty
@@ -97,7 +101,7 @@ toAFor role qName def = do
 
   -- reportSLn "toAFor" 10 $
   --   "The type ignoring sharing is:\n"
-  --   ++ "The type (pretty-printer):\n" ++ prettyShow tyIgnoredSharing ++ "\n"
+  --   ++ "The type (pretty-printer):\n" ++ AP.prettyShow tyIgnoredSharing ++ "\n"
   --   ++ "The type (show):\n" ++ showLn tyIgnoredSharing
 
   -- We η-expand the type before the translation.

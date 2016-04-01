@@ -37,9 +37,7 @@ import Agda.Utils.Pretty ( prettyShow )
 import Apia.Monad.Base ( T )
 
 import Apia.Utils.AgdaAPI.Interface
-  ( qNameConcreteNameRange
-  , qNameLine
-  , qNameNameBindingSiteRange
+  ( qNameLine
   , readInterface
   )
 
@@ -62,11 +60,7 @@ dumpQNameInformation (qName, def) = do
       ty = defType def
 
   putStrLn $ T.pack $ "Qname: " ++ (prettyShow . qnameToConcrete) qName
-  putStrLn $ T.pack $ "Type: "  ++ show ty
-  putStrLn $ T.pack $ "Concrete name range: "
-                      ++ (show . qNameConcreteNameRange) qName
-  putStrLn $ T.pack $ "nameBindingSite range: "
-                      ++ (show . qNameNameBindingSiteRange) qName ++ "\n"
+  putStrLn $ T.pack $ "Type: "  ++ show ty ++ "\n"
 
 -- | Print Agda types information to stdout.
 dumpTypes ∷ FilePath → T ()

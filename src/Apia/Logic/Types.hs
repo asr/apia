@@ -84,11 +84,11 @@ instance Pretty LFormula where
   pretty (Predicate pName ts) =
     sspaces "Predicate" <> pretty pName <> space <> pretty ts
 
-  pretty (Not f)             = sspaces "Not" <> pretty f
-  pretty (And f1 f2)         = sspaces "And" <> pretty f1 <> pretty f2
-  pretty (Or f1 f2)          = sspaces "Or" <> pretty f1 <> pretty f2
-  pretty (Implies f1 f2)     = sspaces "Implies" <> pretty f1 <> pretty f2
-  pretty (Equiv f1 f2)       = sspaces "Equiv" <> pretty f1 <> pretty f2
-  pretty (ForAll var f)      = sspaces "ForAll" <> pretty var <> pretty (f $ Var var)
-  pretty (Exists var f)      = sspaces "Exists " <> pretty var <> pretty (f $ Var var)
-  pretty (Eq t1 t2)          = sspaces "Eq" <> pretty t1 <> pretty t2
+  pretty (Not f)         = sspaces "Not" <> pretty f
+  pretty (And f1 f2)     = sspaces "And" <> pretty f1 <> pretty f2
+  pretty (Or f1 f2)      = sspaces "Or" <> pretty f1 <> pretty f2
+  pretty (Implies f1 f2) = sspaces "Implies" <> pretty f1 <> pretty f2
+  pretty (Equiv f1 f2)   = sspaces "Equiv" <> pretty f1 <> pretty f2
+  pretty (ForAll var f)  = sspaces "ForAll" <> pretty var <> pretty (f $ Var var)
+  pretty (Exists var f)  = sspaces "Exists " <> pretty var <> pretty (f $ Var var)
+  pretty (Eq t1 t2)      = sspaces "Eq" <> pretty t1 <> pretty t2

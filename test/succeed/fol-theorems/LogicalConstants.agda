@@ -24,9 +24,9 @@ infixr 1 _↔_ _⇔_
 -- i.e. the following symbols must be used (it is possible to use Agda
 -- non-dependent function space → instead of ⇒).
 postulate
-  ⊥ ⊤ : Set -- N.B. the name of the tautology symbol is "\top" not T.
-  ¬_  : Set → Set -- N.B. the right hole.
-  _∧_ _∨_ : Set → Set → Set
+  ⊥ ⊤         : Set -- N.B. the name of the tautology symbol is "\top" not T.
+  ¬_          : Set → Set -- N.B. the right hole.
+  _∧_ _∨_     : Set → Set → Set
   _⇒_ _↔_ _⇔_ : Set → Set → Set
 
 -- We postulate some formulae (which are translated as 0-ary

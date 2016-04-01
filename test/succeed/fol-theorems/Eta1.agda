@@ -10,9 +10,9 @@
 module Eta1 where
 
 postulate
-  D   : Set
-  A   : D → Set
-  ∃   : (A : D → Set) → Set
+  D : Set
+  A : D → Set
+  ∃ : (A : D → Set) → Set
 
 -- Due to η-contraction the Agda internal representation of foo and
 -- bar are the same. We η-expand the internal types before the

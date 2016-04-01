@@ -13,10 +13,10 @@ infixl 6 _+_
 infix  4 _≡_
 
 postulate
-  D      : Set
-  zero   : D
-  succ   : D → D
-  _≡_    : D → D → Set
+  D    : Set
+  zero : D
+  succ : D → D
+  _≡_  : D → D → Set
 
 data N : D → Set where
   nzero : N zero

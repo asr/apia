@@ -9,7 +9,7 @@
 
 module Eta4 where
 
-infix 7 _≡_
+infix  7 _≡_
 infixl 10 _*_
 
 postulate

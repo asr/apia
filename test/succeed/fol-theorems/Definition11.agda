@@ -9,21 +9,13 @@
 
 module Definition11 where
 
-postulate
-  D   : Set
-  N   : D → Set
-  _≡_ : D → D → Set
-
-data ∃ (A : D → Set) : Set where
-  _,_ : (witness : D) → A witness → ∃ A
+open import Common.FOL
 
 -- We test the translation of a definition which Agda η-reduces.
-foo : ∀ {n} → N n → D
-foo {n} Nn = n
-  where
-  P : D → Set
-  P d = ∃ λ e → d ≡ e
-  {-# ATP definition P #-}
 
-  postulate bar : ∀ {d} → P d → ∃ λ e → e ≡ d
-  {-# ATP prove bar #-}
+P : D → Set
+P d = ∃ λ e → d ≡ e
+{-# ATP definition P #-}
+
+postulate bar : ∀ {d} → P d → ∃ λ e → e ≡ d
+{-# ATP prove bar #-}

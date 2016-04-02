@@ -9,15 +9,15 @@
 
 module Definition7 where
 
+open import Common.FOL
+
 postulate
-  D   : Set
-  _≡_ : D → D → Set
-  P   : D → Set
+  P : D → Set
 
 -- We test the translation of a definition where we need to erase
 -- proof terms.
-foo : ∀ {a b} → P a → P b → D
-foo {a} {b} Pa Pb = a
+foo : ∀ {a b} → P a → P b → a ≡ a
+foo {a} {b} Pa Pb = bar
   where
   c : D
   c = a

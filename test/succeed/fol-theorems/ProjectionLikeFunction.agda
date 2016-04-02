@@ -30,13 +30,13 @@
 
 module ProjectionLikeFunction where
 
-postulate
-  D    : Set
-  _≡_  : D → D → Set
-  N    : D → Set
+open import Common.FOL
 
-foo : ∀ {n} → N n → D
-foo {n} Nn = n
+postulate
+  N : D → Set
+
+foo : ∀ {n} → N n → n ≡ n
+foo {n} Nn = bar
   where
   P : D → Set
   P i = i ≡ i

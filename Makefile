@@ -372,7 +372,7 @@ errors : $(errors_files)
 # Tested with cabal-install version 1.20.0.3 using version 1.20.0.2 of
 # the Cabal library.
 
-doc :
+haddock :
 	cabal configure
 	cabal haddock --executables \
 	              --haddock-option=--use-unicode \
@@ -444,7 +444,7 @@ hlint :
 
 git_pre_commit :
 	fix-whitespace --check
-	make doc
+	make haddock
 	make hlint
 	@echo "$@ succeeded!"
 

@@ -444,7 +444,6 @@ hlint :
 
 git_pre_commit :
 	fix-whitespace --check
-	make haddock
 	make hlint
 	@echo "$@ succeeded!"
 

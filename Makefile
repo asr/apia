@@ -29,11 +29,7 @@ APIA = dist/build/apia/apia --check
 # Supported ATPs.
 # Missing ileancop
 
-# TODO (04 October 2015): Missing Z3 because it cannot prove some
-# theorems after we are using unique names for the translation.
-
-ATPs = cvc4 e equinox metis spass vampire
-# ATPs = cvc4 e equinox metis spass vampire z3
+ATPs = cvc4 e equinox metis spass vampire z3
 
 ##############################################################################
 # Auxiliary functions
@@ -261,6 +257,9 @@ PROVE_FOL_THEOREMS_FLAGS = \
   --output-dir=$(output_dir) \
   --time=10 \
 
+# We don't prove ${fol_theorems_path}/Definition10.agda with Z3 due to
+# issue #25.
+
 %.prove_fol_theorems :
 	$(AGDA) -i$(fol_theorems_path) $*.agda
 	@for atp in ${ATPs} ; do \
@@ -270,6 +269,13 @@ PROVE_FOL_THEOREMS_FLAGS = \
                       --atp=$$atp \
                       --no-internal-equality \
                       $*.agda ; \
+            ;; \
+            "${fol_theorems_path}/Definition10.agda") \
+              if [[ $$atp != z3 ]]; then \
+                 $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
+                         --atp=$$atp \
+                         $*.agda ; \
+              fi \
             ;; \
             *) $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
                        --atp=$$atp \

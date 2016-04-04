@@ -263,6 +263,7 @@ PROVE_FOL_THEOREMS_FLAGS = \
 %.prove_fol_theorems :
 	$(AGDA) -i$(fol_theorems_path) $*.agda
 	@for atp in ${ATPs} ; do \
+	  set -e ; \
 	  case $*.agda in \
             "${fol_theorems_path}/NonInternalEquality.agda") \
               $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
@@ -298,6 +299,7 @@ PROVE_NON_FOL_THEOREMS_FLAGS = \
 %.prove_non_fol_theorems :
 	$(AGDA) -i$(non_fol_theorems_path) $*.agda
 	@for atp in ${ATPs} ; do \
+	  set -e ; \
 	  case $*.agda in \
             "${non_fol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
             "${non_fol_theorems_path}/Eta-Issue8.agda" | \
@@ -408,6 +410,7 @@ prove_notes_path = -i$(notes_path) \
 	echo $(prove_notes_files)
 	$(AGDA) $(prove_notes_path) $*.agda
 	@for atp in ${ATPs} ; do \
+	  set -e ; \
           $(APIA) $(prove_notes_path) \
                   --atp=$$atp \
 	          --output-dir=$(output_dir) \

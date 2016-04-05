@@ -49,7 +49,7 @@ postulate
   ∨I₂ : B → A ∨ B
   ∨E  : (A ⇒ C) → (B ⇒ C) → A ∨ B → C
   ⊥E  : ⊥ → A
-  ¬E : (¬ A → ⊥ ) → A
+  ¬E : (¬ A → ⊥) → A
 {-# ATP prove →I #-}
 {-# ATP prove →E #-}
 {-# ATP prove ∧I #-}
@@ -98,8 +98,8 @@ postulate
   A¹ B¹ : D → Set
   A²    : D → D → Set
 
--- The introduction and elimination rules for the quantifiers are theorems.
-
+-- The introduction and elimination rules for the quantifiers are
+-- theorems.
 postulate
   ∀I₁ : ((x : D) → A¹ x) → ⋀ A¹
   ∀I₂ : ((x : D) → A¹ x) → ∀ x → A¹ x

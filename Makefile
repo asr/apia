@@ -265,18 +265,18 @@ PROVE_FOL_THEOREMS_FLAGS = \
 	@for atp in ${ATPs} ; do \
 	  set -e ; \
 	  case $*.agda in \
-            "${fol_theorems_path}/NonInternalEquality.agda") \
-              $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
-                      --atp=$$atp \
-                      --no-internal-equality \
-                      $*.agda ; \
-            ;; \
             "${fol_theorems_path}/Definition10.agda") \
               if [[ $$atp != z3 ]]; then \
                  $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
                          --atp=$$atp \
                          $*.agda ; \
               fi \
+            ;; \
+            "${fol_theorems_path}/NonInternalEquality.agda") \
+              $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
+                      --atp=$$atp \
+                      --no-internal-equality \
+                      $*.agda ; \
             ;; \
             *) $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
                        --atp=$$atp \

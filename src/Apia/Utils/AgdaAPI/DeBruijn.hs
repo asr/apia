@@ -43,7 +43,7 @@ import Agda.Syntax.Internal as I
   , Level(Max)
   , Sort(Type)
   , Tele(EmptyTel, ExtendTel)
-  , Term(Def, Lam, Var)
+  , Term(Con, Def, DontCare, Lam, Level, Lit, MetaV, Pi, Shared, Sort, Var)
   , Type
   , Type'(El)
   , var
@@ -62,10 +62,21 @@ class IncIndex a where
   incIndex ∷ a → a
 
 instance IncIndex Term where
+  incIndex (Con _ _)    = __IMPOSSIBLE__
+  incIndex (Def _ _)    = __IMPOSSIBLE__
+  incIndex (DontCare _) = __IMPOSSIBLE__
+  incIndex (Lam _ _ )   = __IMPOSSIBLE__
+  incIndex (Level _)    = __IMPOSSIBLE__
+  incIndex (Lit _)      = __IMPOSSIBLE__
+  incIndex (MetaV _ _)  = __IMPOSSIBLE__
+  incIndex (Pi _ _)     = __IMPOSSIBLE__
+  incIndex (Shared _)   = __IMPOSSIBLE__
+  incIndex (Sort _)     = __IMPOSSIBLE__
+
   incIndex (Var n []) | n >= 0    = var (n + 1)
                       | otherwise = __IMPOSSIBLE__
+
   incIndex (Var _ _) = __IMPOSSIBLE__
-  incIndex _         = __IMPOSSIBLE__
 
 instance IncIndex Elim where
   incIndex (Apply (Arg color term)) = Apply (Arg color $ incIndex term)

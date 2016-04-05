@@ -62,8 +62,12 @@ class IncIndex a where
   incIndex ∷ a → a
 
 instance IncIndex Term where
+  incIndex term@(Def _ _) = term
+
+  incIndex (Var n []) | n >= 0    = var (n + 1)
+                      | otherwise = __IMPOSSIBLE__
+
   incIndex (Con _ _)    = __IMPOSSIBLE__
-  incIndex (Def _ _)    = __IMPOSSIBLE__
   incIndex (DontCare _) = __IMPOSSIBLE__
   incIndex (Lam _ _ )   = __IMPOSSIBLE__
   incIndex (Level _)    = __IMPOSSIBLE__
@@ -72,11 +76,7 @@ instance IncIndex Term where
   incIndex (Pi _ _)     = __IMPOSSIBLE__
   incIndex (Shared _)   = __IMPOSSIBLE__
   incIndex (Sort _)     = __IMPOSSIBLE__
-
-  incIndex (Var n []) | n >= 0    = var (n + 1)
-                      | otherwise = __IMPOSSIBLE__
-
-  incIndex (Var _ _) = __IMPOSSIBLE__
+  incIndex (Var _ _)    = __IMPOSSIBLE__
 
 instance IncIndex Elim where
   incIndex (Apply (Arg color term)) = Apply (Arg color $ incIndex term)

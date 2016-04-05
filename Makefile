@@ -27,9 +27,7 @@ AGDA = agda -v 0
 APIA = dist/build/apia/apia --check
 
 # Supported ATPs.
-# Missing ileancop
-
-ATPs = cvc4 e equinox metis spass vampire z3
+ATPs = cvc4 e equinox ileancop metis spass vampire z3
 
 ##############################################################################
 # Auxiliary functions
@@ -266,7 +264,14 @@ PROVE_FOL_THEOREMS_FLAGS = \
 	  set -e ; \
 	  case $*.agda in \
             "${fol_theorems_path}/Definition10.agda") \
-              if [[ $$atp != z3 ]]; then \
+              if [[ $$atp != ileancop && $$atp != z3 ]]; then \
+                 $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
+                         --atp=$$atp \
+                         $*.agda ; \
+              fi \
+            ;; \
+            "${fol_theorems_path}/LogicalConstants.agda") \
+              if [[ $$atp != ileancop ]]; then \
                  $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
                          --atp=$$atp \
                          $*.agda ; \

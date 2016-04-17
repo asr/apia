@@ -34,7 +34,7 @@ executable apia
 
   extensions:     NoImplicitPrelude
 
-  build-depends:   Agda == 2.5.1.1
+  build-depends:   Agda == 2.6.0.1
                  , base >= 4.6.0.1 && < 4.10
                  , bytestring >= 0.10.0.2 && < 0.11
                  , directory >= 1.2.0.1 && < 1.3

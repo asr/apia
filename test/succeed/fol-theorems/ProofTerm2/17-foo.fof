@@ -9,7 +9,7 @@
 % Name: ProofTerm2.foo
 % Role: prove
 % Line: 17
-fof(n16_116113058, conjecture, ( ! [A] : ( ! [B] : (kp1_(cN_4_116113058,A) => (kp1_(cN_4_116113058,B) => (A = A))) ) )).
+fof(n16_1332067980609588744, conjecture, ( ! [A] : ( ! [B] : (kp1_(cN_4_1332067980609588744,A) => (kp1_(cN_4_1332067980609588744,B) => (A = A))) ) )).
 
 % End conjecture.
 

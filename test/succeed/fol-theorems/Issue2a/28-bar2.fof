@@ -9,7 +9,7 @@
 % Name: Issue2a.foo₂
 % Role: definition
 % Line: 21
-fof(n10_55583567, definition, ( ! [A] : (foo2_10_55583567(A) = A) )).
+fof(n10_612152374944924322, definition, ( ! [A] : (foo2_10_612152374944924322(A) = A) )).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n10_55583567, definition, ( ! [A] : (foo2_10_55583567(A) = A) )).
 % Name: Issue2a.bar₂
 % Role: prove
 % Line: 28
-fof(n20_55583567, conjecture, ( ! [A] : (A = foo2_10_55583567(A)) )).
+fof(n20_612152374944924322, conjecture, ( ! [A] : (A = foo2_10_612152374944924322(A)) )).
 
 % End conjecture.
 

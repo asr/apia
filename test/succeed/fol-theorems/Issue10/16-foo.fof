@@ -9,7 +9,7 @@
 % Name: Issue10.foo
 % Role: prove
 % Line: 16
-fof(n8_52097770, conjecture, ( ! [A] : (kp1_(cP39_4_52097770,A) => kp1_(cP39_4_52097770,A)) )).
+fof(n8_8852744936428687615, conjecture, ( ! [A] : (kp1_(cP39_4_8852744936428687615,A) => kp1_(cP39_4_8852744936428687615,A)) )).
 
 % End conjecture.
 

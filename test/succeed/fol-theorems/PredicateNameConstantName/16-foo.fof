@@ -9,7 +9,7 @@
 % Name: PredicateNameConstantName.foo
 % Role: prove
 % Line: 16
-fof(n8_197099929, conjecture, ( ! [A] : (kp1_(cP_4_197099929,A) => kp1_(cP_4_197099929,A)) )).
+fof(n8_1785468551361590161, conjecture, ( ! [A] : (kp1_(cP_4_1785468551361590161,A) => kp1_(cP_4_1785468551361590161,A)) )).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: Definition1.e
 % Role: definition
 % Line: 18
-fof(n8_82188849, definition, (e_8_82188849 = d_6_82188849)).
+fof(n8_9339737853245513773, definition, (e_8_9339737853245513773 = d_6_9339737853245513773)).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n8_82188849, definition, (e_8_82188849 = d_6_82188849)).
 % Name: Definition1.foo
 % Role: prove
 % Line: 22
-fof(n10_82188849, conjecture, (e_8_82188849 = d_6_82188849)).
+fof(n10_9339737853245513773, conjecture, (e_8_9339737853245513773 = d_6_9339737853245513773)).
 
 % End conjecture.
 

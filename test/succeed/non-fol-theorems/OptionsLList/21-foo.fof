@@ -9,7 +9,7 @@
 % Name: OptionsLList.foo
 % Role: prove
 % Line: 21
-fof(n10_175866164, conjecture, ( ! [A] : (( ? [B] : kp1_(A,B) ) => ( ? [B] : kp1_(A,B) )) )).
+fof(n10_4575199232161780528, conjecture, ( ! [A] : (( ? [B] : kp1_(A,B) ) => ( ? [B] : kp1_(A,B) )) )).
 
 % End conjecture.
 

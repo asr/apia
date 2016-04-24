@@ -9,7 +9,7 @@
 % Name: ProofTerm4._.bar
 % Role: prove
 % Line: 23
-fof(n34_203932140, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : (kp4_(cA_6_203932140,A,B,C,D) => ( ! [E] : (E = E) )) ) ) ) )).
+fof(n34_6392409748752774953, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : (kp4_(cA_6_6392409748752774953,A,B,C,D) => ( ! [E] : (E = E) )) ) ) ) )).
 
 % End conjecture.
 

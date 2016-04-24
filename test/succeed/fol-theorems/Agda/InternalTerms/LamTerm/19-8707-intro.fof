@@ -9,7 +9,7 @@
 % Name: Agda.InternalTerms.LamTerm.∃-intro
 % Role: prove
 % Line: 19
-fof(n14_160023169, conjecture, ( ! [A] : (kp1_(cA_10_160023169,A) => ( ? [B] : kp1_(cA_10_160023169,B) )) )).
+fof(n14_17058706859489787053, conjecture, ( ! [A] : (kp1_(cA_10_17058706859489787053,A) => ( ? [B] : kp1_(cA_10_17058706859489787053,B) )) )).
 
 % End conjecture.
 

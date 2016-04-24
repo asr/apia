@@ -9,7 +9,7 @@
 % Name: Eta1.bar
 % Role: prove
 % Line: 23
-fof(n18_17544139, conjecture, ( ! [A] : (kp1_(cA_4_17544139,A) => ( ? [B] : kp1_(cA_4_17544139,B) )) )).
+fof(n18_16576787705542557502, conjecture, ( ! [A] : (kp1_(cA_4_16576787705542557502,A) => ( ? [B] : kp1_(cA_4_16576787705542557502,B) )) )).
 
 % End conjecture.
 

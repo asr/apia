@@ -9,7 +9,7 @@
 % Name: Existential.foo
 % Role: prove
 % Line: 16
-fof(n10_221690953, conjecture, ( ! [A] : (( ? [B] : kp1_(A,B) ) => ( ? [B] : kp1_(A,B) )) )).
+fof(n10_1717172156931645780, conjecture, ( ! [A] : (( ? [B] : kp1_(A,B) ) => ( ? [B] : kp1_(A,B) )) )).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: NonTopLevelModuleName.foo
 % Role: prove
 % Line: 16
-fof(n8_106767546, conjecture, ( ! [A] : (A = A) )).
+fof(n8_4511513798322373813, conjecture, ( ! [A] : (A = A) )).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: Eta-Issue8.foo
 % Role: prove
 % Line: 16
-fof(n10_76169857, conjecture, ( ! [A] : (( ? [B] : kp1_(A,B) ) => ( ? [B] : kp1_(A,B) )) )).
+fof(n10_2172089094292234999, conjecture, ( ! [A] : (( ? [B] : kp1_(A,B) ) => ( ? [B] : kp1_(A,B) )) )).
 
 % End conjecture.
 

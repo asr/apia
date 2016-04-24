@@ -9,7 +9,7 @@
 % Name: Agda.InternalTerms.PiNoAbsTerm.foo₁
 % Role: prove
 % Line: 25
-fof(n14_145494183, conjecture, (( ! [A] : (pA_10_145494183) ) => (pA_10_145494183))).
+fof(n14_15514026118360438071, conjecture, (( ! [A] : (pA_10_15514026118360438071) ) => (pA_10_15514026118360438071))).
 
 % End conjecture.
 

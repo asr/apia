@@ -9,7 +9,7 @@
 % Name: PropositionalFunction2.A
 % Role: definition
 % Line: 20
-fof(n10_1676460, definition, ( ! [A] : (kp1_(cA_10_1676460,A) <=> (kp1_(cP_4_1676460,A) | kp1_(cP_4_1676460,A))) )).
+fof(n10_8208675042423247495, definition, ( ! [A] : (kp1_(cA_10_8208675042423247495,A) <=> (kp1_(cP_4_8208675042423247495,A) | kp1_(cP_4_8208675042423247495,A))) )).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n10_1676460, definition, ( ! [A] : (kp1_(cA_10_1676460,A) <=> (kp1_(cP_4_167
 % Name: PropositionalFunction2.foo
 % Role: prove
 % Line: 26
-fof(n14_1676460, conjecture, (kp1_(cA_10_1676460,a_6_1676460) => kp1_(cA_10_1676460,a_6_1676460))).
+fof(n14_8208675042423247495, conjecture, (kp1_(cA_10_8208675042423247495,a_6_8208675042423247495) => kp1_(cA_10_8208675042423247495,a_6_8208675042423247495))).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: LogicalConstants.thm₂
 % Role: prove
 % Line: 67
-fof(n48_143722291, conjecture, (((pA_18_143722291) | ($false)) => (pA_18_143722291))).
+fof(n48_5041810728898563849, conjecture, (((pA_18_5041810728898563849) | ($false)) => (pA_18_5041810728898563849))).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: Agda.InternalTerms.DefTerm2.foo
 % Role: axiom
 % Line: 21
-fof(n18_108705303, axiom, kp3_(cP179_10_108705303,a_12_108705303,b_14_108705303,c_16_108705303)).
+fof(n18_1427529989749528630, axiom, kp3_(cP179_10_1427529989749528630,a_12_1427529989749528630,b_14_1427529989749528630,c_16_1427529989749528630)).
 
 % End general axiom(s).
 
@@ -20,7 +20,7 @@ fof(n18_108705303, axiom, kp3_(cP179_10_108705303,a_12_108705303,b_14_108705303,
 % Name: Agda.InternalTerms.DefTerm2.bar
 % Role: prove
 % Line: 25
-fof(n22_108705303, conjecture, ( ! [A] : (A = A) )).
+fof(n22_1427529989749528630, conjecture, ( ! [A] : (A = A) )).
 
 % End conjecture.
 

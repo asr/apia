@@ -9,7 +9,7 @@
 % Name: Issue4._.c
 % Role: definition
 % Line: 22
-fof(n30_126633305, definition, ( ! [A] : (kp1_(cP_10_126633305,A) => ( ! [B] : (kp1_(cP_10_126633305,B) => (c_30_126633305(A,B) = A)) )) )).
+fof(n30_3336295276786706635, definition, ( ! [A] : (kp1_(cP_10_3336295276786706635,A) => ( ! [B] : (kp1_(cP_10_3336295276786706635,B) => (c_30_3336295276786706635(A,B) = A)) )) )).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n30_126633305, definition, ( ! [A] : (kp1_(cP_10_126633305,A) => ( ! [B] : (
 % Name: Issue4._.bar
 % Role: prove
 % Line: 26
-fof(n32_126633305, conjecture, ( ! [A] : (kp1_(cP_10_126633305,A) => ( ! [B] : (kp1_(cP_10_126633305,B) => (c_30_126633305(A,B) = A)) )) )).
+fof(n32_3336295276786706635, conjecture, ( ! [A] : (kp1_(cP_10_3336295276786706635,A) => ( ! [B] : (kp1_(cP_10_3336295276786706635,B) => (c_30_3336295276786706635(A,B) = A)) )) )).
 
 % End conjecture.
 

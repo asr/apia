@@ -9,13 +9,13 @@
 % Name: Definition5.b
 % Role: definition
 % Line: 18
-fof(n10_187407804, definition, (b_10_187407804 = a_8_187407804)).
+fof(n10_18084206567136035306, definition, (b_10_18084206567136035306 = a_8_18084206567136035306)).
 
 % The Agda term was:
 % Name: Definition5.c
 % Role: definition
 % Line: 22
-fof(n12_187407804, definition, (c_12_187407804 = op_6_187407804(b_10_187407804))).
+fof(n12_18084206567136035306, definition, (c_12_18084206567136035306 = op_6_18084206567136035306(b_10_18084206567136035306))).
 
 % End required definition(s) by the conjecture.
 
@@ -26,7 +26,7 @@ fof(n12_187407804, definition, (c_12_187407804 = op_6_187407804(b_10_187407804))
 % Name: Definition5.foo
 % Role: prove
 % Line: 27
-fof(n14_187407804, conjecture, (c_12_187407804 = op_6_187407804(a_8_187407804))).
+fof(n14_18084206567136035306, conjecture, (c_12_18084206567136035306 = op_6_18084206567136035306(a_8_18084206567136035306))).
 
 % End conjecture.
 

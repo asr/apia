@@ -9,13 +9,13 @@
 % Name: DataConstructorsAxioms.N.zN
 % Role: axiom
 % Line: 18
-fof(n10_16080198, axiom, kp1_(cN_8_16080198,zero_4_16080198)).
+fof(n10_8506673062145052261, axiom, kp1_(cN_8_8506673062145052261,zero_4_8506673062145052261)).
 
 % The Agda term was:
 % Name: DataConstructorsAxioms.N.sN
 % Role: axiom
 % Line: 19
-fof(n14_16080198, axiom, ( ! [A] : (kp1_(cN_8_16080198,A) => kp1_(cN_8_16080198,succ_6_16080198(A))) )).
+fof(n14_8506673062145052261, axiom, ( ! [A] : (kp1_(cN_8_8506673062145052261,A) => kp1_(cN_8_8506673062145052261,succ_6_8506673062145052261(A))) )).
 
 % End general axiom(s).
 
@@ -26,7 +26,7 @@ fof(n14_16080198, axiom, ( ! [A] : (kp1_(cN_8_16080198,A) => kp1_(cN_8_16080198,
 % Name: DataConstructorsAxioms.0-N
 % Role: prove
 % Line: 22
-fof(n16_16080198, conjecture, kp1_(cN_8_16080198,zero_4_16080198)).
+fof(n16_8506673062145052261, conjecture, kp1_(cN_8_8506673062145052261,zero_4_8506673062145052261)).
 
 % End conjecture.
 

@@ -9,7 +9,7 @@
 % Name: ProofTerm1.foo
 % Role: prove
 % Line: 17
-fof(n12_72203517, conjecture, ( ! [A] : (kp1_(cN_4_72203517,A) => (A = A)) )).
+fof(n12_5316737939553571598, conjecture, ( ! [A] : (kp1_(cN_4_5316737939553571598,A) => (A = A)) )).
 
 % End conjecture.
 

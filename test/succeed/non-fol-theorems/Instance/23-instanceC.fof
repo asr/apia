@@ -9,7 +9,7 @@
 % Name: Instance.schema
 % Role: hint
 % Line: 16
-fof(n10_126135238, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(A,C) => kp1_(B,C)) ) ) )).
+fof(n10_2796988072420943401, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(A,C) => kp1_(B,C)) ) ) )).
 
 % End local hint(s).
 
@@ -20,7 +20,7 @@ fof(n10_126135238, hypothesis, ( ! [A] : ( ! [B] : ( ! [C] : (kp1_(A,C) => kp1_(
 % Name: Instance.instanceC
 % Role: prove
 % Line: 23
-fof(n18_126135238, conjecture, (kp1_(cA_14_126135238,d_12_126135238) => kp1_(cB_16_126135238,d_12_126135238))).
+fof(n18_2796988072420943401, conjecture, (kp1_(cA_14_2796988072420943401,d_12_2796988072420943401) => kp1_(cB_16_2796988072420943401,d_12_2796988072420943401))).
 
 % End conjecture.
 

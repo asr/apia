@@ -9,7 +9,7 @@
 % Name: LogicalConstants.∀I₁
 % Role: prove
 % Line: 104
-fof(n78_143722291, conjecture, (( ! [A] : kp1_(cA185_70_143722291,A) ) => ( ! [A] : kp1_(cA185_70_143722291,A) ))).
+fof(n78_5041810728898563849, conjecture, (( ! [A] : kp1_(cA185_70_5041810728898563849,A) ) => ( ! [A] : kp1_(cA185_70_5041810728898563849,A) ))).
 
 % End conjecture.
 

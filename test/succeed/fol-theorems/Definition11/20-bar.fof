@@ -9,7 +9,7 @@
 % Name: Definition11.P
 % Role: definition
 % Line: 16
-fof(n2_90119102, definition, ( ! [A] : (kp1_(cP_2_90119102,A) <=> ( ? [B] : (A = B) )) )).
+fof(n2_12950186805551950550, definition, ( ! [A] : (kp1_(cP_2_12950186805551950550,A) <=> ( ? [B] : (A = B) )) )).
 
 % End required definition(s) by the conjecture.
 
@@ -20,7 +20,7 @@ fof(n2_90119102, definition, ( ! [A] : (kp1_(cP_2_90119102,A) <=> ( ? [B] : (A =
 % Name: Definition11.bar
 % Role: prove
 % Line: 20
-fof(n12_90119102, conjecture, ( ! [A] : (kp1_(cP_2_90119102,A) => ( ? [B] : (B = A) )) )).
+fof(n12_12950186805551950550, conjecture, ( ! [A] : (kp1_(cP_2_12950186805551950550,A) => ( ? [B] : (B = A) )) )).
 
 % End conjecture.
 

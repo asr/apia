@@ -163,11 +163,15 @@ executable apia
     ghc-options: -fwarn-context-quantification
 
   if impl(ghc >= 8.0)
-    ghc-options: -Wmissing-pat-syn-sigs
+    ghc-options: -Wmissing-local-signatures
+                 -Wmissing-monadfail-instance
+                 -Wmissing-pattern-synonym-signatures
                  -Wnoncanonical-monad-instances
                  -Wnoncanonical-monoid-instances
                  -Wredundant-constraints
                  -Wsemigroup
+                 -Wunrecognised-warning-flags
+                 -Wunused-foralls
 
   -- From Agda.cabal: If someone installs Agda with the setuid bit
   -- set, then the presence of +RTS may be a security problem (see GHC

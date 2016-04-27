@@ -149,8 +149,7 @@ executable apia
                   -fwarn-unticked-promoted-constructors
 
   if impl(ghc >= 7.6) && impl(ghc < 8.0)
-    ghc-options: -- This option will be deprected in GHC 8.0.1.
-                 -fwarn-missing-local-sigs
+    ghc-options: -fwarn-missing-local-sigs
                  -- This option will be removed in GHC 8.0.1.
                  -fwarn-pointless-pragmas
 

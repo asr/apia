@@ -12,7 +12,7 @@
 
 module Apia.Common
   ( ATP(CVC4, E, Equinox, IleanCoP, Metis, SPASS, Vampire, Z3)
-  , Lang(FOF, TFF0)
+  , Lang(FOF)
   )
   where
 
@@ -39,5 +39,4 @@ instance Pretty ATP where
 
 -- | TPTP output languages.
 data Lang = FOF   -- ^ First-order form.
-          | TFF0  -- ^ Typed first-order form (without arithmetic).
 

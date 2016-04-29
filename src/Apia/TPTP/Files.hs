@@ -40,7 +40,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( whenM )
 import Agda.Utils.Pretty     ( prettyShow )
 
-import Apia.Common              ( Lang(FOF, TFF0) )
+import Apia.Common              ( Lang )
 import Apia.Monad.Base          ( askTOpt, T )
 import Apia.Monad.Reports       ( reportS, reportSLn )
 import Apia.Options             ( Options(optOnlyFiles, optOutputDir) )
@@ -102,9 +102,6 @@ instance AsciiName String where
 fofExt ∷ String
 fofExt = ".fof"
 
-tff0Ext ∷ String
-tff0Ext = ".tff0"
-
 commentLine ∷ Text
 commentLine = "%" +++ T.replicate 77 (T.singleton '-') +++ "\n"
 
@@ -131,9 +128,9 @@ agdaOriginalTerm qName role =
   +++ "% Line: " +++ (T.pack . prettyShow . qNameLine) qName +++ "\n"
 
 addRole ∷ Lang → FilePath → AF → IO ()
-addRole lang file af@(AFor qName afRole _) = do
+addRole _ file af@(AFor qName afRole _) = do
   T.appendFile file $ agdaOriginalTerm qName afRole
-  T.appendFile file $ toTPTP lang af
+  T.appendFile file $ toTPTP af
 
 addRoles ∷ Lang → FilePath → [AF] → Text → IO ()
 addRoles _    _    []  _   = return ()
@@ -195,7 +192,7 @@ createConjectureFile lang file generalRoles conjectureSet = do
   return file
 
 tptpFileName ∷ Lang → ConjectureSet → T FilePath
-tptpFileName lang conjectureSet = do
+tptpFileName _ conjectureSet = do
   -- To avoid clash names with the terms inside a where clause, we
   -- added the line number where the term was defined to the file
   -- name.
@@ -233,13 +230,8 @@ tptpFileName lang conjectureSet = do
             ++ "-"
             ++ asciiName ((concat . nameStringParts . nameConcrete . qnameName) qName)
 
-      ext ∷ String
-      ext = case lang of
-              FOF  → fofExt
-              TFF0 → tff0Ext
-
       file ∷ FilePath
-      file = addExtension f ext
+      file = addExtension f fofExt
 
   reportSLn "tptpFileName" 20 $ "Creating " ++ show file
 

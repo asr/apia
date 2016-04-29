@@ -32,8 +32,6 @@ import Agda.Syntax.Common
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Apia.Common ( Lang(FOF, TFF0) )
-
 import Apia.Logic.Types
   ( LFormula( And
             , Eq
@@ -66,7 +64,7 @@ type TPTP = Text
 
 -- | Translation to TPTP concrete syntax.
 class ToTPTP a where
-  toTPTP ∷ Lang → a → TPTP
+  toTPTP ∷ a → TPTP
 
 -- | Constant, function or predicate.
 data CFP = C | F | P
@@ -93,8 +91,8 @@ prefixLetter name =
 
 -- | Constants, functions and predicates names to TPTP concrete
 -- syntax.
-cfpNameToTPTP ∷ Lang → CFP → String → TPTP
-cfpNameToTPTP lang cfp name =
+cfpNameToTPTP ∷ CFP → String → TPTP
+cfpNameToTPTP cfp name =
   if isUpper (T.head nameTPTP) then T.cons (symbol cfp) nameTPTP else nameTPTP
   where
   symbol ∷ CFP → Char
@@ -108,7 +106,7 @@ cfpNameToTPTP lang cfp name =
   symbol P = 'p'
 
   nameTPTP ∷ Text
-  nameTPTP = toTPTP lang name
+  nameTPTP = toTPTP name
 
 -- If a variable name start by an lower case letter, we add a @'V'@.
 --
@@ -122,16 +120,16 @@ cfpNameToTPTP lang cfp name =
 --   nameTPTP ∷ String
 --   nameTPTP = toTPTP name
 
-quantifierBodyToTPTP ∷ Lang → VarName → (LTerm → LFormula) → TPTP
-quantifierBodyToTPTP lang var f =
+quantifierBodyToTPTP ∷ VarName → (LTerm → LFormula) → TPTP
+quantifierBodyToTPTP var f =
   "[" +++ toUpperFirst (T.pack var) +++ "] : "
-  +++ toTPTP lang (f (Var var))
+  +++ toTPTP (f (Var var))
 
 ------------------------------------------------------------------------------
 -- Translation of Agda/Haskell types to TPTP concrete syntax.
 
 instance ToTPTP Char where
-  toTPTP _ c
+  toTPTP c
     -- From Agda wiki (10 December 2012): A name part is a string of
     -- printable characters not containing any of the following
     -- characters: _;."(){}@.
@@ -163,11 +161,11 @@ instance ToTPTP NameId where
   -- with '@'. We use '_' because '@' is not TPTP valid.
   --
   -- TODO (02 July 2014). Improve the implemention.
-  toTPTP _ (NameId x i) =
+  toTPTP (NameId x i) =
     prefixLetter $ (T.pack . show) x +++ "_" +++ (T.pack . show) i
 
 instance ToTPTP QName where
-  toTPTP lang (QName _ name) = toTPTP lang $ nameId name
+  toTPTP (QName _ name) = toTPTP $ nameId name
 
 ------------------------------------------------------------------------------
 -- Translation of the target logic formulae to TPTP concrete syntax.
@@ -178,59 +176,52 @@ instance ToTPTP QName where
 
 -- Requires @TypeSynonymInstances@.
 instance ToTPTP String where
-  toTPTP lang = prefixLetter . T.concat . map (toTPTP lang)
+  toTPTP = prefixLetter . T.concat . map toTPTP
 
 instance ToTPTP LTerm where
-  toTPTP lang (Fun name []) = cfpNameToTPTP lang C name
-  toTPTP lang (Fun name terms) =
-    cfpNameToTPTP lang F name +++ parens (toTPTP lang terms)
-  toTPTP _ (Var name) = toUpperFirst $ T.pack name
+  toTPTP (Fun name []) = cfpNameToTPTP C name
+  toTPTP (Fun name terms) =
+    cfpNameToTPTP F name +++ parens (toTPTP terms)
+  toTPTP (Var name) = toUpperFirst $ T.pack name
 
 -- Requires @FlexibleInstances@.
 instance ToTPTP [LTerm] where
-  toTPTP _    []       = __IMPOSSIBLE__
-  toTPTP lang [a]      = toTPTP lang a
-  toTPTP lang (a : as) = toTPTP lang a +++ "," +++ toTPTP lang as
+  toTPTP []       = __IMPOSSIBLE__
+  toTPTP [a]      = toTPTP a
+  toTPTP (a : as) = toTPTP a +++ "," +++ toTPTP as
 
 instance ToTPTP LFormula where
   -- If the predicate represents a propositional logic variable,
-  -- following the TPTP syntax, we do not print the internal
+  -- following the TPTP (FOF) syntax, we do not print the internal
   -- parenthesis.
-  toTPTP lang (Predicate pname []) = parens $ cfpNameToTPTP lang P pname
+  toTPTP (Predicate pname []) = parens $ cfpNameToTPTP P pname
 
-  toTPTP lang (Predicate pname terms) =
-    cfpNameToTPTP lang P pname +++ parens (toTPTP lang terms)
+  toTPTP (Predicate pname terms) =
+    cfpNameToTPTP P pname +++ parens (toTPTP terms)
 
-  toTPTP lang (And f1 f2)     = parens $ toTPTP lang f1 +++ " & " +++ toTPTP lang f2
-  toTPTP lang (Or f1 f2)      = parens $ toTPTP lang f1 +++ " | " +++ toTPTP lang f2
-  toTPTP lang (Not f)         = parens $ T.cons '~' (toTPTP lang f)
-  toTPTP lang (Implies f1 f2) = parens $ toTPTP lang f1 +++ " => " +++ toTPTP lang f2
-  toTPTP lang (Equiv f1 f2)   = parens $ toTPTP lang f1 +++ " <=> " +++ toTPTP lang f2
-  toTPTP lang (ForAll var f)  = "( ! " +++ quantifierBodyToTPTP lang var f +++ " )"
-  toTPTP lang (Exists var f)  = "( ? " +++ quantifierBodyToTPTP lang var f +++ " )"
-  toTPTP _    TRUE            = parens "$true"
-  toTPTP _    FALSE           = parens "$false"
-  toTPTP lang (Eq t1 t2)      =
-    parens $ toTPTP lang t1 +++ " = " +++ toTPTP lang t2
+  toTPTP (And f1 f2)     = parens $ toTPTP f1 +++ " & " +++ toTPTP f2
+  toTPTP (Or f1 f2)      = parens $ toTPTP f1 +++ " | " +++ toTPTP f2
+  toTPTP (Not f)         = parens $ T.cons '~' (toTPTP f)
+  toTPTP (Implies f1 f2) = parens $ toTPTP f1 +++ " => " +++ toTPTP f2
+  toTPTP (Equiv f1 f2)   = parens $ toTPTP f1 +++ " <=> " +++ toTPTP f2
+  toTPTP (ForAll var f)  = "( ! " +++ quantifierBodyToTPTP var f +++ " )"
+  toTPTP (Exists var f)  = "( ? " +++ quantifierBodyToTPTP var f +++ " )"
+  toTPTP TRUE            = parens "$true"
+  toTPTP FALSE           = parens "$false"
+  toTPTP (Eq t1 t2)      = parens $ toTPTP t1 +++ " = " +++ toTPTP t2
 
 instance ToTPTP TPTPRole where
-  toTPTP _    TPTPAxiom      = "axiom"
-  toTPTP _    TPTPConjecture = "conjecture"
-  toTPTP _    TPTPDefinition = "definition"
-  toTPTP _    TPTPHint       = "hypothesis"
-  toTPTP FOF  TPTPType       = __IMPOSSIBLE__
-  toTPTP TFF0 TPTPType       = "type"
+  toTPTP TPTPAxiom      = "axiom"
+  toTPTP TPTPConjecture = "conjecture"
+  toTPTP TPTPDefinition = "definition"
+  toTPTP TPTPHint       = "hypothesis"
+  toTPTP TPTPType       = __IMPOSSIBLE__
 
-instance ToTPTP Lang where
-  toTPTP _ FOF  = "fof"
-  toTPTP _ TFF0 = "tff"
-
--- Translation of annotated formulae to TPTP concrete syntax.
+-- Translation of annotated formulae to TPTP (FOF) concrete syntax.
 instance ToTPTP AF where
-  toTPTP lang (AFor qName atpRole formula) =
-    toTPTP lang lang
-    +++ "("
-    +++ toTPTP lang qName +++ ", "
-    +++ toTPTP lang atpRole +++ ", "
-    +++ toTPTP lang formula
+  toTPTP (AFor qName atpRole formula) =
+    "fof("
+    +++ toTPTP qName +++ ", "
+    +++ toTPTP atpRole +++ ", "
+    +++ toTPTP formula
     +++ ")." +++ "\n\n"

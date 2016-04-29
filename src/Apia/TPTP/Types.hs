@@ -43,8 +43,7 @@ import Apia.Utils.List   ( duplicate, duplicatesElements )
 
 -- | Annotated formulae.
 --
--- The annotated formulae are not in TPTP (FOF or TFF0) concrete
--- syntax.
+-- The annotated formulae are not in TPTP (FOF) concrete syntax.
 data AF = AFor QName TPTPRole LFormula
 
 instance Eq AF where

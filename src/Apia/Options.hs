@@ -75,7 +75,7 @@ import Apia.Common
        , Vampire
        , Z3
        )
-  , Lang(FOF, TFF0)
+  , Lang(FOF)
   )
 
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
@@ -208,7 +208,6 @@ inputFileOpt file opts =
 
 langOpt ∷ String → MOptions
 langOpt "fof"  opts = Right opts { optLang = FOF }
-langOpt "tff0" opts = Right opts { optLang = TFF0 }
 langOpt lang   _    = Left $
   pretty "Language " <> pretty lang <> pretty " is not a TPTP language"
 
@@ -363,7 +362,7 @@ options =
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")
                "Look for imports in DIR"
   , Option "L" ["lang"] (ReqArg langOpt "LANG") $
-               "TPTP output language (fof or tff0)\n"
+               "TPTP output language (fof)\n"
                ++ "(default: fof)"
   , Option []  ["no-internal-equality"] (NoArg noInternalEqualityOpt)
                "Do not translate _≡_ to the ATPs equality"

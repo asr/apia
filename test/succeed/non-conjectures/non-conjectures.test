@@ -13,7 +13,7 @@ Usage: apia [OPTIONS] FILE
                                                 of functions (required for handling currying)
            --help                               Show this help
   -i DIR   --include-path=DIR                   Look for imports in DIR
-  -L LANG  --lang=LANG                          TPTP output language (fof)
+  -L LANG  --lang=LANG                          TPTP or SMT-LIB v2 output language (fof or smt2)
                                                 (default: fof)
            --no-internal-equality               Do not translate _≡_ to the ATPs equality
            --no-predicate-constants             Do not use hard-coded (n+1)-ary predicate symbols for the

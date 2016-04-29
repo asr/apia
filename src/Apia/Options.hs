@@ -75,7 +75,7 @@ import Apia.Common
        , Vampire
        , Z3
        )
-  , Lang(FOF)
+  , Lang(FOF, SMT2)
   )
 
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
@@ -208,8 +208,9 @@ inputFileOpt file opts =
 
 langOpt ∷ String → MOptions
 langOpt "fof"  opts = Right opts { optLang = FOF }
-langOpt lang   _    = Left $
-  pretty "Language " <> pretty lang <> pretty " is not a TPTP language"
+langOpt "smt2" opts = Right opts { optLang = SMT2 }
+langOpt lang      _ = Left $
+  pretty "Language " <> pretty lang <> pretty " is not valid output language"
 
 noInternalEqualityOpt ∷ MOptions
 noInternalEqualityOpt opts = Right opts { optNoInternalEquality = True }
@@ -362,7 +363,7 @@ options =
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")
                "Look for imports in DIR"
   , Option "L" ["lang"] (ReqArg langOpt "LANG") $
-               "TPTP output language (fof)\n"
+               "TPTP or SMT-LIB v2 output language (fof or smt2)\n"
                ++ "(default: fof)"
   , Option []  ["no-internal-equality"] (NoArg noInternalEqualityOpt)
                "Do not translate _≡_ to the ATPs equality"

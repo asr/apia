@@ -106,7 +106,7 @@ tff0Ext ∷ String
 tff0Ext = ".tff0"
 
 commentLine ∷ Text
-commentLine = "%-----------------------------------------------------------------------------\n"
+commentLine = "%" +++ T.replicate 77 (T.singleton '-') +++ "\n"
 
 commentLineLn ∷ Text
 commentLineLn = commentLine +++ "\n"

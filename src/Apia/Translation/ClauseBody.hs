@@ -1,20 +1,19 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.Logic.Translation.ToFormulae.ClauseBody
+-- Module      : Apia.Translation.ClauseBody
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- Translation of Agda internal @ClauseBody@ to the target logic
--- formulae and terms.
+-- Translation of Agda internal @ClauseBody@ to the target logic.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.Logic.Translation.ToFormulae.ClauseBody
+module Apia.Translation.ClauseBody
   ( cBodyToFormula
   , cBodyToTerm
   , dropProofTermOnCBody
@@ -34,14 +33,15 @@ import Agda.Syntax.Internal
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Apia.Logic.Translation.ToFormulae.Terms
+import Apia.FOL.Types     ( LFormula, LTerm )
+import Apia.Monad.Base    ( T )
+import Apia.Monad.Reports ( reportSLn )
+
+import Apia.Translation.Terms
   ( agdaTermToFormula
   , agdaTermToTerm
   )
 
-import Apia.Logic.Types                ( LFormula, LTerm )
-import Apia.Monad.Base                 ( T )
-import Apia.Monad.Reports              ( reportSLn )
 import Apia.Utils.AgdaAPI.DeBruijn     ( ChangeIndex(changeIndex), varToIndex )
 import Apia.Utils.AgdaAPI.EtaExpansion ( EtaExpandible(etaExpand) )
 

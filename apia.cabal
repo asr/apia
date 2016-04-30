@@ -58,13 +58,9 @@ executable apia
     Apia.CheckTPTP
     Apia.Common
     Apia.Dump
-    Apia.Logic.Constants
-    Apia.Logic.Primitives
-    Apia.Logic.Translation.ToFormulae.ClauseBody
-    Apia.Logic.Translation.ToFormulae.Functions
-    Apia.Logic.Translation.ToFormulae.Terms
-    Apia.Logic.Translation.ToFormulae.Types
-    Apia.Logic.Types
+    Apia.FOL.Constants
+    Apia.FOL.Primitives
+    Apia.FOL.Types
     Apia.Monad.Base
     Apia.Monad.Environment
     Apia.Monad.Reports
@@ -73,8 +69,12 @@ executable apia
     Apia.Snapshot
     Apia.TPTP.ConcreteSyntax
     Apia.TPTP.Files
-    Apia.TPTP.Translation
     Apia.TPTP.Types
+    Apia.Translation
+    Apia.Translation.ClauseBody
+    Apia.Translation.Functions
+    Apia.Translation.Terms
+    Apia.Translation.Types
     Apia.Utils.AgdaAPI.DeBruijn
     Apia.Utils.AgdaAPI.EtaExpansion
     Apia.Utils.AgdaAPI.IgnoreSharing

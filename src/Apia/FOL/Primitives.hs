@@ -1,6 +1,6 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.Logic.Primitives
+-- Module      : Apia.FOL.Primitives
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
@@ -8,7 +8,7 @@
 -- Stability   : experimental
 --
 -- Names hard-coded in the translation of Agda internal types to
--- logic formulae.
+-- first-order logic formulae.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP           #-}
@@ -16,7 +16,7 @@
 
 -- Adapted from AgdaLight (Plugins.FOL.Primitive).
 
-module Apia.Logic.Primitives
+module Apia.FOL.Primitives
   ( appF
   , appP
   ) where
@@ -27,7 +27,7 @@ import Apia.Prelude
 
 import Agda.Utils.Impossible ( Impossible(Impossible) , throwImpossible )
 
-import Apia.Logic.Types ( LFormula(Predicate), LTerm(Fun) )
+import Apia.FOL.Types ( LFormula(Predicate), LTerm(Fun) )
 
 #include "undefined.h"
 

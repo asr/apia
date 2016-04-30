@@ -1,20 +1,20 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.Logic.Types
+-- Module      : Apia.FOL.Types
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- Target logic types.
+-- Target first-order logic types.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE UnicodeSyntax     #-}
 
-module Apia.Logic.Types
+module Apia.FOL.Types
   ( LFormula( And
             , Eq
             , Equiv

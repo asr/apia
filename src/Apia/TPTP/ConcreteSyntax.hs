@@ -7,7 +7,7 @@
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- TPTP concrete syntax to FOF and TFFO languages.
+-- TPTP concrete syntax to FOF language.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP               #-}
@@ -32,7 +32,7 @@ import Agda.Syntax.Common
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Apia.Logic.Types
+import Apia.FOL.Types
   ( LFormula( And
             , Eq
             , Equiv

@@ -1,19 +1,19 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.Logic.Translation.ToFormulae.Internal.Terms
+-- Module      : Apia.Translation.Terms
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- Translation from Agda internal terms to target logic formulae.
+-- Translation from Agda internal terms to the target logic.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.Logic.Translation.ToFormulae.Terms
+module Apia.Translation.Terms
   ( agdaTermToFormula
   , agdaTermToTerm
   ) where
@@ -56,7 +56,7 @@ import Agda.Syntax.Position  ( noRange )
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( ifM )
 
-import Apia.Logic.Constants
+import Apia.FOL.Constants
   ( lTrue
   , lFalse
   , lNot
@@ -70,14 +70,9 @@ import Apia.Logic.Constants
   , lEquals
   )
 
-import Apia.Logic.Primitives ( appF, appP )
+import Apia.FOL.Primitives ( appF, appP )
 
-import {-# source #-} Apia.Logic.Translation.ToFormulae.Types
-  ( agdaDomTypeToFormula
-  , agdaTypeToFormula
-  )
-
-import Apia.Logic.Types as L
+import Apia.FOL.Types as L
   ( LFormula( And
             , Eq
             , Equiv
@@ -112,6 +107,11 @@ import Apia.Options
             , optSchematicPropositionalFunctions
             , optSchematicPropositionalSymbols
             )
+  )
+
+import {-# source #-} Apia.Translation.Types
+  ( agdaDomTypeToFormula
+  , agdaTypeToFormula
   )
 
 -- import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )

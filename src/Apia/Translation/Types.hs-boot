@@ -1,6 +1,6 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.Logic.Translation.ToFormulae.Types
+module Apia.Translation.Types
   ( agdaDomTypeToFormula
   , agdaTypeToFormula
   ) where
@@ -10,8 +10,8 @@ module Apia.Logic.Translation.ToFormulae.Types
 import Agda.Syntax.Common   ( Dom )
 import Agda.Syntax.Internal ( Type )
 
-import Apia.Logic.Types ( LFormula )
-import Apia.Monad.Base  ( T )
+import Apia.FOL.Types  ( LFormula )
+import Apia.Monad.Base ( T )
 
 ------------------------------------------------------------------------------
 

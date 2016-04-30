@@ -1,20 +1,20 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.TPTP.Translation
+-- Module      : Apia.Translation
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- Translation of ATP pragmas to TPTP formulae.
+-- Translation of ATP pragmas to the target logic.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP                 #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE UnicodeSyntax       #-}
 
-module Apia.TPTP.Translation
+module Apia.Translation
   ( conjecturesToAFors
   , generalRolesToAFors
   ) where
@@ -40,16 +40,17 @@ import Agda.Utils.Monad      ( ifM )
 
 import qualified Agda.Utils.Pretty as AP
 
-import Apia.Logic.Translation.ToFormulae.Functions ( fnToFormula )
-import Apia.Logic.Translation.ToFormulae.Types     ( agdaTypeToFormula )
-import Apia.Monad.Base                             ( getTDefs, isTVarsEmpty, T)
-import Apia.Monad.Reports                          ( reportDLn, reportSLn )
+import Apia.Monad.Base    ( getTDefs, isTVarsEmpty, T)
+import Apia.Monad.Reports ( reportDLn, reportSLn )
 
 import Apia.TPTP.Types
   ( AF(AFor)
   , ConjectureSet(ConjectureSet)
   , GeneralRoles(GeneralRoles)
   )
+
+import Apia.Translation.Functions ( fnToFormula )
+import Apia.Translation.Types     ( agdaTypeToFormula )
 
 import Apia.Utils.AgdaAPI.EtaExpansion     ( EtaExpandible(etaExpand) )
 -- import Apia.Utils.AgdaAPI.IgnoreSharing    ( IgnoreSharing(ignoreSharing) )

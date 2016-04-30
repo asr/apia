@@ -59,10 +59,11 @@ import Apia.Options
   , printUsage
   )
 
-import Apia.Snapshot         ( snapshotTest )
-import Apia.TPTP.Files       ( createConjectureTPTPFile )
-import Apia.TPTP.Translation ( conjecturesToAFors, generalRolesToAFors )
-import Apia.TPTP.Types       ( ConjectureSet, GeneralRoles )
+import Apia.Snapshot   ( snapshotTest )
+import Apia.TPTP.Files ( createConjectureTPTPFile )
+import Apia.TPTP.Types ( ConjectureSet, GeneralRoles )
+
+import Apia.Translation ( conjecturesToAFors, generalRolesToAFors )
 
 import qualified Apia.Utils.Except as E
 

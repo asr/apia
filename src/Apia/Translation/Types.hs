@@ -1,19 +1,19 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.Logic.Translation.ToFormulae.Types
+-- Module      : Apia.Translation.Types
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- Translation of Agda internal types to the target logic formulae.
+-- Translation of Agda internal types to the target logic.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.Logic.Translation.ToFormulae.Types
+module Apia.Translation.Types
   ( agdaDomTypeToFormula
   , agdaTypeToFormula
   ) where
@@ -38,10 +38,10 @@ import Agda.Syntax.Internal as I
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Apia.Logic.Translation.ToFormulae.Terms ( agdaTermToFormula )
-import Apia.Logic.Types                        ( LFormula )
-import Apia.Monad.Base                         ( T )
-import Apia.Monad.Reports                      ( reportSLn )
+import Apia.FOL.Types         ( LFormula )
+import Apia.Monad.Base        ( T )
+import Apia.Monad.Reports     ( reportSLn )
+import Apia.Translation.Terms ( agdaTermToFormula )
 
 #include "undefined.h"
 

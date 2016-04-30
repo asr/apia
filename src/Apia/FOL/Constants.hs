@@ -1,13 +1,13 @@
 -----------------------------------------------------------------------------
 -- |
--- Module      : Apia.Logic.Constants
+-- Module      : Apia.FOL.Constants
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- The logic constants.
+-- First-order logic constants.
 -----------------------------------------------------------------------------
 
 {-# LANGUAGE CPP           #-}
@@ -15,7 +15,7 @@
 
 -- Adapted from AgdaLight (Plugins.FOL.Constants).
 
-module Apia.Logic.Constants
+module Apia.FOL.Constants
   ( lTrue
   , lFalse
   , lNot

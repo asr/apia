@@ -1,14 +1,13 @@
 ------------------------------------------------------------------------------
 -- |
--- Module      : Apia.Logic.Translation.ToFormulae.Functions
+-- Module      : Apia.Translation.Functions
 -- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
 -- License     : See the file LICENSE.
 --
 -- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
 -- Stability   : experimental
 --
--- Translation of Agda internal functions to the target logic
--- formulae.
+-- Translation of Agda internal functions to the target logic.
 ------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP                 #-}
@@ -18,7 +17,7 @@
 -- Only are translated the functions that will be translate as TPTP
 -- definitions.
 
-module Apia.Logic.Translation.ToFormulae.Functions ( fnToFormula ) where
+module Apia.Translation.Functions ( fnToFormula ) where
 
 ------------------------------------------------------------------------------
 
@@ -54,20 +53,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
 import qualified Agda.Utils.Pretty as AP
 
-import Apia.Logic.Translation.ToFormulae.ClauseBody
-  ( cBodyToFormula
-  , cBodyToTerm
-  , dropProofTermOnCBody
-  )
-
-import Apia.Logic.Translation.ToFormulae.Terms
-  ( agdaTermToFormula
-  , agdaTermToTerm
-  )
-
-import Apia.Logic.Translation.ToFormulae.Types ( agdaTypeToFormula )
-
-import Apia.Logic.Types ( LFormula(Implies, Eq, Equiv, ForAll) )
+import Apia.FOL.Types ( LFormula(Implies, Eq, Equiv, ForAll) )
 
 import Apia.Monad.Base
   ( getTVars
@@ -77,6 +63,19 @@ import Apia.Monad.Base
   )
 
 import Apia.Monad.Reports ( reportDLn, reportSLn )
+
+import Apia.Translation.ClauseBody
+  ( cBodyToFormula
+  , cBodyToTerm
+  , dropProofTermOnCBody
+  )
+
+import Apia.Translation.Terms
+  ( agdaTermToFormula
+  , agdaTermToTerm
+  )
+
+import Apia.Translation.Types ( agdaTypeToFormula )
 
 import Apia.Utils.AgdaAPI.DeBruijn ( DecIndex(decIndex) )
 import Apia.Utils.AgdaAPI.Vars     ( BoundedVars(boundedVars) )

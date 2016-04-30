@@ -40,7 +40,6 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( whenM )
 import Agda.Utils.Pretty     ( prettyShow )
 
-import Apia.Common              ( Lang )
 import Apia.Monad.Base          ( askTOpt, T )
 import Apia.Monad.Reports       ( reportS, reportSLn )
 import Apia.Options             ( Options(optOnlyFiles, optOutputDir) )
@@ -127,25 +126,24 @@ agdaOriginalTerm qName role =
   +++ "% Role: " +++ (T.pack . prettyShow) role +++ "\n"
   +++ "% Line: " +++ (T.pack . prettyShow . qNameLine) qName +++ "\n"
 
-addRole ∷ Lang → FilePath → AF → IO ()
-addRole _ file af@(AFor qName afRole _) = do
+addRole ∷ FilePath → AF → IO ()
+addRole file af@(AFor qName afRole _) = do
   T.appendFile file $ agdaOriginalTerm qName afRole
   T.appendFile file $ toTPTP af
 
-addRoles ∷ Lang → FilePath → [AF] → Text → IO ()
-addRoles _    _    []  _   = return ()
-addRoles lang file afs str = do
+addRoles ∷ FilePath → [AF] → Text → IO ()
+addRoles _    []  _   = return ()
+addRoles file afs str = do
   let header, footer ∷ Text
       header = commentLine +++ "% The " +++ str +++ ".\n\n"
       footer = "% End " +++ str +++ ".\n\n"
 
   T.appendFile file header
-  mapM_ (addRole lang file) $ sort afs
+  mapM_ (addRole file) $ sort afs
   T.appendFile file footer
 
-createConjectureFile ∷ Lang → FilePath → GeneralRoles → ConjectureSet →
-                       T FilePath
-createConjectureFile lang file generalRoles conjectureSet = do
+createConjectureFile ∷ FilePath → GeneralRoles → ConjectureSet → T FilePath
+createConjectureFile file generalRoles conjectureSet = do
 
   when (duplicate (axioms generalRoles))     (__IMPOSSIBLE__)
   when (duplicate (defsAxioms generalRoles)) (__IMPOSSIBLE__)
@@ -172,27 +170,27 @@ createConjectureFile lang file generalRoles conjectureSet = do
   liftIO $ do
     conjectureH ← conjectureHeader
     T.writeFile file conjectureH
-    addRoles lang file commonDefs "common required definition(s)"
-    addRoles lang file (axioms newGeneralRoles) "general axiom(s)"
-    addRoles lang file (defsAxioms newGeneralRoles)
+    addRoles file commonDefs "common required definition(s)"
+    addRoles file (axioms newGeneralRoles) "general axiom(s)"
+    addRoles file (defsAxioms newGeneralRoles)
              "required definition(s) by the general axiom(s)"
-    addRoles lang file (hints newGeneralRoles) "general hint(s)"
-    addRoles lang file (defsHints newGeneralRoles)
+    addRoles file (hints newGeneralRoles) "general hint(s)"
+    addRoles file (defsHints newGeneralRoles)
              "required definition(s) by the general hint(s)"
-    addRoles lang file (localHintsConjecture  newConjectureSet) "local hint(s)"
-    addRoles lang file (defsLocalHints newConjectureSet)
+    addRoles file (localHintsConjecture  newConjectureSet) "local hint(s)"
+    addRoles file (defsLocalHints newConjectureSet)
              "required definition(s) by the local hint(s)"
-    addRoles lang file (defsConjecture newConjectureSet)
+    addRoles file (defsConjecture newConjectureSet)
              "required definition(s) by the conjecture"
-    addRoles lang file [ theConjecture newConjectureSet ] "conjecture"
+    addRoles file [ theConjecture newConjectureSet ] "conjecture"
     T.appendFile file conjectureFooter
 
   whenM (askTOpt optOnlyFiles) $ reportS "" 1 $ "Created " ++ file
 
   return file
 
-tptpFileName ∷ Lang → ConjectureSet → T FilePath
-tptpFileName _ conjectureSet = do
+tptpFileName ∷ ConjectureSet → T FilePath
+tptpFileName conjectureSet = do
   -- To avoid clash names with the terms inside a where clause, we
   -- added the line number where the term was defined to the file
   -- name.
@@ -239,7 +237,7 @@ tptpFileName _ conjectureSet = do
 
 -- | The 'createConjectureTPTPFile' function creates a TPTP file with a
 -- conjecture.
-createConjectureTPTPFile ∷ Lang → GeneralRoles → ConjectureSet → T FilePath
-createConjectureTPTPFile lang generalRoles conjectureSet = do
-  file ← tptpFileName lang conjectureSet
-  createConjectureFile lang file generalRoles conjectureSet
+createConjectureTPTPFile ∷ GeneralRoles → ConjectureSet → T FilePath
+createConjectureTPTPFile generalRoles conjectureSet = do
+  file ← tptpFileName conjectureSet
+  createConjectureFile file generalRoles conjectureSet

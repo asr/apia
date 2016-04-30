@@ -75,7 +75,7 @@ import Apia.Common
        , Vampire
        , Z3
        )
-  , Lang(FOF, SMT2)
+  , Lang(SMT2, TPTP)
   )
 
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
@@ -146,7 +146,7 @@ defaultOptions = Options
   , optHelp                            = False
   , optIncludePath                     = []
   , optInputFile                       = Nothing
-  , optLang                            = FOF
+  , optLang                            = TPTP
   , optNoInternalEquality              = False
   , optNoPredicateConstants            = False
   , optOnlyFiles                       = False
@@ -207,10 +207,10 @@ inputFileOpt file opts =
     Just _  → Left $ pretty "only one input file allowed"
 
 langOpt ∷ String → MOptions
-langOpt "fof"  opts = Right opts { optLang = FOF }
+langOpt "tptp" opts = Right opts { optLang = TPTP }
 langOpt "smt2" opts = Right opts { optLang = SMT2 }
 langOpt lang      _ = Left $
-  pretty "Language " <> pretty lang <> pretty " is not valid output language"
+  pretty "Language " <> pretty lang <> pretty " is not a valid output language"
 
 noInternalEqualityOpt ∷ MOptions
 noInternalEqualityOpt opts = Right opts { optNoInternalEquality = True }
@@ -363,8 +363,8 @@ options =
   , Option "i" ["include-path"] (ReqArg includePathOpt "DIR")
                "Look for imports in DIR"
   , Option "L" ["lang"] (ReqArg langOpt "LANG") $
-               "TPTP or SMT-LIB v2 output language (fof or smt2)\n"
-               ++ "(default: fof)"
+               "TPTP or SMT-LIB v2 output language (tptp or smt2)\n"
+               ++ "(default: tptp)"
   , Option []  ["no-internal-equality"] (NoArg noInternalEqualityOpt)
                "Do not translate _≡_ to the ATPs equality"
   , Option []  ["no-predicate-constants"] (NoArg noPredicateConstantsOpt) $

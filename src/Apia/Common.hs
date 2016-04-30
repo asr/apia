@@ -12,7 +12,7 @@
 
 module Apia.Common
   ( ATP(CVC4, E, Equinox, IleanCoP, Metis, SPASS, Vampire, Z3)
-  , Lang(FOF, SMT2)
+  , Lang(SMT2, TPTP)
   )
   where
 
@@ -37,6 +37,7 @@ data ATP = CVC4
 instance Pretty ATP where
   pretty = text . show
 
--- | TPTP output languages.
-data Lang = FOF   -- ^ First-order form.
-          | SMT2  -- ^ SMT-LIB v2 language.
+-- | Target languages.
+data Lang = TPTP   -- ^ FOF (First-order form).
+          | SMT2   -- ^ SMT-LIB v2.
+          deriving Eq

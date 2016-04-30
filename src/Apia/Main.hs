@@ -35,6 +35,7 @@ import Agda.Utils.Lens       ( (^.) )
 
 import Apia.ATPs      ( callATPs, selectedATPs )
 import Apia.CheckTPTP ( checkTPTP )
+import Apia.Common    ( Lang(TPTP) )
 import Apia.Dump      ( dumpTypes )
 
 import Apia.Monad.Base
@@ -139,8 +140,9 @@ runApia = do
 
               -- Creation of the TPTP files.
               tptpFiles ←
-                mapM (createConjectureTPTPFile (optLang opts) (fst allAFs))
-                     (snd allAFs)
+                if optLang opts == TPTP
+                then mapM (createConjectureTPTPFile (fst allAFs)) (snd allAFs)
+                else return []
 
               -- Check the generated TPTP files using the tptp4X
               -- program from the TPTP library.

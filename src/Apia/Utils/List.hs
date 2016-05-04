@@ -36,7 +36,9 @@ isSorted (x : y : xs) = x <= y && isSorted (y : xs)
 
 -- | Return 'True' if there are duplicate elements in the list.
 duplicate ∷ Eq a ⇒ [a] → Bool
-duplicate xs = xs /= nub xs
+duplicate []  = False
+duplicate [_] = False
+duplicate xs  = xs /= nub xs
 
 -- | Return the duplicates elements of an ordered list.
 duplicatesElements ∷ Ord a ⇒ [a] → [a]

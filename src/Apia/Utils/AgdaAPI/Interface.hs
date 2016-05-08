@@ -27,7 +27,6 @@ module Apia.Utils.AgdaAPI.Interface
   , isProjection
   , qNameConcreteNameRange
   , qNameDefinition
-  , QNamesIn(qNamesIn)
   , qNameLine
   , qNameNameBindingSiteRange
   , qNameToString
@@ -58,23 +57,13 @@ import Agda.Syntax.Abstract.Name
   )
 
 import Agda.Syntax.Common
-  ( Arg(Arg)
-  , Dom(Dom)
-  , NameId(NameId)
+  ( NameId(NameId)
   , TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint, TPTPType)
   )
 
 import Agda.Syntax.Internal as I
-  ( Abs(Abs, NoAbs)
-  , Clause(Clause)
-  , ClauseBody
-  , ClauseBodyF(Bind, Body, NoBody)
-  , ConHead(ConHead)
-  , Elim
-  , Elim'(Apply, Proj)
-  , Term(Con, Def, Lam, Pi, Sort, Var)
+  ( Clause
   , Type
-  , Type'(El)
   )
 
 import Agda.Syntax.Position
@@ -353,61 +342,6 @@ getClauses def =
   in case defn of
        Function{} → funClauses defn
        _          → __IMPOSSIBLE__
-
--- | Return the 'QName's in an entity.
-class QNamesIn a where
-  qNamesIn ∷ a → [QName]
-
-instance QNamesIn Term where
-  qNamesIn (Con (ConHead qName _ _) args) = qName : qNamesIn args
-
-  qNamesIn (Def qName args) = qName : qNamesIn args
-
-  qNamesIn (Lam _ absTerm) = qNamesIn absTerm
-
-  qNamesIn (Pi domTy absTy) = qNamesIn domTy ++ qNamesIn absTy
-
-  qNamesIn (Sort _) = []
-
-  qNamesIn (Var n args)
-    | n >= 0    = qNamesIn args
-    | otherwise = __IMPOSSIBLE__
-
-  qNamesIn _ = __IMPOSSIBLE__
-
-instance QNamesIn Type where
-  qNamesIn (El _ term) = qNamesIn term
-
-instance QNamesIn Elim where
-  qNamesIn (Apply (Arg _ term)) = qNamesIn term
-  qNamesIn (Proj _)             = __IMPOSSIBLE__
-
-instance QNamesIn ClauseBody where
-  qNamesIn (Body term)          = qNamesIn term
-  qNamesIn (Bind absClauseBody) = qNamesIn absClauseBody
-  -- 31 May 2012. We don't have an example of this case.
-  --
-  -- qNamesIn NoBody               = []
-  qNamesIn NoBody = __IMPOSSIBLE__
-
-instance QNamesIn Clause where
-  qNamesIn (Clause _ _ _ body _ _) = qNamesIn body
-
-instance QNamesIn Definition where
-  qNamesIn def = qNamesIn $ defType def
-
-instance QNamesIn a ⇒ QNamesIn [a] where
-  qNamesIn = concatMap qNamesIn
-
-instance QNamesIn a ⇒ QNamesIn (Arg a) where
-  qNamesIn (Arg _ e) = qNamesIn e
-
-instance QNamesIn a ⇒ QNamesIn (Dom a) where
-  qNamesIn (Dom _ e) = qNamesIn e
-
-instance QNamesIn a ⇒ QNamesIn (Abs a) where
-  qNamesIn (Abs _ e)   = qNamesIn e
-  qNamesIn (NoAbs _ e) = qNamesIn e
 
 -- Adapted from Agda.TypeChecking.Monad.Signature.isProjection.
 -- | Is it the 'Qname' a projection?

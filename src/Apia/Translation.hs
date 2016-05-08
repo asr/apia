@@ -28,7 +28,8 @@ import Agda.Syntax.Abstract.Name ( QName )
 import Agda.Syntax.Common
   ( TPTPRole(TPTPAxiom, TPTPConjecture, TPTPDefinition, TPTPHint) )
 
-import Agda.Syntax.Internal ( Clause, Type )
+import Agda.Syntax.Internal       ( Clause, Type )
+import Agda.Syntax.Internal.Names ( NamesIn(namesIn) )
 
 import Agda.TypeChecking.Monad.Base
   ( Definition(defName, defType)
@@ -63,7 +64,6 @@ import Apia.Utils.AgdaAPI.Interface
   , getLocalHints
   , isATPDefinition
   , qNameDefinition
-  , QNamesIn(qNamesIn)
   , qNameConcreteNameRange
   )
 
@@ -74,6 +74,8 @@ import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
 import Apia.Utils.Show        ( showListLn, showLn )
 
 import qualified Data.HashMap.Strict as HashMap ( elems, keys )
+
+import qualified Data.Set as Set
 
 #include "undefined.h"
 
@@ -206,15 +208,11 @@ requiredQName qName = do
 -- definitions used in its definition.
 requiredATPDefsByATPDefinition ∷ Definition → T [AF]
 requiredATPDefsByATPDefinition def = do
-  -- We get all the 'QName's in the definition's clauses.
+  -- The cls must be unitary, but it was checked elsewhere.
   let cls ∷ [Clause]
       cls = getClauses def
 
-  -- The cls must be unitary, but it was checked elsewhere.
-  let qNamesInClause ∷ [QName]
-      qNamesInClause = qNamesIn cls
-
-  fmap (nub . concat) (mapM requiredQName qNamesInClause)
+  fmap (nub . concat) (mapM requiredQName $ Set.toList $ namesIn cls)
 
 requiredATPDefsByLocalHints ∷ Definition → T [AF]
 requiredATPDefsByLocalHints def = do
@@ -254,12 +252,8 @@ axiomsToAFors = do
   zipWithM (toAFor TPTPAxiom) (HashMap.keys axDefs) (HashMap.elems axDefs)
 
 requiredATPDefsByDefinition ∷ Definition → T [AF]
-requiredATPDefsByDefinition def = do
-  -- We get all the @QNames@ in the definition.
-  let qNamesInDef ∷ [QName]
-      qNamesInDef = qNamesIn def
-
-  fmap (nub . concat) (mapM requiredQName qNamesInDef)
+requiredATPDefsByDefinition def =
+  fmap (nub . concat) (mapM requiredQName $ Set.toList $ namesIn def)
 
 requiredATPDefsByAxioms ∷ T [AF]
 requiredATPDefsByAxioms = do

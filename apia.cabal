@@ -94,11 +94,10 @@ executable apia
     Apia.Utils.Version
     Paths_apia
 
-  ghc-options:
-    -w
-    -Werror
-    -- Using cpphs as the C preprocessor.
-    -pgmP cpphs -optP --cpp
+  ghc-options: -w
+               -Werror
+               -- Using cpphs as the C preprocessor.
+               -pgmP cpphs -optP --cpp
 
   if impl(ghc >= 7.6)
      ghc-options: -fwarn-alternative-layout-rule-transitional

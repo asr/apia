@@ -39,14 +39,6 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/Schemati
 apia: use the ‘--schematic-functions’ option for the translation of first-order logic universal quantified functions
 >>>= 1
 
-#6. RemoveProofTerms.hs: Underscore variables
-dist/build/apia/apia -itest/fail/errors test/fail/errors/Underscore.agda
-<<<
->>>
->>>2
-apia: the translation of underscore variables is not implemented
->>>= 1
-
 #7. Options.hs: Only process one input file
 dist/build/apia/apia File1.agda File2.agda
 <<<

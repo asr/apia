@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- We do not translate underscore variables
+-- Testing the translation of wild card patterns
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}
@@ -7,7 +7,7 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module Underscore where
+module WildCardPattern where
 
 infix 4 _≡_
 

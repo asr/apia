@@ -159,9 +159,10 @@ instance RemoveVar Elims where
     when (n < 0) (__IMPOSSIBLE__)
     vars ← getTVars
 
+    -- TODO (2016-05-13): Missing test case for this error.
     when (x == "_") $
       E.throwE $
-        pretty "the translation of underscore variables is not implemented"
+        pretty "the translation of wild card patterns is not implemented"
 
     let index ∷ Nat
         index = fromMaybe (__IMPOSSIBLE__) $ elemIndex x vars

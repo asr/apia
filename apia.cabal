@@ -163,7 +163,7 @@ executable apia
 
   if impl(ghc >= 8.0)
     ghc-options: -Wmissing-local-signatures
-                 -Wmissing-monadfail-instance
+                 -Wmissing-monadfail-instances
                  -Wmissing-pattern-synonym-signatures
                  -Wnoncanonical-monad-instances
                  -Wnoncanonical-monoid-instances

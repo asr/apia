@@ -1,0 +1,85 @@
+# Adapted from https://github.com/hvr/multi-ghc-travis
+
+# NB: don't set `language: haskell` here.
+language: c
+
+# Explicitly request container-based infrastructure.
+sudo: false
+
+##############################################################################
+# Tests
+
+matrix:
+  include:
+    - env: TEST=main GHC_VER=8.0.1 CABAL_VER=1.24
+      addons:
+        apt:
+          packages:
+            - cabal-install-1.24
+            - ghc-8.0.1
+          sources:
+            - hvr-ghc
+
+    - env: TEST=main GHC_VER=7.10.3 CABAL_VER=1.22
+      addons:
+        apt:
+          packages:
+            - cabal-install-1.22
+            - ghc-7.10.3
+          sources:
+            - hvr-ghc
+
+    - env: TEST=main GHC_VER=7.8.4 CABAL_VER=1.18
+      addons:
+        apt:
+          packages:
+            - cabal-install-1.18
+            - ghc-7.8.4
+          sources:
+            - hvr-ghc
+
+    - env: TEST=main GHC_VER=7.6.3 CABAL_VER=1.18
+      addons:
+        apt:
+          packages:
+            - cabal-install-1.18
+            - ghc-7.6.3
+          sources:
+            - hvr-ghc
+
+##############################################################################
+before_install:
+  - export PATH=/opt/ghc/$GHC_VER/bin:/opt/cabal/$CABAL_VER/bin:$PATH
+
+##############################################################################
+install:
+  # How much memory we have.
+  - vmstat -s
+
+  # Asking for the shell.
+  - echo $SHELL
+
+  - cabal --version
+  - ghc --version
+  - cabal update
+  - cat $HOME/.cabal/config
+  - cabal install cabal-install
+  - export PATH=$HOME/.cabal/bin:$PATH
+  - export JOBS=2
+
+##############################################################################
+# Installing the extended version of Agda
+
+  - cabal install alex
+  - cabal install happy
+  - git clone https://github.com/asr/eagda.git && cd eagda && cabal install --disable-tests --force-reinstalls && cd ../
+
+##############################################################################
+script:
+
+  - make install-bin
+
+branches:
+  only:
+    - master
+    - travis

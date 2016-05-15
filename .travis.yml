@@ -72,12 +72,12 @@ install:
 
   - cabal install alex
   - cabal install happy
-  - git clone https://github.com/asr/eagda.git && cd eagda && cabal install --disable-tests --force-reinstalls && cd ../
+  - git clone https://github.com/asr/eagda.git && cd eagda && cabal install -v2 -j${JOBS} --disable-tests --force-reinstalls && cd ../
 
 ##############################################################################
 script:
 
-  - make install-bin
+  - cabal install -v2 -j${JOBS}
 
 branches:
   only:

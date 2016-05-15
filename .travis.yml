@@ -82,4 +82,3 @@ script:
 branches:
   only:
     - master
-    - travis

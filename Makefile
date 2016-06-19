@@ -89,7 +89,7 @@ prove_notes_files = $(call my_pathsubst,prove_notes,$(notes_path))
 GENERATED_FOL_THEOREMS_FLAGS = \
   -v 0\
   -i$(fol_theorems_path) --only-files \
-  --output-dir=$(output_dir)/$(fol_theorems_path)
+  --output-dir=$(output_dir)
 
 %.generated_fol_theorems :
 	@echo "Comparing $*.agda"
@@ -120,7 +120,7 @@ GENERATED_NON_FOL_THEOREMS_FLAGS = \
   -v 0 \
   -i$(non_fol_theorems_path) \
   --only-files \
-  --output-dir=$(output_dir)/$(non_fol_theorems_path)
+  --output-dir=$(output_dir)
 
 %.generated_non_fol_theorems :
 	@echo "Comparing $*.agda"
@@ -163,7 +163,7 @@ GENERATED_NON_THEOREMS_FLAGS = \
   -v 0 \
   -i$(non_theorems_path) \
   --only-files \
-  --output-dir=$(output_dir)/$(non_theorems_path)
+  --output-dir=$(output_dir)
 
 %.generated_non_theorems :
 	@echo "Comparing $*.agda"

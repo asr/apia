@@ -49,7 +49,7 @@ Usage: apia [OPTIONS] FILE
 dist/build/apia/apia -itest/succeed/non-conjectures --only-files test/succeed/non-conjectures/TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/TrivialTheorem/20-foo.fof
+Created /tmp/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 
@@ -57,7 +57,7 @@ Created /tmp/TrivialTheorem/20-foo.fof
 dist/build/apia/apia -itest/succeed/non-conjectures -v1 --only-files test/succeed/non-conjectures/TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/TrivialTheorem/20-foo.fof
+Created /tmp/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 
@@ -73,20 +73,20 @@ Apia version 1.0.1
 dist/build/apia/apia -itest/succeed/non-conjectures --atp=e --unproven-conjecture-no-error test/succeed/non-conjectures/NoTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/NoTheorem/17-foo.fof
+Proving the conjecture in /tmp/test/succeed/non-conjectures/NoTheorem/17-foo.fof
 E 1.9 Sourenee *did not* prove the conjecture
-the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
+the ATP(s) did not prove the conjecture in /tmp/test/succeed/non-conjectures/NoTheorem/17-foo.fof
 >>>2
 >>>= 0
 
 # --snapshot-no-error
-dist/build/apia/apia -itest/succeed/non-conjectures --only-files --output-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/succeed/non-conjectures --snapshot-no-error --snapshot-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda
+dist/build/apia/apia -itest/succeed/non-conjectures --only-files --output-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/succeed/non-conjectures --snapshot-no-error --snapshot-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/snapshot/TrivialTheorem/20-foo.fof
+Created /tmp/snapshot/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
 the files are different:
-/tmp/TrivialTheorem/20-foo.fof
-/tmp/snapshot/TrivialTheorem/20-foo.fof
+/tmp/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
+/tmp/snapshot/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 

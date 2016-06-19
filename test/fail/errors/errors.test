@@ -76,7 +76,7 @@ dist/build/apia/apia -itest/fail/errors --snapshot-test --snapshot-dir=no-dir te
 <<<
 >>>
 >>>2
-apia: the file no-dir/TrivialTheorem/20-foo.fof does not exist
+apia: the file no-dir/test/fail/errors/TrivialTheorem/20-foo.fof does not exist
 >>>= 1
 
 # ATP.hs: ATP unknown
@@ -91,7 +91,7 @@ apia: the ATP ‘foo’ is unknown
 dist/build/apia/apia -itest/fail/errors --atp=vampire --with-vampire=xxx test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/TrivialTheorem/20-foo.fof
+Proving the conjecture in /tmp/test/fail/errors/TrivialTheorem/20-foo.fof
 >>>2
 apia: the ‘xxx’ command associated with Vampire does not exist
 >>>= 1
@@ -100,10 +100,10 @@ apia: the ‘xxx’ command associated with Vampire does not exist
 dist/build/apia/apia -itest/fail/errors --atp=e test/fail/errors/NoTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/NoTheorem/17-foo.fof
+Proving the conjecture in /tmp/test/fail/errors/NoTheorem/17-foo.fof
 E 1.9 Sourenee *did not* prove the conjecture
 >>>2
-apia: the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
+apia: the ATP(s) did not prove the conjecture in /tmp/test/fail/errors/NoTheorem/17-foo.fof
 >>>= 1
 
 # Functions.hs : The definitions to be translated only can have one clause
@@ -123,14 +123,14 @@ apia: the interface file /tmp/A.agdai does not exist (use Agda to generate it)
 >>>= 1
 
 # Snapshot.hs: The snapshot and the generated conjecture are differents.
-dist/build/apia/apia -itest/fail/errors --only-files --output-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/fail/errors --snapshot-test --snapshot-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda
+dist/build/apia/apia -itest/fail/errors --only-files --output-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/test/fail/errors/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/fail/errors --snapshot-test --snapshot-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/snapshot/TrivialTheorem/20-foo.fof
+Created /tmp/snapshot/test/fail/errors/TrivialTheorem/20-foo.fof
 >>>2
 apia: the files are different:
-/tmp/TrivialTheorem/20-foo.fof
-/tmp/snapshot/TrivialTheorem/20-foo.fof
+/tmp/test/fail/errors/TrivialTheorem/20-foo.fof
+/tmp/snapshot/test/fail/errors/TrivialTheorem/20-foo.fof
 >>>= 1
 
 # Options.hs (System.Console.GetOpt): -i
@@ -282,7 +282,7 @@ dist/build/apia/apia -itest/fail/errors --check test/fail/errors/DuplicateFormul
 <<<
 >>>
 >>>2
-apia: tptp4X found an error/warning in the file /tmp/DuplicateFormulaTPTP4XError/22-foo.fof
+apia: tptp4X found an error/warning in the file /tmp/test/fail/errors/DuplicateFormulaTPTP4XError/22-foo.fof
 Please report this as a bug
 
 ERROR: Duplicate annotated formula name "n12_8770576564447903158"

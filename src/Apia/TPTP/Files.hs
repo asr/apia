@@ -22,27 +22,24 @@ module Apia.TPTP.Files ( createConjectureTPTPFile ) where
 import Apia.Prelude
 
 import Agda.Syntax.Abstract.Name
-  ( mnameToConcrete
-  , Name(nameConcrete)
-  , QName(qnameModule, qnameName)
+  ( Name(nameConcrete)
+  , QName(qnameName)
   , qnameToConcrete
   )
 
 import Agda.Syntax.Common ( TPTPRole )
 
-import Agda.Syntax.Concrete.Name
-  ( moduleNameToFileName
-  , nameStringParts
-  , toTopLevelModuleName
-  )
+import Agda.Syntax.Concrete.Name ( nameStringParts )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( whenM )
 import Agda.Utils.Pretty     ( prettyShow )
 
-import Apia.Monad.Base          ( askTOpt, T )
-import Apia.Monad.Reports       ( reportS, reportSLn )
-import Apia.Options             ( Options(optOnlyFiles, optOutputDir) )
+import Apia.Monad.Base    ( askTOpt, T )
+import Apia.Monad.Reports ( reportS, reportSLn )
+
+import Apia.Options ( Options(optInputFile, optOnlyFiles, optOutputDir) )
+
 import Apia.TPTP.ConcreteSyntax ( ToTPTP(toTPTP) )
 
 import Apia.TPTP.Types
@@ -64,9 +61,8 @@ import Apia.Utils.AgdaAPI.Interface
  , qNameNameBindingSiteRange
  )
 
-import Apia.Utils.List        ( duplicate )
-import Apia.Utils.String      ( removeString )
-import Apia.Utils.Text        ( (+++), toUpperFirst )
+import Apia.Utils.List ( duplicate )
+import Apia.Utils.Text ( (+++), toUpperFirst )
 
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
@@ -76,7 +72,12 @@ import qualified Data.Text.IO as T
 
 import System.Directory   ( createDirectoryIfMissing )
 import System.Environment ( getProgName )
-import System.FilePath    ( (</>), addExtension )
+
+import System.FilePath
+  ( (</>)
+  , addExtension
+  , dropExtension
+  )
 
 #include "undefined.h"
 
@@ -195,25 +196,19 @@ tptpFileName conjectureSet = do
   -- added the line number where the term was defined to the file
   -- name.
   outputDir ← askTOpt optOutputDir
+  inputFile ← fromMaybe (__IMPOSSIBLE__) <$> askTOpt optInputFile
+
+  reportSLn "tptpFileName" 20 $ "outputDir: " ++ outputDir
+  reportSLn "tptpFileName" 20 $ "inputFile: " ++ inputFile
 
   let qName ∷ QName
       qName = case theConjecture conjectureSet of
                 AFor _qName _ _ → _qName
 
-      moduleDir ∷ FilePath
-      moduleDir = ((`moduleNameToFileName` [])
-                   . toTopLevelModuleName
-                   . mnameToConcrete
-                   . qnameModule) qName
-
-      -- We removed the "/_"s in the module name produced by Agda when
-      -- the qName is inside a where clause.
       finalDir ∷ FilePath
-      finalDir = outputDir </> removeString "/_" moduleDir
+      finalDir = outputDir </> dropExtension inputFile
 
   liftIO $ createDirectoryIfMissing True finalDir
-
-  reportSLn "tptpFileName" 20 $ "Final dir: " ++ finalDir
 
   reportSLn "tptpFileName" 20 $
     "Qname's concrete name range: " ++ (show . qNameConcreteNameRange) qName

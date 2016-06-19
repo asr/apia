@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- Testing the class AgdaInternal.DeBruijn.ChangeIndex: (Def _ []) term
+-- Testing the type class DeBruijn.ChangeIndex: (Def _ []) term
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}

@@ -1,4 +1,4 @@
-#1. --help
+# --help
 dist/build/apia/apia --help
 <<<
 >>>
@@ -45,7 +45,7 @@ Usage: apia [OPTIONS] FILE
 >>>2
 >>>= 0
 
-#2. --only-files
+# --only-files
 dist/build/apia/apia -itest/succeed/non-conjectures --only-files test/succeed/non-conjectures/TrivialTheorem.agda
 <<<
 >>>
@@ -53,7 +53,7 @@ Created /tmp/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 
-#3. --verbose
+# --verbose
 dist/build/apia/apia -itest/succeed/non-conjectures -v1 --only-files test/succeed/non-conjectures/TrivialTheorem.agda
 <<<
 >>>
@@ -61,7 +61,7 @@ Created /tmp/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 
-#4. --version
+# --version
 dist/build/apia/apia --version
 <<<
 >>>
@@ -69,7 +69,7 @@ Apia version 1.0.1
 >>>2
 >>>= 0
 
-#5. --unproven-conjecture-no-error
+# --unproven-conjecture-no-error
 dist/build/apia/apia -itest/succeed/non-conjectures --atp=e --unproven-conjecture-no-error test/succeed/non-conjectures/NoTheorem.agda
 <<<
 >>>
@@ -79,7 +79,7 @@ the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
 >>>2
 >>>= 0
 
-#6. --snapshot-no-error
+# --snapshot-no-error
 dist/build/apia/apia -itest/succeed/non-conjectures --only-files --output-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/succeed/non-conjectures --snapshot-no-error --snapshot-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda
 <<<
 >>>
@@ -90,7 +90,7 @@ the files are different:
 >>>2
 >>>= 0
 
-#7. Interface file
+# Interface file
 agda -itest/succeed/non-conjectures -v 0 -v "main:50" test/succeed/non-conjectures/Foo.agda
 <<<
 >>>
@@ -125,7 +125,7 @@ Interface
 >>>2
 >>>= 0
 
-#8. --dump-types
+# --dump-types
 dist/build/apia/apia -itest/succeed/non-conjectures --dump-types test/succeed/non-conjectures/Foo.agda
 <<<
 >>>
@@ -135,7 +135,7 @@ Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}
 >>>2
 >>>= 0
 
-#9. Issue 18
+# Issue 18
 dist/build/apia/apia -itest/succeed/non-conjectures --dump-types test/succeed/non-conjectures/Issue18.agda
 <<<
 >>>

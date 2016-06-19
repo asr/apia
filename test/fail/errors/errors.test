@@ -1,4 +1,4 @@
-#1. Interface.hs: No file
+# Interface.hs: No file
 dist/build/apia/apia /tmp/NoFile.agda
 <<<
 >>>
@@ -6,7 +6,7 @@ dist/build/apia/apia /tmp/NoFile.agda
 apia: the file /tmp/NoFile.agda does not exist
 >>>= 1
 
-#2. RemoveProofTerms.hs : Don't erase a proof term
+# RemoveProofTerms.hs : Don't erase a proof term
 dist/build/apia/apia -itest/fail/errors test/fail/errors/NotErasedProofTerm.agda
 <<<
 >>>
@@ -15,7 +15,7 @@ apia: the translation failed because we do not know how erase the term
 Pi r(El {_getSort = Type (Max []), unEl = Def NotErasedProofTerm.D []}) (Abs "k" El {_getSort = Type (Max []), unEl = Def NotErasedProofTerm._≤_ [Apply r(Var 0 []),Apply r(Var 0 [])]})
 >>>= 1
 
-#3. Terms.hs: Required --schematic-propositional-symbols option
+# Terms.hs: Required --schematic-propositional-symbols option
 dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/SchematicPropositionalSymbols.agda
 <<<
 >>>
@@ -23,7 +23,7 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/Schemati
 apia: use the ‘--schematic-propositional-symbols’ option for the translation of first-order logic universal quantified propositional symbols
 >>>= 1
 
-#4. Terms.hs: Required --schematic-propositional-functions option
+# Terms.hs: Required --schematic-propositional-functions option
 dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/SchematicPropositionalFunctions.agda
 <<<
 >>>
@@ -31,7 +31,7 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/Schemati
 apia: use the ‘--schematic-propositional-functions’ option for the translation of first-order logic universal quantified propositional functions
 >>>= 1
 
-#5. Terms.hs: Required --schematic-functions option
+# Terms.hs: Required --schematic-functions option
 dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/SchematicFunctions.agda
 <<<
 >>>
@@ -39,7 +39,7 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/Schemati
 apia: use the ‘--schematic-functions’ option for the translation of first-order logic universal quantified functions
 >>>= 1
 
-#7. Options.hs: Only process one input file
+# Options.hs: Only process one input file
 dist/build/apia/apia File1.agda File2.agda
 <<<
 >>>
@@ -47,7 +47,7 @@ dist/build/apia/apia File1.agda File2.agda
 apia: only one input file allowed
 >>>= 1
 
-#8. Unrecognized option
+# Unrecognized option
 dist/build/apia/apia --xxx
 <<<
 >>>
@@ -55,7 +55,7 @@ dist/build/apia/apia --xxx
 apia: unrecognized option `--xxx'
 >>>= 1
 
-#9. Main.hs: Missing input file
+# Main.hs: Missing input file
 dist/build/apia/apia
 <<<
 >>>
@@ -63,7 +63,7 @@ dist/build/apia/apia
 apia: missing input file (try --help)
 >>>= 1
 
-#10. Snapshot.hs: The --output-dir cannot be the same than the --snapshot-dir
+# Snapshot.hs: The --output-dir cannot be the same than the --snapshot-dir
 dist/build/apia/apia -itest/fail/errors --output-dir=/tmp --snapshot-test --snapshot-dir=/tmp test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
@@ -71,7 +71,7 @@ dist/build/apia/apia -itest/fail/errors --output-dir=/tmp --snapshot-test --snap
 apia: the ‘--output-dir’ and ‘--snapshot-dir’ options cannot be the same
 >>>= 1
 
-#11. Snapshot.hs: Missing snapshot file
+# Snapshot.hs: Missing snapshot file
 dist/build/apia/apia -itest/fail/errors --snapshot-test --snapshot-dir=no-dir test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
@@ -79,7 +79,7 @@ dist/build/apia/apia -itest/fail/errors --snapshot-test --snapshot-dir=no-dir te
 apia: the file no-dir/TrivialTheorem/20-foo.fof does not exist
 >>>= 1
 
-#12. ATP.hs: ATP unknown
+# ATP.hs: ATP unknown
 dist/build/apia/apia -itest/fail/errors --atp=foo test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
@@ -87,7 +87,7 @@ dist/build/apia/apia -itest/fail/errors --atp=foo test/fail/errors/TrivialTheore
 apia: the ATP ‘foo’ is unknown
 >>>= 1
 
-#13. ATP.hs: Bad ATP executable name
+# ATP.hs: Bad ATP executable name
 dist/build/apia/apia -itest/fail/errors --atp=vampire --with-vampire=xxx test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
@@ -96,7 +96,7 @@ Proving the conjecture in /tmp/TrivialTheorem/20-foo.fof
 apia: the ‘xxx’ command associated with Vampire does not exist
 >>>= 1
 
-#14. ATP.hs: No theorem
+# ATP.hs: No theorem
 dist/build/apia/apia -itest/fail/errors --atp=e test/fail/errors/NoTheorem.agda
 <<<
 >>>
@@ -106,7 +106,7 @@ E 1.9 Sourenee *did not* prove the conjecture
 apia: the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
 >>>= 1
 
-#15. Functions.hs : The definitions to be translated only can have one clause
+# Functions.hs : The definitions to be translated only can have one clause
 dist/build/apia/apia -itest/fail/errors test/fail/errors/OnlyOneClause.agda
 <<<
 >>>
@@ -114,7 +114,7 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/OnlyOneClause.agda
 apia: the translation of ‘OnlyOneClause._+_’ failed because its definition only can have a clause
 >>>= 1
 
-#16. Interface.hs: Missing interface file
+# Interface.hs: Missing interface file
 echo -e "module A where" > /tmp/A.agda && dist/build/apia/apia /tmp/A.agda
 <<<
 >>>
@@ -122,7 +122,7 @@ echo -e "module A where" > /tmp/A.agda && dist/build/apia/apia /tmp/A.agda
 apia: the interface file /tmp/A.agdai does not exist (use Agda to generate it)
 >>>= 1
 
-#17. Snapshot.hs: The snapshot and the generated conjecture are differents.
+# Snapshot.hs: The snapshot and the generated conjecture are differents.
 dist/build/apia/apia -itest/fail/errors --only-files --output-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/fail/errors --snapshot-test --snapshot-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
@@ -133,7 +133,7 @@ apia: the files are different:
 /tmp/snapshot/TrivialTheorem/20-foo.fof
 >>>= 1
 
-#18. Options.hs (System.Console.GetOpt): -i
+# Options.hs (System.Console.GetOpt): -i
 dist/build/apia/apia -i
 <<<
 >>>
@@ -141,7 +141,7 @@ dist/build/apia/apia -i
 apia: option `-i' requires an argument DIR
 >>>= 1
 
-#19. Options.hs (System.Console.GetOpt): --include-path
+# Options.hs (System.Console.GetOpt): --include-path
 dist/build/apia/apia --include-path
 <<<
 >>>
@@ -149,7 +149,7 @@ dist/build/apia/apia --include-path
 apia: option `--include-path' requires an argument DIR
 >>>= 1
 
-#20. Options.hs: --include-path=
+# Options.hs: --include-path=
 dist/build/apia/apia --include-path=
 <<<
 >>>
@@ -157,7 +157,7 @@ dist/build/apia/apia --include-path=
 apia: option ‘--include-path’ requires an argument DIR
 >>>= 1
 
-#21. Options.hs (System.Console.GetOpt): --atp
+# Options.hs (System.Console.GetOpt): --atp
 dist/build/apia/apia --atp
 <<<
 >>>
@@ -165,7 +165,7 @@ dist/build/apia/apia --atp
 apia: option `--atp' requires an argument NAME
 >>>= 1
 
-#22. Options.hs: --atp=
+# Options.hs: --atp=
 dist/build/apia/apia --atp=
 <<<
 >>>
@@ -173,7 +173,7 @@ dist/build/apia/apia --atp=
 apia: option ‘--atp’ requires an argument NAME
 >>>= 1
 
-#23. Options.hs (System.Console.GetOpt): --output-dir
+# Options.hs (System.Console.GetOpt): --output-dir
 dist/build/apia/apia --output-dir
 <<<
 >>>
@@ -181,7 +181,7 @@ dist/build/apia/apia --output-dir
 apia: option `--output-dir' requires an argument DIR
 >>>= 1
 
-#24. Options.hs: --output-dir=
+# Options.hs: --output-dir=
 dist/build/apia/apia --output-dir=
 <<<
 >>>
@@ -189,7 +189,7 @@ dist/build/apia/apia --output-dir=
 apia: option ‘--output-dir’ requires an argument DIR
 >>>= 1
 
-#25. Options.hs (System.Console.GetOpt): --snapshot-dir
+# Options.hs (System.Console.GetOpt): --snapshot-dir
 dist/build/apia/apia --snapshot-dir
 <<<
 >>>
@@ -197,7 +197,7 @@ dist/build/apia/apia --snapshot-dir
 apia: option `--snapshot-dir' requires an argument DIR
 >>>= 1
 
-#26. Options.hs: --snapshot-dir=
+# Options.hs: --snapshot-dir=
 dist/build/apia/apia --snapshot-dir=
 <<<
 >>>
@@ -205,7 +205,7 @@ dist/build/apia/apia --snapshot-dir=
 apia: option ‘--snapshot-dir’ requires an argument DIR
 >>>= 1
 
-#27. Options.hs (System.Console.GetOpt): --time
+# Options.hs (System.Console.GetOpt): --time
 dist/build/apia/apia --time
 <<<
 >>>
@@ -213,7 +213,7 @@ dist/build/apia/apia --time
 apia: option `--time' requires an argument NUM
 >>>= 1
 
-#28. Options.hs: --time=
+# Options.hs: --time=
 dist/build/apia/apia --time=
 <<<
 >>>
@@ -221,7 +221,7 @@ dist/build/apia/apia --time=
 apia: option ‘--time’ requires an argument NUM
 >>>= 1
 
-#29. Options.hs: --time=negative_value
+# Options.hs: --time=negative_value
 dist/build/apia/apia --time=-10
 <<<
 >>>
@@ -229,7 +229,7 @@ dist/build/apia/apia --time=-10
 apia: option ‘--time’ requires a non-negative integer argument
 >>>= 1
 
-#30. Options.hs (System.Console.GetOpt): --with-vampire
+# Options.hs (System.Console.GetOpt): --with-vampire
 dist/build/apia/apia --with-vampire
 <<<
 >>>
@@ -237,7 +237,7 @@ dist/build/apia/apia --with-vampire
 apia: option `--with-vampire' requires an argument PATH
 >>>= 1
 
-#31. Options.hs: --with-vampire=
+# Options.hs: --with-vampire=
 dist/build/apia/apia --with-vampire=
 <<<
 >>>
@@ -245,7 +245,7 @@ dist/build/apia/apia --with-vampire=
 apia: option ‘--with-vampire’ requires an argument PATH
 >>>= 1
 
-#32. Options.hs (System.Console.GetOpt): -v
+# Options.hs (System.Console.GetOpt): -v
 dist/build/apia/apia -v
 <<<
 >>>
@@ -253,7 +253,7 @@ dist/build/apia/apia -v
 apia: option `-v' requires an argument N
 >>>= 1
 
-#33. Options.hs (System.Console.GetOpt): --verbose
+# Options.hs (System.Console.GetOpt): --verbose
 dist/build/apia/apia --verbose
 <<<
 >>>
@@ -261,7 +261,7 @@ dist/build/apia/apia --verbose
 apia: option `--verbose' requires an argument N
 >>>= 1
 
-#34. Options.hs: --verbose=
+# Options.hs: --verbose=
 dist/build/apia/apia --verbose=
 <<<
 >>>
@@ -269,7 +269,7 @@ dist/build/apia/apia --verbose=
 apia: option ‘--verbose’ requires an argument of the form x.y.z:N or N
 >>>= 1
 
-#35. Functions.hs: The definitions to be translated must be first-order
+# Functions.hs: The definitions to be translated must be first-order
 dist/build/apia/apia -itest/fail/errors test/fail/errors/HigherOrderDefinition.agda
 <<<
 >>>
@@ -277,7 +277,7 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/HigherOrderDefinition.a
 apia: the translation of ‘HigherOrderDefinition.twice’ failed because it is a higher-order definition
 >>>= 1
 
-#36. ChechTPTP.hs: tptp4X yields an error because there is a duplicate formulate
+# ChechTPTP.hs: tptp4X yields an error because there is a duplicate formulate
 dist/build/apia/apia -itest/fail/errors --check test/fail/errors/DuplicateFormulaTPTP4XError.agda
 <<<
 >>>
@@ -289,7 +289,7 @@ ERROR: Duplicate annotated formula name "n12_8770576564447903158"
 
 >>>= 1
 
-#37. Terms.hs: The --schematic-propositional-functions and the --no-predicate-constants option are incompatible
+# Terms.hs: The --schematic-propositional-functions and the --no-predicate-constants option are incompatible
 dist/build/apia/apia --schematic-propositional-functions --no-predicate-constants -itest/fail/errors test/fail/errors/SchematicPropositionalFunctionsWithoutPredicateSymbols.agda
 <<<
 >>>

@@ -68,11 +68,18 @@ install:
   - export JOBS=2
 
 ##############################################################################
-# Installing the extended version of Agda
+# Installing the extended version of Agda (adapted from Agda)
 
   - cabal install alex
   - cabal install happy
-  - git clone https://github.com/asr/eagda.git && cd eagda && cabal install -v2 -j${JOBS} --enable-tests --force-reinstalls && cd ../
+  - git clone https://github.com/asr/eagda.git
+  - cd eagda
+  - cabal install --only-dependencies --enable-tests --force-reinstalls
+  - cabal configure -v2 --enable-tests
+  - cabal build -v2 -j${JOBS}
+  - cabal copy
+  - cabal register
+  - cd ..
 
 ##############################################################################
 script:

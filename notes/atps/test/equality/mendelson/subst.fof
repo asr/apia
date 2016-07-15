@@ -13,7 +13,7 @@
 % IleanCoP V1.3beta1
 % $ ileancop file_name
 
-% Metis 2.3 (release 20160102)
+% Metis 2.3 (release 20160714)
 % $ metis --time-limit 240 file_name
 
 % Vampire 0.6 (revision 903)

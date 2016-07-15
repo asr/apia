@@ -13,7 +13,7 @@ fof(test, conjecture, ((! [A] : p) => p)).
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % $ metis --version
-% metis 2.3 (release 20160102)
+% metis 2.3 (release 20160714)
 
 % $ metis erase-universal-quantifier.fof
 % SZS status Theorem for erase-universal-quantifier.fof

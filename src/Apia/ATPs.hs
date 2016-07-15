@@ -153,7 +153,7 @@ atpOk E = "Proof found!"
 atpOk Equinox = "+++ RESULT: Theorem"
 -- ileanCoP 1.3 beta1.
 atpOk IleanCoP = "Intuitionistic Theorem"
--- Metis 2.3 (release 20160102).
+-- Metis 2.3 (release 20160714).
 atpOk Metis = "SZS status Theorem"
 -- SPASS 3.7.
 atpOk SPASS = "Proof found"

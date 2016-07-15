@@ -17,11 +17,13 @@ In Apia
 
 * Run test-suite
 
-    make apia_changed
+    make agda_apia_changed
 
 * Update README.md.
 
 * Search for comments using the old version.
+
+* Commit and push the changes.
 
 In FOTC
 =======

@@ -297,14 +297,14 @@ selectedATPs = do
   mapM optATP2ATP atps >>= modifyTATPs
 
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
-runATP atp outputMVar timeout fileTPTP = do
+runATP atp outputMVar timeout tptpFile = do
 
   file ← case atp of
            Z3 → do
-             createSMT2file fileTPTP
-             return (replaceExtension fileTPTP smt2Ext)
+             createSMT2file tptpFile
+             return (replaceExtension tptpFile smt2Ext)
 
-           _  → return fileTPTP
+           _  → return tptpFile
 
   args ∷ [String] ← atpArgs atp timeout file
   cmd  ∷ String   ← atpExec atp

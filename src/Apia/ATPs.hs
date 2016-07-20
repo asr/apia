@@ -52,7 +52,7 @@ import Apia.Options
            , optWithIleanCoP
            , optWithMetis
            , optWithSPASS
-           , optWithtptp2X
+           , optWithtptp4X
            , optWithVampire
            , optWithZ3
            )
@@ -65,12 +65,13 @@ import Apia.Utils.PrettyPrint
   , Doc
   , Pretty(pretty)
   , prettyShow
+  , sspaces
   , squotes
   )
 
 import qualified Apia.Utils.Except as E
 
-import Control.Exception.Base  ( catch, evaluate, IOException )
+import Control.Exception.Base  ( evaluate )
 import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
@@ -79,11 +80,11 @@ import qualified Data.Text as T ( pack )
 
 import Safe ( initDef )
 
-import System.FilePath ( dropFileName, replaceExtension )
+import System.FilePath ( replaceExtension )
+import System.Exit     ( ExitCode(ExitSuccess, ExitFailure) )
 
 import System.Process
-  ( callProcess
-  , CmdSpec(RawCommand)
+  ( CmdSpec(RawCommand)
   , createProcess
   , CreateProcess
     ( close_fds
@@ -111,6 +112,7 @@ import System.Process
   , interruptProcessGroupOf
   , ProcessHandle
   , readProcess
+  , readProcessWithExitCode
   , StdStream(CreatePipe, Inherit)
   )
 
@@ -261,27 +263,42 @@ atpArgs Z3 timeout file = return [ "-T:" ++ show timeout
                                  , file
                                  ]
 
--- The tptp2X program (from TPTP 6.3.0) is returing exit status 1
--- instead of 0 (bug), so we need to handle the exception raised.
-createSMT2file ∷ FilePath → T ()
-createSMT2file file = do
+createSMT2file ∷ FilePath → T FilePath
+createSMT2file tptpFile = do
 
-  tptp2XExec ← askTOpt optWithtptp2X
+  tptp4XExec ← askTOpt optWithtptp4X
 
   let msgError ∷ Doc
-      msgError = pretty "the " <> pretty tptp2XExec
+      msgError = pretty "the " <> pretty tptp4XExec
                  <> pretty " command from the TPTP library "
                  <> pretty "does not exist and it is required for using "
                  <> pretty Z3 <> pretty " as an first-order ATP"
 
-  checkExecutable tptp2XExec msgError
+  checkExecutable tptp4XExec msgError
 
-  let dir ∷ String
-      dir = dropFileName file
+  -- 2016-07-20: The `smt2` option is not documented on
+  -- TPTP v6.3.0. Geoff Sutcliffe told us about this option via email.
+  (exitCode, out, err) ← liftIO $
+    readProcessWithExitCode tptp4XExec
+                            [ "-fsmt2", tptpFile ]
+                            []
+  let errorMsg ∷ Doc
+      errorMsg = pretty tptp4XExec
+                 <> sspaces "found an error/warning in the file"
+                 <> pretty tptpFile
+                 <> sspaces "\nPlease report this as a bug\n\n"
+                 <> pretty err
 
-  liftIO $
-    callProcess tptp2XExec [ "-q2", "-fsmt2", "-d", dir, file ]
-      `catch` (\(_ ∷ IOException) → return ())
+  case exitCode of
+    ExitFailure _ →
+      E.throwE errorMsg
+
+    ExitSuccess → do
+      let smt2File ∷ FilePath
+          smt2File = replaceExtension tptpFile smt2Ext
+
+      liftIO $ writeFile smt2File out
+      return smt2File
 
 smt2Ext ∷ String
 smt2Ext = ".smt2"
@@ -300,9 +317,7 @@ runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
 runATP atp outputMVar timeout tptpFile = do
 
   file ← case atp of
-           Z3 → do
-             createSMT2file tptpFile
-             return (replaceExtension tptpFile smt2Ext)
+           Z3 → createSMT2file tptpFile
 
            _  → return tptpFile
 

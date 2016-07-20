@@ -38,18 +38,12 @@ Prerequisites
   [Vampire](http://www.vprover.org/) | Vampire 0.6 (revision 903)
   [Z3](https://github.com/Z3Prover/z3/wiki) | Z3 4.4.1
 
-* The tptp2X program
-
-  The tptp2X program from the
-  [TPTP library](http://www.cs.miami.edu/~tptp/) is required for using
-  Z3 as a first-order ATP. The tested version of tptp2X is from
-  TPTP 6.3.0.
-
 * The tptp4X program
 
-  The `--check` command-line option requires the tptp4X program from
-  the [TPTP library](http://www.cs.miami.edu/~tptp/). The tested
-  version of tptp4X is from TPTP 6.3.0.
+  The `--check` command-line option or using Z3 as a first-order ATP
+  require the tptp4X program from the
+  [TPTP library](http://www.cs.miami.edu/~tptp/). The tested version
+  of tptp4X is from TPTP 6.3.0.
 
 Installation
 ------------

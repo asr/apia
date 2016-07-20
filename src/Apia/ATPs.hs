@@ -277,7 +277,7 @@ createSMT2file tptpFile = do
   checkExecutable tptp4XExec msgError
 
   -- 2016-07-20: The `smt2` option is not documented on
-  -- TPTP v6.3.0. Geoff Sutcliffe told us about this option via email.
+  -- TPTP v6.4.0. Geoff Sutcliffe told us about this option via email.
   (exitCode, out, err) ← liftIO $
     readProcessWithExitCode tptp4XExec
                             [ "-fsmt2", tptpFile ]

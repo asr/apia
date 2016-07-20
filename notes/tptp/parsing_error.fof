@@ -1,4 +1,4 @@
-% Only Equinox and tptp4X (from TPTP 6.3.0) detect the parsing error.
+% Only Equinox and tptp4X (from TPTP 6.4.0) detect the parsing error.
 
 % Tested with:
 

@@ -463,13 +463,12 @@ agda_apia_changed : clean
 ##############################################################################
 # Hlint test
 
-# Due to HLint Issue 196, the `-XNoRoleAnnotations` option is required.
+# Requires HLint >= 1.9.36.
 .PHONY : hlint
 hlint :
 	hlint --color=never \
               --cpp-file=dist/build/autogen/cabal_macros.h \
               --cpp-include=src/Apia/ \
-              -XNoRoleAnnotations \
               src/
 	@echo "$@ succeeded!"
 

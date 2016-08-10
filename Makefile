@@ -495,6 +495,15 @@ hpc_clean :
 	rm -f -r $(hpc_html_dir)
 
 ##############################################################################
+# White-spaces stuff
+
+install-fix-whitespace :
+	cd src/fix-whitespace && cabal install
+
+check-whitespace :
+	fix-whitespace --check
+
+##############################################################################
 # Others
 
 .PHONY : TAGS

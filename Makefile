@@ -106,8 +106,10 @@ GENERATED_FOL_THEOREMS_FLAGS = \
         esac
 	@diff -r $* $(output_dir)/$*
 
+.PHONY : generated_fol_theorems_aux
 generated_fol_theorems_aux : $(generated_fol_theorems_files)
 
+.PHONY : generated_fol_theorems
 generated_fol_theorems :
 	rm -r -f $(output_dir)
 	make generated_fol_theorems_aux
@@ -148,9 +150,11 @@ GENERATED_NON_FOL_THEOREMS_FLAGS = \
         esac
 	@diff -r $* $(output_dir)/$*
 
+.PHONY : generated_non_fol_theorems_aux
 generated_non_fol_theorems_aux : \
   $(generated_non_fol_theorems_files)
 
+.PHONY : generated_non_fol_theorems
 generated_non_fol_theorems :
 	rm -r -f $(output_dir)
 	make generated_non_fol_theorems_aux
@@ -171,8 +175,10 @@ GENERATED_NON_THEOREMS_FLAGS = \
 	@$(APIA) $(GENERATED_NON_THEOREMS_FLAGS) $*.agda
 	@diff -r $* $(output_dir)/$*
 
+.PHONY : generated_non_theorems_aux
 generated_non_theorems_aux : $(generated_non_theorems_files)
 
+.PHONY : generated_non_theorems
 generated_non_theorems : $(generated_non_theorems_files)
 	rm -r -f $(output_dir)
 	make generated_non_theorems_aux
@@ -181,6 +187,7 @@ generated_non_theorems : $(generated_non_theorems_files)
 ##############################################################################
 # Test suite: Generated TPTP files
 
+.PHONY : generated_all
 generated_all :
 	make generated_fol_theorems
 	make generated_non_fol_theorems
@@ -208,6 +215,7 @@ ONLY_FOL_THEOREMS_FLAGS = \
              ;; \
          esac
 
+.PHONY : only_fol_theorems
 only_fol_theorems : $(only_fol_theorems_files)
 	@echo "$@ succeeded!"
 
@@ -243,6 +251,7 @@ ONLY_NON_FOL_THEOREMS_FLAGS = \
              ;; \
         esac
 
+.PHONY : only_non_fol_theorems
 only_non_fol_theorems : \
   $(only_non_fol_theorems_files)
 	@echo "$@ succeeded!"
@@ -290,6 +299,7 @@ PROVE_FOL_THEOREMS_FLAGS = \
           esac ; \
         done
 
+.PHONY : prove_fol_theorems
 prove_fol_theorems : $(prove_fol_theorems_files)
 	@echo "$@ succeeded!"
 
@@ -330,6 +340,7 @@ PROVE_NON_FOL_THEOREMS_FLAGS = \
           esac ; \
         done
 
+.PHONY : prove_non_fol_theorems
 prove_non_fol_theorems : \
   $(prove_non_fol_theorems_files)
 	@echo "$@ succeeded!"
@@ -337,6 +348,7 @@ prove_non_fol_theorems : \
 ##############################################################################
 # Test suite: Prove all theorems
 
+.PHONY : prove_all_theorems
 prove_all_theorems :
 	make prove_fol_theorems
 	make prove_non_fol_theorems
@@ -353,6 +365,7 @@ prove_all_theorems :
 	    exit 1; \
 	fi
 
+.PHONY : refute_theorems
 refute_theorems : $(refute_theorems_files)
 	@echo "$@ succeeded!"
 
@@ -363,6 +376,7 @@ refute_theorems : $(refute_theorems_files)
 	@$(AGDA) -i$(non_conjectures_path) $*.agda
 
 # Tested with shelltestrunner 1.3.5.
+.PHONY : non_conjectures
 non_conjectures : $(non_conjectures_files)
 	shelltest --color --precise \
                   $(non_conjectures_path)/non-conjectures.test
@@ -375,6 +389,7 @@ non_conjectures : $(non_conjectures_files)
 	@$(AGDA) -i$(errors_path) $*.agda
 
 # Tested with shelltestrunner 1.3.5.
+.PHONY : errors
 errors : $(errors_files)
 	shelltest --color --precise $(errors_path)/errors.test
 	@echo "$@ succeeded!"
@@ -385,6 +400,7 @@ errors : $(errors_files)
 # Tested with cabal-install version 1.20.0.3 using version 1.20.0.2 of
 # the Cabal library.
 
+.PHONY : haddock
 haddock :
 	cabal configure
 	cabal haddock --executables \
@@ -402,6 +418,7 @@ type_check_notes_path = -i$(notes_path) \
 %.type_check_notes :
 	$(AGDA) $(type_check_notes_path) $*.agda
 
+.PHONY : type_check_notes
 type_check_notes : $(type_check_notes_files)
 	@echo "$@ succeeded!"
 
@@ -423,12 +440,14 @@ prove_notes_path = -i$(notes_path) \
 	          $*.agda ; \
         done
 
+.PHONY : prove_notes
 prove_notes : $(prove_notes_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
 # Test used when there is a modification to Apia or Agda
 
+.PHONY : agda_apia_changed
 agda_apia_changed : clean
 	cabal clean
 	cabal install --only-dependencies
@@ -445,6 +464,7 @@ agda_apia_changed : clean
 # Hlint test
 
 # Due to HLint Issue 196, the `-XNoRoleAnnotations` option is required.
+.PHONY : hlint
 hlint :
 	hlint --color=never \
               --cpp-file=dist/build/autogen/cabal_macros.h \
@@ -456,6 +476,7 @@ hlint :
 ##############################################################################
 # Git : pre-commit test
 
+.PHONY : git_pre_commit
 git_pre_commit :
 	fix-whitespace --check
 	make hlint
@@ -464,6 +485,7 @@ git_pre_commit :
 ##############################################################################
 # Apia install
 
+.PHONY : install-bin
 install-bin :
 	cabal install --disable-documentation
 
@@ -474,6 +496,7 @@ install-bin :
 
 hpc_html_dir = $(apia_path)/hpc
 
+.PHONY : hpc
 hpc : hpc_clean
 	cd $(apia_path) && cabal clean && cabal install --ghc-option=-fhpc
 	make prove_all_theorem
@@ -490,6 +513,7 @@ hpc : hpc_clean
                    apia.tix
 	rm -f *.tix
 
+.PHONY : hpc_clean
 hpc_clean :
 	rm -f *.tix
 	rm -f -r $(hpc_html_dir)
@@ -497,9 +521,11 @@ hpc_clean :
 ##############################################################################
 # White-spaces stuff
 
+.PHONY : install-fix-whitespace
 install-fix-whitespace :
 	cd src/fix-whitespace && cabal install
 
+.PHONY : check-whitespace
 check-whitespace :
 	fix-whitespace --check
 
@@ -512,11 +538,13 @@ TAGS :
               -i dist/build/autogen/cabal_macros.h \
               -e $(haskell_files)
 
+.PHONY : TODO
 TODO :
 	find . -type d \( -path './.git' -o -path './dist' \) -prune -o -print \
 	| xargs grep -I 'TODO' \
 	| sort
 
+.PHONY : clean
 clean :
 	find . -type f -name '*.agdai' -delete
 	find . -type f -name '*.hi' -delete

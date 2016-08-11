@@ -82,9 +82,15 @@ install:
   - cd ..
 
 ##############################################################################
+# Installing HLint
+
+  - cabal install hlint
+
+##############################################################################
 script:
 
   - cabal install -v2 -j${JOBS}
+  - make hlint
 
 branches:
   only:

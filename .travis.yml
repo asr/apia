@@ -72,14 +72,20 @@ install:
 
   - cabal install alex
   - cabal install happy
-  - git clone https://github.com/asr/eagda.git
-  - cd eagda
+  - git clone https://github.com/asr/eagda.git /tmp/eagda
+  - BASE=`pwd`
+  - cd /tmp/eagda
   - cabal install --only-dependencies --enable-tests --force-reinstalls
   - cabal configure -v2 --enable-tests
   - cabal build -v2 -j${JOBS}
   - cabal copy
   - cabal register
-  - cd ..
+  - cd ${BASE}
+
+##############################################################################
+# Installing fix-whitespace
+
+  - make install-fix-whitespace
 
 ##############################################################################
 # Installing HLint
@@ -89,6 +95,7 @@ install:
 ##############################################################################
 script:
 
+  - make check-whitespace
   - cabal install -v2 -j${JOBS}
   - make hlint
 

@@ -75,8 +75,8 @@ install:
   - git clone https://github.com/asr/eagda.git /tmp/eagda
   - BASE=`pwd`
   - cd /tmp/eagda
-  - cabal install --only-dependencies --enable-tests --force-reinstalls
-  - cabal configure -v2 --enable-tests
+  - cabal install --only-dependencies --force-reinstalls
+  - cabal configure -v2
   - cabal build -v2 -j${JOBS}
   - cabal copy
   - cabal register

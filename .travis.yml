@@ -100,6 +100,7 @@ install:
 ##############################################################################
 script:
 
+  - make APIA="apia" generated_all
   - make type_check_notes
   - make check-whitespace
   - make hlint

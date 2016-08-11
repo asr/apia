@@ -83,6 +83,11 @@ install:
   - cd ${BASE}
 
 ##############################################################################
+# Installing Apia
+
+  - cabal install -v2 -j${JOBS}
+
+##############################################################################
 # Installing fix-whitespace
 
   - make install-fix-whitespace
@@ -96,7 +101,6 @@ install:
 script:
 
   - make check-whitespace
-  - cabal install -v2 -j${JOBS}
   - make hlint
 
 branches:

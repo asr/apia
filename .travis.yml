@@ -93,14 +93,16 @@ install:
   - make install-fix-whitespace
 
 ##############################################################################
-# Installing HLint
+# Installing HLint and shelltestrunner
 
   - cabal install hlint
+  - cabal install shelltestrunner
 
 ##############################################################################
 script:
 
   - make generated_all
+  - make errors
   - make type_check_notes
   - make check-whitespace
   - make hlint

@@ -100,7 +100,7 @@ install:
 ##############################################################################
 script:
 
-  - make APIA="apia --check --with-tptp4X=tools/tptp4X" generated_all
+  - make generated_all
   - make type_check_notes
   - make check-whitespace
   - make hlint

@@ -68,15 +68,16 @@ Apia version 1.0.1
 >>>2
 >>>= 0
 
+# Commented-out because we have no an ATP on Travis (see Issue #50).
 # --unproven-conjecture-no-error
-dist/build/apia/apia -itest/succeed/non-conjectures --atp=e --unproven-conjecture-no-error test/succeed/non-conjectures/NoTheorem.agda
-<<<
->>>
-Proving the conjecture in /tmp/test/succeed/non-conjectures/NoTheorem/17-foo.fof
-E 1.9 Sourenee *did not* prove the conjecture
-the ATP(s) did not prove the conjecture in /tmp/test/succeed/non-conjectures/NoTheorem/17-foo.fof
->>>2
->>>= 0
+# dist/build/apia/apia -itest/succeed/non-conjectures --atp=e --unproven-conjecture-no-error test/succeed/non-conjectures/NoTheorem.agda
+# <<<
+# >>>
+# Proving the conjecture in /tmp/test/succeed/non-conjectures/NoTheorem/17-foo.fof
+# E 1.9 Sourenee *did not* prove the conjecture
+# the ATP(s) did not prove the conjecture in /tmp/test/succeed/non-conjectures/NoTheorem/17-foo.fof
+# >>>2
+# >>>= 0
 
 # --snapshot-no-error
 dist/build/apia/apia -itest/succeed/non-conjectures --only-files --output-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/succeed/non-conjectures --snapshot-no-error --snapshot-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda

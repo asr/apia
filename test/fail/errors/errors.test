@@ -278,11 +278,11 @@ apia: the translation of ‘HigherOrderDefinition.twice’ failed because it is 
 >>>= 1
 
 # ChechTPTP.hs: tptp4X yields an error because there is a duplicate formulate
-dist/build/apia/apia -itest/fail/errors --check --with-tptp4X=tools/tptp4X test/fail/errors/DuplicateFormulaTPTP4XError.agda
+dist/build/apia/apia -itest/fail/errors --check test/fail/errors/DuplicateFormulaTPTP4XError.agda
 <<<
 >>>
 >>>2
-apia: tools/tptp4X found an error/warning in the file /tmp/test/fail/errors/DuplicateFormulaTPTP4XError/22-foo.fof
+apia: tptp4X found an error/warning in the file /tmp/test/fail/errors/DuplicateFormulaTPTP4XError/22-foo.fof
 Please report this as a bug
 
 ERROR: Duplicate annotated formula name "n12_8770576564447903158"

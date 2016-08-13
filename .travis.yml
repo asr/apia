@@ -90,6 +90,11 @@ install:
   - cabal install -v2 -j${JOBS}
 
 ##############################################################################
+# Installing tptp4X
+
+  - cp tools/TPTP-6.4.0/tptp4X ${MY_HOME}/bin/
+
+##############################################################################
 # Installing fix-whitespace
 
   - make install-fix-whitespace

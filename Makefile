@@ -24,7 +24,7 @@ haskell_files = $(shell find src/ -name '*.hs')
 AGDA = agda -v 0
 
 # The defaults ATPs are E, Equinox and Vampire.
-APIA = dist/build/apia/apia --check --with-tptp4X=tools/tptp4X
+APIA = dist/build/apia/apia --check
 
 # Supported ATPs.
 ATPs = cvc4 e equinox ileancop metis spass vampire z3

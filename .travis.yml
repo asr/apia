@@ -49,7 +49,10 @@ matrix:
 
 ##############################################################################
 before_install:
-  - export PATH=/opt/ghc/$GHC_VER/bin:/opt/cabal/$CABAL_VER/bin:$PATH
+  - export APIA_HOME=`pwd`
+  - export MY_HOME=${HOME}/build/asr
+  - mkdir ${MY_HOME}/bin
+  - export PATH=${MY_HOME}/bin:/opt/ghc/${GHC_VER}/bin:/opt/cabal/${CABAL_VER}/bin:${PATH}
 
 ##############################################################################
 install:
@@ -62,9 +65,9 @@ install:
   - cabal --version
   - ghc --version
   - cabal update
-  - cat $HOME/.cabal/config
+  - cat ${HOME}/.cabal/config
   - cabal install cabal-install
-  - export PATH=$HOME/.cabal/bin:$PATH
+  - export PATH=${HOME}/.cabal/bin:${PATH}
   - export JOBS=2
 
 ##############################################################################
@@ -72,15 +75,14 @@ install:
 
   - cabal install alex
   - cabal install happy
-  - git clone https://github.com/asr/eagda.git /tmp/eagda
-  - BASE=`pwd`
-  - cd /tmp/eagda
+  - git clone https://github.com/asr/eagda.git ${MY_HOME}/eagda
+  - cd ${MY_HOME}/eagda
   - cabal install --only-dependencies --force-reinstalls
   - cabal configure -v2
   - cabal build -v2 -j${JOBS}
   - cabal copy
   - cabal register
-  - cd ${BASE}
+  - cd ${APIA_HOME}
 
 ##############################################################################
 # Installing Apia

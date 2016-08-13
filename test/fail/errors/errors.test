@@ -96,16 +96,15 @@ Proving the conjecture in /tmp/test/fail/errors/TrivialTheorem/20-foo.fof
 apia: the ‘xxx’ command associated with Vampire does not exist
 >>>= 1
 
-# Commented-out because we have no an ATP on Travis (see Issue #50).
 # ATP.hs: No theorem
-# dist/build/apia/apia -itest/fail/errors --atp=e test/fail/errors/NoTheorem.agda
-# <<<
-# >>>
-# Proving the conjecture in /tmp/test/fail/errors/NoTheorem/17-foo.fof
-# E 1.9 Sourenee *did not* prove the conjecture
-# >>>2
-# apia: the ATP(s) did not prove the conjecture in /tmp/test/fail/errors/NoTheorem/17-foo.fof
-# >>>= 1
+dist/build/apia/apia -itest/fail/errors --atp=e test/fail/errors/NoTheorem.agda
+<<<
+>>>
+Proving the conjecture in /tmp/test/fail/errors/NoTheorem/17-foo.fof
+E 1.9 Sourenee *did not* prove the conjecture
+>>>2
+apia: the ATP(s) did not prove the conjecture in /tmp/test/fail/errors/NoTheorem/17-foo.fof
+>>>= 1
 
 # Functions.hs : The definitions to be translated only can have one clause
 dist/build/apia/apia -itest/fail/errors test/fail/errors/OnlyOneClause.agda

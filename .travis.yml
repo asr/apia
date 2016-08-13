@@ -101,6 +101,18 @@ install:
   - cabal install shelltestrunner
 
 ##############################################################################
+# Installing the E theorem prover
+
+  - cd ${MY_HOME}
+  - wget http://wwwlehre.dhbw-stuttgart.de/~sschulz/WORK/E_DOWNLOAD/V_1.9/E.tgz
+  - tar -xzf E.tgz
+  - cd E
+  - ./configure --bindir=${MY_HOME}/bin
+  - make
+  - make install
+  - cd ${APIA_HOME}
+
+##############################################################################
 script:
 
   - make generated_all

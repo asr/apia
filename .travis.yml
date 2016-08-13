@@ -124,6 +124,7 @@ script:
   - make non_conjectures
   - make errors
   - make type_check_notes
+  - make ATPs="e" prove_notes
   - make check-whitespace
   - make hlint
 

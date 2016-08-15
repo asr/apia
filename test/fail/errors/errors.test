@@ -64,7 +64,7 @@ apia: missing input file (try --help)
 >>>= 1
 
 # Snapshot.hs: The --output-dir cannot be the same than the --snapshot-dir
-dist/build/apia/apia -itest/fail/errors --output-dir=/tmp --snapshot-test --snapshot-dir=/tmp test/fail/errors/TrivialTheorem.agda
+dist/build/apia/apia --atp=e -itest/fail/errors --output-dir=/tmp --snapshot-test --snapshot-dir=/tmp test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
 >>>2
@@ -72,7 +72,7 @@ apia: the ‘--output-dir’ and ‘--snapshot-dir’ options cannot be the same
 >>>= 1
 
 # Snapshot.hs: Missing snapshot file
-dist/build/apia/apia -itest/fail/errors --snapshot-test --snapshot-dir=no-dir test/fail/errors/TrivialTheorem.agda
+dist/build/apia/apia --atp=e -itest/fail/errors --snapshot-test --snapshot-dir=no-dir test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
 >>>2
@@ -123,7 +123,7 @@ apia: the interface file /tmp/A.agdai does not exist (use Agda to generate it)
 >>>= 1
 
 # Snapshot.hs: The snapshot and the generated conjecture are differents.
-dist/build/apia/apia -itest/fail/errors --only-files --output-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/test/fail/errors/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/fail/errors --snapshot-test --snapshot-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda
+dist/build/apia/apia --atp=e -itest/fail/errors --only-files --output-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/test/fail/errors/TrivialTheorem/20-foo.fof && dist/build/apia/apia --atp=e -itest/fail/errors --snapshot-test --snapshot-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda
 <<<
 >>>
 Created /tmp/snapshot/test/fail/errors/TrivialTheorem/20-foo.fof
@@ -278,7 +278,7 @@ apia: the translation of ‘HigherOrderDefinition.twice’ failed because it is 
 >>>= 1
 
 # ChechTPTP.hs: tptp4X yields an error because there is a duplicate formulate
-dist/build/apia/apia -itest/fail/errors --check test/fail/errors/DuplicateFormulaTPTP4XError.agda
+dist/build/apia/apia --atp=e -itest/fail/errors --check test/fail/errors/DuplicateFormulaTPTP4XError.agda
 <<<
 >>>
 >>>2

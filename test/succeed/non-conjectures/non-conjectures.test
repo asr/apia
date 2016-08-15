@@ -45,7 +45,7 @@ Usage: apia [OPTIONS] FILE
 >>>= 0
 
 # --only-files
-dist/build/apia/apia -itest/succeed/non-conjectures --only-files test/succeed/non-conjectures/TrivialTheorem.agda
+dist/build/apia/apia --atp=e -itest/succeed/non-conjectures --only-files test/succeed/non-conjectures/TrivialTheorem.agda
 <<<
 >>>
 Created /tmp/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
@@ -53,7 +53,7 @@ Created /tmp/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
 >>>= 0
 
 # --verbose
-dist/build/apia/apia -itest/succeed/non-conjectures -v1 --only-files test/succeed/non-conjectures/TrivialTheorem.agda
+dist/build/apia/apia --atp=e -itest/succeed/non-conjectures -v1 --only-files test/succeed/non-conjectures/TrivialTheorem.agda
 <<<
 >>>
 Created /tmp/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
@@ -79,7 +79,7 @@ the ATP(s) did not prove the conjecture in /tmp/test/succeed/non-conjectures/NoT
 >>>= 0
 
 # --snapshot-no-error
-dist/build/apia/apia -itest/succeed/non-conjectures --only-files --output-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof && dist/build/apia/apia -itest/succeed/non-conjectures --snapshot-no-error --snapshot-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda
+dist/build/apia/apia --atp=e -itest/succeed/non-conjectures --only-files --output-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof && dist/build/apia/apia --atp=e -itest/succeed/non-conjectures --snapshot-no-error --snapshot-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda
 <<<
 >>>
 Created /tmp/snapshot/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof

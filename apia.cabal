@@ -22,6 +22,10 @@ description:
   for the ATPs <http://www.cs.miami.edu/~tptp/>.
 extra-source-files:
         src/Apia/undefined.h
+        README.md
+
+data-dir:     src/data
+data-files:   apia.yml
 
 source-repository head
   type:     git
@@ -38,6 +42,7 @@ executable apia
                  , base >= 4.6.0.1 && < 4.10
                  , bytestring >= 0.10.0.2 && < 0.11
                  , containers >= 0.5.0.0 && < 0.6
+                 , deepseq >= 1.3.0 && < 1.5
                  , directory >= 1.2.0.1 && < 1.3
                  , filepath >= 1.3.0.1 && < 1.5
                  , ghc-prim >= 0.3.0.0 && < 0.6
@@ -51,6 +56,7 @@ executable apia
                  -- tranformers 0.4.0.0 was deprecated.
                  , transformers >= 0.3 && < 0.4 || >= 0.4.1.0 && < 0.6
                  , unordered-containers >= 0.2.5.0 && < 0.3
+                 , yaml >= 0.8.17 && < 0.9
 
   build-tools: cpphs >= 1.19
 
@@ -58,6 +64,7 @@ executable apia
     Apia.ATPs
     Apia.CheckTPTP
     Apia.Common
+    Apia.Defaults
     Apia.Dump
     Apia.FOL.Constants
     Apia.FOL.Primitives
@@ -174,7 +181,7 @@ executable apia
 
   -- From Agda.cabal: If someone installs Agda with the setuid bit
   -- set, then the presence of +RTS may be a security problem (see GHC
-  -- bug #3910).  However, we sometimes recommend people to use +RTS
+  -- bug #3910). However, we sometimes recommend people to use +RTS
   -- to control Agda's memory usage, so we want this functionality
   -- enabled by default.
   ghc-options: -rtsopts

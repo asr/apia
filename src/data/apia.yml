@@ -1,0 +1,36 @@
+# --------------------------------------------------------------------
+# File: .apia
+# More information about its parameters and its possible values,
+# please use Apia in the command line with the option help.
+#
+# $ apia --help
+#
+# --------------------------------------------------------------------
+atp: []
+check: false
+dump-types: false
+function-constant: false
+include-path: []
+lang: "tptp"
+no-internal-equality: false
+no-predicate-constants: false
+only-files: false
+output-dir: "/tmp"
+schematic-functions: false
+schematic-propositional-functions: false
+schematic-propositional-symbols: false
+snapshot-dir: "snapshot"
+snapshot-no-error: false
+snapshot-test: false
+time: 240
+unproven-conjecture-no-error: false
+verbose: 1
+with-cvc4: "cvc4"
+with-e: "eprover"
+with-equinox: "equinox"
+with-ileancop: "ileancop.sh"
+with-metis: "metis"
+with-spass: "SPASS"
+with-tptp4X: "tptp4X"
+with-vampire: "vampire_lin64"
+with-z3: "z3"

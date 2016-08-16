@@ -40,4 +40,4 @@ instance Pretty ATP where
 -- | Target languages.
 data Lang = TPTP   -- ^ FOF (First-order form).
           | SMT2   -- ^ SMT-LIB v2.
-          deriving Eq
+          deriving (Eq, Show)

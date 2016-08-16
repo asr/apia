@@ -115,6 +115,47 @@ Command-line options
   The `_≡_` symbol is translated to the ATPs equality by default. For
   reverting this behaviour use the `--no-internal-equality` option.
 
+YAML Configuration
+------------------
+<!-- Following the style to present the stack.yaml configuration files-->
+We can run Apia using options set in YAML files with name `.apia`.
+The options break down into project-specific options in:
+
+  - `<project dir>/.apia`
+
+and non-project-specific options in:
+
+  - `~/.apia` -- for user non-project default options
+
+*Note:* When Apia is invoked outside a project it will source project specific
+options from `~/.apia`. Options in this file will be ignored for a project with
+its own `<project dir>/.apia`.
+
+### Project-specific config
+
+Project-specific options are only valid in the `.apia` file local to a
+project, not in the user config files.
+
+> Note: We define *project* to mean a directory that contains an `.apia`
+> file, which specifies valid options. The options are specified in the `help`
+> command. Check `apia --help` to see all options available.
+
+In your project-specific options, you specify  *which options to use*
+when running Apia.
+
+### Examples
+
+We want to use the ATPs E and Metis with Apia. Also, we want to save the
+results in the directory `/myoutputdir` and use the option `check`.
+Then, our Apia file should be similar to this one.
+
+```yaml
+# cat ~/.apia
+atp: ["e", "metis"]
+output-dir: "/myoutputdir"
+check: true
+```
+
 Known limitations
 -----------------
 

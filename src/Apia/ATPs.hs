@@ -142,10 +142,6 @@ optATP2ATP "z3"       = return Z3
 optATP2ATP other =
   E.throwE $ pretty "the ATP " <> squotes other <> pretty " is unknown"
 
--- | Default ATPs.
-defaultATPs ∷ [String]
-defaultATPs = ["e", "equinox", "vampire"]
-
 atpOk ∷ ATP → String
 -- CVC4 1.4.
 atpOk CVC4 = "SZS status Theorem"
@@ -306,12 +302,12 @@ smt2Ext = ".smt2"
 -- | The selected ATPs by the user or the default ones.
 selectedATPs ∷ T ()
 selectedATPs = do
-  atpsAux ← askTOpt optATP
-
-  let atps ∷ [String]
-      atps = if null atpsAux then defaultATPs else atpsAux
-
-  mapM optATP2ATP atps >>= modifyTATPs
+  atps ← askTOpt optATP
+  let msgError ∷ Doc
+      msgError = pretty "At least you need to specify one valid ATP"
+  if null atps
+    then E.throwE msgError
+    else mapM optATP2ATP atps >>= modifyTATPs
 
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
 runATP atp outputMVar timeout tptpFile = do

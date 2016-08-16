@@ -14,8 +14,7 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Apia.Options
-  ( defaultOptions
-  , options
+  ( options
   , MOptions  -- Required by Haddock.
   , Options( Options --Improve Haddock information.
            , optATP
@@ -50,6 +49,7 @@ module Apia.Options
            , optWithVampire
            , optWithZ3
            )
+  , verboseOpt
   , printUsage
   , processOptions
   ) where
@@ -62,7 +62,7 @@ import Agda.Interaction.Options ( Verbosity )
 import Agda.Utils.Impossible    ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.List          ( wordsBy )
 
-import qualified Agda.Utils.Trie as Trie ( insert, singleton )
+import qualified Agda.Utils.Trie as Trie ( insert )
 
 import Apia.Common
   ( ATP( CVC4
@@ -78,7 +78,6 @@ import Apia.Common
   )
 
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
-
 import qualified Data.Text as T ( pack )
 
 import Safe ( initDef )
@@ -131,44 +130,7 @@ data Options = Options
   , optWithVampire                     ∷ String
   , optWithZ3                          ∷ String
   }
-
--- N.B. The default ATPs are handled by @ATP.callATPs@.
---
--- | Default options use by the program.
-defaultOptions ∷ Options
-defaultOptions = Options
-  { optATP                             = []
-  , optCheck                           = False
-  , optDumpTypes                       = False
-  , optFnConstant                      = False
-  , optHelp                            = False
-  , optIncludePath                     = []
-  , optInputFile                       = Nothing
-  , optLang                            = TPTP
-  , optNoInternalEquality              = False
-  , optNoPredicateConstants            = False
-  , optOnlyFiles                       = False
-  , optOutputDir                       = "/tmp"
-  , optSchematicFunctions              = False
-  , optSchematicPropositionalFunctions = False
-  , optSchematicPropositionalSymbols   = False
-  , optSnapshotDir                     = "snapshot"
-  , optSnapshotNoError                 = False
-  , optSnapshotTest                    = False
-  , optTime                            = 240
-  , optUnprovenNoError                 = False
-  , optVerbose                         = Trie.singleton [] 1
-  , optVersion                         = False
-  , optWithCVC4                        = "cvc4"
-  , optWithE                           = "eprover"
-  , optWithEquinox                     = "equinox"
-  , optWithIleanCoP                    = "ileancop.sh"
-  , optWithMetis                       = "metis"
-  , optWithSPASS                       = "SPASS"
-  , optWithtptp4X                      = "tptp4X"
-  , optWithVampire                     = "vampire_lin64"
-  , optWithZ3                          = "z3"
-  }
+  deriving Show
 
 -- | 'Options' monad.
 type MOptions = Options → Either Doc Options
@@ -176,7 +138,7 @@ type MOptions = Options → Either Doc Options
 atpOpt ∷ String → MOptions
 atpOpt [] _ = Left $
   pretty "option " <> squotes "--atp" <> pretty " requires an argument NAME"
-atpOpt name opts = Right opts { optATP = optATP opts ++ [name] }
+atpOpt name opts = Right opts { optATP = nub $ optATP opts ++ [name] }
 
 checkOpt ∷ MOptions
 checkOpt opts = Right opts { optCheck = True }
@@ -423,5 +385,5 @@ processOptionsHelper argv f defaults =
     (_, _, errs) → Left $ pretty $ initDef (__IMPOSSIBLE__) $ init $ unlines errs
 
 -- | Processing the command-line 'Options'.
-processOptions ∷ [String] → Either Doc Options
-processOptions argv = processOptionsHelper argv inputFileOpt defaultOptions
+processOptions ∷ [String] → Options -> Either Doc Options
+processOptions argv = processOptionsHelper argv inputFileOpt

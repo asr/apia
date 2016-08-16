@@ -2,7 +2,7 @@ name:          apia
 version:       1.0.1
 build-type:    Simple
 cabal-version: >= 1.8
-author:        Andrés Sicard-Ramírez
+author:        Andrés Sicard-Ramírez with contributions by Jonathan Prieto-Cubides
 license:       MIT
 license-file:  LICENSE
 maintainer:    Andrés Sicard-Ramírez <asr@eafit.edu.co>

@@ -1,15 +1,6 @@
-------------------------------------------------------------------------------
--- |
--- Module      : Apia.FOL.Primitives
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- Names hard-coded in the translation of Agda internal types to
+
+-- | Names hard-coded in the translation of Agda internal types to
 -- first-order logic formulae.
-------------------------------------------------------------------------------
 
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}

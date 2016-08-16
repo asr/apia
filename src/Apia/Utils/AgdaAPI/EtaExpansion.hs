@@ -1,14 +1,5 @@
-------------------------------------------------------------------------------
--- |
--- Module      : Apia.Utils.AgdaAPI.EtaExpansion
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- Eta expansion of Agda internal types.
-------------------------------------------------------------------------------
+
+-- | Eta expansion of Agda internal types.
 
 {-# LANGUAGE CPP                 #-}
 {-# LANGUAGE FlexibleInstances   #-}

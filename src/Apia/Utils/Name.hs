@@ -1,14 +1,5 @@
-------------------------------------------------------------------------------
--- |
--- Module      : Apia.Utils.Name
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- Utilities on names.
-------------------------------------------------------------------------------
+
+-- | Utilities on names.
 
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}

@@ -1,14 +1,5 @@
-------------------------------------------------------------------------------
--- |
--- Module      : Apia.Utils.Show
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- Utilities related to 'Show'.
-------------------------------------------------------------------------------
+
+-- | Utilities related to 'Show'.
 
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}

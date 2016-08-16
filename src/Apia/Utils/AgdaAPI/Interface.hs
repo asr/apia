@@ -1,14 +1,5 @@
-------------------------------------------------------------------------------
--- |
--- Module      : Apia.Utils.AgdaAPI.Interface
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- Handling of Agda interface files (*.agdai).
-------------------------------------------------------------------------------
+
+-- | Handling of Agda interface files (*.agdai).
 
 {-# LANGUAGE CPP                 #-}
 {-# LANGUAGE FlexibleInstances   #-}

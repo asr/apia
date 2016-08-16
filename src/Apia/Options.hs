@@ -1,14 +1,5 @@
------------------------------------------------------------------------------
--- |
--- Module      : Apia.Options
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- Process the command-line arguments.
------------------------------------------------------------------------------
+
+-- | Process the command-line arguments.
 
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}

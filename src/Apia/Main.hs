@@ -1,16 +1,7 @@
-------------------------------------------------------------------------------
--- |
--- Module      : Main
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- Apia: A program for proving first-order theorems written in the
+
+-- | Apia: A program for proving first-order theorems written in the
 -- dependently typed language Agda using first-order automatic theorem
 -- provers.
-------------------------------------------------------------------------------
 
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE OverloadedStrings   #-}

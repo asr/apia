@@ -1,14 +1,5 @@
-------------------------------------------------------------------------------
--- |
--- Module      : Apia.TPTP.ConcreteSyntax
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- TPTP concrete syntax to FOF language.
-------------------------------------------------------------------------------
+
+-- | TPTP concrete syntax to FOF language.
 
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE FlexibleInstances #-}  -- Implies TypeSynonymInstances.

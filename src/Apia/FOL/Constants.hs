@@ -1,13 +1,5 @@
------------------------------------------------------------------------------
--- |
--- Module      : Apia.FOL.Constants
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- First-order logic constants.
+
+-- | First-order logic constants.
 -----------------------------------------------------------------------------
 
 {-# LANGUAGE CPP           #-}

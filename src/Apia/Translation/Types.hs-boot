@@ -1,3 +1,4 @@
+
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Apia.Translation.Types

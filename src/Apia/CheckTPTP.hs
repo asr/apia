@@ -1,14 +1,5 @@
------------------------------------------------------------------------------
--- |
--- Module      : Apia.CheckTPTP
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- Check the generated TPTP file using the tptp4X program.
------------------------------------------------------------------------------
+
+-- | Check the generated TPTP file using the tptp4X program.
 
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE UnicodeSyntax     #-}

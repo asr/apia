@@ -1,14 +1,5 @@
------------------------------------------------------------------------------
--- |
--- Module      : Apia.Monad.Reports
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- Reports via the @--verbose@ option.
------------------------------------------------------------------------------
+
+-- | Reports via the @--verbose@ option.
 
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}

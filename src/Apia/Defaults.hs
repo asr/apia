@@ -1,14 +1,5 @@
------------------------------------------------------------------------------
--- |
--- Module      : Apia.Defaults
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Jonathan Prieto-Cubides <jprieto9@eafit.edu.co>
--- Stability   : experimental
---
--- Get the default values arguments.
------------------------------------------------------------------------------
+
+-- | Get the default values arguments.
 
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE MultiWayIf        #-}

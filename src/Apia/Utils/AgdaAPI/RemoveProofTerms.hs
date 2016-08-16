@@ -1,16 +1,6 @@
-------------------------------------------------------------------------------
--- |
--- Module      : Apia.Utils.AgdaAPI.RemoveProofTerms
--- Copyright   : (c) Andrés Sicard-Ramírez 2009-2015
--- License     : See the file LICENSE.
---
--- Maintainer  : Andrés Sicard-Ramírez <asr@eafit.edu.co>
--- Stability   : experimental
---
--- Remove references to variables which are proof terms from Agda
--- internal types.
 
-------------------------------------------------------------------------------
+-- | Remove references to variables which are proof terms from Agda
+-- internal types.
 
 {-# LANGUAGE CPP               #-}
 {-# LANGUAGE FlexibleInstances #-}

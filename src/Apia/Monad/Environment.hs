@@ -17,12 +17,14 @@ module Apia.Monad.Environment ( env ) where
 
 ------------------------------------------------------------------------------
 
-import           Apia.Prelude
+import Apia.Prelude
 
-import           Apia.Defaults      (getDefaults)
-import           Apia.Options       (Options, processOptions)
-import           Apia.Utils.Monad   (die)
-import           System.Environment (getArgs)
+import Apia.Defaults    ( getDefaults )
+import Apia.Options     ( Options, processOptions )
+import Apia.Utils.Monad ( die )
+
+import System.Environment ( getArgs )
+
 ------------------------------------------------------------------------------
 -- | The environment.
 env ∷ IO Options

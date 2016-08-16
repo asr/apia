@@ -24,8 +24,8 @@ extra-source-files:
         src/Apia/undefined.h
         README.md
 
-data-dir:     src/data
-data-files:   apia.yml
+data-dir:   src/data
+data-files: apia.yml
 
 source-repository head
   type:     git

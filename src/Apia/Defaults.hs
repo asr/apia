@@ -20,22 +20,31 @@ module Apia.Defaults
   , apiaNameFile
   ) where
 
-import           Apia.Prelude
+import Apia.Prelude
 
-import           Agda.Utils.Trie       as Trie
-import           Apia.Common           (Lang (SMT2, TPTP))
-import           Apia.Options          (Options (..), verboseOpt)
-import           Control.DeepSeq       (NFData (rnf))
-import qualified Data.HashMap.Strict   as HashMap
-import qualified Data.Text             as T
-import           Data.Yaml             (FromJSON (parseJSON), Object,
-                                        parseMaybe)
-import qualified Data.Yaml.Include     as YamlInclude
-import           Paths_apia            (getDataFileName)
-import           Prelude               hiding (lookup)
-import           System.Directory      (doesFileExist,
-                                        getCurrentDirectory, getHomeDirectory)
-import           System.FilePath.Posix ((</>))
+import Apia.Common  ( Lang (SMT2, TPTP) )
+import Apia.Options ( Options(..), verboseOpt )
+
+import Agda.Utils.Trie as Trie
+
+import Control.DeepSeq ( NFData(rnf) )
+
+import qualified Data.HashMap.Strict as HashMap
+import qualified Data.Text           as T
+
+import Data.Yaml ( FromJSON (parseJSON), Object, parseMaybe )
+import qualified Data.Yaml.Include as YamlInclude
+
+import Paths_apia     ( getDataFileName )
+import Prelude hiding ( lookup )
+
+import System.Directory
+  ( doesFileExist
+  , getCurrentDirectory
+  , getHomeDirectory
+  )
+
+import System.FilePath.Posix ((</>))
 
 -- | Default options use by the program.
 defaultOptions ∷ Options
@@ -349,6 +358,7 @@ combineOptions config = setVals defaultOptions
   where
     setVals ∷ Options → Options
     setVals = foldl (flip (.)) id g
+
     g ∷ [Options → Options]
     g = map (\f → f config) setters
 
@@ -359,6 +369,7 @@ finalConfig cfs = combineOptions $ Config $ HashMap.unions hs
   where
     hs ∷ [Object]
     hs = map getHashMap cfs
+
     getHashMap ∷ Config → Object
     getHashMap (Config o) = o
 
@@ -379,7 +390,9 @@ getDefaults = do
   paths ← sequence [getCurrentDirectory, getHomeDirectory]
   userFiles ← filterM doesFileExist $ map (</>apiaNameFile) paths
   defaultApia ← getDataFileName apiaTemplate
+
   let allFiles ∷ [FilePath]
       allFiles = userFiles ++ [defaultApia]
+
   loaded ← mapM loadYAML allFiles
   return $ finalConfig loaded

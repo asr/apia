@@ -295,7 +295,7 @@ selectedATPs ∷ T ()
 selectedATPs = do
   atps ← askTOpt optATP
   let msgError ∷ Doc
-      msgError = pretty "At least you need to specify one valid ATP"
+      msgError = pretty "At least you need to specify one ATP"
   if null atps
     then E.throwE msgError
     else mapM optATP2ATP atps >>= modifyTATPs

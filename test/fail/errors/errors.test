@@ -296,3 +296,11 @@ dist/build/apia/apia --schematic-propositional-functions --no-predicate-constant
 >>>2
 apia: the ‘--schematic-propositional-functions’ and ‘--no-predicate-constants’ options are incompatible
 >>>= 1
+
+# APTs.hs: the flag --atp is required.
+dist/build/apia/apia -itest/fail/errors test/fail/errors/NoTheorem.agda
+<<<
+>>>
+>>>2
+apia: At least you need to specify one ATP
+>>>= 1

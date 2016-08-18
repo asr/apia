@@ -376,5 +376,5 @@ processOptionsHelper argv f defaults =
     (_, _, errs) → Left $ pretty $ initDef (__IMPOSSIBLE__) $ init $ unlines errs
 
 -- | Processing the command-line 'Options'.
-processOptions ∷ [String] → Options -> Either Doc Options
+processOptions ∷ [String] → Options → Either Doc Options
 processOptions argv = processOptionsHelper argv inputFileOpt

@@ -9,6 +9,7 @@ module Apia.Utils.PrettyPrint
   , bquotes
   , Pretty(pretty)
   , prettyShow
+  , spaces
   , sspaces
   , squotes
   ) where

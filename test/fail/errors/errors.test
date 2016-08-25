@@ -304,3 +304,11 @@ dist/build/apia/apia -itest/fail/errors test/fail/errors/NoTheorem.agda
 >>>2
 apia: At least you need to specify one ATP
 >>>= 1
+
+# Files.hs: exception when using `createDirectoryIfMissing`
+echo Foo > /tmp/foo & dist/build/apia/apia --atp=e -itest/fail/errors --output-dir=/tmp/foo/ test/fail/errors/NoTheorem.agda
+<<<
+>>>
+>>>2
+apia: could not create the ‘/tmp/foo/test/fail/errors/NoTheorem’ directory
+>>>= 1

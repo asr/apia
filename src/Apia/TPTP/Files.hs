@@ -1,10 +1,11 @@
 
 -- | Creation of the TPTP files.
 
-{-# LANGUAGE CPP               #-}
-{-# LANGUAGE FlexibleInstances #-}  -- Implies TypeSynonymInstances.
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE UnicodeSyntax     #-}
+{-# LANGUAGE CPP                 #-}
+{-# LANGUAGE FlexibleInstances   #-}  -- Implies TypeSynonymInstances.
+{-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE OverloadedStrings   #-}
+{-# LANGUAGE UnicodeSyntax       #-}
 
 module Apia.TPTP.Files ( createConjectureTPTPFile ) where
 
@@ -52,10 +53,13 @@ import Apia.Utils.AgdaAPI.Interface
  , qNameNameBindingSiteRange
  )
 
-import Apia.Utils.List ( duplicate )
-import Apia.Utils.Text ( (+++), toUpperFirst )
+import Apia.Utils.List        ( duplicate )
+import Apia.Utils.Monad       ( die )
+import Apia.Utils.PrettyPrint ( (<>), spaces, squotes )
+import Apia.Utils.Text        ( (+++), toUpperFirst )
 
-import Control.Monad.IO.Class  ( MonadIO(liftIO) )
+import Control.Exception      ( catch, IOException )
+import Control.Monad.IO.Class ( MonadIO(liftIO) )
 
 import Data.Text ( Text )
 import qualified Data.Text as T
@@ -199,7 +203,9 @@ tptpFileName conjectureSet = do
       finalDir ∷ FilePath
       finalDir = outputDir </> dropExtension inputFile
 
-  liftIO $ createDirectoryIfMissing True finalDir
+  liftIO $ createDirectoryIfMissing True finalDir `catch`
+    \ (_ :: IOException) →
+      die $ "could not create the" <> spaces (squotes finalDir) <> "directory"
 
   reportSLn "tptpFileName" 20 $
     "Qname's concrete name range: " ++ (show . qNameConcreteNameRange) qName

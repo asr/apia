@@ -1,13 +1,15 @@
 
--- | TPTP types and common functions on them.
+-- | Target language types and common functions on them.
 
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.TPTP.Types
-  ( AF(AFor)
+module Apia.TargetLang.Types
+  ( AF(AExpr, AFor, ATy)
   , allRequiredDefs
   , commonRequiredDefs
-  , ConjectureSet(defsConjecture
+  , ConjectureSet( declsConjecture
+                 , defsConjecture
                  , defsLocalHints
                  , localHintsConjecture
                  , ConjectureSet
@@ -15,6 +17,7 @@ module Apia.TPTP.Types
                  )
   , dropCommonRequiredDefs
   , GeneralRoles(axioms, defsAxioms, defsHints, hints, GeneralRoles)
+  , TargetFormula(FOLFormula, SMT2Expr, SMT2Type)
   ) where
 
 ------------------------------------------------------------------------------
@@ -23,28 +26,39 @@ import Apia.Prelude
 
 import Agda.Syntax.Abstract.Name ( QName )
 import Agda.Syntax.Common        ( TPTPRole )
+import Agda.Utils.Impossible     ( Impossible(Impossible), throwImpossible )
 
-import Apia.FOL.Types  ( LFormula )
-import Apia.Utils.List ( duplicate, duplicatesElements )
+import Apia.Common            ( SMT2Role )
+import Apia.FOL.Types         ( LFormula )
+import Apia.Utils.List        ( duplicate, duplicatesElements )
+import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
+import Apia.Utils.SMT2        ( SMT2Expr, SMT2Type )
+
+#include "undefined.h"
 
 ------------------------------------------------------------------------------
--- Note: We don't import the module TPTP.ConcreteSyntax to avoid a circular
--- importation, therefore Haddock does not create a link for
--- 'TPTP.ConcreteSyntax.ToTPTP'.
-
--- | Annotated formulae.
---
--- The annotated formulae are not in TPTP (FOF) concrete syntax.
-data AF = AFor QName TPTPRole LFormula
+-- | Annotated TPTP (FOF) formulae, SMT-LIB v2 expresions or
+-- SMT-LIB v2 types.
+data AF = AFor  QName  TPTPRole LFormula
+        | AExpr QName  SMT2Role SMT2Expr
+        | ATy   String SMT2Role SMT2Type
 
 instance Eq AF where
-  (AFor qName1 _ _) == (AFor qName2 _ _) = qName1 == qName2
+  (AFor qName1 _ _)  == (AFor qName2 _ _)  = qName1 == qName2
+  (AExpr qName1 _ _) == (AExpr qName2 _ _) = qName1 == qName2
+  (ATy xs1 _ _)      == (ATy xs2 _ _)      = xs1    == xs2
+  _                  == _                  = __IMPOSSIBLE__
 
 instance Ord AF where
-  compare (AFor qName1 _ _) (AFor qName2 _ _) = compare qName1 qName2
+  compare (AFor qName1 _ _)  (AFor qName2 _ _)  = compare qName1 qName2
+  compare (AExpr qName1 _ _) (AExpr qName2 _ _) = compare qName1 qName2
+  compare (ATy xs1 _ _)      (ATy xs2 _ _)      = compare xs1 xs2
+  compare _                  _                  = __IMPOSSIBLE__
 
 instance Show AF where
-  show (AFor qname _ _) = show qname
+  show (AFor qname _ _)  = show qname
+  show (AExpr qname _ _) = show qname
+  show (ATy name _ _)    = show name
 
 -- | The 'ATPRole's share by all the conjetures in an Agda module.
 data GeneralRoles = GeneralRoles
@@ -60,6 +74,7 @@ data ConjectureSet = ConjectureSet
   , defsConjecture       ∷ [AF]  -- ^ ATP definitions used by the conjecture.
   , localHintsConjecture ∷ [AF]  -- ^ The conjecture local hints.
   , defsLocalHints       ∷ [AF]  -- ^ ATP definitions used by the local hints.
+  , declsConjecture      ∷ [AF]  -- ^ ATP declarations used by the conjecture.
   }
 
 -- | All required definitions by a conjecture.
@@ -101,3 +116,12 @@ dropCommonRequiredDefs generalRoles conjectureSet =
   x          = defsHints      generalRoles  \\ commonDefs
   y          = defsLocalHints conjectureSet \\ commonDefs
   z          = defsConjecture conjectureSet \\ commonDefs
+
+data TargetFormula = FOLFormula LFormula
+                   | SMT2Expr   SMT2Expr
+                   | SMT2Type   SMT2Type
+
+instance Pretty TargetFormula where
+  pretty (FOLFormula f) = pretty "FOLFormula: " <> pretty f
+  pretty (SMT2Expr f)   = pretty "SMT2Exprf: " <> pretty f
+  pretty (SMT2Type ty)  = pretty "SMT2Type: " <> pretty ty

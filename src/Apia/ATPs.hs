@@ -28,6 +28,8 @@ import Apia.Common
        , Vampire
        , Z3
        )
+  , Lang(SMT2, TPTP)
+  , smt2Ext
   )
 
 import Apia.Monad.Base    ( askTOpt, getTATPs, modifyTATPs, T )
@@ -35,6 +37,7 @@ import Apia.Monad.Reports ( reportS )
 
 import Apia.Options
   ( Options( optATP
+           , optLang
            , optTime
            , optUnprovenNoError
            , optWithCVC4
@@ -49,7 +52,7 @@ import Apia.Options
            )
   )
 
-import Apia.Utils.Directory   ( checkExecutable )
+import Apia.Utils.Directory ( checkExecutable )
 
 import Apia.Utils.PrettyPrint
   ( (<>)
@@ -66,6 +69,8 @@ import Control.Exception.Base  ( evaluate )
 import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
 import Control.Monad.IO.Class  ( MonadIO(liftIO) )
+
+import Data.Char ( toLower )
 
 import qualified Data.Text as T ( pack )
 
@@ -133,23 +138,24 @@ optATP2ATP "z3"       = return Z3
 optATP2ATP other =
   E.throwE $ pretty "the ATP " <> squotes other <> pretty " is unknown"
 
-atpOk ∷ ATP → String
+atpOK ∷ Lang → ATP → String
 -- CVC4 1.4.
-atpOk CVC4 = "SZS status Theorem"
+atpOK TPTP CVC4 = "SZS status Theorem"
+atpOK SMT2 CVC4 = "unsat"
 -- E 1.9.
-atpOk E = "Proof found!"
+atpOK _ E = "Proof found!"
 -- Equinox 5.0alpha (2010-06-29).
-atpOk Equinox = "+++ RESULT: Theorem"
+atpOK _ Equinox = "+++ RESULT: Theorem"
 -- ileanCoP 1.3 beta1.
-atpOk IleanCoP = "Intuitionistic Theorem"
+atpOK _ IleanCoP = "Intuitionistic Theorem"
 -- Metis 2.3 (release 20160714).
-atpOk Metis = "SZS status Theorem"
+atpOK _ Metis = "SZS status Theorem"
 -- SPASS 3.7.
-atpOk SPASS = "Proof found"
+atpOK _ SPASS = "Proof found"
 -- Vampire 0.6 (revision 903).
-atpOk Vampire = "Termination reason: Refutation\n"
+atpOK _ Vampire = "Termination reason: Refutation\n"
 -- Z3 4.4.1.
-atpOk Z3 = "unsat"
+atpOK _ Z3 = "unsat"
 
 atpVersion ∷ ATP → T String
 atpVersion CVC4 = do
@@ -172,14 +178,16 @@ atpVersion atp = do
   exec ← atpExec atp
   liftIO $ initDef (__IMPOSSIBLE__) <$> readProcess exec ["--version"] ""
 
-checkOutput ∷ ATP → String → Bool
-checkOutput atp output = atpOk atp `isInfixOf` output
+checkOutput ∷ Lang → ATP → String → Bool
+checkOutput lang atp output = atpOK lang atp `isInfixOf` output
 
 atpArgs ∷ ATP → Int → FilePath → T [String]
 
 -- TODO (20 July 2015). The timeout is not working with precision.
-atpArgs CVC4 timeout file =
-  return [ "--lang=tptp"
+atpArgs CVC4 timeout file = do
+  lang ← askTOpt optLang
+
+  return [ "--lang=" ++ map toLower (show lang)
          , "--strict-parsing"
          , "--tlimit=" ++ show (timeout * 1000)
          , file
@@ -287,9 +295,6 @@ createSMT2file tptpFile = do
       liftIO $ writeFile smt2File out
       return smt2File
 
-smt2Ext ∷ String
-smt2Ext = ".smt2"
-
 -- | The selected ATPs by the user or the default ones.
 selectedATPs ∷ T ()
 selectedATPs = do
@@ -301,14 +306,17 @@ selectedATPs = do
     else mapM optATP2ATP atps >>= modifyTATPs
 
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
-runATP atp outputMVar timeout tptpFile = do
+runATP atp outputMVar timeout file = do
+  lang ← askTOpt optLang
 
-  file ← case atp of
-           Z3 → createSMT2file tptpFile
+  atpFile ← case (lang, atp) of
+    (TPTP, Z3) → do
+      _ ← createSMT2file file
+      return (replaceExtension file smt2Ext)
 
-           _  → return tptpFile
+    _  → return file
 
-  args ∷ [String] ← atpArgs atp timeout file
+  args ∷ [String] ← atpArgs atp timeout atpFile
   cmd  ∷ String   ← atpExec atp
 
   let msgError ∷ Doc
@@ -346,7 +354,7 @@ runATP atp outputMVar timeout tptpFile = do
   output ← liftIO $ hGetContents $ fromMaybe (__IMPOSSIBLE__) outputH
   _      ← liftIO $ forkIO $
              evaluate (length output) >>
-             putMVar outputMVar (checkOutput atp output, atp)
+             putMVar outputMVar (checkOutput lang atp output, atp)
 
   return atpPH
 

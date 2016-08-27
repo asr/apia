@@ -6,7 +6,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE UnicodeSyntax     #-}
 
-module Apia.TPTP.ConcreteSyntax
+module Apia.TargetLang.TPTPConcreteSyntax
   ( ToTPTP(toTPTP)
   ) where
 
@@ -40,7 +40,7 @@ import Apia.FOL.Types
   , VarName
   )
 
-import Apia.TPTP.Types ( AF(AFor) )
+import Apia.TargetLang.Types ( AF(AFor) )
 
 import Apia.Utils.Text ( (+++), parens, toUpperFirst )
 
@@ -210,9 +210,12 @@ instance ToTPTP TPTPRole where
 
 -- Translation of annotated formulae to TPTP (FOF) concrete syntax.
 instance ToTPTP AF where
-  toTPTP (AFor qName atpRole formula) =
+  toTPTP (AFor qName role formula) =
     "fof("
     +++ toTPTP qName +++ ", "
-    +++ toTPTP atpRole +++ ", "
+    +++ toTPTP role +++ ", "
     +++ toTPTP formula
     +++ ")." +++ "\n\n"
+
+  toTPTP _ = __IMPOSSIBLE__
+

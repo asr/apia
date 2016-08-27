@@ -11,10 +11,10 @@ module Apia.Translation.Types
 import Agda.Syntax.Common   ( Dom )
 import Agda.Syntax.Internal ( Type )
 
-import Apia.FOL.Types  ( LFormula )
-import Apia.Monad.Base ( T )
+import Apia.Monad.Base       ( T )
+import Apia.TargetLang.Types ( TargetFormula )
 
 ------------------------------------------------------------------------------
 
-agdaDomTypeToFormula ∷ Dom Type → T LFormula
-agdaTypeToFormula    ∷ Type → T LFormula
+agdaDomTypeToFormula ∷ Dom Type → T TargetFormula
+agdaTypeToFormula    ∷ Type → T TargetFormula

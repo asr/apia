@@ -47,6 +47,8 @@ import Agda.Syntax.Position  ( noRange )
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.Monad      ( ifM )
 
+import Apia.Common ( Lang(SMT2, TPTP) )
+
 import Apia.FOL.Constants
   ( lTrue
   , lFalse
@@ -92,6 +94,7 @@ import Apia.Monad.Reports ( reportDLn, reportSLn )
 
 import Apia.Options
   ( Options ( optFnConstant
+            , optLang
             , optNoInternalEquality
             , optNoPredicateConstants
             , optSchematicFunctions
@@ -99,6 +102,8 @@ import Apia.Options
             , optSchematicPropositionalSymbols
             )
   )
+
+import Apia.TargetLang.Types ( TargetFormula(FOLFormula, SMT2Expr, SMT2Type) )
 
 import {-# source #-} Apia.Translation.Types
   ( agdaDomTypeToFormula
@@ -111,6 +116,19 @@ import Apia.Utils.AgdaAPI.Interface     ( qNameToUniqueString )
 import qualified Apia.Utils.Except as E
 
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
+
+import Apia.Utils.SMT2
+  ( smt2And
+  , smt2Bicond
+  , smt2C
+  , smt2Cond
+  , smt2False
+  , SMT2Expr
+  , smt2Not
+  , smt2Or
+  , smt2True
+  , tBool
+  )
 
 #include "undefined.h"
 
@@ -130,7 +148,7 @@ universalQuantificationErrorMsg p =
         "--schematic-propositional-functions" → "propositional functions"
         _                                     → __IMPOSSIBLE__
 
-agdaArgTermToFormula ∷ Arg Term → T LFormula
+agdaArgTermToFormula ∷ Arg Term → T TargetFormula
 agdaArgTermToFormula Arg {argInfo = info, unArg = t} =
   case info of
     ArgInfo { argInfoHiding = NotHidden } → agdaTermToFormula t
@@ -143,12 +161,32 @@ agdaArgTermToTerm Arg {argInfo = info, unArg = t} =
     ArgInfo { argInfoHiding = NotHidden } → agdaTermToTerm t
     _                                     → __IMPOSSIBLE__
 
-binConst ∷ (LFormula → LFormula → LFormula) →
+tptpBinConst ∷ (LFormula → LFormula → LFormula) →
            Arg Term →
            Arg Term →
            T LFormula
-binConst op arg1 arg2 =
-  liftM2 op (agdaArgTermToFormula arg1) (agdaArgTermToFormula arg2)
+tptpBinConst op arg1 arg2 = do
+  lang ← askTOpt optLang
+  f1   ← agdaArgTermToFormula arg1
+  f2   ← agdaArgTermToFormula arg2
+
+  case (lang, f1, f2) of
+    (TPTP, FOLFormula _f1, FOLFormula _f2) → return $ op _f1 _f2
+    _                                      → __IMPOSSIBLE__
+
+-- TODO (2016-05-03): Refactor with `tptpBinConst`.
+smt2BinConst ∷ (SMT2Expr → SMT2Expr → SMT2Expr) →
+               Arg Term →
+               Arg Term →
+               T SMT2Expr
+smt2BinConst op arg1 arg2 = do
+  lang ← askTOpt optLang
+  f1   ← agdaArgTermToFormula arg1
+  f2   ← agdaArgTermToFormula arg2
+
+  case (lang, f1, f2) of
+    (SMT2, SMT2Expr _f1, SMT2Expr _f2) → return $ op _f1 _f2
+    _                                  → __IMPOSSIBLE__
 
 elimToTerm ∷ Elim → T LTerm
 elimToTerm (Apply arg) = agdaArgTermToTerm arg
@@ -178,9 +216,11 @@ propositionalFunctionScheme vars n elims = do
     _ → fmap (appP (L.Var var)) (mapM elimToTerm elims)
 
 -- | Translate an Agda internal 'Term' to a target logic formula.
-agdaTermToFormula ∷ Term → T LFormula
+agdaTermToFormula ∷ Term → T TargetFormula
 agdaTermToFormula term'@(Def qName@(QName _ name) elims) = do
   reportSLn "t2f" 10 $ "agdaTermToFormula Def:\n" ++ show term'
+
+  lang ← askTOpt optLang
 
   let cName ∷ C.Name
       cName = nameConcrete name
@@ -194,17 +234,32 @@ agdaTermToFormula term'@(Def qName@(QName _ name) elims) = do
      case allApplyElims elims of
        Nothing → __IMPOSSIBLE__
 
-       Just [] | isCNameLogicConst lTrue  → return TRUE
+       Just [] | isCNameLogicConst lTrue →
+                   case lang of
+                     TPTP → return $ FOLFormula TRUE
+                     SMT2 → return $ SMT2Expr smt2True
 
-               | isCNameLogicConst lFalse → return FALSE
+               | isCNameLogicConst lFalse →
+                   case lang of
+                     TPTP → return $ FOLFormula FALSE
+                     SMT2 → return $ SMT2Expr smt2False
 
-               | otherwise →
-                 -- In this guard we translate 0-ary predicates, i.e.
-                 -- propositional functions, for example, A : Set.
-                 flip Predicate [] <$> qNameToUniqueString qName
+               | otherwise → do
+                   -- In this guard we translate 0-ary predicates,
+                   -- i.e.  propositional functions, for example,
+                   -- A : Set.
+                   str ← qNameToUniqueString qName
+                   case lang of
+                     TPTP → return $ FOLFormula $ Predicate str []
+                     SMT2 → return $ SMT2Expr $ smt2C . fromString $ str
 
        Just [a]
-         | isCNameHoleRight lNot → fmap Not (agdaArgTermToFormula a)
+         | isCNameHoleRight lNot → do
+             fm ← agdaArgTermToFormula a
+             case (lang, fm) of
+               (TPTP, FOLFormula _fm) → return $ FOLFormula $ Not _fm
+               (SMT2, SMT2Expr _fm)   → return $ SMT2Expr $ smt2Not _fm
+               _                      → __IMPOSSIBLE__
 
          | isCNameLogicConst lExists ||
            isCNameLogicConst lForAll → do
@@ -212,33 +267,49 @@ agdaTermToFormula term'@(Def qName@(QName _ name) elims) = do
 
              freshVar ← newTVar
 
-             return $ if isCNameLogicConst lExists
-                      then Exists freshVar $ const fm
-                      else ForAll freshVar $ const fm
+             case (lang, fm) of
+               (TPTP, FOLFormula _fm) →
+                 return $
+                   if isCNameLogicConst lExists
+                   then FOLFormula $ Exists freshVar $ const _fm
+                   else FOLFormula $ ForAll freshVar $ const _fm
+               _ → __IMPOSSIBLE__
 
-         | otherwise → predicate qName elims
+         | otherwise → FOLFormula <$> predicate qName elims
 
        Just [a1, a2]
-         | isCNameTwoHoles lAnd → binConst And a1 a2
+         | isCNameTwoHoles lAnd →
+             case lang of
+               TPTP → FOLFormula <$> tptpBinConst And a1 a2
+               SMT2 → SMT2Expr <$> smt2BinConst smt2And a1 a2
 
-         | isCNameTwoHoles lOr → binConst Or a1 a2
+         | isCNameTwoHoles lOr →
+             case lang of
+               TPTP → FOLFormula <$> tptpBinConst Or a1 a2
+               SMT2 → SMT2Expr <$> smt2BinConst smt2Or a1 a2
 
-         | isCNameTwoHoles lCond → binConst Implies a1 a2
+         | isCNameTwoHoles lCond →
+             case lang of
+               TPTP → FOLFormula <$> tptpBinConst Implies a1 a2
+               SMT2 → SMT2Expr <$> smt2BinConst smt2Cond a1 a2
 
          | isCNameTwoHoles lBicond1
-           || isCNameTwoHoles lBicond2 → binConst Equiv a1 a2
+           || isCNameTwoHoles lBicond2 →
+             case lang of
+               TPTP → FOLFormula <$> tptpBinConst Equiv a1 a2
+               SMT2 → SMT2Expr <$> smt2BinConst smt2Bicond a1 a2
 
          | isCNameTwoHoles lEquals → do
              reportSLn "t2f" 20 "Processing equals"
              ifM (askTOpt optNoInternalEquality)
                  -- Not using the ATPs internal equality.
-                 (predicate qName elims)
+                 (FOLFormula <$> predicate qName elims)
                  -- Using the ATPs internal equality.
-                 (liftM2 Eq (agdaArgTermToTerm a1) (agdaArgTermToTerm a2))
+                 (FOLFormula <$> liftM2 Eq (agdaArgTermToTerm a1) (agdaArgTermToTerm a2))
 
-         | otherwise → predicate qName elims
+         | otherwise → FOLFormula <$> predicate qName elims
 
-       _ → predicate qName elims
+       _ → FOLFormula <$> predicate qName elims
 
        where
        isCNameLogicConst ∷ String → Bool
@@ -274,6 +345,7 @@ agdaTermToFormula (Pi domTy (Abs x absTy)) = do
     ++ "domTy: " ++ show domTy ++ "\n"
     ++ "absTy: " ++ show (Abs x absTy)
 
+  lang     ← askTOpt optLang
   freshVar ← pushTNewVar
 
   reportSLn "t2f" 20 $
@@ -301,7 +373,10 @@ agdaTermToFormula (Pi domTy (Abs x absTy)) = do
     El (Type (Max [])) (Def _ []) → do
       reportSLn "t2f" 20 $
         "Adding universal quantification on variable " ++ show freshVar
-      return $ ForAll freshVar $ const f
+      case (lang, f) of
+        (TPTP, FOLFormula _f) →
+          return $ FOLFormula $ ForAll freshVar $ const _f
+        _ → __IMPOSSIBLE__
 
     -- The bounded variable is quantified on a proof. Due to we have
     -- drop the quantification on proofs terms, this case is
@@ -324,7 +399,10 @@ agdaTermToFormula (Pi domTy (Abs x absTy)) = do
            (NoAbs _ (El (Type (Max [])) (Def _ [])))) → do
       reportSLn "t2f" 20
         "Removing a quantification on a function of a Set to a Set"
-      return $ ForAll freshVar $ const f
+      case (lang, f) of
+        (TPTP, FOLFormula _f) →
+          return $ FOLFormula $ ForAll freshVar $ const _f
+        _ → __IMPOSSIBLE__
 
     -- N.B. The next case is just a generalization to various
     -- arguments of the previous case.
@@ -370,7 +448,10 @@ agdaTermToFormula (Pi domTy (Abs x absTy)) = do
 
     El (Type (Max [ClosedLevel 1])) (Pi _ (NoAbs _ _)) → do
       reportSLn "t2f" 20 $ "The type domTy is: " ++ show domTy
-      return $ ForAll freshVar $ const f
+      case (lang, f) of
+        (TPTP, FOLFormula _f) →
+          return $ FOLFormula $ ForAll freshVar $ const _f
+        _ → __IMPOSSIBLE__
 
     -- Non-FOL translation: First-order logic universal quantified
     -- propositional symbols.
@@ -407,7 +488,9 @@ agdaTermToFormula (Pi domTy (NoAbs x absTy)) = do
     "agdaTermToFormula Pi _ (NoAbs _ _):\n"
     ++ "domTy: " ++ show domTy ++ "\n"
     ++ "absTy: " ++ show (NoAbs x absTy)
-  f2 ← agdaTypeToFormula absTy
+
+  lang ← askTOpt optLang
+  f2   ← agdaTypeToFormula absTy
 
   if x /= "_"
     then
@@ -417,13 +500,19 @@ agdaTermToFormula (Pi domTy (NoAbs x absTy)) = do
         -- logic formula.
         El (Type (Max [])) (Def _ []) → do
           freshVar ← newTVar
-          return $ ForAll freshVar $ const f2
+          case (lang, f2) of
+            (TPTP, FOLFormula _f2) →
+              return $ FOLFormula $ ForAll freshVar $ const _f2
+            _ → __IMPOSSIBLE__
 
         -- The variable @x@ is a proof term, therefore we erase the
         -- quantification on it.
         El (Type (Max [])) (Def _ _) → do
           f1 ← agdaDomTypeToFormula domTy
-          return $ Implies f1 f2
+          case (lang, f1, f2) of
+            (TPTP, FOLFormula _f1, FOLFormula _f2) →
+              return $ FOLFormula $ Implies _f1 _f2
+            _ → __IMPOSSIBLE__
 
         -- The variable in @domTy@ has type @Set₁@
         -- (e.g. A : D → Set) and it isn't used, so we omit it.
@@ -435,7 +524,27 @@ agdaTermToFormula (Pi domTy (NoAbs x absTy)) = do
 
     else do
       f1 ← agdaDomTypeToFormula domTy
-      return $ Implies f1 f2
+      case (lang, f1, f2) of
+        (TPTP, FOLFormula _f1, FOLFormula _f2) →
+          return $ FOLFormula $ Implies _f1 _f2
+
+        (SMT2, SMT2Expr _f1, SMT2Expr _f2) →
+          return $ SMT2Expr $ smt2Cond _f1 _f2
+
+        _  → do
+          reportDLn "t2f" 20 $
+            pretty "f1 is: " <> pretty f1 <> pretty "\n"
+            <> pretty "f2 is: " <> pretty f2
+          __IMPOSSIBLE__
+
+agdaTermToFormula term'@(Sort (Type (Max []))) = do
+  reportSLn "t2f" 10 $ "agdaTermToFormula Var: " ++ show term'
+
+  lang ← askTOpt optLang
+
+  case lang of
+    TPTP → __IMPOSSIBLE__
+    SMT2 → return $ SMT2Type tBool
 
 agdaTermToFormula term'@(I.Var n elims) = do
   reportSLn "t2f" 10 $ "agdaTermToFormula Var: " ++ show term'
@@ -446,7 +555,7 @@ agdaTermToFormula term'@(I.Var n elims) = do
 
   case elims of
     -- N.B. In this case we *don't* use Koen's approach.
-    [] → return $ Predicate (vars !! n) []
+    [] → return $ FOLFormula $ Predicate (vars !! n) []
 
     -- Non-FOL translation: First-order logic universal quantified
     -- propositional functions.
@@ -473,7 +582,7 @@ agdaTermToFormula term'@(I.Var n elims) = do
                  <> pretty " and "
                  <> squotes "--no-predicate-constants"
                  <> pretty " options are incompatible")
-               (propositionalFunctionScheme vars n elims)
+               (FOLFormula <$> propositionalFunctionScheme vars n elims)
           )
           (E.throwE $ universalQuantificationErrorMsg p)
 

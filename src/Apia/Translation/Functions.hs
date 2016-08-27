@@ -44,16 +44,20 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
 import qualified Agda.Utils.Pretty as AP
 
+import Apia.Common    ( Lang(TPTP) )
 import Apia.FOL.Types ( LFormula(Implies, Eq, Equiv, ForAll) )
 
 import Apia.Monad.Base
-  ( getTVars
+  ( askTOpt
+  , getTVars
   , popTVar
   , pushTNewVar
   , T
   )
 
-import Apia.Monad.Reports ( reportDLn, reportSLn )
+import Apia.Options          ( Options(optLang) )
+import Apia.Monad.Reports    ( reportDLn, reportSLn )
+import Apia.TargetLang.Types ( TargetFormula(FOLFormula) )
 
 import Apia.Translation.ClauseBody
   ( cBodyToFormula
@@ -92,7 +96,7 @@ varsToElims n = Apply (Arg defaultArgInfo (var (n - 1))) : varsToElims (n - 1)
 -- definitions with only one clause.
 
 -- | Translate an ATP definition to a target logic formula.
-fnToFormula ∷ QName → Type → [Clause] → T LFormula
+fnToFormula ∷ QName → Type → [Clause] → T TargetFormula
 fnToFormula _      _  []   = __IMPOSSIBLE__
 fnToFormula qName  ty [cl] = clauseToFormula qName ty cl
 fnToFormula qName  _  _    =
@@ -113,10 +117,12 @@ fnToFormula qName  _  _    =
 -- LHS and the RHS (i.e. the body of the clause) it is necessary to
 -- generate an universal quantification on an equal number of
 -- variables to length @[Arg Pattern]@.
-clauseToFormula ∷ QName → Type → Clause → T LFormula
+clauseToFormula ∷ QName → Type → Clause → T TargetFormula
 
 -- There is at most one variable in the clause's pattern.
-clauseToFormula qName ty (Clause r tel (_ : pats) cBody cTy cc) =
+clauseToFormula qName ty (Clause r tel (_ : pats) cBody cTy cc) = do
+  lang ← askTOpt optLang
+
   case tel of
     -- The bounded variable is quantified on a @Set@,
     --
@@ -134,7 +140,10 @@ clauseToFormula qName ty (Clause r tel (_ : pats) cBody cTy cc) =
       f ← clauseToFormula qName ty (Clause r tels pats cBody cTy cc)
       popTVar
 
-      return $ ForAll freshVar $ const f
+      case (lang, f) of
+        (TPTP, FOLFormula _f) →
+          return $ FOLFormula $ ForAll freshVar $ const _f
+        _                     → __IMPOSSIBLE__
 
     -- The bounded variable is quantified on a proof,
     --
@@ -175,7 +184,10 @@ clauseToFormula qName ty (Clause r tel (_ : pats) cBody cTy cc) =
 
       reportDLn "def2f" 20 $ pretty "f2: " <> pretty f2
 
-      return $ Implies f1 f2
+      case (lang, f1, f2) of
+        (TPTP, FOLFormula _f1, FOLFormula _f2) →
+          return $ FOLFormula $ Implies _f1 _f2
+        _ → __IMPOSSIBLE__
 
     ExtendTel (Dom _ (El (Type (Max [])) (Pi _ _))) _ →
       E.throwE $ pretty "the translation of " <> bquotes (AP.pretty qName)
@@ -189,6 +201,7 @@ clauseToFormula qName ty (Clause r tel (_ : pats) cBody cTy cc) =
 -- universal quantification, so we translate the LHS and the RHS.
 clauseToFormula qName ty (Clause _ _ [] cBody _ _) = do
   vars ← getTVars
+  lang ← askTOpt optLang
   reportSLn "def2f" 20 $ "vars: " ++ show vars
 
   case ty of
@@ -202,7 +215,12 @@ clauseToFormula qName ty (Clause _ _ [] cBody _ _) = do
 
       -- Because the LHS and the RHS (the body of the clause) are
       -- formulae, they are related via an equivalence logic.
-      liftM2 Equiv (agdaTermToFormula lhs) (cBodyToFormula cBody)
+      f1 ← agdaTermToFormula lhs
+      f2 ← cBodyToFormula cBody
+      case (lang, f1, f2) of
+        (TPTP, FOLFormula _f1, FOLFormula _f2) →
+          return $ FOLFormula $ Equiv _f1 _f2
+        _ → __IMPOSSIBLE__
 
     -- The defined symbol is a function.
     El (Type (Max [])) _ → do
@@ -227,7 +245,14 @@ clauseToFormula qName ty (Clause _ _ [] cBody _ _) = do
         -- @foo d = ...
         --
         -- so we don't need to add new fresh variables.
-        then liftM2 Eq (agdaTermToTerm lhs) (cBodyToTerm cBody)
+        then do
+          t1 ← agdaTermToTerm lhs
+          t2 ← cBodyToTerm cBody
+
+          case lang of
+            TPTP → return $ FOLFormula $ Eq t1 t2
+            _    → __IMPOSSIBLE__
+
         -- The definition is of the form
         --
         -- @foo ∷ D → D@
@@ -254,7 +279,7 @@ clauseToFormula qName ty (Clause _ _ [] cBody _ _) = do
                 helper [x]      = ForAll x $ \_ → Eq tLHS tRHS
                 helper (x : xs) = ForAll x $ \_ → helper xs
 
-            return $ helper freshVars
+            return $ FOLFormula $ helper freshVars
           else __IMPOSSIBLE__
 
     _ → __IMPOSSIBLE__

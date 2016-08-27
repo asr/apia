@@ -29,24 +29,24 @@ import Agda.Syntax.Internal as I
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Apia.FOL.Types         ( LFormula )
 import Apia.Monad.Base        ( T )
 import Apia.Monad.Reports     ( reportSLn )
 import Apia.Translation.Terms ( agdaTermToFormula )
+import Apia.TargetLang.Types  ( TargetFormula )
 
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
 -- | Translate an Agda internal 'Dom' 'Type' to a target logic
 -- formula.
-agdaDomTypeToFormula ∷ Dom Type → T LFormula
+agdaDomTypeToFormula ∷ Dom Type → T TargetFormula
 agdaDomTypeToFormula Dom {domInfo = info, unDom = ty} =
   case info of
     ArgInfo { argInfoHiding = NotHidden } → agdaTypeToFormula ty
     _                                     →  __IMPOSSIBLE__
 
 -- | Translate an Agda internal 'Type' to a target logic formula.
-agdaTypeToFormula ∷ Type → T LFormula
+agdaTypeToFormula ∷ Type → T TargetFormula
 agdaTypeToFormula ty@(El (Type (Max [])) term) = do
   reportSLn "agdaTypeToFormula" 10 $ "Processing type ty:\n" ++ show ty
   agdaTermToFormula term

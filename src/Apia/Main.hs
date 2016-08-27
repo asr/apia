@@ -50,11 +50,10 @@ import Apia.Options
   , printUsage
   )
 
-import Apia.Snapshot   ( snapshotTest )
-import Apia.TPTP.Files ( createConjectureTPTPFile )
-import Apia.TPTP.Types ( ConjectureSet, GeneralRoles )
-
-import Apia.Translation ( conjecturesToAFors, generalRolesToAFors )
+import Apia.Snapshot         ( snapshotTest )
+import Apia.TargetLang.Files ( createTargetFile )
+import Apia.TargetLang.Types ( ConjectureSet, GeneralRoles )
+import Apia.Translation      ( conjecturesToAFors, generalRolesToAFors )
 
 import qualified Apia.Utils.Except as E
 
@@ -130,22 +129,20 @@ runApia = do
               -- state.
               selectedATPs
 
-              -- Creation of the TPTP files.
-              tptpFiles ←
-                if optLang opts == TPTP
-                then mapM (createConjectureTPTPFile (fst allAFs)) (snd allAFs)
-                else return []
+              -- Creation of the targets files.
+              targetsFiles ← mapM (createTargetFile (fst allAFs)) (snd allAFs)
 
               -- Check the generated TPTP files using the tptp4X
               -- program from the TPTP library.
-              when (optCheck opts) $ mapM_ checkTPTP tptpFiles
+              when (optCheck opts &&  optLang opts == TPTP) $
+                   mapM_ checkTPTP targetsFiles
 
               case () of
                 _ | -- Run the snapshot test.
-                    optSnapshotTest opts → mapM_ snapshotTest tptpFiles
+                    optSnapshotTest opts → mapM_ snapshotTest targetsFiles
 
-                  | -- The ATPs systems are called on the TPTP files.
-                    not (optOnlyFiles opts) → mapM_ callATPs tptpFiles
+                  | -- The ATPs systems are called on the targets files.
+                    not (optOnlyFiles opts) → mapM_ callATPs targetsFiles
 
                   | otherwise → return ()
 

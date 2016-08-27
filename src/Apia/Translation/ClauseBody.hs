@@ -24,9 +24,10 @@ import Agda.Syntax.Internal
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Apia.FOL.Types     ( LFormula, LTerm )
-import Apia.Monad.Base    ( T )
-import Apia.Monad.Reports ( reportSLn )
+import Apia.FOL.Types        ( LTerm )
+import Apia.Monad.Base       ( T )
+import Apia.Monad.Reports    ( reportSLn )
+import Apia.TargetLang.Types ( TargetFormula )
 
 import Apia.Translation.Terms
   ( agdaTermToFormula
@@ -41,7 +42,7 @@ import Apia.Utils.AgdaAPI.EtaExpansion ( EtaExpandible(etaExpand) )
 ------------------------------------------------------------------------------
 -- | Translate an Agda internal 'ClauseBody' to a target logical
 -- formula.
-cBodyToFormula ∷ ClauseBody → T LFormula
+cBodyToFormula ∷ ClauseBody → T TargetFormula
 cBodyToFormula (Body term)          = etaExpand term >>= agdaTermToFormula
 cBodyToFormula (Bind (Abs _ cBody)) = cBodyToFormula cBody
 cBodyToFormula _                    = __IMPOSSIBLE__

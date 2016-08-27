@@ -18,6 +18,7 @@ module Apia.Utils.PrettyPrint
 
 import Apia.Prelude
 
+import Apia.Utils.SMT2 ( pp, SMT2Expr, SMT2Type )
 import Text.PrettyPrint
 
 ------------------------------------------------------------------------------
@@ -54,3 +55,9 @@ instance Pretty Doc where
 
 instance Pretty String where
   pretty = text
+
+instance Pretty SMT2Expr where
+  pretty = pp
+
+instance Pretty SMT2Type where
+  pretty = pp

@@ -32,13 +32,20 @@ import Agda.Utils.Monad      ( ifM )
 
 import qualified Agda.Utils.Pretty as AP
 
-import Apia.Monad.Base    ( getTDefs, isTVarsEmpty, T)
-import Apia.Monad.Reports ( reportDLn, reportSLn )
+import Apia.Common
+  ( Lang(SMT2,TPTP)
+  , SMT2Role(SMT2Conjecture, SMT2Declaration)
+  )
 
-import Apia.TPTP.Types
-  ( AF(AFor)
+import Apia.Monad.Base    ( askTOpt, getTDefs, isTVarsEmpty, T)
+import Apia.Monad.Reports ( reportDLn, reportSLn )
+import Apia.Options       ( Options(optLang) )
+
+import Apia.TargetLang.Types
+  ( AF(AExpr, AFor, ATy)
   , ConjectureSet(ConjectureSet)
   , GeneralRoles(GeneralRoles)
+  , TargetFormula(FOLFormula, SMT2Expr, SMT2Type)
   )
 
 import Apia.Translation.Functions ( fnToFormula )
@@ -54,8 +61,9 @@ import Apia.Utils.AgdaAPI.Interface
   , getClauses
   , getLocalHints
   , isATPDefinition
-  , qNameDefinition
   , qNameConcreteNameRange
+  , qNameDefinition
+  , qNameToUniqueString
   )
 
 import Apia.Utils.AgdaAPI.RemoveProofTerms ( removeProofTerm )
@@ -72,15 +80,16 @@ import qualified Data.Set as Set
 
 ------------------------------------------------------------------------------
 
-toAFor ∷ TPTPRole → QName → Definition → T AF
-toAFor role qName def = do
+toAFor ∷ Maybe TPTPRole → Maybe SMT2Role → QName → Definition → T AF
+toAFor tptpRole smt2Role qName def = do
   let ty ∷ Type
       ty = defType def
   reportSLn "toAFor" 10 $
      "Translating QName: " ++ showLn qName
      ++ "The type (pretty-printer):\n" ++ AP.prettyShow ty ++ "\n"
      ++ "The type (show):\n" ++ showLn ty
-     ++ "Role: " ++ showLn role ++ "\n"
+     ++ "TPTP role: " ++ showLn tptpRole ++ "\n"
+     ++ "SMT2 role: " ++ showLn smt2Role ++ "\n"
      ++ "Position: " ++ (showLn . qNameConcreteNameRange) qName
 
   -- Note (2016-04-01): The Agda current default is not sharing.
@@ -135,11 +144,21 @@ toAFor role qName def = do
     pretty "The logic formula for " <> AP.pretty qName
     <> pretty " is:\n" <> pretty for
 
-  ifM isTVarsEmpty (return $ AFor qName role for) (__IMPOSSIBLE__)
+  case (tptpRole, smt2Role, for) of
+    (Just _tptpRole, Nothing, FOLFormula _for) →
+      ifM isTVarsEmpty (return $ AFor qName _tptpRole _for) (__IMPOSSIBLE__)
+    (Nothing, Just SMT2Conjecture, SMT2Expr _for) →
+      ifM isTVarsEmpty (return $ AExpr qName SMT2Conjecture _for) (__IMPOSSIBLE__)
+    (Nothing, Just SMT2Declaration, SMT2Type _for) → do
+      varName ← qNameToUniqueString qName
+      ifM isTVarsEmpty (return $ ATy varName SMT2Declaration _for) (__IMPOSSIBLE__)
+    _                  → __IMPOSSIBLE__
 
 -- Translation of an Agda internal function to an annotated formula.
 fnToAFor ∷ QName → Definition → T AF
 fnToAFor qName def = do
+  lang ← askTOpt optLang
+
   let ty ∷ Type
       ty = defType def
 
@@ -161,11 +180,14 @@ fnToAFor qName def = do
     pretty "The logic formula for " <> AP.pretty qName
     <> pretty " is:\n" <> pretty for
 
-  return $ AFor qName TPTPDefinition for
+  case (lang, for) of
+    (TPTP, FOLFormula _for) → return $ AFor qName TPTPDefinition _for
+    _                       → __IMPOSSIBLE__
 
 -- We translate a local hint to annotated formula.
 localHintToAFor ∷ QName → T AF
-localHintToAFor qName = qNameDefinition qName >>= toAFor TPTPHint qName
+localHintToAFor qName =
+  qNameDefinition qName >>= toAFor (Just TPTPHint) Nothing qName
 
 -- We translate the local hints of an ATP conjecture to annotated
 -- formulae.
@@ -215,11 +237,22 @@ requiredATPDefsByLocalHints def = do
   fmap (nub . concat) (mapM requiredATPDefsByDefinition hintsDefs)
 
 conjectureToAFor ∷ QName → Definition → T ConjectureSet
-conjectureToAFor qName def = liftM4 ConjectureSet
-                                    (toAFor TPTPConjecture qName def)
-                                    (requiredATPDefsByDefinition def)
-                                    (localHintsToAFors def)
-                                    (requiredATPDefsByLocalHints def)
+conjectureToAFor qName def = do
+  lang ← askTOpt optLang
+
+  liftM5
+    ConjectureSet
+    (case lang of
+       TPTP → toAFor (Just TPTPConjecture) Nothing qName def
+       SMT2 → toAFor Nothing (Just SMT2Conjecture) qName def
+    )
+    (requiredATPDefsByDefinition def)
+    (localHintsToAFors def)
+    (requiredATPDefsByLocalHints def)
+    (case lang of
+       TPTP → return []
+       SMT2 → requiredDeclsByDefinition def
+    )
 
 -- | Translate the ATP conjectures and their local hints in the top
 -- level module to annotated formulae.
@@ -240,7 +273,10 @@ axiomsToAFors ∷ T [AF]
 axiomsToAFors = do
   axDefs ∷ Definitions ← getATPAxioms <$> getTDefs
 
-  zipWithM (toAFor TPTPAxiom) (HashMap.keys axDefs) (HashMap.elems axDefs)
+  zipWithM
+    (toAFor (Just TPTPAxiom) Nothing)
+    (HashMap.keys axDefs)
+    (HashMap.elems axDefs)
 
 requiredATPDefsByDefinition ∷ Definition → T [AF]
 requiredATPDefsByDefinition def =
@@ -257,7 +293,10 @@ generalHintsToAFors ∷ T [AF]
 generalHintsToAFors = do
   ghDefs ∷ Definitions ← getATPHints <$> getTDefs
 
-  zipWithM (toAFor TPTPHint) (HashMap.keys ghDefs) (HashMap.elems ghDefs)
+  zipWithM
+    (toAFor (Just TPTPHint) Nothing)
+    (HashMap.keys ghDefs)
+    (HashMap.elems ghDefs)
 
 requiredATPDefsByHints ∷ T [AF]
 requiredATPDefsByHints = do
@@ -274,3 +313,13 @@ generalRolesToAFors = liftM4 GeneralRoles
                              requiredATPDefsByAxioms
                              generalHintsToAFors
                              requiredATPDefsByHints
+
+requiredDeclsByDefinition ∷ Definition → T [AF]
+requiredDeclsByDefinition def = do
+  -- We get all the @QNames@ in the definition.
+  let qNamesInDef ∷ [QName]
+      qNamesInDef = Set.toList $ namesIn def
+
+  defsInDefTy ← mapM qNameDefinition qNamesInDef
+
+  zipWithM (toAFor Nothing (Just SMT2Declaration)) qNamesInDef defsInDefTy

@@ -37,6 +37,10 @@ postulate A B C : Set
 postulate A→A : A → A
 {-# ATP prove A→A #-}
 
+-- Testing the conditional using the hard-coded function type.
+postulate A⇒A : A ⇒ A
+{-# ATP prove A⇒A #-}
+
 -- The introduction and elimination rules for the propositional
 -- connectives are theorems.
 postulate

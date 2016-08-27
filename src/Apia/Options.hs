@@ -121,7 +121,6 @@ data Options = Options
   , optWithVampire                     ∷ String
   , optWithZ3                          ∷ String
   }
-  deriving Show
 
 -- | 'Options' monad.
 type MOptions = Options → Either Doc Options

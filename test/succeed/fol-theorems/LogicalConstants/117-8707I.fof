@@ -6,10 +6,10 @@
 % The conjecture.
 
 % The Agda term was:
-% Name: LogicalConstants.refl
+% Name: LogicalConstants.∃I
 % Role: prove
-% Line: 86
-fof(n60_5041810728898563849, conjecture, ( ! [A] : (A = A) )).
+% Line: 117
+fof(n100_5041810728898563849, conjecture, ( ! [A] : (kp1_(cA185_72_5041810728898563849,A) => ( ? [B] : kp1_(cA185_72_5041810728898563849,B) )) )).
 
 % End conjecture.
 

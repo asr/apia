@@ -6,10 +6,10 @@
 % The conjecture.
 
 % The Agda term was:
-% Name: LogicalConstants.¬E
+% Name: LogicalConstants.thm₂
 % Role: prove
-% Line: 52
-fof(n44_5041810728898563849, conjecture, (((~(pA_18_5041810728898563849)) => ($false)) => (pA_18_5041810728898563849))).
+% Line: 71
+fof(n50_5041810728898563849, conjecture, (((pA_18_5041810728898563849) | ($false)) => (pA_18_5041810728898563849))).
 
 % End conjecture.
 

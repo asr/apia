@@ -64,9 +64,8 @@ Installation
    $ cabal install
    ````
 
-   In order to test the installation of the program, once the extended
-   version of Agda and (some of) the ATPs have been installed, we can
-   try to automatically prove the conjecture in
+   In order to test the installation of Apia, you can try to
+   automatically prove the conjecture in
 
     ````agda
     module Test where
@@ -81,34 +80,22 @@ Installation
     {-# ATP prove ∨-comm #-}
     ````
 
-   by running the following commands:
+   using the E ATP by running the following commands:
 
    ````bash
    $ agda Test.agda
-   $ apia Test.agda
+   $ apia --atp=e Test.agda
    Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
    E 1.9  Sourenee proved the conjecture
    ````
 
-   The program will call the default ATPs and tell which of the ATPs
-   was able to first prove a certain conjecture. If none ATP could
-   prove a conjecture after four minutes, the process of proving that
-   particular conjecture is aborted and the ATPs try to prove the next
-   conjecture.
+   Apia will call the E ATP and tell if this ATP was able to prove the
+   conjecture. If the ATP could not prove the conjecture after the
+   default timeout, the process of proving that particular conjecture
+   is aborted.
 
-Command-line options
---------------------
-
-* Choosing the ATPs
-
-  If we want to just use a certain ATP, say Equinox, we can run the
-  following command:
-
-   ````bash
-   $ apia --atp=equinox Test.agda
-   Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
-   Equinox, version 5.0alpha, 2010-06-29 proved the conjecture
-   ````
+Some command-line options
+-------------------------
 
 * No using the ATPs equality
 

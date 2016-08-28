@@ -443,19 +443,27 @@ prove_notes : $(prove_notes_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test used when there is a modification to Apia or Agda
+# Test used when there is a modification to Apia
 
-.PHONY : agda_apia_changed
-agda_apia_changed : clean
-	cabal clean
-	cabal install --only-dependencies
-	cabal configure
-	cabal build
+.PHONY : tests
+tests :
 	make generated_all
 	make non_conjectures
 	make errors
 	make type_check_notes
 	make prove_notes
+	@echo "$@ succeeded!"
+
+##############################################################################
+# Test used when there is a modification to Agda
+
+.PHONY : agda_changed
+agda_changed : clean
+	cabal clean
+	cabal install --only-dependencies
+	cabal configure
+	cabal build
+	make tests
 	@echo "$@ succeeded!"
 
 ##############################################################################

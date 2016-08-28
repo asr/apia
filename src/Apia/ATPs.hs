@@ -34,7 +34,8 @@ import Apia.Monad.Base    ( askTOpt, getTATPs, modifyTATPs, T )
 import Apia.Monad.Reports ( reportS )
 
 import Apia.Options
-  ( Options( optATP
+  ( extractATPs
+  , Options( optATP
            , optTime
            , optUnprovenNoError
            , optWithCVC4
@@ -294,11 +295,16 @@ smt2Ext = ".smt2"
 selectedATPs ∷ T ()
 selectedATPs = do
   atps ← askTOpt optATP
+
   let msgError ∷ Doc
       msgError = pretty "at least you need to specify one ATP"
-  if null atps
+
+  let atps' ∷ [String]
+      atps' = extractATPs atps
+
+  if null atps'
     then E.throwE msgError
-    else mapM optATP2ATP atps >>= modifyTATPs
+    else mapM optATP2ATP atps' >>= modifyTATPs
 
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
 runATP atp outputMVar timeout tptpFile = do

@@ -14,7 +14,7 @@ module Apia.Defaults
 import Apia.Prelude
 
 import Apia.Common  ( Lang (SMT2, TPTP) )
-import Apia.Options ( Options(..), verboseOpt )
+import Apia.Options ( Options(..), verboseOpt, ManagerATP(DefaultATPs) )
 
 import Agda.Utils.Trie as Trie
 
@@ -40,7 +40,7 @@ import System.FilePath.Posix ((</>))
 -- | Default options use by the program.
 defaultOptions ∷ Options
 defaultOptions = Options
-  { optATP                             = []
+  { optATP                             = DefaultATPs []
   , optCheck                           = False
   , optDumpTypes                       = False
   , optFnConstant                      = False
@@ -89,7 +89,7 @@ setATP config opts = newOpts
   where
     newOpts ∷ Options
     newOpts = case lookConfig "atp" config of
-      Just val → opts { optATP = val }
+      Just val → opts { optATP = DefaultATPs val }
       _        → opts
 
 setCheck ∷ Config → Options → Options

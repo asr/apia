@@ -5,7 +5,9 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Apia.Options
-  ( options
+  ( extractATPs
+  , ManagerATP(..)
+  , options
   , OM  -- Required by Haddock.
   , Options( Options --Improve Haddock information.
            , optATP
@@ -87,9 +89,18 @@ import System.Environment ( getProgName )
 
 -----------------------------------------------------------------------------
 
+-- | A data type to deal with the option optATP
+
+data ManagerATP a = DefaultATPs a | CommandATPs a
+
+extractATPs ∷ ManagerATP a → a
+extractATPs (DefaultATPs val) = val
+extractATPs (CommandATPs val) = val
+
+
 -- | Program command-line options.
 data Options = Options
-  { optATP                             ∷ [String]
+  { optATP                             ∷ ManagerATP [String]
   , optCheck                           ∷ Bool
   , optDumpTypes                       ∷ Bool
   , optFnConstant                      ∷ Bool
@@ -128,7 +139,12 @@ type OM = Options → Either Doc Options
 atpOpt ∷ String → OM
 atpOpt [] _ = Left $
   pretty "option " <> squotes "--atp" <> pretty " requires an argument NAME"
-atpOpt name opts = Right opts { optATP = nub $ optATP opts ++ [name] }
+atpOpt name opts = Right opts { optATP = CommandATPs atps }
+  where
+    atps ∷ [String]
+    atps = case optATP opts of
+      CommandATPs old → nub $ old ++ [name]
+      DefaultATPs _   → [name]
 
 checkOpt ∷ OM
 checkOpt opts = Right opts { optCheck = True }

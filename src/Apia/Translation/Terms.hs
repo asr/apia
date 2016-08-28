@@ -65,12 +65,12 @@ import Apia.FOL.Primitives ( appF, appP )
 
 import Apia.FOL.Types as L
   ( LFormula( And
+            , Bicond
+            , Cond
             , Eq
-            , Equiv
             , Exists
             , FALSE
             , ForAll
-            , Implies
             , Not
             , Or
             , Predicate
@@ -223,10 +223,10 @@ agdaTermToFormula term'@(Def qName@(QName _ name) elims) = do
 
          | isCNameTwoHoles lOr → binConst Or a1 a2
 
-         | isCNameTwoHoles lCond → binConst Implies a1 a2
+         | isCNameTwoHoles lCond → binConst Cond a1 a2
 
          | isCNameTwoHoles lBicond1
-           || isCNameTwoHoles lBicond2 → binConst Equiv a1 a2
+           || isCNameTwoHoles lBicond2 → binConst Bicond a1 a2
 
          | isCNameTwoHoles lEquals → do
              reportSLn "t2f" 20 "Processing equals"
@@ -423,7 +423,7 @@ agdaTermToFormula (Pi domTy (NoAbs x absTy)) = do
         -- quantification on it.
         El (Type (Max [])) (Def _ _) → do
           f1 ← agdaDomTypeToFormula domTy
-          return $ Implies f1 f2
+          return $ Cond f1 f2
 
         -- The variable in @domTy@ has type @Set₁@
         -- (e.g. A : D → Set) and it isn't used, so we omit it.
@@ -435,7 +435,7 @@ agdaTermToFormula (Pi domTy (NoAbs x absTy)) = do
 
     else do
       f1 ← agdaDomTypeToFormula domTy
-      return $ Implies f1 f2
+      return $ Cond f1 f2
 
 agdaTermToFormula term'@(I.Var n elims) = do
   reportSLn "t2f" 10 $ "agdaTermToFormula Var: " ++ show term'

@@ -7,12 +7,12 @@
 
 module Apia.FOL.Types
   ( LFormula( And
+            , Bicond
+            , Cond
             , Eq
-            , Equiv
             , Exists
             , FALSE
             , ForAll
-            , Implies
             , Not
             , Or
             , Predicate
@@ -62,8 +62,8 @@ data LFormula = TRUE
               | Not LFormula
               | And LFormula LFormula
               | Or LFormula LFormula
-              | Implies LFormula LFormula
-              | Equiv LFormula LFormula
+              | Cond LFormula LFormula
+              | Bicond LFormula LFormula
               | ForAll VarName (LTerm → LFormula)
               | Exists VarName (LTerm → LFormula)
               | Eq LTerm LTerm
@@ -78,8 +78,8 @@ instance Pretty LFormula where
   pretty (Not f)         = sspaces "Not" <> pretty f
   pretty (And f1 f2)     = sspaces "And" <> pretty f1 <> pretty f2
   pretty (Or f1 f2)      = sspaces "Or" <> pretty f1 <> pretty f2
-  pretty (Implies f1 f2) = sspaces "Implies" <> pretty f1 <> pretty f2
-  pretty (Equiv f1 f2)   = sspaces "Equiv" <> pretty f1 <> pretty f2
+  pretty (Cond f1 f2)    = sspaces "Cond" <> pretty f1 <> pretty f2
+  pretty (Bicond f1 f2)  = sspaces "Bicond" <> pretty f1 <> pretty f2
   pretty (ForAll var f)  = sspaces "ForAll" <> pretty var <> pretty (f $ Var var)
   pretty (Exists var f)  = sspaces "Exists " <> pretty var <> pretty (f $ Var var)
   pretty (Eq t1 t2)      = sspaces "Eq" <> pretty t1 <> pretty t2

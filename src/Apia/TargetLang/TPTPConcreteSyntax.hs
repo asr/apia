@@ -25,12 +25,12 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
 import Apia.FOL.Types
   ( LFormula( And
+            , Bicond
+            , Cond
             , Eq
-            , Equiv
             , Exists
             , FALSE
             , ForAll
-            , Implies
             , Not
             , Or
             , Predicate
@@ -193,8 +193,8 @@ instance ToTPTP LFormula where
   toTPTP (And f1 f2)     = parens $ toTPTP f1 +++ " & " +++ toTPTP f2
   toTPTP (Or f1 f2)      = parens $ toTPTP f1 +++ " | " +++ toTPTP f2
   toTPTP (Not f)         = parens $ T.cons '~' (toTPTP f)
-  toTPTP (Implies f1 f2) = parens $ toTPTP f1 +++ " => " +++ toTPTP f2
-  toTPTP (Equiv f1 f2)   = parens $ toTPTP f1 +++ " <=> " +++ toTPTP f2
+  toTPTP (Cond f1 f2)    = parens $ toTPTP f1 +++ " => " +++ toTPTP f2
+  toTPTP (Bicond f1 f2)  = parens $ toTPTP f1 +++ " <=> " +++ toTPTP f2
   toTPTP (ForAll var f)  = "( ! " +++ quantifierBodyToTPTP var f +++ " )"
   toTPTP (Exists var f)  = "( ? " +++ quantifierBodyToTPTP var f +++ " )"
   toTPTP TRUE            = parens "$true"

@@ -45,7 +45,7 @@ import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 import qualified Agda.Utils.Pretty as AP
 
 import Apia.Common    ( Lang(TPTP) )
-import Apia.FOL.Types ( LFormula(Implies, Eq, Equiv, ForAll) )
+import Apia.FOL.Types ( LFormula(Bicond, Cond, Eq, ForAll) )
 
 import Apia.Monad.Base
   ( askTOpt
@@ -152,7 +152,7 @@ clauseToFormula qName ty (Clause r tel (_ : pats) cBody cTy cc) = do
     --
     -- so we need drop this quantification. In this case, we erase the
     -- quantification on the bounded variable and we try it as a
-    -- function type (using @Implies@ instead of @ForAll@).
+    -- function type (using @Cond@ instead of @ForAll@).
 
     -- N.B. the pattern matching on @(Def _ _)@.
     ExtendTel (Dom _ tye@(El (Type (Max [])) (Def _ _))) (Abs x tels) → do
@@ -186,7 +186,7 @@ clauseToFormula qName ty (Clause r tel (_ : pats) cBody cTy cc) = do
 
       case (lang, f1, f2) of
         (TPTP, FOLFormula _f1, FOLFormula _f2) →
-          return $ FOLFormula $ Implies _f1 _f2
+          return $ FOLFormula $ Cond _f1 _f2
         _ → __IMPOSSIBLE__
 
     ExtendTel (Dom _ (El (Type (Max [])) (Pi _ _))) _ →
@@ -214,12 +214,12 @@ clauseToFormula qName ty (Clause _ _ [] cBody _ _) = do
           lhs = Def qName $ varsToElims $ length vars
 
       -- Because the LHS and the RHS (the body of the clause) are
-      -- formulae, they are related via an equivalence logic.
+      -- formulae, they are related via an biconditional connective,
       f1 ← agdaTermToFormula lhs
       f2 ← cBodyToFormula cBody
       case (lang, f1, f2) of
         (TPTP, FOLFormula _f1, FOLFormula _f2) →
-          return $ FOLFormula $ Equiv _f1 _f2
+          return $ FOLFormula $ Bicond _f1 _f2
         _ → __IMPOSSIBLE__
 
     -- The defined symbol is a function.

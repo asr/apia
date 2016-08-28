@@ -67,12 +67,12 @@ import Apia.FOL.Primitives ( appF, appP )
 
 import Apia.FOL.Types as L
   ( LFormula( And
+            , Bicond
+            , Cond
             , Eq
-            , Equiv
             , Exists
             , FALSE
             , ForAll
-            , Implies
             , Not
             , Or
             , Predicate
@@ -290,13 +290,13 @@ agdaTermToFormula term'@(Def qName@(QName _ name) elims) = do
 
          | isCNameTwoHoles lCond →
              case lang of
-               TPTP → FOLFormula <$> tptpBinConst Implies a1 a2
+               TPTP → FOLFormula <$> tptpBinConst Cond a1 a2
                SMT2 → SMT2Expr <$> smt2BinConst smt2Cond a1 a2
 
          | isCNameTwoHoles lBicond1
            || isCNameTwoHoles lBicond2 →
              case lang of
-               TPTP → FOLFormula <$> tptpBinConst Equiv a1 a2
+               TPTP → FOLFormula <$> tptpBinConst Bicond a1 a2
                SMT2 → SMT2Expr <$> smt2BinConst smt2Bicond a1 a2
 
          | isCNameTwoHoles lEquals → do
@@ -511,7 +511,7 @@ agdaTermToFormula (Pi domTy (NoAbs x absTy)) = do
           f1 ← agdaDomTypeToFormula domTy
           case (lang, f1, f2) of
             (TPTP, FOLFormula _f1, FOLFormula _f2) →
-              return $ FOLFormula $ Implies _f1 _f2
+              return $ FOLFormula $ Cond _f1 _f2
             _ → __IMPOSSIBLE__
 
         -- The variable in @domTy@ has type @Set₁@
@@ -526,7 +526,7 @@ agdaTermToFormula (Pi domTy (NoAbs x absTy)) = do
       f1 ← agdaDomTypeToFormula domTy
       case (lang, f1, f2) of
         (TPTP, FOLFormula _f1, FOLFormula _f2) →
-          return $ FOLFormula $ Implies _f1 _f2
+          return $ FOLFormula $ Cond _f1 _f2
 
         (SMT2, SMT2Expr _f1, SMT2Expr _f2) →
           return $ SMT2Expr $ smt2Cond _f1 _f2

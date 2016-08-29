@@ -26,9 +26,8 @@ import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), prettyShow, squotes )
 
 import qualified Data.Text as T ( pack )
 
-import Control.Monad.IO.Class ( MonadIO(liftIO) )
-import Safe.Exact             ( dropExact )
-import System.FilePath        ( combine, joinPath, splitPath )
+import Safe.Exact      ( dropExact )
+import System.FilePath ( combine, joinPath, splitPath )
 
 ------------------------------------------------------------------------------
 

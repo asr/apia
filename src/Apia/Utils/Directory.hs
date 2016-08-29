@@ -22,8 +22,6 @@ import Apia.Utils.PrettyPrint ( Doc )
 
 import qualified Data.ByteString.Lazy as BL ( readFile )
 
-import Control.Monad.IO.Class ( MonadIO(liftIO) )
-
 import System.Directory ( doesFileExist, findExecutable )
 
 ------------------------------------------------------------------------------

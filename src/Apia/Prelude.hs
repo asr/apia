@@ -1,6 +1,7 @@
 
 -- | Apia prelude.
 
+{-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Apia.Prelude
@@ -38,6 +39,12 @@ import Data.Tuple     as YAP
 import Control.Applicative as YAP
 import Control.Monad       as YAP
 
+#if __GLASGOW_HASKELL__ <= 710
+import Control.Monad.Reader as YAP ( MonadIO(liftIO) )
+#else
+import Control.Monad.IO.Class as YAP ( MonadIO(liftIO) )
+#endif
+
 import GHC.Num   as YAP ( (+), (*), (-) )
 import GHC.Real  as YAP ( fromIntegral, round )
 import GHC.Types as YAP ( Float )
@@ -48,9 +55,7 @@ import Text.Read as YAP ( read )
 import Text.Show as YAP
 
 ------------------------------------------------------------------------------
--- Internal use
-
-import Control.Monad.IO.Class ( MonadIO(liftIO) )
+-- Non-exported modules
 
 import Data.Text ( Text )
 import qualified Data.Text.IO as T

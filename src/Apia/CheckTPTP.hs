@@ -18,8 +18,6 @@ import qualified Apia.Utils.Except as E
 
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), sspaces )
 
-import Control.Monad.IO.Class  ( MonadIO(liftIO) )
-
 import System.Exit    ( ExitCode(ExitSuccess, ExitFailure) )
 import System.Process ( readProcessWithExitCode )
 

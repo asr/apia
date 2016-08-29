@@ -64,8 +64,7 @@ import Apia.Utils.PrettyPrint       ( Doc )
 import Apia.Utils.Monad   ( failureMsg, pair )
 import Apia.Utils.Version ( progNameVersion )
 
-import Control.Monad.IO.Class ( MonadIO(liftIO) )
-import Control.Monad.Reader   ( ask )
+import Control.Monad.Reader ( ask )
 
 import qualified Data.Text as T ( pack )
 

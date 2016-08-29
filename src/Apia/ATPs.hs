@@ -66,7 +66,6 @@ import qualified Apia.Utils.Except as E
 import Control.Exception.Base  ( evaluate )
 import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
-import Control.Monad.IO.Class  ( MonadIO(liftIO) )
 
 import qualified Data.Text as T ( pack )
 

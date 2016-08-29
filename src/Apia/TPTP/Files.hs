@@ -58,8 +58,7 @@ import Apia.Utils.Monad       ( die )
 import Apia.Utils.PrettyPrint ( (<>), spaces, squotes )
 import Apia.Utils.Text        ( (+++), toUpperFirst )
 
-import Control.Exception      ( catch, IOException )
-import Control.Monad.IO.Class ( MonadIO(liftIO) )
+import Control.Exception ( catch, IOException )
 
 import Data.Text ( Text )
 import qualified Data.Text as T

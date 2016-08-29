@@ -1,5 +1,5 @@
 # Interface.hs: No file
-dist/build/apia/apia /tmp/NoFile.agda
+../../../dist/build/apia/apia /tmp/NoFile.agda
 <<<
 >>>
 >>>2
@@ -7,7 +7,7 @@ apia: the file /tmp/NoFile.agda does not exist
 >>>= 1
 
 # RemoveProofTerms.hs : Don't erase a proof term
-dist/build/apia/apia -itest/fail/errors test/fail/errors/NotErasedProofTerm.agda
+agda -v0 NotErasedProofTerm.agda && ../../../dist/build/apia/apia NotErasedProofTerm.agda
 <<<
 >>>
 >>>2
@@ -16,7 +16,7 @@ Pi r(El {_getSort = Type (Max []), unEl = Def NotErasedProofTerm.D []}) (Abs "k"
 >>>= 1
 
 # Terms.hs: Required --schematic-propositional-symbols option
-dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/SchematicPropositionalSymbols.agda
+agda -v0 RequiredOption/SchematicPropositionalSymbols.agda && ../../../dist/build/apia/apia RequiredOption/SchematicPropositionalSymbols.agda
 <<<
 >>>
 >>>2
@@ -24,7 +24,7 @@ apia: use the ‘--schematic-propositional-symbols’ option for the translation
 >>>= 1
 
 # Terms.hs: Required --schematic-propositional-functions option
-dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/SchematicPropositionalFunctions.agda
+agda -v0 RequiredOption/SchematicPropositionalFunctions.agda && ../../../dist/build/apia/apia RequiredOption/SchematicPropositionalFunctions.agda
 <<<
 >>>
 >>>2
@@ -32,7 +32,7 @@ apia: use the ‘--schematic-propositional-functions’ option for the translati
 >>>= 1
 
 # Terms.hs: Required --schematic-functions option
-dist/build/apia/apia -itest/fail/errors test/fail/errors/RequiredOption/SchematicFunctions.agda
+agda -v0 RequiredOption/SchematicFunctions.agda && ../../../dist/build/apia/apia RequiredOption/SchematicFunctions.agda
 <<<
 >>>
 >>>2
@@ -40,7 +40,7 @@ apia: use the ‘--schematic-functions’ option for the translation of first-or
 >>>= 1
 
 # Options.hs: Only process one input file
-dist/build/apia/apia File1.agda File2.agda
+../../../dist/build/apia/apia File1.agda File2.agda
 <<<
 >>>
 >>>2
@@ -48,7 +48,7 @@ apia: only one input file allowed
 >>>= 1
 
 # Unrecognized option
-dist/build/apia/apia --xxx
+../../../dist/build/apia/apia --xxx
 <<<
 >>>
 >>>2
@@ -56,7 +56,7 @@ apia: unrecognized option `--xxx'
 >>>= 1
 
 # Main.hs: Missing input file
-dist/build/apia/apia
+../../../dist/build/apia/apia
 <<<
 >>>
 >>>2
@@ -64,7 +64,7 @@ apia: missing input file (try --help)
 >>>= 1
 
 # Snapshot.hs: The --output-dir cannot be the same than the --snapshot-dir
-dist/build/apia/apia --atp=e -itest/fail/errors --output-dir=/tmp --snapshot-test --snapshot-dir=/tmp test/fail/errors/TrivialTheorem.agda
+agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=e --output-dir=/tmp --snapshot-test --snapshot-dir=/tmp TrivialTheorem.agda
 <<<
 >>>
 >>>2
@@ -72,15 +72,15 @@ apia: the ‘--output-dir’ and ‘--snapshot-dir’ options cannot be the same
 >>>= 1
 
 # Snapshot.hs: Missing snapshot file
-dist/build/apia/apia --atp=e -itest/fail/errors --snapshot-test --snapshot-dir=no-dir test/fail/errors/TrivialTheorem.agda
+agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=e --snapshot-test --snapshot-dir=no-dir TrivialTheorem.agda
 <<<
 >>>
 >>>2
-apia: the file no-dir/test/fail/errors/TrivialTheorem/20-foo.fof does not exist
+apia: the file no-dir/TrivialTheorem/20-foo.fof does not exist
 >>>= 1
 
 # ATP.hs: ATP unknown
-dist/build/apia/apia -itest/fail/errors --atp=foo test/fail/errors/TrivialTheorem.agda
+agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=foo TrivialTheorem.agda
 <<<
 >>>
 >>>2
@@ -88,26 +88,26 @@ apia: the ATP ‘foo’ is unknown
 >>>= 1
 
 # ATP.hs: Bad ATP executable name
-dist/build/apia/apia -itest/fail/errors --atp=vampire --with-vampire=xxx test/fail/errors/TrivialTheorem.agda
+agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=vampire --with-vampire=xxx TrivialTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/test/fail/errors/TrivialTheorem/20-foo.fof
+Proving the conjecture in /tmp/TrivialTheorem/20-foo.fof
 >>>2
 apia: the ‘xxx’ command associated with Vampire does not exist
 >>>= 1
 
 # ATP.hs: No theorem
-dist/build/apia/apia -itest/fail/errors --atp=e test/fail/errors/NoTheorem.agda
+agda -v0 NoTheorem.agda && ../../../dist/build/apia/apia --atp=e NoTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/test/fail/errors/NoTheorem/17-foo.fof
+Proving the conjecture in /tmp/NoTheorem/17-foo.fof
 E 1.9 Sourenee *did not* prove the conjecture
 >>>2
-apia: the ATP(s) did not prove the conjecture in /tmp/test/fail/errors/NoTheorem/17-foo.fof
+apia: the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
 >>>= 1
 
 # Functions.hs : The definitions to be translated only can have one clause
-dist/build/apia/apia -itest/fail/errors test/fail/errors/OnlyOneClause.agda
+agda -v0 OnlyOneClause.agda && ../../../dist/build/apia/apia OnlyOneClause.agda
 <<<
 >>>
 >>>2
@@ -115,7 +115,7 @@ apia: the translation of ‘OnlyOneClause._+_’ failed because its definition o
 >>>= 1
 
 # Interface.hs: Missing interface file
-echo -e "module A where" > /tmp/A.agda && dist/build/apia/apia /tmp/A.agda
+echo -e "module A where" > /tmp/A.agda && ../../../dist/build/apia/apia /tmp/A.agda
 <<<
 >>>
 >>>2
@@ -123,18 +123,18 @@ apia: the interface file /tmp/A.agdai does not exist (use Agda to generate it)
 >>>= 1
 
 # Snapshot.hs: The snapshot and the generated conjecture are differents.
-dist/build/apia/apia --atp=e -itest/fail/errors --only-files --output-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/test/fail/errors/TrivialTheorem/20-foo.fof && dist/build/apia/apia --atp=e -itest/fail/errors --snapshot-test --snapshot-dir=/tmp/snapshot test/fail/errors/TrivialTheorem.agda
+agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=e --only-files --output-dir=/tmp/snapshot TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && ../../../dist/build/apia/apia --atp=e --snapshot-test --snapshot-dir=/tmp/snapshot TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/snapshot/test/fail/errors/TrivialTheorem/20-foo.fof
+Created /tmp/snapshot/TrivialTheorem/20-foo.fof
 >>>2
 apia: the files are different:
-/tmp/test/fail/errors/TrivialTheorem/20-foo.fof
-/tmp/snapshot/test/fail/errors/TrivialTheorem/20-foo.fof
+/tmp/TrivialTheorem/20-foo.fof
+/tmp/snapshot/TrivialTheorem/20-foo.fof
 >>>= 1
 
 # Options.hs (System.Console.GetOpt): -i
-dist/build/apia/apia -i
+../../../dist/build/apia/apia -i
 <<<
 >>>
 >>>2
@@ -142,7 +142,7 @@ apia: option `-i' requires an argument DIR
 >>>= 1
 
 # Options.hs (System.Console.GetOpt): --include-path
-dist/build/apia/apia --include-path
+../../../dist/build/apia/apia --include-path
 <<<
 >>>
 >>>2
@@ -150,7 +150,7 @@ apia: option `--include-path' requires an argument DIR
 >>>= 1
 
 # Options.hs: --include-path=
-dist/build/apia/apia --include-path=
+../../../dist/build/apia/apia --include-path=
 <<<
 >>>
 >>>2
@@ -158,7 +158,7 @@ apia: option ‘--include-path’ requires an argument DIR
 >>>= 1
 
 # Options.hs (System.Console.GetOpt): --atp
-dist/build/apia/apia --atp
+../../../dist/build/apia/apia --atp
 <<<
 >>>
 >>>2
@@ -166,7 +166,7 @@ apia: option `--atp' requires an argument NAME
 >>>= 1
 
 # Options.hs: --atp=
-dist/build/apia/apia --atp=
+../../../dist/build/apia/apia --atp=
 <<<
 >>>
 >>>2
@@ -174,7 +174,7 @@ apia: option ‘--atp’ requires an argument NAME
 >>>= 1
 
 # Options.hs (System.Console.GetOpt): --output-dir
-dist/build/apia/apia --output-dir
+../../../dist/build/apia/apia --output-dir
 <<<
 >>>
 >>>2
@@ -182,7 +182,7 @@ apia: option `--output-dir' requires an argument DIR
 >>>= 1
 
 # Options.hs: --output-dir=
-dist/build/apia/apia --output-dir=
+../../../dist/build/apia/apia --output-dir=
 <<<
 >>>
 >>>2
@@ -190,7 +190,7 @@ apia: option ‘--output-dir’ requires an argument DIR
 >>>= 1
 
 # Options.hs (System.Console.GetOpt): --snapshot-dir
-dist/build/apia/apia --snapshot-dir
+../../../dist/build/apia/apia --snapshot-dir
 <<<
 >>>
 >>>2
@@ -198,7 +198,7 @@ apia: option `--snapshot-dir' requires an argument DIR
 >>>= 1
 
 # Options.hs: --snapshot-dir=
-dist/build/apia/apia --snapshot-dir=
+../../../dist/build/apia/apia --snapshot-dir=
 <<<
 >>>
 >>>2
@@ -206,7 +206,7 @@ apia: option ‘--snapshot-dir’ requires an argument DIR
 >>>= 1
 
 # Options.hs (System.Console.GetOpt): --time
-dist/build/apia/apia --time
+../../../dist/build/apia/apia --time
 <<<
 >>>
 >>>2
@@ -214,7 +214,7 @@ apia: option `--time' requires an argument NUM
 >>>= 1
 
 # Options.hs: --time=
-dist/build/apia/apia --time=
+../../../dist/build/apia/apia --time=
 <<<
 >>>
 >>>2
@@ -222,7 +222,7 @@ apia: option ‘--time’ requires an argument NUM
 >>>= 1
 
 # Options.hs: --time=negative_value
-dist/build/apia/apia --time=-10
+../../../dist/build/apia/apia --time=-10
 <<<
 >>>
 >>>2
@@ -230,7 +230,7 @@ apia: option ‘--time’ requires a non-negative integer argument
 >>>= 1
 
 # Options.hs (System.Console.GetOpt): --with-vampire
-dist/build/apia/apia --with-vampire
+../../../dist/build/apia/apia --with-vampire
 <<<
 >>>
 >>>2
@@ -238,7 +238,7 @@ apia: option `--with-vampire' requires an argument PATH
 >>>= 1
 
 # Options.hs: --with-vampire=
-dist/build/apia/apia --with-vampire=
+../../../dist/build/apia/apia --with-vampire=
 <<<
 >>>
 >>>2
@@ -246,7 +246,7 @@ apia: option ‘--with-vampire’ requires an argument PATH
 >>>= 1
 
 # Options.hs (System.Console.GetOpt): -v
-dist/build/apia/apia -v
+../../../dist/build/apia/apia -v
 <<<
 >>>
 >>>2
@@ -254,7 +254,7 @@ apia: option `-v' requires an argument N
 >>>= 1
 
 # Options.hs (System.Console.GetOpt): --verbose
-dist/build/apia/apia --verbose
+../../../dist/build/apia/apia --verbose
 <<<
 >>>
 >>>2
@@ -262,7 +262,7 @@ apia: option `--verbose' requires an argument N
 >>>= 1
 
 # Options.hs: --verbose=
-dist/build/apia/apia --verbose=
+../../../dist/build/apia/apia --verbose=
 <<<
 >>>
 >>>2
@@ -270,7 +270,7 @@ apia: option ‘--verbose’ requires an argument of the form x.y.z:N or N
 >>>= 1
 
 # Functions.hs: The definitions to be translated must be first-order
-dist/build/apia/apia -itest/fail/errors test/fail/errors/HigherOrderDefinition.agda
+agda -v0 HigherOrderDefinition.agda && ../../../dist/build/apia/apia HigherOrderDefinition.agda
 <<<
 >>>
 >>>2
@@ -278,27 +278,27 @@ apia: the translation of ‘HigherOrderDefinition.twice’ failed because it is 
 >>>= 1
 
 # ChechTPTP.hs: tptp4X yields an error because there is a duplicate formulate
-dist/build/apia/apia --atp=e -itest/fail/errors --check test/fail/errors/DuplicateFormulaTPTP4XError.agda
+agda -v0 DuplicateFormulaTPTP4XError.agda && ../../../dist/build/apia/apia --atp=e --check DuplicateFormulaTPTP4XError.agda
 <<<
 >>>
 >>>2
-apia: tptp4X found an error/warning in the file /tmp/test/fail/errors/DuplicateFormulaTPTP4XError/22-foo.fof
+apia: tptp4X found an error/warning in the file /tmp/DuplicateFormulaTPTP4XError/22-foo.fof
 Please report this as a bug
 
 ERROR: Duplicate annotated formula name "n12_8770576564447903158"
 
 >>>= 1
 
-# Terms.hs: The --schematic-propositional-functions and the --no-predicate-constants option are incompatible
-dist/build/apia/apia --schematic-propositional-functions --no-predicate-constants -itest/fail/errors test/fail/errors/SchematicPropositionalFunctionsWithoutPredicateSymbols.agda
-<<<
->>>
->>>2
-apia: the ‘--schematic-propositional-functions’ and ‘--no-predicate-constants’ options are incompatible
->>>= 1
+# Terms.hs: The --schematic-propositional-functions and the --no-predicate-constants option a# re incompatible
+# agda -v0 SchematicPropositionalFunctionsWithoutPredicateSymbols.agda && ../../../dist/build/apia/apia --schematic-propositional-functions --no-predicate-constants SchematicPropositionalFunctionsWithoutPredicateSymbols.agda
+# <<<
+# >>>
+# >>>2
+# apia: the ‘--schematic-propositional-functions’ and ‘--no-predicate-constants’ options are incompatible
+# >>>= 1
 
 # APTs.hs: the flag --atp is required.
-cd test/fail/errors/NoATPs && ../../../../dist/build/apia/apia -i../ ../TrivialTheorem.agda
+cd NoATPs && agda -v0 Test.agda && ../../../../dist/build/apia/apia Test.agda
 <<<
 >>>
 >>>2
@@ -306,9 +306,9 @@ apia: at least you need to specify one ATP
 >>>= 1
 
 # Files.hs: exception when using `createDirectoryIfMissing`
-echo Foo > /tmp/foo && dist/build/apia/apia --atp=e -itest/fail/errors --output-dir=/tmp/foo/ test/fail/errors/NoTheorem.agda
+agda -v0 NoTheorem.agda && echo Foo > /tmp/foo && ../../../dist/build/apia/apia --atp=e --output-dir=/tmp/foo/ NoTheorem.agda
 <<<
 >>>
 >>>2
-apia: could not create the ‘/tmp/foo/test/fail/errors/NoTheorem’ directory
+apia: could not create the ‘/tmp/foo/NoTheorem’ directory
 >>>= 1

@@ -40,8 +40,6 @@ my_pathsubst = $(patsubst %.agda, %.$(1), \
 
 # Tests
 
-errors_files = $(call my_pathsubst,errors,$(errors_path))
-
 generated_fol_theorems_files = \
   $(call my_pathsubst,generated_fol_theorems,$(fol_theorems_path))
 
@@ -381,15 +379,12 @@ non_conjectures : $(non_conjectures_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
-# Test suite: Error messages
-
-%.errors :
-	@$(AGDA) -i$(errors_path) $*.agda
+# Test suite: Errors
 
 # Tested with shelltestrunner 1.3.5.
 .PHONY : errors
-errors : $(errors_files)
-	shelltest --color --precise $(errors_path)/errors.test
+errors :
+	shelltest --color --precise --execdir $(errors_path)/errors.test
 	@echo "$@ succeeded!"
 
 ##############################################################################

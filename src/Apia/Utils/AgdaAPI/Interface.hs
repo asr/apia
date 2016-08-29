@@ -107,9 +107,8 @@ import qualified Apia.Utils.Except as E
 
 import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
 
-import Control.Monad.IO.Class    ( MonadIO(liftIO) )
-import Control.Monad.Trans.Class ( MonadTrans(lift) )
-import Control.Monad.Trans.State ( evalStateT, get, put, StateT )
+import Control.Monad.IO.Class ( MonadIO(liftIO) )
+import Control.Monad.State    ( evalStateT, get, lift, put, StateT )
 
 import qualified Data.HashMap.Strict as HashMap ( filter, lookup )
 

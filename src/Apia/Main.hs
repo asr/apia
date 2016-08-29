@@ -64,9 +64,8 @@ import Apia.Utils.PrettyPrint       ( Doc )
 import Apia.Utils.Monad   ( failureMsg, pair )
 import Apia.Utils.Version ( progNameVersion )
 
-import Control.Monad.IO.Class     ( MonadIO(liftIO) )
-import Control.Monad.Trans.Class  ( MonadTrans(lift) )
-import Control.Monad.Trans.Reader ( ask )
+import Control.Monad.IO.Class ( MonadIO(liftIO) )
+import Control.Monad.Reader   ( ask )
 
 import qualified Data.Text as T ( pack )
 
@@ -103,7 +102,7 @@ translation agdaFile = do
 -- | The main function.
 runApia ∷ T ()
 runApia = do
-  opts ← lift $ lift ask
+  opts ← ask
   case () of
     _ | optHelp opts → liftIO printUsage
 

@@ -16,7 +16,7 @@ import Apia.Prelude
 import Agda.Syntax.Concrete.Name ( NamePart(Id, Hole) )
 import Agda.Utils.Impossible     ( Impossible(Impossible), throwImpossible )
 
-import Control.Monad.Trans.State ( get, put, State )
+import Control.Monad.State ( get, put, State )
 
 #include "undefined.h"
 

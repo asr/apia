@@ -38,6 +38,9 @@ Prerequisites
   [Vampire](http://www.vprover.org/) | Vampire 0.6 (revision 903)
   [Z3](https://github.com/Z3Prover/z3/wiki) | Z3 4.4.1
 
+  Moreover, Apia has support for [OnlineATPs](http://github.com/jonaprieto/onlineatps). With this feature we have freedom to use any online ATP available in the
+  [TPTP World](http://www.cs.miami.edu/~tptp/cgi-bin/SystemOnTPTP).
+
 * The tptp4X program
 
   The `--check` command-line option or using Z3 as a first-order ATP
@@ -97,6 +100,35 @@ Installation
 Some command-line options
 -------------------------
 
+* Choosing the ATPs
+
+  If we want to just use a certain local ATP, say Equinox, we can run the
+  following command:
+
+   ````bash
+   $ apia --atp=equinox Test.agda
+   Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
+   Equinox, version 5.0alpha, 2010-06-29 proved the conjecture
+   ````
+
+  Also the user can install
+  [OnlineATPs](http://github.com/jonaprieto/OnlineATPS)
+  and use all ATPs available on the web site of
+  [SystemOnTPTP](http://www.cs.miami.edu/~tptp/cgi-bin/SystemOnTPTP).
+  Therefore, we could use a version of E Prover  with `onlineatps` installed
+  using the following command:
+
+  ````bash
+  $ apia --atp=online-e Test.agda
+  Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
+  E-2.0 proved the conjecture
+  ````
+  To see a list of all online ATPs available, run the following command:
+
+  ```bash
+  $ onlineatps --list-atps
+  ```
+
 * No using the ATPs equality
 
   The `_≡_` symbol is translated to the ATPs equality by default. For
@@ -132,13 +164,13 @@ when running Apia.
 
 ### Examples
 
-We want to use the ATPs E and Metis with Apia. Also, we want to save the
-results in the directory `/myoutputdir` and use the option `check`.
-Then, our Apia file should be similar to this one.
+We want to use the ATPs E, Metis and the online version of Vampire with Apia.
+Also, we want to save the results in the directory `/myoutputdir` and use
+the option `check`. Then, our Apia file should be similar to this one.
 
 ```yaml
 # cat ~/.apia
-atp: ["e", "metis"]
+atp: ["e", "metis", "online-vampire"]
 output-dir: "/myoutputdir"
 check: true
 ```

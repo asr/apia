@@ -24,6 +24,7 @@ import Apia.Common
        , Equinox
        , IleanCoP
        , Metis
+       , OnlineATP
        , SPASS
        , Vampire
        , Z3
@@ -35,7 +36,7 @@ import Apia.Monad.Reports ( reportS )
 
 import Apia.Options
   ( extractATPs
-  , Options( optATP
+  ,  Options( optATP
            , optTime
            , optUnprovenNoError
            , optWithCVC4
@@ -43,12 +44,14 @@ import Apia.Options
            , optWithEquinox
            , optWithIleanCoP
            , optWithMetis
+           , optWithOnlineATPs
            , optWithSPASS
            , optWithtptp4X
            , optWithVampire
            , optWithZ3
            )
   )
+
 
 import Apia.Utils.Directory   ( checkExecutable )
 
@@ -112,26 +115,29 @@ import System.Process
 ------------------------------------------------------------------------------
 
 atpExec ∷ ATP → T String
-atpExec CVC4     = askTOpt optWithCVC4
-atpExec E        = askTOpt optWithE
-atpExec Equinox  = askTOpt optWithEquinox
-atpExec IleanCoP = askTOpt optWithIleanCoP
-atpExec Metis    = askTOpt optWithMetis
-atpExec SPASS    = askTOpt optWithSPASS
-atpExec Vampire  = askTOpt optWithVampire
-atpExec Z3       = askTOpt optWithZ3
+atpExec CVC4            = askTOpt optWithCVC4
+atpExec E               = askTOpt optWithE
+atpExec Equinox         = askTOpt optWithEquinox
+atpExec IleanCoP        = askTOpt optWithIleanCoP
+atpExec Metis           = askTOpt optWithMetis
+atpExec (OnlineATP _)   = askTOpt optWithOnlineATPs
+atpExec SPASS           = askTOpt optWithSPASS
+atpExec Vampire         = askTOpt optWithVampire
+atpExec Z3              = askTOpt optWithZ3
 
 optATP2ATP ∷ String → T ATP
-optATP2ATP "cvc4"     = return CVC4
-optATP2ATP "e"        = return E
-optATP2ATP "equinox"  = return Equinox
-optATP2ATP "ileancop" = return IleanCoP
-optATP2ATP "metis"    = return Metis
-optATP2ATP "spass"    = return SPASS
-optATP2ATP "vampire"  = return Vampire
-optATP2ATP "z3"       = return Z3
-optATP2ATP other =
-  E.throwE $ pretty "the ATP " <> squotes other <> pretty " is unknown"
+optATP2ATP "cvc4"           = return CVC4
+optATP2ATP "e"              = return E
+optATP2ATP "equinox"        = return Equinox
+optATP2ATP "ileancop"       = return IleanCoP
+optATP2ATP "metis"          = return Metis
+optATP2ATP "spass"          = return SPASS
+optATP2ATP "vampire"        = return Vampire
+optATP2ATP "z3"             = return Z3
+optATP2ATP other
+  | "online-" `isPrefixOf` other = return $ OnlineATP other
+  | otherwise =
+    E.throwE $ pretty "the ATP " <> squotes other <> pretty " is unknown"
 
 atpOk ∷ ATP → String
 -- CVC4 1.4.
@@ -144,6 +150,8 @@ atpOk Equinox = "+++ RESULT: Theorem"
 atpOk IleanCoP = "Intuitionistic Theorem"
 -- Metis 2.3 (release 20160714).
 atpOk Metis = "SZS status Theorem"
+-- OnlineATPs 1.0.0
+atpOk (OnlineATP _ ) = "Theorem"
 -- SPASS 3.7.
 atpOk SPASS = "Proof found"
 -- Vampire 0.6 (revision 903).
@@ -168,6 +176,12 @@ atpVersion Equinox = do
 atpVersion IleanCoP = return $ show IleanCoP
 -- No `--version` option in SPASS.
 atpVersion SPASS = return $ show SPASS
+-- OnlineATPs has the option --version-atp=NAME
+atpVersion atp@(OnlineATP name)  = do
+  exec ← atpExec atp
+  liftIO $ initDef (__IMPOSSIBLE__) <$>
+    readProcess exec ["--version-atp=" ++ name ] ""
+
 atpVersion atp = do
   exec ← atpExec atp
   liftIO $ initDef (__IMPOSSIBLE__) <$> readProcess exec ["--version"] ""
@@ -231,6 +245,13 @@ atpArgs IleanCoP timeout file = return [ file
 atpArgs Metis timeout file = return [ "--time-limit", show timeout
                                     , file
                                     ]
+
+atpArgs (OnlineATP atp) timeout file  = return [ "--atp=" ++ atp
+                                               , "--fof"
+                                               , "--only-check"
+                                               , "--time=" ++ show timeout
+                                               , file
+                                               ]
 
 atpArgs SPASS timeout file = return [ "-PProblem=0"
                                     , "-PStatistic=0"

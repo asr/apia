@@ -15,8 +15,8 @@ module Apia.Options
            , optDumpTypes
            , optFnConstant
            , optHelp
-           , optInputFile
            , optIncludePath
+           , optInputFile
            , optLang
            , optNoInternalEquality
            , optNoPredicateConstants
@@ -37,14 +37,15 @@ module Apia.Options
            , optWithEquinox
            , optWithIleanCoP
            , optWithMetis
+           , optWithOnlineATPs
            , optWithSPASS
            , optWithtptp4X
            , optWithVampire
            , optWithZ3
            )
-  , verboseOpt
   , printUsage
   , processOptions
+  , verboseOpt
   ) where
 
 ------------------------------------------------------------------------------
@@ -127,6 +128,7 @@ data Options = Options
   , optWithEquinox                     ∷ String
   , optWithIleanCoP                    ∷ String
   , optWithMetis                       ∷ String
+  , optWithOnlineATPs                  ∷ String
   , optWithSPASS                       ∷ String
   , optWithtptp4X                      ∷ String
   , optWithVampire                     ∷ String
@@ -279,6 +281,12 @@ withMetisOpt [] _ = Left $
   <> pretty " requires an argument PATH"
 withMetisOpt name opts = Right opts { optWithMetis = name }
 
+withOnlineATPsOpt ∷ String → OM
+withOnlineATPsOpt [] _ = Left $
+  pretty "option " <> squotes "--with-onlineatps"
+  <> pretty " requires an argument PATH"
+withOnlineATPsOpt name opts = Right opts { optWithOnlineATPs = name }
+
 withSPASSOpt ∷ String → OM
 withSPASSOpt [] _ = Left $
   pretty "option " <> squotes "--with-spass"
@@ -365,6 +373,8 @@ options =
                "Give the path to " ++ show IleanCoP
   , Option []  ["with-metis"] (ReqArg withMetisOpt "PATH") $
                "Give the path to " ++ show Metis
+  , Option []  ["with-onlineatps"] (ReqArg withOnlineATPsOpt "PATH")
+               "Give the path to OnlineATPs"
   , Option []  ["with-spass"] (ReqArg withSPASSOpt "PATH") $
                "Give the path to " ++ show SPASS
   , Option []  ["with-tptp4X"] (ReqArg withtptp4XOpt "PATH")

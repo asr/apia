@@ -2,7 +2,7 @@
 -- | Common types.
 
 module Apia.Common
-  ( ATP(CVC4, E, Equinox, IleanCoP, Metis, SPASS, Vampire, Z3)
+  ( ATP(CVC4, E, Equinox, IleanCoP, Metis, OnlineATP, SPASS, Vampire, Z3)
   , Lang(SMT2, TPTP)
   )
   where
@@ -20,13 +20,15 @@ data ATP = CVC4
          | Equinox
          | IleanCoP
          | Metis
+         | OnlineATP String
          | SPASS
          | Vampire
          | Z3
          deriving Show
 
 instance Pretty ATP where
-  pretty = text . show
+  pretty (OnlineATP atp) = text . show $ atp
+  pretty other           = text . show $ other
 
 -- | Target languages.
 data Lang = TPTP   -- ^ FOF (First-order form).

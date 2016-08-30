@@ -36,6 +36,7 @@ Usage: apia [OPTIONS] FILE
            --with-equinox=PATH                  Give the path to Equinox
            --with-ileancop=PATH                 Give the path to IleanCoP
            --with-metis=PATH                    Give the path to Metis
+           --with-onlineatps=PATH               Give the path to OnlineATPs
            --with-spass=PATH                    Give the path to SPASS
            --with-tptp4X=PATH                   Give the path to tptp4X
            --with-vampire=PATH                  Give the path to Vampire

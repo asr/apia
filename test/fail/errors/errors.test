@@ -312,3 +312,13 @@ agda -v0 NoTheorem.agda && echo Foo > /tmp/foo && ../../../dist/build/apia/apia 
 >>>2
 apia: could not create the ‘/tmp/foo/NoTheorem’ directory
 >>>= 1
+
+# Issue #62
+cd Issue62 && agda -v0 NoTheorem.agda && ../../../../dist/build/apia/apia --atp=e NoTheorem.agda
+<<<
+>>>
+Proving the conjecture in /tmp/NoTheorem/17-foo.fof
+E 1.9 Sourenee *did not* prove the conjecture
+>>>2
+apia: the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
+>>>= 1

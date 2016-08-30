@@ -290,12 +290,12 @@ ERROR: Duplicate annotated formula name "n12_8770576564447903158"
 >>>= 1
 
 # Terms.hs: The --schematic-propositional-functions and the --no-predicate-constants option a# re incompatible
-# agda -v0 SchematicPropositionalFunctionsWithoutPredicateSymbols.agda && ../../../dist/build/apia/apia --schematic-propositional-functions --no-predicate-constants SchematicPropositionalFunctionsWithoutPredicateSymbols.agda
-# <<<
-# >>>
-# >>>2
-# apia: the ‘--schematic-propositional-functions’ and ‘--no-predicate-constants’ options are incompatible
-# >>>= 1
+agda -v0 SchematicPropositionalFunctionsWithoutPredicateSymbols.agda && ../../../dist/build/apia/apia --schematic-propositional-functions --no-predicate-constants SchematicPropositionalFunctionsWithoutPredicateSymbols.agda
+<<<
+>>>
+>>>2
+apia: the ‘--schematic-propositional-functions’ and ‘--no-predicate-constants’ options are incompatible
+>>>= 1
 
 # APTs.hs: the flag --atp is required.
 cd NoATPs && agda -v0 Test.agda && ../../../../dist/build/apia/apia Test.agda

@@ -25,7 +25,7 @@ $ vampire_lin64 -t xxx --mode casc --input_file file_name
 Options used from the shell
 ---------------------------
 
-E 1.9
+E 1.9.1
 $ eprover --tstp-format --output-level=0 file_name
 
 Equinox 5.0alpha (2010-06-29)

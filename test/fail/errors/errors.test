@@ -101,7 +101,7 @@ agda -v0 NoTheorem.agda && ../../../dist/build/apia/apia --atp=e NoTheorem.agda
 <<<
 >>>
 Proving the conjecture in /tmp/NoTheorem/17-foo.fof
-E 1.9 Sourenee *did not* prove the conjecture
+E 1.9.1 Sungma *did not* prove the conjecture
 >>>2
 apia: the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
 >>>= 1
@@ -318,7 +318,7 @@ cd Issue62 && agda -v0 NoTheorem.agda && ../../../../dist/build/apia/apia --atp=
 <<<
 >>>
 Proving the conjecture in /tmp/NoTheorem/17-foo.fof
-E 1.9 Sourenee *did not* prove the conjecture
+E 1.9.1 Sungma *did not* prove the conjecture
 >>>2
 apia: the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
 >>>= 1

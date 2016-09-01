@@ -19,7 +19,7 @@ In Apia
 
 * Run test-suite
 
-    make agda_apia_changed
+    make tests
 
 * Update README.md.
 

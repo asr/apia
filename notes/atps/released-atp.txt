@@ -4,7 +4,9 @@ procedure:
 In Apia
 ========
 
-* Test apia/notes/atps/test/equality/.
+(See apia/notes/atps/run-atps.txt for running the ATPs)
+
+* Test apia/notes/atps/test/equality/mendelson.
 
 * Test apia/notes/tptp.
 
@@ -22,6 +24,8 @@ In Apia
 * Update README.md.
 
 * Search for comments using the old version.
+
+* Update the ATP in Travis, if necessary.
 
 * Commit and push the changes.
 

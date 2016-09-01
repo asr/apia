@@ -5,19 +5,10 @@
 % The conjecture was proved by the following ATPs:
 
 % E 1.9
-% $ eprover --tstp-format --output-level=0 file_name
-
 % Equinox 5.0alpha (2010-06-29)
-% $ equinox file_name
-
 % IleanCoP V1.3beta1
-% $ ileancop file_name
-
 % Metis 2.3 (release 20160714)
-% $ metis file_name
-
 % Vampire 0.6 (revision 903)
-% $ vampire_lin64 --input_file file_name
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 

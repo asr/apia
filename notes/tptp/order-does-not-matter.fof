@@ -1,12 +1,15 @@
-% The order of axioms/conjectures/etc does not matter for the ATPs.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% The order of axioms/conjectures/etc does not matter for the ATPs
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% All the ATPs proved the conjecture. Tested with
+% The conjecture was proved by the following ATPs:
 
 % E 1.9
 % Equinox 5.0alpha (2010-06-29)
 % Metis 2.3 (release 20160714)
 % Vampire 0.6 (revision 903)
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % The conjecture first.
 fof(t, conjecture, q).
 

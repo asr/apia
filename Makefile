@@ -374,7 +374,8 @@ refute_theorems : $(refute_theorems_files)
 # Tested with shelltestrunner 1.3.5.
 .PHONY : non_conjectures
 non_conjectures : $(non_conjectures_files)
-	shelltest --color --precise \
+	shelltest --color \
+                  --precise \
                   $(non_conjectures_path)/non-conjectures.test
 	@echo "$@ succeeded!"
 
@@ -384,7 +385,7 @@ non_conjectures : $(non_conjectures_files)
 # Tested with shelltestrunner 1.3.5.
 .PHONY : errors
 errors :
-	shelltest --color --precise --execdir $(errors_path)/errors.test
+	shelltest --color --execdir --precise  $(errors_path)/errors.test
 	@echo "$@ succeeded!"
 
 ##############################################################################

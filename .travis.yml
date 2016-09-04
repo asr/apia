@@ -118,6 +118,14 @@ install:
   - cd ${APIA_HOME}
 
 ##############################################################################
+# Installing OnlineATPs
+
+  - git clone https://github.com/jonaprieto/OnlineATPs ${MY_HOME}/OnlineATPs
+  - cd ${MY_HOME}/OnlineATPs
+  - cabal install --force-reinstalls
+  - cd ${APIA_HOME}
+
+##############################################################################
 script:
 
   - make generated_all

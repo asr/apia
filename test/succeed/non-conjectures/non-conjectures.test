@@ -150,3 +150,12 @@ Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi r{El {_getSort = Type
 
 >>>2
 >>>= 0
+
+# Test case for the on-line ATPs (Issue #68)
+../../../dist/build/apia/apia --atp=online-e TrivialTheorem.agda
+<<<
+>>>
+Proving the conjecture in /tmp/TrivialTheorem/20-foo.fof
+E---2.0 proved the conjecture
+>>>2
+>>>= 0

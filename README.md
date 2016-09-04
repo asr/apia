@@ -38,7 +38,9 @@ Prerequisites
   [Vampire](http://www.vprover.org/) | Vampire 0.6 (revision 903)
   [Z3](https://github.com/Z3Prover/z3/wiki) | Z3 4.4.1
 
-  Moreover, Apia has support for [OnlineATPs](http://github.com/jonaprieto/onlineatps). With this feature we have freedom to use any online ATP available in the
+  Moreover, Apia has support for
+  [OnlineATPs](http://github.com/jonaprieto/onlineatps). With this
+  feature we have freedom to use any online ATP available in the
   [TPTP World](http://www.cs.miami.edu/~tptp/cgi-bin/SystemOnTPTP).
 
 * The tptp4X program
@@ -97,7 +99,7 @@ Installation
    default timeout, the process of proving that particular conjecture
    is aborted.
 
-Using on-line ATPs
+Using online ATPs
 ------------------
 
 After installing the `onlineatps` tool from
@@ -105,7 +107,7 @@ After installing the `onlineatps` tool from
 possible to use any ATP available on
 [SystemOnTPTP](http://www.cs.miami.edu/~tptp/cgi-bin/SystemOnTPTP).
 
-For example, we could use an on-line version of the E ATP using the
+For example, we could use an online version of the E ATP using the
 following commands:
 
 ````bash
@@ -114,7 +116,7 @@ Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
 E-2.0 proved the conjecture
 ````
 
-To see a list of all on-line ATPs available, run the following command:
+To see a list of all online ATPs available, run the following command:
 
 ```bash
 $ onlineatps --list-atps

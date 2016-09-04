@@ -101,11 +101,11 @@ Using on-line ATPs
 ------------------
 
 After installing the `onlineatps` tool from
-[this](http://github.com/jonaprieto/OnlineATPS), it is possible to use
-any ATP available on
+[this](http://github.com/jonaprieto/OnlineATPS) repository, it is
+possible to use any ATP available on
 [SystemOnTPTP](http://www.cs.miami.edu/~tptp/cgi-bin/SystemOnTPTP).
 
-For example, we could use a on-line version of the E ATP using the
+For example, we could use an on-line version of the E ATP using the
 following commands:
 
 ````bash

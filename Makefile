@@ -375,6 +375,7 @@ refute_theorems : $(refute_theorems_files)
 .PHONY : non_conjectures
 non_conjectures : $(non_conjectures_files)
 	shelltest --color \
+                  --execdir \
                   --precise \
                   $(non_conjectures_path)/non-conjectures.test
 	@echo "$@ succeeded!"

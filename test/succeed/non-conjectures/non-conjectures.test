@@ -1,5 +1,5 @@
 # --help
-dist/build/apia/apia --help
+../../../dist/build/apia/apia --help
 <<<
 >>>
 Usage: apia [OPTIONS] FILE
@@ -46,23 +46,23 @@ Usage: apia [OPTIONS] FILE
 >>>= 0
 
 # --only-files
-dist/build/apia/apia --atp=e -itest/succeed/non-conjectures --only-files test/succeed/non-conjectures/TrivialTheorem.agda
+../../../dist/build/apia/apia --atp=e --only-files TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
+Created /tmp/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 
 # --verbose
-dist/build/apia/apia --atp=e -itest/succeed/non-conjectures -v1 --only-files test/succeed/non-conjectures/TrivialTheorem.agda
+../../../dist/build/apia/apia --atp=e -v1 --only-files TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
+Created /tmp/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 
 # --version
-dist/build/apia/apia --version
+../../../dist/build/apia/apia --version
 <<<
 >>>
 Apia version 1.0.1
@@ -70,28 +70,28 @@ Apia version 1.0.1
 >>>= 0
 
 # --unproven-conjecture-no-error
-dist/build/apia/apia -itest/succeed/non-conjectures --atp=e --unproven-conjecture-no-error test/succeed/non-conjectures/NoTheorem.agda
+../../../dist/build/apia/apia --atp=e --unproven-conjecture-no-error NoTheorem.agda
 <<<
 >>>
-Proving the conjecture in /tmp/test/succeed/non-conjectures/NoTheorem/17-foo.fof
+Proving the conjecture in /tmp/NoTheorem/17-foo.fof
 E 1.9.1 Sungma *did not* prove the conjecture
-the ATP(s) did not prove the conjecture in /tmp/test/succeed/non-conjectures/NoTheorem/17-foo.fof
+the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
 >>>2
 >>>= 0
 
 # --snapshot-no-error
-dist/build/apia/apia --atp=e -itest/succeed/non-conjectures --only-files --output-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof && dist/build/apia/apia --atp=e -itest/succeed/non-conjectures --snapshot-no-error --snapshot-dir=/tmp/snapshot test/succeed/non-conjectures/TrivialTheorem.agda
+../../../dist/build/apia/apia --atp=e --only-files --output-dir=/tmp/snapshot TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && ../../../dist/build/apia/apia --atp=e --snapshot-no-error --snapshot-dir=/tmp/snapshot TrivialTheorem.agda
 <<<
 >>>
-Created /tmp/snapshot/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
+Created /tmp/snapshot/TrivialTheorem/20-foo.fof
 the files are different:
-/tmp/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
-/tmp/snapshot/test/succeed/non-conjectures/TrivialTheorem/20-foo.fof
+/tmp/TrivialTheorem/20-foo.fof
+/tmp/snapshot/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 
 # Interface file
-agda -itest/succeed/non-conjectures -v 0 -v "main:50" test/succeed/non-conjectures/Foo.agda
+agda -v 0 -v "main:50" Foo.agda
 <<<
 >>>
 Interface
@@ -126,7 +126,7 @@ Interface
 >>>= 0
 
 # --dump-types
-dist/build/apia/apia -itest/succeed/non-conjectures --dump-types test/succeed/non-conjectures/Foo.agda
+../../../dist/build/apia/apia --dump-types Foo.agda
 <<<
 >>>
 Qname: Foo.foo
@@ -136,7 +136,7 @@ Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}
 >>>= 0
 
 # Issue #18
-dist/build/apia/apia -itest/succeed/non-conjectures --dump-types test/succeed/non-conjectures/Issue18.agda
+../../../dist/build/apia/apia --dump-types Issue18.agda
 <<<
 >>>
 Qname: Issue18.D

@@ -74,7 +74,7 @@ Apia version 1.0.1
 <<<
 >>>
 Proving the conjecture in /tmp/NoTheorem/17-foo.fof
-E 1.9.1 Sungma *did not* prove the conjecture
+E 1.9.1-001 Sungma *did not* prove the conjecture
 the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
 >>>2
 >>>= 0

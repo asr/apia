@@ -30,7 +30,7 @@ Prerequisites
   ATP | Tested version
   --- | --------------------
   [CVC4](http://cvc4.cs.nyu.edu/web/) | CVC 1.4
-  [E](http://wwwlehre.dhbw-stuttgart.de/%7Esschulz/E/E.html) | E 1.9.1 Sungma
+  [E](http://wwwlehre.dhbw-stuttgart.de/%7Esschulz/E/E.html) | E 1.9.1-001 Sungma
   [Equinox](http://www.cse.chalmers.se/~koen/code/) | Equinox 5.0alpha (2010-06-29)
   [ileanCoP](http://www.leancop.de/ileancop/index.html) | ileanCoP 1.3beta1
   [Metis](http://www.gilith.com/software/metis/) | Metis 2.3 (release 20160714)
@@ -91,7 +91,7 @@ Installation
    $ agda Test.agda
    $ apia --atp=e Test.agda
    Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
-   E 1.9.1  Sungma proved the conjecture
+   E 1.9.1-001  Sungma proved the conjecture
    ````
 
    Apia will call the E ATP and tell if this ATP was able to prove the

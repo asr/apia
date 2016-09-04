@@ -97,42 +97,28 @@ Installation
    default timeout, the process of proving that particular conjecture
    is aborted.
 
-Some command-line options
--------------------------
+Using on-line ATPs
+------------------
 
-* Choosing the ATPs
+After installing the `onlineatps` tool from
+[this](http://github.com/jonaprieto/OnlineATPS), it is possible to use
+any ATP available on
+[SystemOnTPTP](http://www.cs.miami.edu/~tptp/cgi-bin/SystemOnTPTP).
 
-  If we want to just use a certain local ATP, say Equinox, we can run the
-  following command:
+For example, we could use a on-line version of the E ATP using the
+following commands:
 
-   ````bash
-   $ apia --atp=equinox Test.agda
-   Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
-   Equinox, version 5.0alpha, 2010-06-29 proved the conjecture
-   ````
+````bash
+$ apia --atp=online-e Test.agda
+Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
+E-2.0 proved the conjecture
+````
 
-  Also the user can install
-  [OnlineATPs](http://github.com/jonaprieto/OnlineATPS)
-  and use all ATPs available on the web site of
-  [SystemOnTPTP](http://www.cs.miami.edu/~tptp/cgi-bin/SystemOnTPTP).
-  Therefore, we could use a version of E Prover  with `onlineatps` installed
-  using the following command:
+To see a list of all on-line ATPs available, run the following command:
 
-  ````bash
-  $ apia --atp=online-e Test.agda
-  Proving the conjecture in /tmp/Test/9-8744-comm.tptp ...
-  E-2.0 proved the conjecture
-  ````
-  To see a list of all online ATPs available, run the following command:
-
-  ```bash
-  $ onlineatps --list-atps
-  ```
-
-* No using the ATPs equality
-
-  The `_≡_` symbol is translated to the ATPs equality by default. For
-  reverting this behaviour use the `--no-internal-equality` option.
+```bash
+$ onlineatps --list-atps
+```
 
 YAML Configuration
 ------------------

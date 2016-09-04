@@ -135,7 +135,7 @@ Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}
 >>>2
 >>>= 0
 
-# Issue 18
+# Issue #18
 dist/build/apia/apia -itest/succeed/non-conjectures --dump-types test/succeed/non-conjectures/Issue18.agda
 <<<
 >>>

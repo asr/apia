@@ -103,11 +103,16 @@ import System.Process
     , child_user
 #endif
     )
+#if defined(linux_HOST_OS)
   , interruptProcessGroupOf
+#endif
   , ProcessHandle
   , readProcess
   , readProcessWithExitCode
   , StdStream(CreatePipe, Inherit)
+#if defined(darwin_HOST_OS)
+  , terminateProcess
+#endif
   )
 
 #include "undefined.h"
@@ -397,7 +402,14 @@ atpsAnswer atps outputMVar atpsPH file n =
         then do
           reportS "" 1 $ atpWithVersion ++ " proved the conjecture"
           -- See note [Killing the ATPs].
-          liftIO $ mapM_ interruptProcessGroupOf atpsPH
+          liftIO $ mapM_
+          -- We use @terminateProcess@ on Mac OS X (see Issue #29).
+#if defined(darwin_HOST_OS)
+                     terminateProcess
+#else
+                     interruptProcessGroupOf
+#endif
+                     atpsPH
         else do
           reportS "" 1 $ atpWithVersion ++ " *did not* prove the conjecture"
           atpsAnswer atps outputMVar atpsPH file (n + 1)

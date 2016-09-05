@@ -1,4 +1,4 @@
-Apia
+Apia [![Build Status](https://travis-ci.org/asr/apia.svg?branch=master)](https://travis-ci.org/asr/apia)
 ====
 
 Description

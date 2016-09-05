@@ -396,6 +396,7 @@ atpsAnswer atps outputMVar atpsPH file n =
       if fst output
         then do
           reportS "" 1 $ atpWithVersion ++ " proved the conjecture"
+          -- See note [Killing the ATPs].
           liftIO $ mapM_ interruptProcessGroupOf atpsPH
         else do
           reportS "" 1 $ atpWithVersion ++ " *did not* prove the conjecture"
@@ -423,7 +424,9 @@ callATPs file = do
 ------------------------------------------------------------------------------
 -- Note [Timeout increse].
 
--- 12 June 2012: Hack. Running for example
+-- Creation date: 2021-06-12
+
+-- Hack. Running for example
 --
 -- @$ equinox --time 216 conjecture.tptp@
 --
@@ -438,3 +441,13 @@ callATPs file = do
 -- doesn't prove the theorem. I guess there is some overhead for
 -- calling various ATPs from Apia. Therefore we increase internally
 -- 10% the ATPs timeout.
+
+------------------------------------------------------------------------------
+-- Note [Killing the ATPs].
+
+-- Creation date: 2016-09-05
+
+-- After an ATP prove a conjecture, we need to kill the other ATPs
+-- that are running. We are using @interruptProcessGroupOf@ instead of
+-- @terminateProcess@ because, generally speaking, this function kills
+-- faster the running ATPs.

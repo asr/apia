@@ -58,7 +58,7 @@ executable apia
                  , unordered-containers >= 0.2.5.0 && < 0.3
                  , yaml >= 0.8.17 && < 0.9
 
-  build-tools: cpphs >= 1.20.2
+  build-tools: cpphs >= 1.19
 
   other-modules:
     Apia.ATPs

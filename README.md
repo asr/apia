@@ -103,7 +103,7 @@ Using online ATPs
 ------------------
 
 After installing the `onlineatps` tool from
-[this](http://github.com/jonaprieto/OnlineATPS) repository, it is
+[this](http://github.com/jonaprieto/onlineatps) repository, it is
 possible to use any ATP available on
 [SystemOnTPTP](http://www.cs.miami.edu/~tptp/cgi-bin/SystemOnTPTP).
 

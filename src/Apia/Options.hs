@@ -151,6 +151,9 @@ atpOpt name opts = Right opts { optATP = CommandATPs atps }
 checkOpt ∷ OM
 checkOpt opts = Right opts { optCheck = True }
 
+noCheckOpt ∷ OM
+noCheckOpt opts = Right opts { optCheck = False }
+
 dumpTypesOpt ∷ OM
 dumpTypesOpt opts = Right opts { optDumpTypes = True }
 
@@ -332,6 +335,9 @@ options =
   , Option "L" ["lang"] (ReqArg langOpt "LANG") $
                "TPTP or SMT-LIB v2 output language (tptp or smt2)\n"
                ++ "(default: tptp)"
+  , Option []  ["no-check"] (NoArg noCheckOpt) $
+               "Do not check the syntax of the generated TPTP files using the\n"
+               ++ "tptp4X program from the TPTP library"
   , Option []  ["no-internal-equality"] (NoArg noInternalEqualityOpt)
                "Do not translate _≡_ to the ATPs equality"
   , Option []  ["no-predicate-constants"] (NoArg noPredicateConstantsOpt) $

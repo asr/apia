@@ -3,6 +3,7 @@
 
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
+{-# LANGUAGE RecordWildCards     #-}
 
 module Apia.Options
   ( extractATPs
@@ -70,8 +71,12 @@ import Apia.Common
        )
   , Lang(SMT2, TPTP)
   )
-
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
+import Apia.Utils.Yaml
+
+import           Apia.Common           (Lang (SMT2, TPTP))
+import Agda.Utils.Trie as Trie
+
 import qualified Data.Text as T ( pack )
 
 import Safe ( initDef )
@@ -134,6 +139,74 @@ data Options = Options
   , optWithVampire                     ∷ String
   , optWithZ3                          ∷ String
   }
+
+instance FromJSON Options where
+  parseJSON = withObject "opts" $ \o → do
+    optATP
+      ← o .?. (T.pack "atp") .!= (DefaultATPs [])
+    optCheck
+      ← o .?. (T.pack "check") .!= False
+    optDumpTypes
+      ← o .?. (T.pack "dumptypes") .!= False
+    optFnConstant
+      ← o .?. (T.pack "fnconstant") .!= False
+    optHelp
+      ← o .?. (T.pack "help") .!= False
+    optIncludePath
+      ← o .?. (T.pack "includepath") .!= []
+    optInputFile
+      ← o .?. (T.pack "inputfile") .!= Nothing
+    optLang
+      ← o .?. (T.pack "lang") .!= TPTP
+    optNoInternalEquality
+      ← o .?. (T.pack "nointernalequality") .!= False
+    optNoPredicateConstants
+      ← o .?. (T.pack "nopredicateconstants") .!= False
+    optOnlyFiles
+      ← o .?. (T.pack "onlyfiles") .!= False
+    optOutputDir
+      ← o .?. (T.pack "outputdir") .!= "/tmp"
+    optSchematicFunctions
+      ← o .?. (T.pack "schematicfunctions") .!= False
+    optSchematicPropositionalFunctions
+      ← o .?. (T.pack "schematicpropositionalfunctions") .!= False
+    optSchematicPropositionalSymbols
+      ← o .?. (T.pack "schematicpropositionalsymbols") .!= False
+    optSnapshotDir
+      ← o .?. (T.pack "snapshotdir") .!= "snapshot"
+    optSnapshotNoError
+      ← o .?. (T.pack "snapshotnoerror") .!= False
+    optSnapshotTest
+      ← o .?. (T.pack "snapshottest") .!= False
+    optTime
+      ← o .?. (T.pack "time") .!= 240
+    optUnprovenNoError
+      ← o .?. (T.pack "unprovennoerror") .!= False
+    optVerbose
+      ← o .?. (T.pack "verbose") .!= Trie.singleton [] 1
+    optVersion
+      ← o .?. (T.pack "version") .!= False
+    optWithCVC4
+      ← o .?. (T.pack "withcvc4") .!= "cvc4"
+    optWithE
+      ← o .?. (T.pack "withe") .!= "eprover"
+    optWithEquinox
+      ← o .?. (T.pack "withequinox") .!= "equinox"
+    optWithIleanCoP
+      ← o .?. (T.pack "withileancop") .!= "ileancop.sh"
+    optWithMetis
+      ← o .?. (T.pack "withmetis") .!= "metis"
+    optWithOnlineATPs
+      ← o .?. (T.pack "withonlineatps") .!= "onlineatps"
+    optWithSPASS
+      ← o .?. (T.pack "withspass") .!= "SPASS"
+    optWithtptp4X
+      ← o .?. (T.pack "withtptp4x") .!= "tptp4x"
+    optWithVampire
+      ← o .?. (T.pack "withvampire") .!= "vampire_lin64"
+    optWithZ3
+      ← o .?. (T.pack "withz3") .!= "z3"
+    return Options{..}
 
 -- | 'Options' monad.
 type OM = Options → Either Doc Options

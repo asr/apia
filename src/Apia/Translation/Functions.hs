@@ -201,7 +201,7 @@ clauseToFormula qName ty (Clause _ _ [] cBody _ _) = do
           lhs = Def qName $ varsToElims $ length vars
 
       -- Because the LHS and the RHS (the body of the clause) are
-      -- formulae, they are related via an biconditional connective,
+      -- formulae, they are related via a biconditional connective,
       liftM2 Bicond (agdaTermToFormula lhs) (cBodyToFormula cBody)
 
     -- The defined symbol is a function.

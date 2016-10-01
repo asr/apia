@@ -4,6 +4,9 @@
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 {-# LANGUAGE RecordWildCards     #-}
+{-# LANGUAGE MultiWayIf          #-}
+
+-- {-# LANGUAGE Multi
 
 module Apia.Options
   ( extractATPs
@@ -58,6 +61,7 @@ import Agda.Utils.Impossible    ( Impossible(Impossible), throwImpossible )
 import Agda.Utils.List          ( wordsBy )
 
 import qualified Agda.Utils.Trie as Trie ( insert )
+import qualified Data.HashMap.Strict as HM
 
 import Apia.Common
   ( ATP( CVC4
@@ -143,7 +147,9 @@ data Options = Options
 instance FromJSON Options where
   parseJSON = withObject "opts" $ \o → do
     optATP
-      ← o .?. (T.pack "atp") .!= (DefaultATPs [])
+      ← case HM.lookup (T.pack "atp") o of
+          Just val → DefaultATPs val
+          _        → DefaultATPs []
     optCheck
       ← o .?. (T.pack "check") .!= False
     optDumpTypes
@@ -157,7 +163,11 @@ instance FromJSON Options where
     optInputFile
       ← o .?. (T.pack "inputfile") .!= Nothing
     optLang
-      ← o .?. (T.pack "lang") .!= TPTP
+      ← case HM.lookup (T.pack "lang" o) of
+          Just val → if | val == T.pack "tptp" → TPTP
+                        | val == T.pack "smt"  → SMT2
+                        | otherwise            → TPTP
+          _        → TPTP
     optNoInternalEquality
       ← o .?. (T.pack "nointernalequality") .!= False
     optNoPredicateConstants
@@ -166,7 +176,8 @@ instance FromJSON Options where
       ← o .?. (T.pack "onlyfiles") .!= False
     optOutputDir
       ← o .?. (T.pack "outputdir") .!= "/tmp"
-    optSchematicFunctions
+    optSchematicFunctio
+    ns
       ← o .?. (T.pack "schematicfunctions") .!= False
     optSchematicPropositionalFunctions
       ← o .?. (T.pack "schematicpropositionalfunctions") .!= False
@@ -183,7 +194,12 @@ instance FromJSON Options where
     optUnprovenNoError
       ← o .?. (T.pack "unprovennoerror") .!= False
     optVerbose
-      ← o .?. (T.pack "verbose") .!= Trie.singleton [] 1
+      ← return $ Trie.singleton [] 1
+      -- ← case HM.lookup "verbose" o of
+      --     Just val  → case verboseOpt val opts of
+      --                       Right o → o
+      --                       Left _  → Trie.singleton [] 1
+      --     _         → Trie.singleton [] 1
     optVersion
       ← o .?. (T.pack "version") .!= False
     optWithCVC4

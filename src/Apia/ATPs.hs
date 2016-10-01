@@ -36,7 +36,7 @@ import Apia.Monad.Reports ( reportS )
 
 import Apia.Options
   ( extractATPs
-  ,  Options( optATP
+  , Options( optATP
            , optTime
            , optUnprovenNoError
            , optWithCVC4
@@ -52,8 +52,7 @@ import Apia.Options
            )
   )
 
-
-import Apia.Utils.Directory   ( checkExecutable )
+import Apia.Utils.Directory ( checkExecutable )
 
 import Apia.Utils.PrettyPrint
   ( (<>)

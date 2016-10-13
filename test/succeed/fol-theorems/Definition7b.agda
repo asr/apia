@@ -7,7 +7,7 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module Definition7 where
+module Definition7b where
 
 open import Common.FOL
 

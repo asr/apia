@@ -116,7 +116,9 @@ fnToFormula qName  _  _    =
 clauseToFormula ∷ QName → Type → Clause → T LFormula
 
 -- There is at most one variable in the clause's pattern.
-clauseToFormula qName ty (Clause r tel (_ : pats) cBody cTy cc) =
+clauseToFormula qName ty cl@(Clause r tel (_ : pats) cBody cTy cc) = do
+  reportSLn "def2f" 20 $ "cl: " ++ show cl
+
   case tel of
     -- The bounded variable is quantified on a @Set@,
     --

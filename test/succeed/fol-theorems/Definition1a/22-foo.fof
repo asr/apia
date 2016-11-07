@@ -6,10 +6,10 @@
 % The required definition(s) by the conjecture.
 
 % The Agda term was:
-% Name: Definition3.foo
+% Name: Definition1a.e
 % Role: definition
-% Line: 17
-fof(n6_17295205133339332156, definition, ( ! [A] : ( ! [B] : (foo_6_17295205133339332156(A,B) = A) ) )).
+% Line: 18
+fof(n8_2586801528035818698, definition, (e_8_2586801528035818698 = d_6_2586801528035818698)).
 
 % End required definition(s) by the conjecture.
 
@@ -17,10 +17,10 @@ fof(n6_17295205133339332156, definition, ( ! [A] : ( ! [B] : (foo_6_172952051333
 % The conjecture.
 
 % The Agda term was:
-% Name: Definition3.bar
+% Name: Definition1a.foo
 % Role: prove
-% Line: 21
-fof(n16_17295205133339332156, conjecture, ( ! [A] : ( ! [B] : (A = foo_6_17295205133339332156(A,B)) ) )).
+% Line: 22
+fof(n10_2586801528035818698, conjecture, (e_8_2586801528035818698 = d_6_2586801528035818698)).
 
 % End conjecture.
 

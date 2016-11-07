@@ -7,16 +7,17 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module Definition2 where
+module Definition1a where
 
 postulate
   D   : Set
   _≡_ : D → D → Set
+  d   : D
 
--- We test the translation of the definition of a unary function.
-foo : D → D
-foo d = d
-{-# ATP definition foo #-}
+-- We test the translation of the definition of a nullary function.
+e : D
+e = d
+{-# ATP definition e #-}
 
-postulate bar : ∀ d → d ≡ foo d
-{-# ATP prove bar #-}
+postulate foo : e ≡ d
+{-# ATP prove foo #-}

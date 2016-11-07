@@ -6,16 +6,16 @@
 % The general axiom(s).
 
 % The Agda term was:
-% Name: Definition4.+-0x
+% Name: Definition1d.+-0x
 % Role: axiom
 % Line: 34
-fof(n44_17641114351576156350, axiom, ( ! [A] : (n_43__40_17641114351576156350(zero_4_17641114351576156350,A) = A) )).
+fof(n44_16540866580372729657, axiom, ( ! [A] : (n_43__40_16540866580372729657(zero_4_16540866580372729657,A) = A) )).
 
 % The Agda term was:
-% Name: Definition4.+-Sx
+% Name: Definition1d.+-Sx
 % Role: axiom
 % Line: 35
-fof(n50_17641114351576156350, axiom, ( ! [A] : ( ! [B] : (n_43__40_17641114351576156350(succ_6_17641114351576156350(A),B) = succ_6_17641114351576156350(n_43__40_17641114351576156350(A,B))) ) )).
+fof(n50_16540866580372729657, axiom, ( ! [A] : ( ! [B] : (n_43__40_16540866580372729657(succ_6_16540866580372729657(A),B) = succ_6_16540866580372729657(n_43__40_16540866580372729657(A,B))) ) )).
 
 % End general axiom(s).
 
@@ -23,10 +23,10 @@ fof(n50_17641114351576156350, axiom, ( ! [A] : ( ! [B] : (n_43__40_1764111435157
 % The required definition(s) by the conjecture.
 
 % The Agda term was:
-% Name: Definition4.A
+% Name: Definition1d.A
 % Role: definition
 % Line: 40
-fof(n52_17641114351576156350, definition, ( ! [A] : (kp1_(cA_52_17641114351576156350,A) <=> (n_43__40_17641114351576156350(zero_4_17641114351576156350,A) = A)) )).
+fof(n52_16540866580372729657, definition, ( ! [A] : (kp1_(cA_52_16540866580372729657,A) <=> (n_43__40_16540866580372729657(zero_4_16540866580372729657,A) = A)) )).
 
 % End required definition(s) by the conjecture.
 
@@ -34,10 +34,10 @@ fof(n52_17641114351576156350, definition, ( ! [A] : (kp1_(cA_52_1764111435157615
 % The conjecture.
 
 % The Agda term was:
-% Name: Definition4.A0
+% Name: Definition1d.A0
 % Role: prove
 % Line: 44
-fof(n56_17641114351576156350, conjecture, kp1_(cA_52_17641114351576156350,zero_4_17641114351576156350)).
+fof(n56_16540866580372729657, conjecture, kp1_(cA_52_16540866580372729657,zero_4_16540866580372729657)).
 
 % End conjecture.
 

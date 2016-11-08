@@ -260,9 +260,6 @@ PROVE_FOL_THEOREMS_FLAGS = \
   --output-dir=$(output_dir) \
   --time=10 \
 
-# We don't prove ${fol_theorems_path}/Definition10.agda with Z3 due to
-# Issue #25.
-
 # We don't prove ${fol_theorems_path}/LogicalConstants.agda with Z3 due to
 # Issue #79.
 
@@ -272,7 +269,7 @@ PROVE_FOL_THEOREMS_FLAGS = \
 	  set -e ; \
 	  case $*.agda in \
             "${fol_theorems_path}/Definition10.agda") \
-              if [[ $$atp != ileancop && $$atp != z3 ]]; then \
+              if [[ $$atp != ileancop ]]; then \
                  $(APIA) ${PROVE_FOL_THEOREMS_FLAGS} \
                          --atp=$$atp \
                          $*.agda ; \

@@ -48,9 +48,9 @@ Prerequisites
   The `--check` command-line option or using
   [Z3](https://github.com/Z3Prover/z3/wiki) as a first-order ATP
   require the tptp4X program from the
-  [TPTP library](http://www.cs.miami.edu/~tptp/). This program is
-  included in this repository. The tested version of tptp4X is from
-  TPTP 6.4.0.
+  [TPTP library](http://www.tptp.org). This program is included in
+  this repository. The tested version of tptp4X is from
+  [Geoff's Service Tools](http://www.tptp.org/ServiceTools.tgz).
 
 Installation
 ------------

@@ -443,9 +443,10 @@ agdaTermToFormula term'@(I.Var n elims) = do
   when (n < 0) (__IMPOSSIBLE__)
   vars ← getTVars
 
-  -- We use @<=@ because the first argument of @I.Var@ doesn't start
-  -- in one but in zero.
-  when (length vars <= n) (__IMPOSSIBLE__)
+  -- We also test for equality because the first argument of @I.Var@
+  -- doesn't start in one but in zero.
+  when (length vars == n) (__IMPOSSIBLE__)
+  when (length vars < n)  (__IMPOSSIBLE__)
 
   case elims of
     -- N.B. In this case we *don't* use Koen's approach.
@@ -565,9 +566,10 @@ agdaTermToTerm term'@(I.Var n args) = do
   when (n < 0) (__IMPOSSIBLE__)
   vars ← getTVars
 
-  -- We use @<=@ because the first argument of @I.Var@ doesn't start
-  -- in one but in zero.
-  when (length vars <= n) (__IMPOSSIBLE__)
+  -- We also test for equality because the first argument of @I.Var@
+  -- doesn't start in one but in zero.
+  when (length vars == n) (__IMPOSSIBLE__)
+  when (length vars < n)  (__IMPOSSIBLE__)
 
   case args of
     [] → return $ L.Var (vars !! n)

@@ -22,6 +22,8 @@ $ SPASS -TPTP=1 -TimeLimit=xxx file_name
 
 $ vampire_lin64 -t xxx --mode casc --input_file file_name
 
+$ z3 -T:xxx file_name
+
 Options used from the shell
 ---------------------------
 
@@ -42,3 +44,7 @@ $ SPASS -TPTP=1 file_name
 
 Vampire 0.6 (revision 903)
 $ vampire_lin64 --input_file file_name
+
+Z3 version 4.5.0 - 64 bit
+$ tptp4X -fsmt2 file.fof > file.smt2
+$ z3 file.smt2

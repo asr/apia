@@ -160,7 +160,7 @@ atpOk (OnlineATP _ ) = "Theorem"
 atpOk SPASS = "Proof found"
 -- Vampire 0.6 (revision 903).
 atpOk Vampire = "Termination reason: Refutation\n"
--- Z3 4.4.1.
+-- Z3 version 4.5.0 - 64 bit
 atpOk Z3 = "unsat"
 
 atpVersion ∷ ATP → T String

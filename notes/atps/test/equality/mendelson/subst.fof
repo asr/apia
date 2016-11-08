@@ -19,6 +19,9 @@
 % Vampire 0.6 (revision 903)
 % $ vampire_lin64 -t 240 --input_file file_name
 
+% Z3 version 4.5.0 - 64 bit
+% $ z3 file_name
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Mendelson's axioms (p. 155).

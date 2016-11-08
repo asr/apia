@@ -1,0 +1,10 @@
+# --------------------------------------------------------------------
+# File: .apia
+# More information about its parameters and its possible values,
+# please use Apia in the command line with the option help.
+#
+# $ apia --help
+#
+# --------------------------------------------------------------------
+atp: [e]
+check: true

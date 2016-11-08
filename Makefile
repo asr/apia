@@ -261,7 +261,7 @@ PROVE_FOL_THEOREMS_FLAGS = \
   --time=10 \
 
 # We don't prove ${fol_theorems_path}/Definition10.agda with Z3 due to
-# issue #25.
+# Issue #25.
 
 %.prove_fol_theorems :
 	$(AGDA) -i$(fol_theorems_path) $*.agda

@@ -98,7 +98,7 @@ install:
 ##############################################################################
 # Installing tptp4X
 
-  - cp tools/TPTP-6.4.0/tptp4X ${MY_HOME}/bin/
+  - cp tools/tptp4X ${MY_HOME}/bin/
 
 ##############################################################################
 # Installing fix-whitespace

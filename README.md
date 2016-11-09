@@ -49,7 +49,7 @@ Prerequisites
   [Z3](https://github.com/Z3Prover/z3/wiki) as a first-order ATP
   require the tptp4X program from the
   [TPTP library](http://www.tptp.org). This program is included in
-  this repository. The tested version of tptp4X is from
+  this repository. The tested version of tptp4X is 6.4.0.2 from
   [Geoff's Service Tools](http://www.tptp.org/ServiceTools.tgz).
 
 Installation

@@ -32,6 +32,8 @@ In Apia
 In FOTC
 =======
 
+* Test fotc/notes/atps/mendelson-equality.
+
 * In fotc/src/fot, to test all the proved conjectures if the ATP is a
   default one.
 

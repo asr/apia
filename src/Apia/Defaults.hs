@@ -76,8 +76,8 @@ defaultOptions = Options
 
 type Key = T.Text
 
-data Config = Config Object
-  deriving (Eq, Show)
+newtype Config = Config Object
+               deriving (Eq, Show)
 
 instance NFData Config where
   rnf (Config o) = rnf o `seq` ()

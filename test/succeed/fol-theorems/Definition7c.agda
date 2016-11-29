@@ -7,7 +7,7 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module Definition7b where
+module Definition7c where
 
 open import Common.FOL
 
@@ -16,8 +16,8 @@ postulate
 
 -- We test the translation of a definition where we need to erase
 -- proof terms.
-foo : ∀ {a} → P a → P a → a ≡ a
-foo {a} Pa₁ Pa₂ = bar
+foo : ∀ {a b} → P a → P b → a ≡ a
+foo {a} {b} Pa Pb = bar
   where
   c : D
   c = a

@@ -322,3 +322,11 @@ E 1.9.1-001 Sungma *did not* prove the conjecture
 >>>2
 apia: the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
 >>>= 1
+
+# Issue #80
+agda -v0 Issue80.agda && ../../../dist/build/apia/apia --atp=e Issue80.agda
+<<<
+>>>
+>>>2
+apia: the translation of ‘Issue80._⊕_’ failed because it is not a FOL-definition
+>>>= 1

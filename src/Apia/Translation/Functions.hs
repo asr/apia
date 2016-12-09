@@ -34,7 +34,7 @@ import Agda.Syntax.Internal
   , Sort(Type)
   , Tele(ExtendTel)
   , Telescope
-  , Term(Def, Pi)
+  , Term(Def, Pi, Sort)
   , Type
   , Type'(El)
   , var
@@ -182,6 +182,11 @@ clauseToFormula qName ty cl@(Clause r tel (_ : pats) cBody cTy cc) = do
     ExtendTel (Dom _ (El (Type (Max [])) (Pi _ _))) _ →
       E.throwE $ pretty "the translation of " <> bquotes (AP.pretty qName)
                  <> pretty " failed because it is a higher-order definition"
+
+    -- Issue #80.
+    ExtendTel (Dom _ (El (Type (Max [_])) (Sort _))) _ →
+      E.throwE $ pretty "the translation of " <> bquotes (AP.pretty qName)
+                 <> pretty " failed because it is not a FOL-definition"
 
     _ → do
         reportSLn "def2f" 20 $ "tel: " ++ show tel  -- (ignoreSharing tel)

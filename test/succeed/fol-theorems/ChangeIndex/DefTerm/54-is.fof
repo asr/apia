@@ -23,10 +23,10 @@ fof(n58_9109245163876945356, axiom, ( ! [A] : ( ! [B] : (n_43__48_91092451638769
 % The required definition(s) by the conjecture.
 
 % The Agda term was:
-% Name: ChangeIndex.DefTerm._.A
+% Name: ChangeIndex.DefTerm.A
 % Role: definition
-% Line: 46
-fof(n70_9109245163876945356, definition, ( ! [A] : (kp1_(cN_10_9109245163876945356,A) => ( ! [B] : (kp2_(cA_70_9109245163876945356,A,B) <=> (n_43__48_9109245163876945356(B,zero_6_9109245163876945356) = B)) )) )).
+% Line: 44
+fof(n60_9109245163876945356, definition, ( ! [A] : (kp1_(cA_60_9109245163876945356,A) <=> (n_43__48_9109245163876945356(A,zero_6_9109245163876945356) = A)) )).
 
 % End required definition(s) by the conjecture.
 
@@ -34,10 +34,10 @@ fof(n70_9109245163876945356, definition, ( ! [A] : (kp1_(cN_10_91092451638769453
 % The conjecture.
 
 % The Agda term was:
-% Name: ChangeIndex.DefTerm._.A0
+% Name: ChangeIndex.DefTerm.is
 % Role: prove
-% Line: 50
-fof(n74_9109245163876945356, conjecture, ( ! [A] : (kp1_(cN_10_9109245163876945356,A) => kp2_(cA_70_9109245163876945356,A,zero_6_9109245163876945356)) )).
+% Line: 54
+fof(n78_9109245163876945356, conjecture, ( ! [A] : (kp1_(cN_10_9109245163876945356,A) => ( ! [B] : (kp1_(cA_60_9109245163876945356,B) => kp1_(cA_60_9109245163876945356,succ_8_9109245163876945356(B))) )) )).
 
 % End conjecture.
 

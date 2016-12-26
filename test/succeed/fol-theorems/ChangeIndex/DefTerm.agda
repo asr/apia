@@ -40,13 +40,14 @@ postulate
   +-Sx : ∀ m n → succ m + n ≡ succ (m + n)
 {-# ATP axiom +-0x +-Sx #-}
 
+-- See Issue #81.
+A : D → Set
+A i = i + zero ≡ i
+{-# ATP definition A #-}
+
 +-rightIdentity : ∀ {n} → N n → n + zero ≡ n
 +-rightIdentity Nn = N-ind A A0 is Nn
   where
-  A : D → Set
-  A i = i + zero ≡ i
-  {-# ATP definition A #-}
-
   postulate A0 : A zero
   {-# ATP prove A0 #-}
 

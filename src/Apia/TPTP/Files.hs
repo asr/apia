@@ -119,7 +119,12 @@ agdaOriginalTerm qName role =
   "% The Agda term was:\n"
   +++ "% Name: " +++ (T.pack . prettyShow . qnameToConcrete) qName +++ "\n"
   +++ "% Role: " +++ (T.pack . prettyShow) role +++ "\n"
-  +++ "% Line: " +++ (T.pack . prettyShow . qNameLine) qName +++ "\n"
+  +++ "% Line: " +++ line +++ "\n"
+  where
+  line :: Text
+  line = case qNameLine qName of
+    Just l  → T.pack $ prettyShow l
+    Nothing → "N/A"
 
 addRole ∷ FilePath → AF → IO ()
 addRole file af@(AFor qName afRole _) = do
@@ -215,7 +220,7 @@ tptpFileName conjectureSet = do
 
   let f ∷ FilePath
       f = finalDir </>
-            (show . qNameLine) qName
+            maybe (__IMPOSSIBLE__) show (qNameLine qName)
             ++ "-"
             ++ asciiName ((concat . nameStringParts . nameConcrete . qnameName) qName)
 

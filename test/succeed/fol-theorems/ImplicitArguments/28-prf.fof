@@ -17,7 +17,7 @@ fof(n16_3385984094902434145, axiom, (a_4_3385984094902434145 = b_6_3385984094902
 % The conjecture.
 
 % The Agda term was:
-% Name: ImplicitArguments._.prf
+% Name: ImplicitArguments.prf
 % Role: prove
 % Line: 28
 fof(n26_3385984094902434145, conjecture, ( ! [A] : (b_6_3385984094902434145 = a_4_3385984094902434145) )).

@@ -15,7 +15,6 @@ module Apia.Utils.AgdaAPI.DeBruijn
   ( ChangeIndex(changeIndex)
   , DecIndex(decIndex)
   , IncIndex(incIndex)
-  , varToIndex
   ) where
 
 ------------------------------------------------------------------------------
@@ -26,8 +25,6 @@ import Agda.Syntax.Common ( Arg(Arg), Dom(Dom), Nat )
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
-  , ClauseBody
-  , ClauseBodyF(Bind, Body)
   , Elim
   , Elim'(Apply, Proj)
   , Elims
@@ -58,7 +55,7 @@ instance IncIndex Term where
   incIndex (Var n []) | n >= 0    = var (n + 1)
                       | otherwise = __IMPOSSIBLE__
 
-  incIndex (Con _ _)    = __IMPOSSIBLE__
+  incIndex Con{}        = __IMPOSSIBLE__
   incIndex (DontCare _) = __IMPOSSIBLE__
   incIndex (Lam _ _ )   = __IMPOSSIBLE__
   incIndex (Level _)    = __IMPOSSIBLE__
@@ -71,7 +68,7 @@ instance IncIndex Term where
 
 instance IncIndex Elim where
   incIndex (Apply (Arg color term)) = Apply (Arg color $ incIndex term)
-  incIndex (Proj _)                 = __IMPOSSIBLE__
+  incIndex (Proj _ _)               = __IMPOSSIBLE__
 
 instance IncIndex a ⇒ IncIndex [a] where
   incIndex = map incIndex
@@ -96,7 +93,7 @@ instance DecIndex Type where
 
 instance DecIndex Elim where
   decIndex (Apply (Arg color term)) = Apply (Arg color $ decIndex term)
-  decIndex (Proj _)                 = __IMPOSSIBLE__
+  decIndex (Proj _ _)               = __IMPOSSIBLE__
 
 instance DecIndex a ⇒ DecIndex [a] where
   decIndex = map decIndex
@@ -141,19 +138,10 @@ instance VarNames Term where
 
 instance VarNames Elim where
   varNames (Apply (Arg _ term)) = varNames term
-  varNames (Proj _)             = __IMPOSSIBLE__
+  varNames (Proj _ _)           = __IMPOSSIBLE__
 
 instance VarNames a ⇒ VarNames [a] where
   varNames = concatMap varNames
-
-instance VarNames ClauseBody where
-  varNames (Bind (Abs x cBody)) = varNames cBody ++ [x]
-  varNames (Body term)          = varNames term
-  varNames _                    = __IMPOSSIBLE__
-
--- | Return the de Bruijn index of a variable in a 'ClauseBody'.
-varToIndex ∷ ClauseBody → String → Nat
-varToIndex cBody x = fromMaybe (__IMPOSSIBLE__) $ elemIndex x (varNames cBody)
 
 ------------------------------------------------------------------------------
 -- | To change a de Bruijn index with respect to other index in an
@@ -226,8 +214,3 @@ instance ChangeIndex Elims where
     Apply (Arg info (changeIndex term index)) : changeIndex elims index
 
   changeIndex _ _ = __IMPOSSIBLE__
-
-instance ChangeIndex ClauseBody where
-  changeIndex (Bind (Abs x cBody)) index = Bind (Abs x (changeIndex cBody index))
-  changeIndex (Body term)          index = Body $ changeIndex term index
-  changeIndex _                    _     = __IMPOSSIBLE__

@@ -115,7 +115,7 @@ Interface
         names
           foo --> [Foo.foo]
 
-  signature: Sig {_sigSections = fromList [(Foo,Section {_secTelescope = EmptyTel})], _sigDefinitions = fromList [(Foo.foo,Defn {defArgInfo = ArgInfo {argInfoHiding = NotHidden, argInfoRelevance = Relevant}, defName = Foo.foo, defType = El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}, defPolarity = [], defArgOccurrences = [], defDisplay = [], defMutual = MutId 0, defCompiledRep = CompiledRep {compiledHaskell = Nothing, exportHaskell = Nothing, compiledEpic = Nothing, compiledJS = Nothing, compiledCore = Nothing}, defInstance = Nothing, defCopy = False, defMatchable = False, theDef = Axiom {axTPTPRole = Nothing, axTPTPHints = []}})], _sigRewriteRules = fromList []}
+  signature: Sig {_sigSections = fromList [(Foo,Section {_secTelescope = EmptyTel})], _sigDefinitions = fromList [(Foo.foo,Defn {defArgInfo = ArgInfo {argInfoHiding = NotHidden, argInfoRelevance = Relevant, argInfoOrigin = UserWritten, argInfoOverlappable = False}, defName = Foo.foo, defType = El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}, defPolarity = [], defArgOccurrences = [], defDisplay = [], defMutual = MutId 0, defCompiledRep = CompiledRep {compiledHaskell = Nothing, exportHaskell = Nothing, compiledEpic = Nothing, compiledJS = Nothing, compiledCore = Nothing}, defInstance = Nothing, defCopy = False, defMatchable = False, theDef = Axiom {axTPTPRole = Nothing, axTPTPHints = []}})], _sigRewriteRules = fromList []}
   display: fromList []
   builtin: fromList []
   Haskell imports: fromList []
@@ -145,10 +145,10 @@ Qname: Issue18.D
 Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}
 
 Qname: Issue18.∃
-Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi r(El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi r(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (NoAbs "_" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}) (NoAbs "A" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}
+Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru(El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (NoAbs "_" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}) (NoAbs "A" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}
 
 Qname: Issue18.∃._,_
-Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi r{El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi r(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (NoAbs "_" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}} (Abs "A" El {_getSort = Type (Max []), unEl = Pi r(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (Abs "witness" El {_getSort = Type (Max []), unEl = Pi r(El {_getSort = Type (Max []), unEl = Var 1 [Apply r(Var 0 [])]}) (NoAbs "_" El {_getSort = Type (Max []), unEl = Def Issue18.∃ [Apply r(Var 1 [])]})})})}
+Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru{El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (NoAbs "_" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}} (Abs "A" El {_getSort = Type (Max []), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (Abs "witness" El {_getSort = Type (Max []), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Var 1 [Apply ru(Var 0 [])]}) (NoAbs "_" El {_getSort = Type (Max []), unEl = Def Issue18.∃ [Apply ru(Var 1 [])]})})})}
 
 >>>2
 >>>= 0

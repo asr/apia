@@ -6,10 +6,10 @@
 % The required definition(s) by the conjecture.
 
 % The Agda term was:
-% Name: Definition07b._.c
+% Name: Definition07a.c
 % Role: definition
-% Line: 22
-fof(n18_3056672008584059307, definition, ( ! [A] : (kp1_(cP_2_3056672008584059307,A) => (kp1_(cP_2_3056672008584059307,A) => (c_18_3056672008584059307(A) = A))) )).
+% Line: N/A
+fof(n16_11993643694955597229, definition, ( ! [A] : (kp1_(cP_2_11993643694955597229,A) => (c_16_11993643694955597229(A) = A)) )).
 
 % End required definition(s) by the conjecture.
 
@@ -17,10 +17,10 @@ fof(n18_3056672008584059307, definition, ( ! [A] : (kp1_(cP_2_305667200858405930
 % The conjecture.
 
 % The Agda term was:
-% Name: Definition07b._.bar
+% Name: Definition07a.bar
 % Role: prove
 % Line: 26
-fof(n20_3056672008584059307, conjecture, ( ! [A] : (kp1_(cP_2_3056672008584059307,A) => (kp1_(cP_2_3056672008584059307,A) => (c_18_3056672008584059307(A) = A))) )).
+fof(n18_11993643694955597229, conjecture, ( ! [A] : (kp1_(cP_2_11993643694955597229,A) => (c_16_11993643694955597229(A) = A)) )).
 
 % End conjecture.
 

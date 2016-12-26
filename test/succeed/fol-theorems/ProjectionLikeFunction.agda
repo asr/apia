@@ -35,12 +35,13 @@ open import Common.FOL
 postulate
   N : D → Set
 
+-- See Issue #81.
+P : D → Set
+P i = i ≡ i
+{-# ATP definition P #-}
+
 foo : ∀ {n} → N n → n ≡ n
 foo {n} Nn = bar
   where
-  P : D → Set
-  P i = i ≡ i
-  {-# ATP definition P #-}
-
   postulate bar : P n
   {-# ATP prove bar #-}

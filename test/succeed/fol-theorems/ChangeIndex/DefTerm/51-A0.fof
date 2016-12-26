@@ -6,16 +6,16 @@
 % The general axiom(s).
 
 % The Agda term was:
-% Name: Definition07d.+-0x
+% Name: ChangeIndex.DefTerm.+-0x
 % Role: axiom
-% Line: 34
-fof(n44_3651358211057802336, axiom, ( ! [A] : (n_43__40_3651358211057802336(zero_4_3651358211057802336,A) = A) )).
+% Line: 39
+fof(n52_9109245163876945356, axiom, ( ! [A] : (n_43__48_9109245163876945356(zero_6_9109245163876945356,A) = A) )).
 
 % The Agda term was:
-% Name: Definition07d.+-Sx
+% Name: ChangeIndex.DefTerm.+-Sx
 % Role: axiom
-% Line: 35
-fof(n50_3651358211057802336, axiom, ( ! [A] : ( ! [B] : (n_43__40_3651358211057802336(succ_6_3651358211057802336(A),B) = succ_6_3651358211057802336(n_43__40_3651358211057802336(A,B))) ) )).
+% Line: 40
+fof(n58_9109245163876945356, axiom, ( ! [A] : ( ! [B] : (n_43__48_9109245163876945356(succ_8_9109245163876945356(A),B) = succ_8_9109245163876945356(n_43__48_9109245163876945356(A,B))) ) )).
 
 % End general axiom(s).
 
@@ -23,10 +23,10 @@ fof(n50_3651358211057802336, axiom, ( ! [A] : ( ! [B] : (n_43__40_36513582110578
 % The required definition(s) by the conjecture.
 
 % The Agda term was:
-% Name: Definition07d._.A
+% Name: ChangeIndex.DefTerm.A
 % Role: definition
-% Line: 43
-fof(n62_3651358211057802336, definition, ( ! [A] : (kp1_(cN_10_3651358211057802336,A) => ( ! [B] : (kp2_(cA_62_3651358211057802336,A,B) <=> (n_43__40_3651358211057802336(B,zero_4_3651358211057802336) = B)) )) )).
+% Line: 44
+fof(n60_9109245163876945356, definition, ( ! [A] : (kp1_(cA_60_9109245163876945356,A) <=> (n_43__48_9109245163876945356(A,zero_6_9109245163876945356) = A)) )).
 
 % End required definition(s) by the conjecture.
 
@@ -34,10 +34,10 @@ fof(n62_3651358211057802336, definition, ( ! [A] : (kp1_(cN_10_36513582110578023
 % The conjecture.
 
 % The Agda term was:
-% Name: Definition07d._.A0
+% Name: ChangeIndex.DefTerm.A0
 % Role: prove
-% Line: 47
-fof(n66_3651358211057802336, conjecture, ( ! [A] : (kp1_(cN_10_3651358211057802336,A) => kp2_(cA_62_3651358211057802336,A,zero_4_3651358211057802336)) )).
+% Line: 51
+fof(n74_9109245163876945356, conjecture, ( ! [A] : (kp1_(cN_10_9109245163876945356,A) => kp1_(cA_60_9109245163876945356,zero_6_9109245163876945356)) )).
 
 % End conjecture.
 

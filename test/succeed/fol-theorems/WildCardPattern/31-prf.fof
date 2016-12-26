@@ -6,7 +6,7 @@
 % The conjecture.
 
 % The Agda term was:
-% Name: WildCardPattern._.prf
+% Name: WildCardPattern.prf
 % Role: prove
 % Line: 31
 fof(n38_3607633150605865650, conjecture, ( ! [A] : ( ! [B] : (kp1_(cN_16_3607633150605865650,A) => (kp1_(cN_16_3607633150605865650,B) => (B = B))) ) )).

@@ -47,12 +47,13 @@ postulate
            ∃[ x' ] ∃[ xs' ] ∃[ ys' ] xs' ≈ ys' ∧ xs ≡ x' ∷ xs' ∧ ys ≡ x' ∷ ys'
 {-# ATP axiom ≈-gfp₁ #-}
 
+-- See Issue #81.
+P : D → Set
+P ws = ∃[ zs ] ws ≈ zs
+{-# ATP definition P #-}
+
 ≈→Stream : ∀ {xs ys} → xs ≈ ys → Stream xs
 ≈→Stream {xs} {ys} xs≈ys = Stream-gfp₂ P helper (ys , xs≈ys)
   where
-  P : D → Set
-  P ws = ∃[ zs ] ws ≈ zs
-  {-# ATP definition P #-}
-
   postulate helper : ∀ {ws} → P ws → ∃[ w' ] ∃[ ws' ] P ws' ∧ ws ≡ w' ∷ ws'
   {-# ATP prove helper #-}

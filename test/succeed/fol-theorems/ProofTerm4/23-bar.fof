@@ -6,7 +6,7 @@
 % The conjecture.
 
 % The Agda term was:
-% Name: ProofTerm4._.bar
+% Name: ProofTerm4.bar
 % Role: prove
 % Line: 23
 fof(n34_6392409748752774953, conjecture, ( ! [A] : ( ! [B] : ( ! [C] : ( ! [D] : (kp4_(cA_6_6392409748752774953,A,B,C,D) => ( ! [E] : (E = E) )) ) ) ) )).

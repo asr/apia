@@ -152,7 +152,7 @@ binConst op arg1 arg2 =
 
 elimToTerm ∷ Elim → T LTerm
 elimToTerm (Apply arg) = agdaArgTermToTerm arg
-elimToTerm (Proj _)    = __IMPOSSIBLE__
+elimToTerm (Proj _ _)  = __IMPOSSIBLE__
 
 -- Translation of predicates.
 predicate ∷ QName → Elims → T LFormula
@@ -497,7 +497,7 @@ appArgsF fn args = do
 
 -- | Translate an Agda internal 'Term' to a target logic term.
 agdaTermToTerm ∷ Term → T LTerm
-agdaTermToTerm term'@(Con (ConHead (QName _ name) _ _) args) = do
+agdaTermToTerm term'@(Con (ConHead (QName _ name) _ _) _ args) = do
   reportSLn "t2t" 10 $ "agdaTermToTerm Con:\n" ++ show term'
 
   let cName ∷ C.Name

@@ -35,7 +35,7 @@ fof(n54_14726347801198496434, axiom, ( ! [A] : ( ! [B] : ( ! [C] : (n_4343__42_1
 % The conjecture.
 
 % The Agda term was:
-% Name: Agda.NewUnifier._.prf
+% Name: Agda.NewUnifier.prf
 % Role: prove
 % Line: 48
 fof(n70_14726347801198496434, conjecture, ( ! [A] : (kp1_(cList_32_14726347801198496434,A) => kp1_(cList_32_14726347801198496434,n_4343__42_14726347801198496434(n9193_16_14726347801198496434,A))) )).

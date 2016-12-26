@@ -12,7 +12,7 @@ agda -v0 NotErasedProofTerm.agda && ../../../dist/build/apia/apia NotErasedProof
 >>>
 >>>2
 apia: the translation failed because we do not know how erase the term
-Pi r(El {_getSort = Type (Max []), unEl = Def NotErasedProofTerm.D []}) (Abs "k" El {_getSort = Type (Max []), unEl = Def NotErasedProofTerm._≤_ [Apply r(Var 0 []),Apply r(Var 0 [])]})
+Pi ru(El {_getSort = Type (Max []), unEl = Def NotErasedProofTerm.D []}) (Abs "k" El {_getSort = Type (Max []), unEl = Def NotErasedProofTerm._≤_ [Apply ru(Var 0 []),Apply ru(Var 0 [])]})
 >>>= 1
 
 # Terms.hs: Required --schematic-propositional-symbols option

@@ -24,8 +24,6 @@ import Agda.Syntax.Common
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
-  , ClauseBody
-  , ClauseBodyF(Bind, Body, NoBody)
   , Elim
   , Elim'(Apply, Proj)
   , Sort(Type)
@@ -59,19 +57,13 @@ instance BoundedVars Term where
 
 instance BoundedVars Elim where
   boundedVars (Apply (Arg _ term)) = boundedVars term
-  boundedVars (Proj _)             = __IMPOSSIBLE__
+  boundedVars (Proj _ _)           = __IMPOSSIBLE__
 
 instance BoundedVars a ⇒ BoundedVars (Arg a) where
   boundedVars (Arg _ e) = boundedVars e
 
 instance BoundedVars a ⇒ BoundedVars [a] where
    boundedVars xs = sum $ map boundedVars xs
-
-instance BoundedVars ClauseBody where
-  boundedVars (Bind (Abs _ cBody)) = 1 + boundedVars cBody
-  boundedVars (Bind (NoAbs _ _))   = __IMPOSSIBLE__
-  boundedVars (Body term)          = boundedVars term
-  boundedVars NoBody               = 0
 
 ------------------------------------------------------------------------------
 -- We only need to remove the variables which are proof terms, so we
@@ -97,7 +89,7 @@ instance BoundedVarsType Term where
 
   boundedVarsType (Def _ elims) = boundedVarsType elims
 
-  boundedVarsType (Con _ _) = []
+  boundedVarsType Con{}     = []
   boundedVarsType (Lam _ _) = []
 
   boundedVarsType (Var n _) | n >= 0    = []
@@ -107,7 +99,7 @@ instance BoundedVarsType Term where
 
 instance BoundedVarsType Elim where
   boundedVarsType (Apply (Arg _ term)) = boundedVarsType term
-  boundedVarsType (Proj _)             = __IMPOSSIBLE__
+  boundedVarsType (Proj _ _)           = __IMPOSSIBLE__
 
 instance BoundedVarsType a ⇒ BoundedVarsType (Arg a) where
   boundedVarsType (Arg _ e) = boundedVarsType e

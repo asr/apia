@@ -79,7 +79,6 @@ executable apia
     Apia.TPTP.Files
     Apia.TPTP.Types
     Apia.Translation
-    Apia.Translation.ClauseBody
     Apia.Translation.Functions
     Apia.Translation.Terms
     Apia.Translation.Types

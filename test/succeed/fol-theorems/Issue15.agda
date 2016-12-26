@@ -45,14 +45,15 @@ postulate
     -- Conat is greater than A.
     ∀ {n} → A n → Conat n
 
+-- See Issue #81.
+A : D → Set
+A n = n ≡ zero ∨ (∃[ n' ] n ≡ succ n' ∧ Conat n')
+{-# ATP definition A #-}
+
 Conat-in : ∀ {n} →
            n ≡ zero ∨ (∃[ n' ] n ≡ succ n' ∧ Conat n') →
            Conat n
 Conat-in h = Conat-coind A h' h
   where
-  A : D → Set
-  A n = n ≡ zero ∨ (∃[ n' ] n ≡ succ n' ∧ Conat n')
-  {-# ATP definition A #-}
-
   postulate h' : ∀ {n} → A n → n ≡ zero ∨ (∃[ n' ] n ≡ succ n' ∧ A n')
   {-# ATP prove h' #-}

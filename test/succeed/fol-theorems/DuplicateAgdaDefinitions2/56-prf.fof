@@ -56,7 +56,7 @@ fof(n58_9598430241594792406, definition, ( ! [A] : ( ! [B] : (kp2_(cNLE_58_95984
 % The conjecture.
 
 % The Agda term was:
-% Name: DuplicateAgdaDefinitions2._.prf
+% Name: DuplicateAgdaDefinitions2.prf
 % Role: prove
 % Line: 56
 fof(n92_9598430241594792406, conjecture, ( ! [A] : (kp1_(cN_20_9598430241594792406,A) => kp1_(cBool_28_9598430241594792406,n_8804__52_9598430241594792406(succ_10_9598430241594792406(A),zero_4_9598430241594792406))) )).

@@ -6,10 +6,10 @@
 % The required definition(s) by the conjecture.
 
 % The Agda term was:
-% Name: Issue4._.c
+% Name: ProjectionLikeFunction.P
 % Role: definition
-% Line: 22
-fof(n30_3336295276786706635, definition, ( ! [A] : (kp1_(cP_10_3336295276786706635,A) => ( ! [B] : (kp1_(cP_10_3336295276786706635,B) => (c_30_3336295276786706635(A,B) = A)) )) )).
+% Line: 39
+fof(n4_1482223297855593758, definition, ( ! [A] : (kp1_(cP_4_1482223297855593758,A) <=> (A = A)) )).
 
 % End required definition(s) by the conjecture.
 
@@ -17,10 +17,10 @@ fof(n30_3336295276786706635, definition, ( ! [A] : (kp1_(cP_10_33362952767867066
 % The conjecture.
 
 % The Agda term was:
-% Name: Issue4._.bar
+% Name: ProjectionLikeFunction.bar
 % Role: prove
-% Line: 26
-fof(n32_3336295276786706635, conjecture, ( ! [A] : (kp1_(cP_10_3336295276786706635,A) => ( ! [B] : (kp1_(cP_10_3336295276786706635,B) => (c_30_3336295276786706635(A,B) = A)) )) )).
+% Line: 46
+fof(n20_1482223297855593758, conjecture, ( ! [A] : (kp1_(cN_2_1482223297855593758,A) => kp1_(cP_4_1482223297855593758,A)) )).
 
 % End conjecture.
 

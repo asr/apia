@@ -140,7 +140,7 @@ instance EtaExpandible Term where
 
   -- We don't know an example of η-contraction with Con, therefore
   -- we don't do anything.
-  etaExpand term'@(Con _ _) = return term'
+  etaExpand term'@Con{} = return term'
 
   etaExpand (Lam h (Abs x termAbs)) = Lam h . Abs x <$> etaExpand termAbs
 
@@ -165,7 +165,7 @@ instance EtaExpandible Term where
 
 instance EtaExpandible Elim where
   etaExpand (Apply (Arg color term)) = Apply . Arg color <$> etaExpand term
-  etaExpand (Proj _)                 = __IMPOSSIBLE__
+  etaExpand (Proj _ _)               = __IMPOSSIBLE__
 
 instance EtaExpandible a ⇒ EtaExpandible (Dom a) where
   etaExpand (Dom ai e) = Dom ai <$> etaExpand e

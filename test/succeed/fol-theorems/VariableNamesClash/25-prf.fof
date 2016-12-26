@@ -17,7 +17,7 @@ fof(n10_4821903336301014140, axiom, (a_6_4821903336301014140 = b_8_4821903336301
 % The conjecture.
 
 % The Agda term was:
-% Name: VariableNamesClash._.prf
+% Name: VariableNamesClash.prf
 % Role: prove
 % Line: 25
 fof(n24_4821903336301014140, conjecture, ( ! [A] : ( ! [B] : (a_6_4821903336301014140 = b_8_4821903336301014140) ) )).

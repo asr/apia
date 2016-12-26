@@ -17,10 +17,10 @@ fof(n64_15559352520079581876, axiom, ( ! [A] : ( ! [B] : (kp2_(n_8776__10_155593
 % The required definition(s) by the conjecture.
 
 % The Agda term was:
-% Name: RemoveVar.LamTerm._.P
+% Name: RemoveVar.LamTerm.P
 % Role: definition
-% Line: 53
-fof(n82_15559352520079581876, definition, ( ! [A] : ( ! [B] : (kp2_(n_8776__10_15559352520079581876,A,B) => ( ! [C] : (kp3_(cP_82_15559352520079581876,A,B,C) <=> ( ? [D] : kp2_(n_8776__10_15559352520079581876,C,D) )) )) ) )).
+% Line: 51
+fof(n66_15559352520079581876, definition, ( ! [A] : (kp1_(cP_66_15559352520079581876,A) <=> ( ? [B] : kp2_(n_8776__10_15559352520079581876,A,B) )) )).
 
 % End required definition(s) by the conjecture.
 
@@ -28,10 +28,10 @@ fof(n82_15559352520079581876, definition, ( ! [A] : ( ! [B] : (kp2_(n_8776__10_1
 % The conjecture.
 
 % The Agda term was:
-% Name: RemoveVar.LamTerm._.helper
+% Name: RemoveVar.LamTerm.helper
 % Role: prove
-% Line: 57
-fof(n94_15559352520079581876, conjecture, ( ! [A] : ( ! [B] : (kp2_(n_8776__10_15559352520079581876,A,B) => ( ! [C] : (kp3_(cP_82_15559352520079581876,A,B,C) => ( ? [D] : ( ? [E] : (kp3_(cP_82_15559352520079581876,A,B,E) & (C = n_8759__6_15559352520079581876(D,E))) ) )) )) ) )).
+% Line: 58
+fof(n94_15559352520079581876, conjecture, ( ! [A] : ( ! [B] : (kp2_(n_8776__10_15559352520079581876,A,B) => ( ! [C] : (kp1_(cP_66_15559352520079581876,C) => ( ? [D] : ( ? [E] : (kp1_(cP_66_15559352520079581876,E) & (C = n_8759__6_15559352520079581876(D,E))) ) )) )) ) )).
 
 % End conjecture.
 

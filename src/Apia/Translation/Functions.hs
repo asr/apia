@@ -152,7 +152,7 @@ clauseToFormula qName ty cl@(Clause r tel (_ : ncps) (Just cBody) cTy cc) totalB
     -- N.B. the pattern matching on @(Def _ _)@.
 
     -- See Issue #81.
-    ExtendTel (Dom _ (El (Type (Max [])) (Def _ _))) (Abs _ _) → do
+    ExtendTel (Dom _ (El (Type (Max [])) (Def _ _))) (Abs _ _) →
       E.throwE $
         pretty "the translation of "
         <> bquotes (AP.pretty qName)

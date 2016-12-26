@@ -58,7 +58,12 @@ executable apia
                  , unordered-containers >= 0.2.5.0 && < 0.3
                  , yaml >= 0.8.17 && < 0.9
 
-  build-tools: cpphs >= 1.19
+  -- We don't write an upper bound for cpphs because the `build-tools`
+  -- field can not be modified in Hackage.
+
+  -- If your change the lower bound of cpphs also change it in the
+  -- `.travis.yml` file.
+  build-tools: cpphs >= 1.20.2
 
   other-modules:
     Apia.ATPs

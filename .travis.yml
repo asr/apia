@@ -81,6 +81,10 @@ install:
 ##############################################################################
 # Installing the extended version of Agda (adapted from Agda)
 
+  # The version installed of cpphs should match the lower version
+  # required in apia.cabal.
+  - cabal install cpphs-1.20.2
+
   - git clone https://github.com/asr/eagda.git ${MY_HOME}/eagda
   - cd ${MY_HOME}/eagda
   - cabal install --only-dependencies --force-reinstalls

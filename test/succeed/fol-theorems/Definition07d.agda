@@ -7,7 +7,7 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module Definition09 where
+module Definition07d where
 
 infixl 6 _+_
 infix  4 _≡_

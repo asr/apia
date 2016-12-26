@@ -6,16 +6,16 @@
 % The general axiom(s).
 
 % The Agda term was:
-% Name: Definition09.+-0x
+% Name: Definition07d.+-0x
 % Role: axiom
 % Line: 34
-fof(n44_8350520894002125725, axiom, ( ! [A] : (n_43__40_8350520894002125725(zero_4_8350520894002125725,A) = A) )).
+fof(n44_3651358211057802336, axiom, ( ! [A] : (n_43__40_3651358211057802336(zero_4_3651358211057802336,A) = A) )).
 
 % The Agda term was:
-% Name: Definition09.+-Sx
+% Name: Definition07d.+-Sx
 % Role: axiom
 % Line: 35
-fof(n50_8350520894002125725, axiom, ( ! [A] : ( ! [B] : (n_43__40_8350520894002125725(succ_6_8350520894002125725(A),B) = succ_6_8350520894002125725(n_43__40_8350520894002125725(A,B))) ) )).
+fof(n50_3651358211057802336, axiom, ( ! [A] : ( ! [B] : (n_43__40_3651358211057802336(succ_6_3651358211057802336(A),B) = succ_6_3651358211057802336(n_43__40_3651358211057802336(A,B))) ) )).
 
 % End general axiom(s).
 
@@ -23,10 +23,10 @@ fof(n50_8350520894002125725, axiom, ( ! [A] : ( ! [B] : (n_43__40_83505208940021
 % The required definition(s) by the conjecture.
 
 % The Agda term was:
-% Name: Definition09._.A
+% Name: Definition07d._.A
 % Role: definition
 % Line: 43
-fof(n62_8350520894002125725, definition, ( ! [A] : (kp1_(cN_10_8350520894002125725,A) => ( ! [B] : (kp2_(cA_62_8350520894002125725,A,B) <=> (n_43__40_8350520894002125725(B,zero_4_8350520894002125725) = B)) )) )).
+fof(n62_3651358211057802336, definition, ( ! [A] : (kp1_(cN_10_3651358211057802336,A) => ( ! [B] : (kp2_(cA_62_3651358211057802336,A,B) <=> (n_43__40_3651358211057802336(B,zero_4_3651358211057802336) = B)) )) )).
 
 % End required definition(s) by the conjecture.
 
@@ -34,10 +34,10 @@ fof(n62_8350520894002125725, definition, ( ! [A] : (kp1_(cN_10_83505208940021257
 % The conjecture.
 
 % The Agda term was:
-% Name: Definition09._.is
+% Name: Definition07d._.is
 % Role: prove
 % Line: 50
-fof(n70_8350520894002125725, conjecture, ( ! [A] : (kp1_(cN_10_8350520894002125725,A) => ( ! [B] : (kp2_(cA_62_8350520894002125725,A,B) => kp2_(cA_62_8350520894002125725,A,succ_6_8350520894002125725(B))) )) )).
+fof(n70_3651358211057802336, conjecture, ( ! [A] : (kp1_(cN_10_3651358211057802336,A) => ( ! [B] : (kp2_(cA_62_3651358211057802336,A,B) => kp2_(cA_62_3651358211057802336,A,succ_6_3651358211057802336(B))) )) )).
 
 % End conjecture.
 

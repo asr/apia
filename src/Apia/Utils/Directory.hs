@@ -44,4 +44,4 @@ equalFiles f1 f2 = liftM2 (==) (BL.readFile f1) (BL.readFile f2)
 -- | Return 'True' if the files are different, otherwise the function
 -- returns 'False'.
 notEqualFiles ∷ FilePath → FilePath → IO Bool
-notEqualFiles f1 f2 = liftM2 (/=) (BL.readFile f1) (BL.readFile f2)
+notEqualFiles f1 f2 = ifM (equalFiles f1 f2) (return False) (return True)

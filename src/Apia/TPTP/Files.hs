@@ -55,7 +55,7 @@ import Apia.Utils.AgdaAPI.Interface
 
 import Apia.Utils.List        ( duplicate )
 import Apia.Utils.Monad       ( die )
-import Apia.Utils.PrettyPrint ( (<>), spaces, squotes )
+import Apia.Utils.PrettyPrint ( (<>), scquotes, spaces )
 import Apia.Utils.Text        ( (+++), toUpperFirst )
 
 import Control.Exception ( catch, IOException )
@@ -209,7 +209,7 @@ tptpFileName conjectureSet = do
 
   liftIO $ createDirectoryIfMissing True finalDir `catch`
     \ (_ :: IOException) →
-      die $ "could not create the" <> spaces (squotes finalDir) <> "directory"
+      die $ "could not create the" <> spaces (scquotes finalDir) <> "directory"
 
   reportSLn "tptpFileName" 20 $
     "Qname's concrete name range: " ++ (show . qNameConcreteNameRange) qName

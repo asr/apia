@@ -65,7 +65,7 @@ import Apia.Utils.AgdaAPI.EtaExpansion ( EtaExpandible(etaExpand) )
 import qualified Apia.Utils.Except as E
 
 -- import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
-import Apia.Utils.PrettyPrint ( (<>), bquotes, Pretty(pretty) )
+import Apia.Utils.PrettyPrint ( (<>), cquotes, Pretty(pretty) )
 
 #include "undefined.h"
 
@@ -88,7 +88,7 @@ fnToFormula _      _  []   = __IMPOSSIBLE__
 fnToFormula qName  ty [cl] =
   clauseToFormula qName ty cl (length $ namedClausePats cl)
 fnToFormula qName  _  _    =
-  E.throwE $ pretty "the translation of " <> bquotes (AP.pretty qName)
+  E.throwE $ pretty "the translation of " <> cquotes (AP.pretty qName)
              <> pretty " failed because its definition only can have a clause"
 
 -- A Clause is defined by (Agda.Syntax.Internal, 2016-12-25):
@@ -155,17 +155,17 @@ clauseToFormula qName ty cl@(Clause r tel (_ : ncps) (Just cBody) cTy cc) totalB
     ExtendTel (Dom _ (El (Type (Max [])) (Def _ _))) (Abs _ _) →
       E.throwE $
         pretty "the translation of "
-        <> bquotes (AP.pretty qName)
+        <> cquotes (AP.pretty qName)
         <> pretty " failed because we do not how to erase proof terms"
         <> pretty " in the definitions"
 
     ExtendTel (Dom _ (El (Type (Max [])) (Pi _ _))) _ →
-      E.throwE $ pretty "the translation of " <> bquotes (AP.pretty qName)
+      E.throwE $ pretty "the translation of " <> cquotes (AP.pretty qName)
                  <> pretty " failed because it is a higher-order definition"
 
     -- Issue #80.
     ExtendTel (Dom _ (El (Type (Max [_])) (Sort _))) _ →
-      E.throwE $ pretty "the translation of " <> bquotes (AP.pretty qName)
+      E.throwE $ pretty "the translation of " <> cquotes (AP.pretty qName)
                  <> pretty " failed because it is not a FOL-definition"
 
     _ → do

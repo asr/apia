@@ -71,7 +71,7 @@ import Apia.Common
   , Lang(SMT2, TPTP)
   )
 
-import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
+import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), scquotes )
 import qualified Data.Text as T ( pack )
 
 import Safe ( initDef )
@@ -140,7 +140,7 @@ type OM = Options → Either Doc Options
 
 atpOpt ∷ String → OM
 atpOpt [] _ = Left $
-  pretty "option " <> squotes "--atp" <> pretty " requires an argument NAME"
+  pretty "option " <> scquotes "--atp" <> pretty " requires an argument NAME"
 atpOpt name opts = Right opts { optATP = CommandATPs atps }
   where
     atps ∷ [String]
@@ -165,7 +165,7 @@ helpOpt opts = Right opts { optHelp = True }
 
 includePathOpt ∷ FilePath → OM
 includePathOpt [] _ = Left $
-  pretty "option " <> squotes "--include-path"
+  pretty "option " <> scquotes "--include-path"
   <> pretty " requires an argument DIR"
 includePathOpt dir opts =
   Right opts { optIncludePath = optIncludePath opts ++ [dir] }
@@ -193,7 +193,7 @@ onlyFilesOpt opts = Right opts { optOnlyFiles = True }
 
 outputDirOpt ∷ FilePath → OM
 outputDirOpt [] _ = Left $
-  pretty "option " <> squotes "--output-dir"
+  pretty "option " <> scquotes "--output-dir"
   <> pretty " requires an argument DIR"
 outputDirOpt dir opts = Right opts { optOutputDir = dir }
 
@@ -207,7 +207,7 @@ schematicPropositionalSymbolsOpt opts =
 
 snapshotDirOpt ∷ FilePath → OM
 snapshotDirOpt [] _ = Left $
-  pretty "option " <> squotes "--snapshot-dir"
+  pretty "option " <> scquotes "--snapshot-dir"
   <> pretty " requires an argument DIR"
 snapshotDirOpt dir opts = Right opts { optSnapshotDir = dir }
 
@@ -221,11 +221,11 @@ snapshotTestOpt opts = Right opts { optSnapshotTest = True }
 
 timeOpt ∷ String → OM
 timeOpt [] _ = Left $
-  pretty "option " <> squotes "--time" <> pretty " requires an argument NUM"
+  pretty "option " <> scquotes "--time" <> pretty " requires an argument NUM"
 timeOpt secs opts =
   if all isDigit secs
   then Right opts { optTime = read secs }
-  else Left $ pretty "option " <> squotes "--time"
+  else Left $ pretty "option " <> scquotes "--time"
               <> pretty " requires a non-negative integer argument"
 
 unprovenNoErrorOpt ∷ OM
@@ -234,7 +234,7 @@ unprovenNoErrorOpt opts = Right opts { optUnprovenNoError = True }
 -- Adapted from @Agda.Interaction.Options.verboseFlag@.
 verboseOpt ∷ String → OM
 verboseOpt [] _ = Left $
- pretty "option " <> squotes "--verbose"
+ pretty "option " <> scquotes "--verbose"
  <> pretty " requires an argument of the form x.y.z:N or N"
 verboseOpt str opts =
   Right opts { optVerbose = Trie.insert k n $ optVerbose opts }
@@ -256,61 +256,61 @@ versionOpt opts = Right opts { optVersion = True }
 
 withCVC4Opt ∷ String → OM
 withCVC4Opt [] _ = Left $
-  pretty "option " <> squotes "--with-cvc4"
+  pretty "option " <> scquotes "--with-cvc4"
   <> pretty " requires an argument PATH"
 withCVC4Opt name opts = Right opts { optWithCVC4 = name }
 
 withEOpt ∷ String → OM
 withEOpt [] _ = Left $
-  pretty "option " <> squotes "--with-e"
+  pretty "option " <> scquotes "--with-e"
   <> pretty " requires an argument PATH"
 withEOpt name opts = Right opts { optWithE = name }
 
 withEquinoxOpt ∷ String → OM
 withEquinoxOpt [] _ = Left $
-  pretty "option " <> squotes "--with-equinox"
+  pretty "option " <> scquotes "--with-equinox"
   <> pretty " requires an argument PATH"
 withEquinoxOpt name opts = Right opts { optWithEquinox = name }
 
 withIleanCoPOpt ∷ String → OM
 withIleanCoPOpt [] _ = Left $
-  pretty "option " <> squotes "--with-ileancop"
+  pretty "option " <> scquotes "--with-ileancop"
   <> pretty " requires an argument PATH"
 withIleanCoPOpt name opts = Right opts { optWithIleanCoP = name }
 
 withMetisOpt ∷ String → OM
 withMetisOpt [] _ = Left $
-  pretty "option " <> squotes "--with-metis"
+  pretty "option " <> scquotes "--with-metis"
   <> pretty " requires an argument PATH"
 withMetisOpt name opts = Right opts { optWithMetis = name }
 
 withOnlineATPsOpt ∷ String → OM
 withOnlineATPsOpt [] _ = Left $
-  pretty "option " <> squotes "--with-onlineatps"
+  pretty "option " <> scquotes "--with-onlineatps"
   <> pretty " requires an argument PATH"
 withOnlineATPsOpt name opts = Right opts { optWithOnlineATPs = name }
 
 withSPASSOpt ∷ String → OM
 withSPASSOpt [] _ = Left $
-  pretty "option " <> squotes "--with-spass"
+  pretty "option " <> scquotes "--with-spass"
   <> pretty " requires an argument PATH"
 withSPASSOpt name opts = Right opts { optWithSPASS = name }
 
 withtptp4XOpt ∷ String → OM
 withtptp4XOpt [] _ = Left $
-  pretty "option " <> squotes "--with-tptp4X"
+  pretty "option " <> scquotes "--with-tptp4X"
   <> pretty " requires an argument PATH"
 withtptp4XOpt name opts = Right opts { optWithtptp4X = name }
 
 withVampireOpt ∷ String → OM
 withVampireOpt [] _  = Left $
-  pretty "option " <> squotes "--with-vampire"
+  pretty "option " <> scquotes "--with-vampire"
   <> pretty " requires an argument PATH"
 withVampireOpt name opts = Right opts { optWithVampire = name }
 
 withZ3Opt ∷ String → OM
 withZ3Opt []   _    = Left $
-  pretty "option " <> squotes "--with-z3"
+  pretty "option " <> scquotes "--with-z3"
   <> pretty " requires an argument PATH"
 withZ3Opt name opts = Right opts { optWithZ3 = name }
 

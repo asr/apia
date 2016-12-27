@@ -22,7 +22,7 @@ import Apia.Options
 import qualified Apia.Utils.Except as E
 
 import Apia.Utils.Directory   ( notEqualFiles )
-import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), prettyShow, squotes )
+import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), prettyShow, scquotes )
 
 import qualified Data.Text as T ( pack )
 
@@ -39,8 +39,8 @@ snapshotTest file = do
   snapshotDir ← askTOpt optSnapshotDir
 
   if outputDir == snapshotDir
-    then E.throwE $ pretty "the " <> squotes "--output-dir"
-                    <> pretty " and " <> squotes "--snapshot-dir"
+    then E.throwE $ pretty "the " <> scquotes "--output-dir"
+                    <> pretty " and " <> scquotes "--snapshot-dir"
                     <> pretty " options cannot be the same"
     else do
       -- The original file without the output directory.

@@ -110,7 +110,7 @@ import Apia.Utils.AgdaAPI.Interface     ( qNameToUniqueString )
 
 import qualified Apia.Utils.Except as E
 
-import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
+import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), scquotes )
 
 #include "undefined.h"
 
@@ -118,7 +118,7 @@ import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), squotes )
 
 universalQuantificationErrorMsg ∷ String → Doc
 universalQuantificationErrorMsg p =
-  pretty "use the " <> squotes p
+  pretty "use the " <> scquotes p
   <> pretty " option for the translation of first-order logic universal quantified "
   <> pretty entities
   where
@@ -473,9 +473,9 @@ agdaTermToFormula term'@(I.Var n elims) = do
       ifM (askTOpt optSchematicPropositionalFunctions)
           (ifM (askTOpt optNoPredicateConstants)
                (E.throwE $
-                 pretty "the " <> squotes "--schematic-propositional-functions"
+                 pretty "the " <> scquotes "--schematic-propositional-functions"
                  <> pretty " and "
-                 <> squotes "--no-predicate-constants"
+                 <> scquotes "--no-predicate-constants"
                  <> pretty " options are incompatible")
                (propositionalFunctionScheme vars n elims)
           )
@@ -595,7 +595,7 @@ agdaTermToTerm term'@(I.Var n args) = do
 
       ifM (askTOpt optSchematicFunctions)
           -- TODO (24 March 2013). Implementation.
-          (E.throwE $ pretty "the option " <> squotes "--schematic-functions"
+          (E.throwE $ pretty "the option " <> scquotes "--schematic-functions"
                       <> pretty " is not implemented")
           -- (do lTerms ← mapM agdaArgTermToTerm varArgs
           --     ifM (askTOpt optAppF)

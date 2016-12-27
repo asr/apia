@@ -59,8 +59,8 @@ import Apia.Utils.PrettyPrint
   , Doc
   , Pretty(pretty)
   , prettyShow
+  , scquotes
   , sspaces
-  , squotes
   )
 
 import qualified Apia.Utils.Except as E
@@ -141,7 +141,7 @@ optATP2ATP "z3"             = return Z3
 optATP2ATP other
   | "online-" `isPrefixOf` other = return $ OnlineATP other
   | otherwise =
-    E.throwE $ pretty "the ATP " <> squotes other <> pretty " is unknown"
+    E.throwE $ pretty "the ATP " <> scquotes other <> pretty " is unknown"
 
 atpOk ∷ ATP → String
 -- CVC4 1.4.
@@ -344,7 +344,7 @@ runATP atp outputMVar timeout tptpFile = do
   cmd  ∷ String   ← atpExec atp
 
   let msgError ∷ Doc
-      msgError = pretty "the " <> squotes cmd
+      msgError = pretty "the " <> scquotes cmd
                  <> pretty " command associated with "
                  <> pretty atp <> pretty " does not exist"
 

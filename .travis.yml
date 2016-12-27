@@ -3,8 +3,8 @@
 # NB: don't set `language: haskell` here.
 language: c
 
-# Explicitly request container-based infrastructure.
-sudo: false
+# Explicitly request sudo-enabled virtual environments
+sudo: true
 
 ##############################################################################
 # Tests

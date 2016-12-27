@@ -29,11 +29,11 @@ checkTPTP file = do
 
   tptp4XExec ← askTOpt optWithtptp4X
 
-  let msgError ∷ Doc
-      msgError = "the " <> pretty tptp4XExec
+  let errorMsg ∷ Doc
+      errorMsg = "the " <> pretty tptp4XExec
                  <> " command from the TPTP library does not exist"
 
-  checkExecutable tptp4XExec msgError
+  checkExecutable tptp4XExec errorMsg
 
   (exitCode, out, _) ← liftIO $
     readProcessWithExitCode tptp4XExec
@@ -48,8 +48,7 @@ checkTPTP file = do
                           <> pretty out
 
   case exitCode of
-    ExitFailure _ →
-      E.throwE errorOrWarningMsg
+    ExitFailure _ → E.throwE errorOrWarningMsg
 
     -- TODO (11 December 2012). How add a test case for this case?
     ExitSuccess →

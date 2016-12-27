@@ -282,13 +282,13 @@ createSMT2file tptpFile = do
 
   tptp4XExec ← askTOpt optWithtptp4X
 
-  let msgError ∷ Doc
-      msgError = pretty "the " <> pretty tptp4XExec
+  let errorMsg ∷ Doc
+      errorMsg = pretty "the " <> pretty tptp4XExec
                  <> pretty " command from the TPTP library "
                  <> pretty "does not exist and it is required for using "
-                 <> pretty Z3 <> pretty " as an first-order ATP"
+                 <> pretty Z3 <> pretty " as a first-order ATP"
 
-  checkExecutable tptp4XExec msgError
+  checkExecutable tptp4XExec errorMsg
 
   -- 2016-07-20: The `smt2` option is not documented on
   -- TPTP v6.4.0. Geoff Sutcliffe told us about this option via email.
@@ -296,16 +296,15 @@ createSMT2file tptpFile = do
     readProcessWithExitCode tptp4XExec
                             [ "-fsmt2", tptpFile ]
                             []
-  let errorMsg ∷ Doc
-      errorMsg = pretty tptp4XExec
-                 <> sspaces "found an error/warning in the file"
-                 <> pretty tptpFile
-                 <> sspaces "\nPlease report this as a bug\n\n"
-                 <> pretty err
+  let errorOrWarningMsg ∷ Doc
+      errorOrWarningMsg = pretty tptp4XExec
+                          <> sspaces "found an error/warning in the file"
+                          <> pretty tptpFile
+                          <> sspaces "\nPlease report this as a bug\n\n"
+                          <> pretty err
 
   case exitCode of
-    ExitFailure _ →
-      E.throwE errorMsg
+    ExitFailure _ → E.throwE errorOrWarningMsg
 
     ExitSuccess → do
       let smt2File ∷ FilePath
@@ -322,14 +321,14 @@ selectedATPs ∷ T ()
 selectedATPs = do
   atps ← askTOpt optATP
 
-  let msgError ∷ Doc
-      msgError = pretty "at least you need to specify one ATP"
+  let errorMsg ∷ Doc
+      errorMsg = pretty "at least you need to specify one ATP"
 
   let atps' ∷ [String]
       atps' = extractATPs atps
 
   if null atps'
-    then E.throwE msgError
+    then E.throwE errorMsg
     else mapM optATP2ATP atps' >>= modifyTATPs
 
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
@@ -343,12 +342,12 @@ runATP atp outputMVar timeout tptpFile = do
   args ∷ [String] ← atpArgs atp timeout file
   cmd  ∷ String   ← atpExec atp
 
-  let msgError ∷ Doc
-      msgError = pretty "the " <> scquotes cmd
+  let errorMsg ∷ Doc
+      errorMsg = pretty "the " <> scquotes cmd
                  <> pretty " command associated with "
                  <> pretty atp <> pretty " does not exist"
 
-  checkExecutable cmd msgError
+  checkExecutable cmd errorMsg
 
   -- To create the ATPs process we follow the ideas used by
   -- @System.Process.proc@.

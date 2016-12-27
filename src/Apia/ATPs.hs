@@ -191,7 +191,16 @@ atpVersion atp = do
   liftIO $ initDef (__IMPOSSIBLE__) <$> readProcess exec ["--version"] ""
 
 checkOutput ∷ ATP → String → Bool
-checkOutput atp output = atpOk atp `isInfixOf` output
+checkOutput atp output =
+  case atp of
+    -- Issue #64.
+    Z3 → b1 && b2
+    _  → b1
+
+  where
+    b1, b2 ∷ Bool
+    b1 = atpOk atp `isInfixOf` output
+    b2 = not $ isInfixOf "(error" output
 
 atpArgs ∷ ATP → Int → FilePath → T [String]
 

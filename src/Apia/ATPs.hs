@@ -143,25 +143,27 @@ optATP2ATP other
   | otherwise =
     E.throwE $ pretty "the ATP " <> scquotes other <> pretty " is unknown"
 
-atpOk ∷ ATP → String
+
+-- | The message generad by the ATPs when a conjectured is proved,
+atpProvedMsg ∷ ATP → String
 -- CVC4 1.4.
-atpOk CVC4 = "SZS status Theorem"
+atpProvedMsg CVC4 = "SZS status Theorem"
 -- E 1.9.1-001
-atpOk E = "Proof found!"
+atpProvedMsg E = "Proof found!"
 -- Equinox 5.0alpha (2010-06-29).
-atpOk Equinox = "+++ RESULT: Theorem"
+atpProvedMsg Equinox = "+++ RESULT: Theorem"
 -- ileanCoP 1.3 beta1.
-atpOk IleanCoP = "Intuitionistic Theorem"
+atpProvedMsg IleanCoP = "Intuitionistic Theorem"
 -- Metis 2.3 (release 20161108).
-atpOk Metis = "SZS status Theorem"
+atpProvedMsg Metis = "SZS status Theorem"
 -- OnlineATPs 1.0.0
-atpOk (OnlineATP _ ) = "Theorem"
+atpProvedMsg (OnlineATP _ ) = "Theorem"
 -- SPASS 3.7.
-atpOk SPASS = "Proof found"
+atpProvedMsg SPASS = "Proof found"
 -- Vampire 0.6 (revision 903).
-atpOk Vampire = "Termination reason: Refutation\n"
+atpProvedMsg Vampire = "Termination reason: Refutation\n"
 -- Z3 version 4.5.0 - 64 bit
-atpOk Z3 = "unsat"
+atpProvedMsg Z3 = "unsat"
 
 atpVersion ∷ ATP → T String
 atpVersion CVC4 = do
@@ -190,8 +192,12 @@ atpVersion atp = do
   exec ← atpExec atp
   liftIO $ initDef (__IMPOSSIBLE__) <$> readProcess exec ["--version"] ""
 
-checkOutput ∷ ATP → String → Bool
-checkOutput atp output =
+checkOutputError ∷ ATP → String → String → Bool
+-- Since the ATPs should not generate errors, we are generating an
+-- error if the error message is not empty.
+checkOutputError _ _ (_:_) = __IMPOSSIBLE__
+
+checkOutputError atp output _ =
   case atp of
     -- Issue #64.
     Z3 → b1 && b2
@@ -199,7 +205,7 @@ checkOutput atp output =
 
   where
     b1, b2 ∷ Bool
-    b1 = atpOk atp `isInfixOf` output
+    b1 = atpProvedMsg atp `isInfixOf` output
     b2 = not $ isInfixOf "(error" output
 
 atpArgs ∷ ATP → Int → FilePath → T [String]
@@ -360,14 +366,14 @@ runATP atp outputMVar timeout tptpFile = do
 
   -- To create the ATPs process we follow the ideas used by
   -- @System.Process.proc@.
-  (_, outputH, _, atpPH) ← liftIO $
+  (_, processOutput, processError, processHandle) ← liftIO $
     createProcess CreateProcess
                     { cmdspec            = RawCommand cmd args
                     , cwd                = Nothing
                     , env                = Nothing
                     , std_in             = Inherit
                     , std_out            = CreatePipe
-                    , std_err            = Inherit
+                    , std_err            = CreatePipe
                     , close_fds          = False
                     , create_group       = True
 #if MIN_VERSION_process(1,2,0)
@@ -383,12 +389,14 @@ runATP atp outputMVar timeout tptpFile = do
                     , child_user         = Nothing
 #endif
                     }
-  output ← liftIO $ hGetContents $ fromMaybe (__IMPOSSIBLE__) outputH
+  output ← liftIO $ hGetContents $ fromMaybe (__IMPOSSIBLE__) processOutput
+  err    ← liftIO $ hGetContents $ fromMaybe (__IMPOSSIBLE__) processError
   _      ← liftIO $ forkIO $
              evaluate (length output) >>
-             putMVar outputMVar (checkOutput atp output, atp)
+             evaluate (length err) >>
+             putMVar outputMVar (checkOutputError atp output err, atp)
 
-  return atpPH
+  return processHandle
 
 atpsAnswer ∷ [ATP] → MVar (Bool, ATP) → [ProcessHandle] → FilePath → Int →
              T ()

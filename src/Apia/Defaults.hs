@@ -8,7 +8,6 @@
 
 module Apia.Defaults
   ( getDefaults
-  , apiaFileName
   ) where
 
 import Apia.Prelude

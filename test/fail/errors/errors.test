@@ -162,7 +162,7 @@ apia: option ‘--include-path’ requires an argument DIR
 <<<
 >>>
 >>>2
-apia: option `--atp' requires an argument NAME
+apia: option `--atp' requires an argument [online-]NAME
 >>>= 1
 
 # Options.hs: --atp=

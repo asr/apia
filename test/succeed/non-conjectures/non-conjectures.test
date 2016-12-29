@@ -4,7 +4,9 @@
 >>>
 Usage: apia [OPTIONS] FILE
 
-           --atp=NAME                           Set the ATP (cvc4, e, equinox, ileancop, metis, spass, vampire or z3)
+           --atp=[online-]NAME                  Set the ATP
+                                                (offline ATPs: cvc4, e, equinox, ileancop, metis, spass, vampire or z3)
+                                                (online ATPs: run the ‘onlineatps --list-atps’ command)
                                                 (default: e, equinox and vampire)
            --check                              Check the syntax of the generated TPTP files using the
                                                 tptp4X program from the TPTP library

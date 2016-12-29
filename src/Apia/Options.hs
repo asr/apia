@@ -320,8 +320,7 @@ options =
   [ Option []  ["atp"] (ReqArg atpOpt "[online-]NAME") $
                "Set the ATP\n"
                ++ "(offline ATPs: cvc4, e, equinox, ileancop, metis, spass, vampire or z3)\n"
-               ++ "(online ATPs: run the ‘onlineatps --list-atps’ command)\n"
-               ++ "(default: e, equinox and vampire)"
+               ++ "(online ATPs: run the ‘onlineatps --list-atps’ command)"
   , Option []  ["check"] (NoArg checkOpt) $
                "Check the syntax of the generated TPTP files using the\n"
                ++ "tptp4X program from the TPTP library"

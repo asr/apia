@@ -8,13 +8,13 @@
 
 module Apia.Defaults
   ( getDefaults
-  , apiaNameFile
+  , apiaFileName
   ) where
 
 import Apia.Prelude
 
 import Apia.Common  ( Lang (SMT2, TPTP) )
-import Apia.Options ( Options(..), verboseOpt, ManagerATP(DefaultATPs) )
+import Apia.Options ( ManagerATP(DefaultATPs), Options(..), verboseOpt )
 
 import Agda.Utils.Trie as Trie
 
@@ -379,8 +379,8 @@ loadYAML dotApia = do
   decoded ← YamlInclude.decodeFile dotApia
   return $ Config $ fromMaybe HashMap.empty decoded
 
-apiaNameFile ∷ FilePath
-apiaNameFile = ".apia"
+apiaFileName ∷ FilePath
+apiaFileName = ".apia"
 
 apiaTemplate :: FilePath
 apiaTemplate = "apia.yml"
@@ -389,7 +389,7 @@ apiaTemplate = "apia.yml"
 getDefaults ∷ IO Options
 getDefaults = do
   paths ← sequence [getCurrentDirectory, getHomeDirectory]
-  userFiles ← filterM doesFileExist $ map (</>apiaNameFile) paths
+  userFiles ← filterM doesFileExist $ map (</> apiaFileName) paths
   defaultApia ← getDataFileName apiaTemplate
 
   let allFiles ∷ [FilePath]

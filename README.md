@@ -44,7 +44,7 @@ Prerequisites
 
     Apia can use any online ATP available in the
     [TPTP World](http://www.cs.miami.edu/~tptp/cgi-bin/SystemOnTPTP)
-    by using the [OnlineATPs](http://github.com/jonaprieto/onlineatps)
+    by using the [onlineatps](http://github.com/jonaprieto/onlineatps)
     program.
 
 * The tptp4X program

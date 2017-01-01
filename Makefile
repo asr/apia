@@ -446,6 +446,7 @@ tests :
 	make errors
 	make type_check_notes
 	make prove_notes
+	make haddock
 	@echo "$@ succeeded!"
 
 ##############################################################################

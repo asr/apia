@@ -55,8 +55,8 @@ instance IgnoreSharing a ⇒ IgnoreSharing (Dom a) where
   ignoreSharing (Dom ai e) = Dom ai (ignoreSharing e)
 
 instance IgnoreSharing a ⇒ IgnoreSharing (Elim' a) where
-  ignoreSharing (Apply a)    = Apply $ ignoreSharing a
-  ignoreSharing (Proj qname) = Proj qname
+  ignoreSharing (Apply a)      = Apply $ ignoreSharing a
+  ignoreSharing (Proj o qname) = Proj o qname
 
 instance IgnoreSharing a ⇒ IgnoreSharing (Arg a) where
   ignoreSharing (Arg ai e) = Arg ai (ignoreSharing e)

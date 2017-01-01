@@ -9,7 +9,7 @@ module Apia.Options
   , ManagerATP(..)
   , options
   , OM  -- Required by Haddock.
-  , Options( Options --Improve Haddock information.
+  , Options( Options -- Improve Haddock information.
            , optATP
            , optCheck
            , optDumpTypes
@@ -90,14 +90,12 @@ import System.Environment ( getProgName )
 
 -----------------------------------------------------------------------------
 
--- | A data type to deal with the option optATP
-
+-- | A data type to deal with the option 'optATP'.
 data ManagerATP a = DefaultATPs a | CommandATPs a
 
 extractATPs ∷ ManagerATP a → a
 extractATPs (DefaultATPs val) = val
 extractATPs (CommandATPs val) = val
-
 
 -- | Program command-line options.
 data Options = Options

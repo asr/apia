@@ -18,6 +18,7 @@ module Apia.Options
            , optIncludePath
            , optInputFile
            , optLang
+           , optNoConfigFile
            , optNoInternalEquality
            , optNoPredicateConstants
            , optOnlyFiles
@@ -107,6 +108,7 @@ data Options = Options
   , optIncludePath                     ∷ [FilePath]
   , optInputFile                       ∷ Maybe FilePath
   , optLang                            ∷ Lang
+  , optNoConfigFile                    ∷ Bool
   , optNoInternalEquality              ∷ Bool
   , optNoPredicateConstants            ∷ Bool
   , optOnlyFiles                       ∷ Bool
@@ -179,6 +181,9 @@ langOpt "tptp" opts = Right opts { optLang = TPTP }
 langOpt "smt2" opts = Right opts { optLang = SMT2 }
 langOpt lang      _ = Left $
   pretty "Language " <> pretty lang <> pretty " is not a valid output language"
+
+noConfigFileOpt ∷ OM
+noConfigFileOpt opts = Right opts { optNoConfigFile = True }
 
 noInternalEqualityOpt ∷ OM
 noInternalEqualityOpt opts = Right opts { optNoInternalEquality = True }
@@ -337,6 +342,8 @@ options =
   , Option []  ["no-check"] (NoArg noCheckOpt) $
                "Do not check the syntax of the generated TPTP files using the\n"
                ++ "tptp4X program from the TPTP library"
+  , Option []  ["no-config-file"] (NoArg noConfigFileOpt)
+               "Omit any configuration file (.apia)"
   , Option []  ["no-internal-equality"] (NoArg noInternalEqualityOpt)
                "Do not translate _≡_ to the ATPs equality"
   , Option []  ["no-predicate-constants"] (NoArg noPredicateConstantsOpt) $

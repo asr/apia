@@ -18,6 +18,7 @@ Usage: apia [OPTIONS] FILE
                                                 (default: tptp)
            --no-check                           Do not check the syntax of the generated TPTP files using the
                                                 tptp4X program from the TPTP library
+           --no-config-file                     Omit any configuration file (.apia)
            --no-internal-equality               Do not translate _≡_ to the ATPs equality
            --no-predicate-constants             Do not use hard-coded (n+1)-ary predicate symbols for the
                                                 translation of n-ary predicates

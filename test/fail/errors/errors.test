@@ -330,3 +330,10 @@ agda -v0 Issue80.agda && ../../../dist/build/apia/apia --atp=e Issue80.agda
 >>>2
 apia: the translation of ‘Issue80._⊕_’ failed because it is not a FOL-definition
 >>>= 1
+
+# Issue #62
+cd Issue84 && agda -v0 NoTheorem.agda && ../../../../dist/build/apia/apia --no-config-file NoTheorem.agda
+<<<
+>>>2
+apia: at least you need to specify one ATP
+>>>= 1

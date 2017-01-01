@@ -7,7 +7,8 @@
 {-# LANGUAGE UnicodeSyntax     #-}
 
 module Apia.Defaults
-  ( getDefaults
+  ( defaultOptions
+  ,  getDefaults
   ) where
 
 import Apia.Prelude
@@ -47,6 +48,7 @@ defaultOptions = Options
   , optIncludePath                     = []
   , optInputFile                       = Nothing
   , optLang                            = TPTP
+  , optNoConfigFile                    = False
   , optNoInternalEquality              = False
   , optNoPredicateConstants            = False
   , optOnlyFiles                       = False

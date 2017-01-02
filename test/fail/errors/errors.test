@@ -298,7 +298,7 @@ apia: the ‘--schematic-propositional-functions’ and ‘--no-predicate-consta
 >>>= 1
 
 # APTs.hs: the flag --atp is required.
-cd NoATPs && agda -v0 Test.agda && ../../../../dist/build/apia/apia Test.agda
+agda -v0 NoTheorem.agda && ../../../dist/build/apia/apia NoTheorem.agda
 <<<
 >>>
 >>>2

@@ -22,7 +22,7 @@ import Apia.Utils.PrettyPrint ( Doc )
 
 import qualified Data.ByteString.Lazy as BL ( readFile )
 
-import System.Directory ( doesFileExist, findExecutable )
+import System.Directory ( findExecutable )
 
 ------------------------------------------------------------------------------
 
@@ -31,9 +31,7 @@ import System.Directory ( doesFileExist, findExecutable )
 checkExecutable ∷ MonadIO m ⇒ FilePath → Doc → E.ExceptT Doc m ()
 checkExecutable file msg =
   caseMaybeM (liftIO $ findExecutable file)
-             (ifM (liftIO $ doesFileExist file)
-                  (return ())
-                  (E.throwE msg))
+             (E.throwE msg)
              (\_ → return ())
 
 -- | Return 'True' if the files are equals, otherwise the function

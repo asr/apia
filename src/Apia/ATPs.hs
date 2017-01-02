@@ -8,7 +8,6 @@
 module Apia.ATPs
   ( ATP  -- Required by Haddock.
   , callATPs
-  , selectedATPs
   ) where
 
 ------------------------------------------------------------------------------
@@ -331,7 +330,8 @@ createSMT2file tptpFile = do
 smt2Ext ∷ String
 smt2Ext = ".smt2"
 
--- | The selected ATPs by the user or the default ones.
+-- | The selected ATPs by the user or the default ones are added to
+-- the translation monad state.
 selectedATPs ∷ T ()
 selectedATPs = do
   atps ← askTOpt optATP
@@ -432,6 +432,7 @@ atpsAnswer atps outputMVar atpsPH file n =
 -- | The function 'callATPs' calls the selected 'ATP's on a TPTP conjecture.
 callATPs ∷ FilePath → T ()
 callATPs file = do
+  selectedATPs
   timeoutAux  ← askTOpt optTime
   outputMVar  ← liftIO (newEmptyMVar ∷ IO (MVar (Bool, ATP)))
 

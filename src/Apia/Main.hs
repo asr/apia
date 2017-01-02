@@ -24,7 +24,7 @@ import Agda.TypeChecking.Monad.Base
 import Agda.Utils.Impossible ( catchImpossible )
 import Agda.Utils.Lens       ( (^.) )
 
-import Apia.ATPs      ( callATPs, selectedATPs )
+import Apia.ATPs      ( callATPs )
 import Apia.CheckTPTP ( checkTPTP )
 import Apia.Common    ( Lang(TPTP) )
 import Apia.Dump      ( dumpTypes )
@@ -123,10 +123,6 @@ runApia = do
 
               -- The ATP pragmas are translated to annotated formulae.
               allAFs ← translation file
-
-              -- The selected ATPs are added to the translation monad
-              -- state.
-              selectedATPs
 
               -- Creation of the TPTP files.
               tptpFiles ←

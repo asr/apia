@@ -87,13 +87,13 @@ agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=foo TrivialT
 apia: the ATP ‘foo’ is unknown
 >>>= 1
 
-# ATP.hs: Bad ATP executable name
-agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=vampire --with-vampire=xxx TrivialTheorem.agda
+# ATP.hs: Bad ATP executable name and Issue #82.
+agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=e --with-e=xxx TrivialTheorem.agda
 <<<
 >>>
 Proving the conjecture in /tmp/TrivialTheorem/20-foo.fof
 >>>2
-apia: the ‘xxx’ command associated with Vampire does not exist
+apia: the ‘xxx’ command associated with E does not exist
 >>>= 1
 
 # ATP.hs: No theorem

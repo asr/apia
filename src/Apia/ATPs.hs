@@ -118,15 +118,25 @@ import System.Process
 ------------------------------------------------------------------------------
 
 atpExec ∷ ATP → T String
-atpExec CVC4            = askTOpt optWithCVC4
-atpExec E               = askTOpt optWithE
-atpExec Equinox         = askTOpt optWithEquinox
-atpExec IleanCoP        = askTOpt optWithIleanCoP
-atpExec Metis           = askTOpt optWithMetis
-atpExec (OnlineATP _)   = askTOpt optWithOnlineATPs
-atpExec SPASS           = askTOpt optWithSPASS
-atpExec Vampire         = askTOpt optWithVampire
-atpExec Z3              = askTOpt optWithZ3
+atpExec atp = do
+  cmd ← case atp of
+    CVC4          → askTOpt optWithCVC4
+    E             → askTOpt optWithE
+    Equinox       → askTOpt optWithEquinox
+    IleanCoP      → askTOpt optWithIleanCoP
+    Metis         → askTOpt optWithMetis
+    (OnlineATP _) → askTOpt optWithOnlineATPs
+    SPASS         → askTOpt optWithSPASS
+    Vampire       → askTOpt optWithVampire
+    Z3            → askTOpt optWithZ3
+
+  let errorMsg ∷ Doc
+      errorMsg = pretty "the " <> scquotes cmd
+                 <> pretty " command associated with "
+                 <> pretty atp <> pretty " does not exist"
+
+  checkExecutable cmd errorMsg
+  return cmd
 
 optATP2ATP ∷ String → T ATP
 optATP2ATP "cvc4"           = return CVC4
@@ -356,13 +366,6 @@ runATP atp outputMVar timeout tptpFile = do
 
   args ∷ [String] ← atpArgs atp timeout file
   cmd  ∷ String   ← atpExec atp
-
-  let errorMsg ∷ Doc
-      errorMsg = pretty "the " <> scquotes cmd
-                 <> pretty " command associated with "
-                 <> pretty atp <> pretty " does not exist"
-
-  checkExecutable cmd errorMsg
 
   -- To create the ATPs process we follow the ideas used by
   -- @System.Process.proc@.

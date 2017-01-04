@@ -4,8 +4,7 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
 module Apia.Utils.Directory
-  ( checkExecutable
-  , equalFiles
+  ( equalFiles
   , notEqualFiles
   ) where
 
@@ -13,26 +12,11 @@ module Apia.Utils.Directory
 
 import Apia.Prelude
 
-import Agda.Utils.Maybe ( caseMaybeM )
 import Agda.Utils.Monad ( ifM )
-
-import qualified Apia.Utils.Except as E
-
-import Apia.Utils.PrettyPrint ( Doc )
 
 import qualified Data.ByteString.Lazy as BL ( readFile )
 
-import System.Directory ( findExecutable )
-
 ------------------------------------------------------------------------------
-
--- | @checkExecutable file msg@ throws an exception with message @msg@
--- if the executable @file@ is missing.
-checkExecutable ∷ MonadIO m ⇒ FilePath → Doc → E.ExceptT Doc m ()
-checkExecutable file msg =
-  caseMaybeM (liftIO $ findExecutable file)
-             (E.throwE msg)
-             (\_ → return ())
 
 -- | Return 'True' if the files are equals, otherwise the function
 -- returns 'False'.

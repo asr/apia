@@ -1,4 +1,4 @@
-# Interface.hs: No file
+# Error: MissingFile (Agda file)
 ../../../dist/build/apia/apia /tmp/NoFile.agda
 <<<
 >>>
@@ -6,7 +6,7 @@
 apia: the file /tmp/NoFile.agda does not exist
 >>>= 1
 
-# RemoveProofTerms.hs : Don't erase a proof term
+# Error: RemoveProofTermError
 agda -v0 NotErasedProofTerm.agda && ../../../dist/build/apia/apia NotErasedProofTerm.agda
 <<<
 >>>
@@ -15,7 +15,7 @@ apia: the translation failed because we do not know how erase the term
 Pi ru(El {_getSort = Type (Max []), unEl = Def NotErasedProofTerm.D []}) (Abs "k" El {_getSort = Type (Max []), unEl = Def NotErasedProofTerm._≤_ [Apply ru(Var 0 []),Apply ru(Var 0 [])]})
 >>>= 1
 
-# Terms.hs: Required --schematic-propositional-symbols option
+# Error: UniversalQuantificationError (required --schematic-propositional-symbols option)
 agda -v0 RequiredOption/SchematicPropositionalSymbols.agda && ../../../dist/build/apia/apia RequiredOption/SchematicPropositionalSymbols.agda
 <<<
 >>>
@@ -23,7 +23,7 @@ agda -v0 RequiredOption/SchematicPropositionalSymbols.agda && ../../../dist/buil
 apia: use the ‘--schematic-propositional-symbols’ option for the translation of first-order logic universal quantified propositional symbols
 >>>= 1
 
-# Terms.hs: Required --schematic-propositional-functions option
+# Error: UniversalQuantificationError (required --schematic-propositional-functions option)
 agda -v0 RequiredOption/SchematicPropositionalFunctions.agda && ../../../dist/build/apia/apia RequiredOption/SchematicPropositionalFunctions.agda
 <<<
 >>>
@@ -31,7 +31,7 @@ agda -v0 RequiredOption/SchematicPropositionalFunctions.agda && ../../../dist/bu
 apia: use the ‘--schematic-propositional-functions’ option for the translation of first-order logic universal quantified propositional functions
 >>>= 1
 
-# Terms.hs: Required --schematic-functions option
+# Error: UniversalQuantificationError (required --schematic-functions option)
 agda -v0 RequiredOption/SchematicFunctions.agda && ../../../dist/build/apia/apia RequiredOption/SchematicFunctions.agda
 <<<
 >>>
@@ -55,7 +55,7 @@ apia: only one input file allowed
 apia: unrecognized option `--xxx'
 >>>= 1
 
-# Main.hs: Missing input file
+# Error: MissingInputFile
 ../../../dist/build/apia/apia
 <<<
 >>>
@@ -63,7 +63,7 @@ apia: unrecognized option `--xxx'
 apia: missing input file (try --help)
 >>>= 1
 
-# Snapshot.hs: The --output-dir cannot be the same than the --snapshot-dir
+# Error: SnapshotSameDirectory
 agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=e --output-dir=/tmp --snapshot-test --snapshot-dir=/tmp TrivialTheorem.agda
 <<<
 >>>
@@ -71,7 +71,7 @@ agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=e --output-d
 apia: the ‘--output-dir’ and ‘--snapshot-dir’ options cannot be the same
 >>>= 1
 
-# Snapshot.hs: Missing snapshot file
+# Error: MissingFile (snapshot file)
 agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=e --snapshot-test --snapshot-dir=no-dir TrivialTheorem.agda
 <<<
 >>>
@@ -79,7 +79,7 @@ agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=e --snapshot
 apia: the file no-dir/TrivialTheorem/20-foo.fof does not exist
 >>>= 1
 
-# ATP.hs: ATP unknown
+# Error: UnknownATP
 agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=foo TrivialTheorem.agda
 <<<
 >>>
@@ -87,7 +87,7 @@ agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=foo TrivialT
 apia: the ATP ‘foo’ is unknown
 >>>= 1
 
-# ATP.hs: Bad ATP executable name and Issue #82.
+# Error WrongATPName and Issue #82
 agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=e --with-e=xxx TrivialTheorem.agda
 <<<
 >>>
@@ -96,7 +96,7 @@ Proving the conjecture in /tmp/TrivialTheorem/20-foo.fof
 apia: the ‘xxx’ command associated with E does not exist
 >>>= 1
 
-# ATP.hs: No theorem
+# Error: NoATPsProof
 agda -v0 NoTheorem.agda && ../../../dist/build/apia/apia --atp=e NoTheorem.agda
 <<<
 >>>
@@ -106,7 +106,7 @@ E 1.9.1-001 Sungma *did not* prove the conjecture
 apia: the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
 >>>= 1
 
-# Functions.hs : The definitions to be translated only can have one clause
+# Error: NoOneClauseDefinition
 agda -v0 OnlyOneClause.agda && ../../../dist/build/apia/apia OnlyOneClause.agda
 <<<
 >>>
@@ -114,7 +114,7 @@ agda -v0 OnlyOneClause.agda && ../../../dist/build/apia/apia OnlyOneClause.agda
 apia: the translation of ‘OnlyOneClause._+_’ failed because its definition only can have a clause
 >>>= 1
 
-# Interface.hs: Missing interface file
+# Error: MissingInterfaceFile
 echo -e "module A where" > /tmp/A.agda && ../../../dist/build/apia/apia /tmp/A.agda
 <<<
 >>>
@@ -122,7 +122,7 @@ echo -e "module A where" > /tmp/A.agda && ../../../dist/build/apia/apia /tmp/A.a
 apia: the interface file /tmp/A.agdai does not exist (use Agda to generate it)
 >>>= 1
 
-# Snapshot.hs: The snapshot and the generated conjecture are differents.
+# Error: SnapshotDifferentFiles
 agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=e --only-files --output-dir=/tmp/snapshot TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && ../../../dist/build/apia/apia --atp=e --snapshot-test --snapshot-dir=/tmp/snapshot TrivialTheorem.agda
 <<<
 >>>
@@ -269,15 +269,15 @@ apia: option `--verbose' requires an argument N
 apia: option ‘--verbose’ requires an argument of the form x.y.z:N or N
 >>>= 1
 
-# Functions.hs: The definitions to be translated must be first-order
+# Error: NoFOLDefinition
 agda -v0 HigherOrderDefinition.agda && ../../../dist/build/apia/apia HigherOrderDefinition.agda
 <<<
 >>>
 >>>2
-apia: the translation of ‘HigherOrderDefinition.twice’ failed because it is a higher-order definition
+apia: the translation of ‘HigherOrderDefinition.twice’ failed because it is not a FOL-definition
 >>>= 1
 
-# ChechTPTP.hs: tptp4X yields an error because there is a duplicate formulate
+# Error: TPTP4XErrorWarning (duplicate formulae)
 agda -v0 DuplicateFormulaTPTP4XError.agda && ../../../dist/build/apia/apia --atp=e --check DuplicateFormulaTPTP4XError.agda
 <<<
 >>>
@@ -289,7 +289,7 @@ ERROR: Duplicate annotated formula name "n12_8770576564447903158"
 
 >>>= 1
 
-# Terms.hs: The --schematic-propositional-functions and the --no-predicate-constants option a# re incompatible
+# Error : IncompatibleCLOptions (--schematic-propositional-functions and --no-predicate-constants)
 agda -v0 SchematicPropositionalFunctionsWithoutPredicateSymbols.agda && ../../../dist/build/apia/apia --schematic-propositional-functions --no-predicate-constants SchematicPropositionalFunctionsWithoutPredicateSymbols.agda
 <<<
 >>>
@@ -297,7 +297,7 @@ agda -v0 SchematicPropositionalFunctionsWithoutPredicateSymbols.agda && ../../..
 apia: the ‘--schematic-propositional-functions’ and ‘--no-predicate-constants’ options are incompatible
 >>>= 1
 
-# APTs.hs: the flag --atp is required.
+# Error: NoATP
 agda -v0 NoTheorem.agda && ../../../dist/build/apia/apia NoTheorem.agda
 <<<
 >>>

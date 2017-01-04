@@ -97,15 +97,21 @@ import Agda.Utils.Monad      ( unlessM )
 
 import qualified Agda.Utils.Trie as Trie ( singleton )
 
-import Apia.Monad.Base    ( askTOpt, getTDefs, T )
+import Apia.Monad.Base
+  ( askTOpt
+  , getTDefs
+  , T
+  , tError
+  , TError ( MissingFile
+           , MissingInterfaceFile
+           , WrongInterfaceFile
+           )
+  )
+
 import Apia.Monad.Reports ( reportSLn )
 import Apia.Options       ( Options(optIncludePath) )
 
 -- import Apia.Utils.AgdaAPI.IgnoreSharing ( ignoreSharing )
-
-import qualified Apia.Utils.Except as E
-
-import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
 
 import Control.Monad.State ( evalStateT, get, lift, put, StateT )
 
@@ -177,15 +183,13 @@ readInterface file = do
   pFile ∷ FilePath ← liftIO $ fmap filePath (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive pFile)
-          (E.throwE $ pretty "the file " <> pretty pFile
-                      <> pretty " does not exist")
+          (tError $ MissingFile pFile)
 
   -- The physical Agda interface file.
   iFile ∷ FilePath ← liftIO $ fmap (filePath . toIFile) (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive iFile)
-          (E.throwE $ pretty "the interface file " <> pretty iFile
-                      <> pretty " does not exist (use Agda to generate it)")
+          (tError $ MissingInterfaceFile iFile)
 
   r ∷ Either TCErr (Maybe Interface) ← liftIO $ runTCMTop $
     do setCommandLineOptions optsCommandLine
@@ -193,14 +197,10 @@ readInterface file = do
 
   case r of
     Right (Just i) → return i
-    -- This message is not included in the errors test.
-    Right Nothing  → E.throwE $
-                       pretty "The reading of the interface file "
-                       <> pretty iFile <> pretty " failed. "
-                       <> pretty "It is possible that you used a different version "
-                       <> pretty "of Agda to build the Apia program and to "
-                       <> pretty "type-check your module"
-    Left _         → __IMPOSSIBLE__
+    -- TODO (2017-01-03): This error is not included in the
+    -- test-suite.
+    Right Nothing → tError $ WrongInterfaceFile iFile
+    Left  _       → __IMPOSSIBLE__
 
 getInterface ∷ ModuleName → T Interface
 getInterface x = do

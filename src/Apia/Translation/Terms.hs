@@ -86,6 +86,11 @@ import Apia.Monad.Base
   , popTVar
   , pushTNewVar
   , T
+  , tError
+  , TError ( IncompatibleCLOptions
+           , NoImplementedOption
+           , UniversalQuantificationError
+           )
   )
 
 import Apia.Monad.Reports ( reportDLn, reportSLn )
@@ -106,29 +111,12 @@ import {-# source #-} Apia.Translation.Types
   )
 
 -- import Apia.Utils.AgdaAPI.IgnoreSharing ( IgnoreSharing(ignoreSharing) )
-import Apia.Utils.AgdaAPI.Interface     ( qNameToUniqueString )
-
-import qualified Apia.Utils.Except as E
-
-import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), scquotes )
+import Apia.Utils.AgdaAPI.Interface ( qNameToUniqueString )
+import Apia.Utils.PrettyPrint       ( (<>), Pretty(pretty) )
 
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
-
-universalQuantificationErrorMsg ∷ String → Doc
-universalQuantificationErrorMsg p =
-  pretty "use the " <> scquotes p
-  <> pretty " option for the translation of first-order logic universal quantified "
-  <> pretty entities
-  where
-    entities ∷ String
-    entities =
-      case p of
-        "--schematic-functions"               → "functions"
-        "--schematic-propositional-symbols"   → "propositional symbols"
-        "--schematic-propositional-functions" → "propositional functions"
-        _                                     → __IMPOSSIBLE__
 
 agdaArgTermToFormula ∷ Arg Term → T LFormula
 agdaArgTermToFormula Arg {argInfo = info, unArg = t} =
@@ -396,7 +384,7 @@ agdaTermToFormula (Pi domTy (Abs x absTy)) = do
 
       ifM (askTOpt optSchematicPropositionalSymbols)
           (return f)
-          (E.throwE $ universalQuantificationErrorMsg p)
+          (tError $ UniversalQuantificationError p)
 
     someType → do
       reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
@@ -472,14 +460,13 @@ agdaTermToFormula term'@(I.Var n elims) = do
 
       ifM (askTOpt optSchematicPropositionalFunctions)
           (ifM (askTOpt optNoPredicateConstants)
-               (E.throwE $
-                 pretty "the " <> scquotes "--schematic-propositional-functions"
-                 <> pretty " and "
-                 <> scquotes "--no-predicate-constants"
-                 <> pretty " options are incompatible")
+               (tError $ IncompatibleCLOptions
+                  "--schematic-propositional-functions"
+                  "--no-predicate-constants"
+               )
                (propositionalFunctionScheme vars n elims)
           )
-          (E.throwE $ universalQuantificationErrorMsg p)
+          (tError $ UniversalQuantificationError p)
 
 agdaTermToFormula term' = do
   reportSLn "t2f" 20 $ "term: " ++ show term'
@@ -595,13 +582,12 @@ agdaTermToTerm term'@(I.Var n args) = do
 
       ifM (askTOpt optSchematicFunctions)
           -- TODO (24 March 2013). Implementation.
-          (E.throwE $ pretty "the option " <> scquotes "--schematic-functions"
-                      <> pretty " is not implemented")
+          (tError $ NoImplementedOption "--schematic-functions")
           -- (do lTerms ← mapM agdaArgTermToTerm varArgs
           --     ifM (askTOpt optAppF)
           --         (return $ foldl' app (Var (vars !! n)) lTerms)
           --         (return $ Fun (vars !! n) lTerms))
-          (E.throwE $ universalQuantificationErrorMsg p)
+          (tError $ UniversalQuantificationError p)
 
 agdaTermToTerm _ = __IMPOSSIBLE__
 

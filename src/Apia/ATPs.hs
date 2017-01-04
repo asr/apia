@@ -30,7 +30,23 @@ import Apia.Common
        )
   )
 
-import Apia.Monad.Base    ( askTOpt, getTATPs, modifyTATPs, T )
+import Apia.Monad.Base
+  ( askTOpt
+  , checkExecutable
+  , getTATPs
+  , modifyTATPs
+  , T
+  , tError
+  , TError ( MissingTPTP4XCommandZ3
+           , NoATP
+           , NoATPsProof
+           , NoSupportedATPVersion
+           , TPTP4XErrorWarning
+           , UnknownATP
+           , WrongATPCommand
+           )
+  )
+
 import Apia.Monad.Reports ( reportS )
 
 import Apia.Options
@@ -51,18 +67,12 @@ import Apia.Options
            )
   )
 
-import Apia.Utils.Directory ( checkExecutable )
-
 import Apia.Utils.PrettyPrint
   ( (<>)
   , Doc
   , Pretty(pretty)
   , prettyShow
-  , scquotes
-  , sspaces
   )
-
-import qualified Apia.Utils.Except as E
 
 import Control.Exception.Base  ( evaluate )
 import Control.Concurrent      ( forkIO )
@@ -130,12 +140,7 @@ atpExec atp = do
     Vampire       → askTOpt optWithVampire
     Z3            → askTOpt optWithZ3
 
-  let errorMsg ∷ Doc
-      errorMsg = pretty "the " <> scquotes cmd
-                 <> pretty " command associated with "
-                 <> pretty atp <> pretty " does not exist"
-
-  checkExecutable cmd errorMsg
+  checkExecutable cmd $ WrongATPCommand atp cmd
   return cmd
 
 optATP2ATP ∷ String → T ATP
@@ -150,8 +155,7 @@ optATP2ATP "z3"             = return Z3
 optATP2ATP other
   | "online-" `isPrefixOf` other = return $ OnlineATP other
   | otherwise =
-    E.throwE $ pretty "the ATP " <> scquotes other <> pretty " is unknown"
-
+    tError $ UnknownATP other
 
 -- | The message generad by the ATPs when a conjectured is proved,
 atpProvedMsg ∷ ATP → String
@@ -257,9 +261,8 @@ atpArgs E timeout file = do
                     , "--tstp-format"
                     , file
                     ]
-        -- This message is not included in the error test.
-        else E.throwE $ pretty "the ATP " <> pretty eVersion
-                        <> pretty " is not supported"
+        -- TODO (2017-01-04): Missing error from the test-suite.
+        else tError $ NoSupportedATPVersion E eVersion
 
 -- Equinox bug. Neither the option @--no-progress@ nor the option
 -- @--verbose 0@ reduce the output.
@@ -306,13 +309,9 @@ createSMT2file tptpFile = do
 
   tptp4XExec ← askTOpt optWithtptp4X
 
-  let errorMsg ∷ Doc
-      errorMsg = pretty "the " <> pretty tptp4XExec
-                 <> pretty " command from the TPTP library "
-                 <> pretty "does not exist and it is required for using "
-                 <> pretty Z3 <> pretty " as a first-order ATP"
 
-  checkExecutable tptp4XExec errorMsg
+  -- TODO (2017-01-03): Missing error from the test-suite.
+  checkExecutable tptp4XExec $ MissingTPTP4XCommandZ3 tptp4XExec
 
   -- 2016-07-20: The `smt2` option is not documented on
   -- TPTP v6.4.0. Geoff Sutcliffe told us about this option via email.
@@ -320,15 +319,10 @@ createSMT2file tptpFile = do
     readProcessWithExitCode tptp4XExec
                             [ "-fsmt2", tptpFile ]
                             []
-  let errorOrWarningMsg ∷ Doc
-      errorOrWarningMsg = pretty tptp4XExec
-                          <> sspaces "found an error/warning in the file"
-                          <> pretty tptpFile
-                          <> sspaces "\nPlease report this as a bug\n\n"
-                          <> pretty err
 
   case exitCode of
-    ExitFailure _ → E.throwE errorOrWarningMsg
+    -- TODO (2017-01-03): Missing error in the test-suite.
+    ExitFailure _ → tError $ TPTP4XErrorWarning tptpFile tptp4XExec err
 
     ExitSuccess → do
       let smt2File ∷ FilePath
@@ -346,14 +340,11 @@ selectedATPs ∷ T ()
 selectedATPs = do
   atps ← askTOpt optATP
 
-  let errorMsg ∷ Doc
-      errorMsg = pretty "at least you need to specify one ATP"
-
   let atps' ∷ [String]
       atps' = extractATPs atps
 
   if null atps'
-    then E.throwE errorMsg
+    then tError NoATP
     else mapM optATP2ATP atps' >>= modifyTATPs
 
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
@@ -406,13 +397,14 @@ atpsAnswer ∷ [ATP] → MVar (Bool, ATP) → [ProcessHandle] → FilePath → I
 atpsAnswer atps outputMVar atpsPH file n =
   if n == length atps
     then do
+      -- TODO (2017-01-03): Add warning
       let msg ∷ Doc
           msg = pretty "the ATP(s) did not prove the conjecture in "
                 <> pretty file
 
       ifM (askTOpt optUnprovenNoError)
           (putStrLn $ T.pack $ prettyShow msg)
-          (E.throwE msg)
+          (tError $ NoATPsProof file)
     else do
       output ← liftIO $ takeMVar outputMVar
       atpWithVersion ← atpVersion (snd output)

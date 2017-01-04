@@ -13,7 +13,7 @@ module Apia.Utils.Monad
 
 import Apia.Prelude
 
-import Apia.Utils.PrettyPrint ( Doc, prettyShow )
+import Apia.Utils.PrettyPrint ( Doc, Pretty, prettyShow )
 
 import System.Environment ( getProgName )
 import System.Exit        ( exitFailure )
@@ -24,7 +24,7 @@ pair ∷ Monad m ⇒ m a → m b → m (a, b)
 pair mx my = mx >>= \x → my >>= \y → return (x, y)
 
 -- | Failure message.
-failureMsg ∷ Doc → IO ()
+failureMsg ∷ Pretty e ⇒ e → IO ()
 failureMsg err =
   getProgName >>= \prg → hPutStrLn stderr $ prg ++ ": " ++ prettyShow err
 

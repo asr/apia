@@ -72,11 +72,16 @@ import Agda.Syntax.Internal as I
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
 
-import Apia.Monad.Base    ( getTVars, popTVar, pushTVar, T )
-import Apia.Monad.Reports ( reportSLn )
+import Apia.Monad.Base
+  ( getTVars
+  , popTVar
+  , pushTVar
+  , T
+  , tError
+  , TError(RemoveProofTermError, TranslationOfWildCardPatterns)
+  )
 
-import qualified Apia.Utils.Except as E
-import Apia.Utils.PrettyPrint ( (<>), Pretty(pretty) )
+import Apia.Monad.Reports ( reportSLn )
 
 #include "undefined.h"
 
@@ -149,10 +154,9 @@ instance RemoveVar Elims where
     when (n < 0) (__IMPOSSIBLE__)
     vars ← getTVars
 
-    -- TODO (2016-05-13): Missing test case for this error.
+    -- TODO (2017-01-03): Missing error from the test-suite.
     when (x == "_") $
-      E.throwE $
-        pretty "the translation of wild card patterns is not implemented"
+      tError TranslationOfWildCardPatterns
 
     let index ∷ Nat
         index = fromMaybe (__IMPOSSIBLE__) $ elemIndex x vars
@@ -220,8 +224,7 @@ removeProofTerm ty (x, typeVar) = do
     El (Type (Max [])) someTerm → do
       reportSLn "removePT" 20 $
                 "The term someTerm is: " ++ show someTerm
-      E.throwE $ pretty "the translation failed because we do not know how erase "
-                 <> pretty "the term\n" <> (pretty . show) someTerm
+      tError $ RemoveProofTermError someTerm
 
     -- N.B. The next case is just a generalization to various
     -- arguments of the previous case.

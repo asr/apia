@@ -33,6 +33,9 @@ import Apia.Monad.Base
   ( modifyTDefs
   , runT
   , T
+  , tCatch
+  , tError
+  , TError(MissingInputFile)
   )
 
 import Apia.Monad.Reports ( reportSLn )
@@ -56,13 +59,9 @@ import Apia.TPTP.Types ( ConjectureSet, GeneralRoles )
 
 import Apia.Translation ( conjecturesToAFors, generalRolesToAFors )
 
-import qualified Apia.Utils.Except as E
-
 import Apia.Utils.AgdaAPI.Interface ( getImportedInterfaces, readInterface )
-import Apia.Utils.PrettyPrint       ( Doc )
-
-import Apia.Utils.Monad   ( failureMsg, pair )
-import Apia.Utils.Version ( progNameVersion )
+import Apia.Utils.Monad             ( failureMsg, pair )
+import Apia.Utils.Version           ( progNameVersion )
 
 import Control.Monad.Reader ( ask )
 
@@ -112,7 +111,7 @@ runApia = do
       | otherwise → do
 
         file ← case optInputFile opts of
-                 Nothing → E.throwE "missing input file (try --help)"
+                 Nothing → tError MissingInputFile
                  Just f  → return f
 
         case () of
@@ -147,9 +146,9 @@ runApia = do
 main ∷ IO ()
 main = do
   -- Adapted from @Agda.Main.main@. Requires -XScopedTypeVariables.
-  r ∷ Either Doc () ← runT $ runApia `E.catchE` \err →
+  r ∷ Either TError () ← runT $ runApia `tCatch` \err →
     do liftIO $ failureMsg err
-       E.throwE err
+       tError err
 
   case r of
     Right _ → exitSuccess

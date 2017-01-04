@@ -13,16 +13,22 @@ import Apia.Prelude
 import Agda.Utils.FileName ( doesFileExistCaseSensitive )
 import Agda.Utils.Monad    ( ifM, unlessM, whenM )
 
-import Apia.Monad.Base ( askTOpt, T )
+import Apia.Monad.Base (
+  askTOpt
+  , T
+  , tError
+  , TError ( MissingFile
+           , SnapshotDifferentFiles
+           , SnapshotSameDirectory
+           )
+  )
 
 import Apia.Options
   ( Options(optOutputDir, optSnapshotDir, optSnapshotNoError)
   )
 
-import qualified Apia.Utils.Except as E
-
+import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), prettyShow )
 import Apia.Utils.Directory   ( notEqualFiles )
-import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), prettyShow, scquotes )
 
 import qualified Data.Text as T ( pack )
 
@@ -39,9 +45,7 @@ snapshotTest file = do
   snapshotDir ← askTOpt optSnapshotDir
 
   if outputDir == snapshotDir
-    then E.throwE $ pretty "the " <> scquotes "--output-dir"
-                    <> pretty " and " <> scquotes "--snapshot-dir"
-                    <> pretty " options cannot be the same"
+    then tError SnapshotSameDirectory
     else do
       -- The original file without the output directory.
       let auxFile ∷ FilePath
@@ -50,14 +54,15 @@ snapshotTest file = do
           snapshotFile ∷ FilePath
           snapshotFile = combine snapshotDir auxFile
 
-      unlessM (liftIO $ doesFileExistCaseSensitive snapshotFile) $ E.throwE $
-        pretty "the file " <> pretty snapshotFile <> pretty " does not exist"
+      unlessM (liftIO $ doesFileExistCaseSensitive snapshotFile) $
+        tError $ MissingFile snapshotFile
 
       whenM (liftIO $ notEqualFiles file snapshotFile) $ do
+        -- TODO (2017-01-03): Add Warning.
         let msg ∷ Doc
             msg = pretty "the files are different:\n"
                   <> pretty file <> pretty "\n" <> pretty snapshotFile
 
         ifM (askTOpt optSnapshotNoError)
             (putStrLn $ T.pack $ prettyShow msg)
-            (E.throwE msg)
+            (tError $ SnapshotDifferentFiles file snapshotFile)

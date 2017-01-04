@@ -7,7 +7,6 @@
 
 module Apia.Monad.Base
   ( askTOpt
-  , checkExecutable
   , getTATPs
   , getTDefs
   , getTVars
@@ -21,30 +20,30 @@ module Apia.Monad.Base
   , runT
   , T
   , tCatch
-  , tError
-  , TError ( IncompatibleCLOptions
-           , MissingFile
-           , MissingInputFile
-           , MissingInterfaceFile
-           , MissingTPTP4XCommand
-           , MissingTPTP4XCommandZ3
-           , NoATP
-           , NoATPsProof
-           , NoFOLDefinition
-           , NoImplementedOption
-           , NoOneClauseDefinition
-           , NoSupportedATPVersion
-           , ProofTermInDefintion
-           , RemoveProofTermError
-           , SnapshotDifferentFiles
-           , SnapshotSameDirectory
-           , TPTP4XErrorWarning
-           , TranslationOfWildCardPatterns
-           , UniversalQuantificationError
-           , UnknownATP
-           , WrongATPCommand
-           , WrongInterfaceFile
-           )
+  , tErr
+  , TErr ( IncompatibleCLOptions
+         , MissingFile
+         , MissingInputFile
+         , MissingInterfaceFile
+         , MissingTPTP4XCommand
+         , MissingTPTP4XCommandZ3
+         , NoATP
+         , NoATPsProof
+         , NoFOLDefinition
+         , NoImplementedOption
+         , NoOneClauseDefinition
+         , NoSupportedATPVersion
+         , ProofTermInDefintion
+         , RemoveProofTermError
+         , SnapshotDifferentFiles
+         , SnapshotSameDirectory
+         , TPTP4XErrorWarning
+         , TranslationOfWildCardPatterns
+         , UniversalQuantificationError
+         , UnknownATP
+         , WrongATPCommand
+         , WrongInterfaceFile
+         )
   , TState  -- Required by Haddock.
   ) where
 
@@ -56,7 +55,6 @@ import Agda.Syntax.Abstract.Name    ( QName )
 import Agda.Syntax.Internal         ( Term )
 import Agda.TypeChecking.Monad.Base ( Definitions )
 import Agda.Utils.Impossible        ( Impossible(Impossible), throwImpossible )
-import Agda.Utils.Maybe             ( caseMaybeM )
 
 import qualified Agda.Utils.Pretty as AP
 
@@ -90,8 +88,6 @@ import Control.Monad.State
 
 import qualified Data.HashMap.Strict as HashMap ( empty )
 
-import System.Directory ( findExecutable )
-
 #include "undefined.h"
 
 ------------------------------------------------------------------------------
@@ -115,47 +111,38 @@ initTState = TState { tDefs = HashMap.empty
 -- Errors
 
 -- | The errors in the translation monad.
-data TError = IncompatibleCLOptions String String
-            | MissingFile FilePath
-            | MissingInputFile
-            | MissingInterfaceFile FilePath
-            | MissingTPTP4XCommand String
-            | MissingTPTP4XCommandZ3 String
-            | NoATP
-            | NoATPsProof FilePath
-            | NoFOLDefinition QName
-            | NoImplementedOption String
-            | NoOneClauseDefinition QName
-            | NoSupportedATPVersion ATP String
-            | ProofTermInDefintion QName
-            | RemoveProofTermError Term
-            | SnapshotDifferentFiles FilePath FilePath
-            | SnapshotSameDirectory
-            | TPTP4XErrorWarning FilePath String String
-            | TranslationOfWildCardPatterns
-            | UniversalQuantificationError String
-            | UnknownATP String
-            | WrongATPCommand ATP String
-            | WrongInterfaceFile FilePath
+data TErr = IncompatibleCLOptions String String
+          | MissingFile FilePath
+          | MissingInputFile
+          | MissingInterfaceFile FilePath
+          | MissingTPTP4XCommand String
+          | MissingTPTP4XCommandZ3 String
+          | NoATP
+          | NoATPsProof FilePath
+          | NoFOLDefinition QName
+          | NoImplementedOption String
+          | NoOneClauseDefinition QName
+          | NoSupportedATPVersion ATP String
+          | ProofTermInDefintion QName
+          | RemoveProofTermError Term
+          | SnapshotDifferentFiles FilePath FilePath
+          | SnapshotSameDirectory
+          | TPTP4XErrorWarning FilePath String String
+          | TranslationOfWildCardPatterns
+          | UniversalQuantificationError String
+          | UnknownATP String
+          | WrongATPCommand ATP String
+          | WrongInterfaceFile FilePath
 
 -- | Throw an error in the the translation monad
-tError ∷ TError → T a
-tError = E.throwE
+tErr ∷ TErr → T a
+tErr = E.throwE
 
 -- | Catch errors in the the translation monad
-tCatch ∷ T () → (TError → T ()) -> T ()
+tCatch ∷ T () → (TErr → T ()) -> T ()
 tCatch = E.catchE
 
--- TODO (2017-01-03): Find a different module for this function.
--- | @checkExecutable file msg@ throws an exception with message @msg@
--- if the executable @file@ is missing.
-checkExecutable ∷ FilePath → TError → T ()
-checkExecutable file err =
-  caseMaybeM (liftIO $ findExecutable file)
-             (tError err)
-             (\_ → return ())
-
-instance Pretty TError where
+instance Pretty TErr where
   pretty (IncompatibleCLOptions opt1 opt2) =
     "the " <> scquotes opt1 <> " and " <> scquotes opt2
     <> " options are incompatible"
@@ -244,10 +231,10 @@ instance Pretty TError where
 
 ------------------------------------------------------------------------------
 -- | The translation monad.
-type T = E.ExceptT TError (StateT TState (ReaderT Options IO))
+type T = E.ExceptT TErr (StateT TState (ReaderT Options IO))
 
 -- | Running the translation monad.
-runT ∷ T a → IO (Either TError a)
+runT ∷ T a → IO (Either TErr a)
 runT ta = env >>= runReaderT (evalStateT (E.runExceptT ta) initTState)
 
 -- | Return 'True' if the list of variables in the translation monad

@@ -12,13 +12,13 @@ import Apia.Prelude
 
 import Apia.Monad.Base
   ( askTOpt
-  , checkExecutable
   , T
-  , tError
-  , TError(MissingTPTP4XCommand, TPTP4XErrorWarning)
+  , tErr
+  , TErr(MissingTPTP4XCommand, TPTP4XErrorWarning)
   )
 
-import Apia.Options ( Options(optWithtptp4X) )
+import Apia.Monad.Utils   ( findExecutableErr )
+import Apia.Options       ( Options(optWithtptp4X) )
 
 import System.Exit    ( ExitCode(ExitSuccess, ExitFailure) )
 import System.Process ( readProcessWithExitCode )
@@ -32,7 +32,7 @@ checkTPTP file = do
   tptp4XExec ← askTOpt optWithtptp4X
 
   -- TODO (2017-01-03): Missing error in the test-suite.
-  checkExecutable tptp4XExec $ MissingTPTP4XCommand tptp4XExec
+  findExecutableErr tptp4XExec $ MissingTPTP4XCommand tptp4XExec
 
   (exitCode, out, _) ← liftIO $
     readProcessWithExitCode tptp4XExec
@@ -40,9 +40,9 @@ checkTPTP file = do
                             []
 
   case exitCode of
-    ExitFailure _ → tError $ TPTP4XErrorWarning file tptp4XExec out
+    ExitFailure _ → tErr $ TPTP4XErrorWarning file tptp4XExec out
 
     -- TODO (2017-01-03). How add a test case for this case?
     ExitSuccess →
-      when ("WARNING" `isInfixOf` out) $ tError $
+      when ("WARNING" `isInfixOf` out) $ tErr $
         TPTP4XErrorWarning file tptp4XExec out

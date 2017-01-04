@@ -34,8 +34,8 @@ import Apia.Monad.Base
   , runT
   , T
   , tCatch
-  , tError
-  , TError(MissingInputFile)
+  , tErr
+  , TErr(MissingInputFile)
   )
 
 import Apia.Monad.Reports ( reportSLn )
@@ -111,7 +111,7 @@ runApia = do
       | otherwise → do
 
         file ← case optInputFile opts of
-                 Nothing → tError MissingInputFile
+                 Nothing → tErr MissingInputFile
                  Just f  → return f
 
         case () of
@@ -146,9 +146,9 @@ runApia = do
 main ∷ IO ()
 main = do
   -- Adapted from @Agda.Main.main@. Requires -XScopedTypeVariables.
-  r ∷ Either TError () ← runT $ runApia `tCatch` \err →
+  r ∷ Either TErr () ← runT $ runApia `tCatch` \err →
     do liftIO $ failureMsg err
-       tError err
+       tErr err
 
   case r of
     Right _ → exitSuccess

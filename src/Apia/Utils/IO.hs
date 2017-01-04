@@ -1,9 +1,9 @@
 
--- | Utilities on directory manipulation.
+-- | Utilities on IO.
 
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Apia.Utils.Directory
+module Apia.Utils.IO
   ( equalFiles
   , notEqualFiles
   ) where

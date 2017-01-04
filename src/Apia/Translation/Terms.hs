@@ -86,11 +86,11 @@ import Apia.Monad.Base
   , popTVar
   , pushTNewVar
   , T
-  , tError
-  , TError ( IncompatibleCLOptions
-           , NoImplementedOption
-           , UniversalQuantificationError
-           )
+  , tErr
+  , TErr ( IncompatibleCLOptions
+         , NoImplementedOption
+         , UniversalQuantificationError
+         )
   )
 
 import Apia.Monad.Reports ( reportDLn, reportSLn )
@@ -384,7 +384,7 @@ agdaTermToFormula (Pi domTy (Abs x absTy)) = do
 
       ifM (askTOpt optSchematicPropositionalSymbols)
           (return f)
-          (tError $ UniversalQuantificationError p)
+          (tErr $ UniversalQuantificationError p)
 
     someType → do
       reportSLn "t2f" 20 $ "The type domTy is: " ++ show someType
@@ -460,13 +460,13 @@ agdaTermToFormula term'@(I.Var n elims) = do
 
       ifM (askTOpt optSchematicPropositionalFunctions)
           (ifM (askTOpt optNoPredicateConstants)
-               (tError $ IncompatibleCLOptions
+               (tErr $ IncompatibleCLOptions
                   "--schematic-propositional-functions"
                   "--no-predicate-constants"
                )
                (propositionalFunctionScheme vars n elims)
           )
-          (tError $ UniversalQuantificationError p)
+          (tErr $ UniversalQuantificationError p)
 
 agdaTermToFormula term' = do
   reportSLn "t2f" 20 $ "term: " ++ show term'
@@ -582,12 +582,12 @@ agdaTermToTerm term'@(I.Var n args) = do
 
       ifM (askTOpt optSchematicFunctions)
           -- TODO (24 March 2013). Implementation.
-          (tError $ NoImplementedOption "--schematic-functions")
+          (tErr $ NoImplementedOption "--schematic-functions")
           -- (do lTerms ← mapM agdaArgTermToTerm varArgs
           --     ifM (askTOpt optAppF)
           --         (return $ foldl' app (Var (vars !! n)) lTerms)
           --         (return $ Fun (vars !! n) lTerms))
-          (tError $ UniversalQuantificationError p)
+          (tErr $ UniversalQuantificationError p)
 
 agdaTermToTerm _ = __IMPOSSIBLE__
 

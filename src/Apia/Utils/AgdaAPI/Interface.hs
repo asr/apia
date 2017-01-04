@@ -101,11 +101,11 @@ import Apia.Monad.Base
   ( askTOpt
   , getTDefs
   , T
-  , tError
-  , TError ( MissingFile
-           , MissingInterfaceFile
-           , WrongInterfaceFile
-           )
+  , tErr
+  , TErr ( MissingFile
+         , MissingInterfaceFile
+         , WrongInterfaceFile
+         )
   )
 
 import Apia.Monad.Reports ( reportSLn )
@@ -183,13 +183,13 @@ readInterface file = do
   pFile ∷ FilePath ← liftIO $ fmap filePath (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive pFile)
-          (tError $ MissingFile pFile)
+          (tErr $ MissingFile pFile)
 
   -- The physical Agda interface file.
   iFile ∷ FilePath ← liftIO $ fmap (filePath . toIFile) (absolute file)
 
   unlessM (liftIO $ doesFileExistCaseSensitive iFile)
-          (tError $ MissingInterfaceFile iFile)
+          (tErr $ MissingInterfaceFile iFile)
 
   r ∷ Either TCErr (Maybe Interface) ← liftIO $ runTCMTop $
     do setCommandLineOptions optsCommandLine
@@ -199,7 +199,7 @@ readInterface file = do
     Right (Just i) → return i
     -- TODO (2017-01-03): This error is not included in the
     -- test-suite.
-    Right Nothing → tError $ WrongInterfaceFile iFile
+    Right Nothing → tErr $ WrongInterfaceFile iFile
     Left  _       → __IMPOSSIBLE__
 
 getInterface ∷ ModuleName → T Interface

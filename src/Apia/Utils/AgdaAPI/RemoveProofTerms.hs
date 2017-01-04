@@ -77,8 +77,8 @@ import Apia.Monad.Base
   , popTVar
   , pushTVar
   , T
-  , tError
-  , TError(RemoveProofTermError, TranslationOfWildCardPatterns)
+  , tErr
+  , TErr(RemoveProofTermError, TranslationOfWildCardPatterns)
   )
 
 import Apia.Monad.Reports ( reportSLn )
@@ -155,8 +155,7 @@ instance RemoveVar Elims where
     vars ← getTVars
 
     -- TODO (2017-01-03): Missing error from the test-suite.
-    when (x == "_") $
-      tError TranslationOfWildCardPatterns
+    when (x == "_") $ tErr TranslationOfWildCardPatterns
 
     let index ∷ Nat
         index = fromMaybe (__IMPOSSIBLE__) $ elemIndex x vars
@@ -224,7 +223,7 @@ removeProofTerm ty (x, typeVar) = do
     El (Type (Max [])) someTerm → do
       reportSLn "removePT" 20 $
                 "The term someTerm is: " ++ show someTerm
-      tError $ RemoveProofTermError someTerm
+      tErr $ RemoveProofTermError someTerm
 
     -- N.B. The next case is just a generalization to various
     -- arguments of the previous case.

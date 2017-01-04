@@ -49,11 +49,11 @@ import Apia.Monad.Base
   , popTVar
   , pushTNewVar
   , T
-  , tError
-  , TError ( NoFOLDefinition
-           , NoOneClauseDefinition
-           , ProofTermInDefintion
-           )
+  , tErr
+  , TErr ( NoFOLDefinition
+         , NoOneClauseDefinition
+         , ProofTermInDefintion
+         )
   )
 
 import Apia.Monad.Reports ( reportSLn )
@@ -87,8 +87,7 @@ fnToFormula ∷ QName → Type → [Clause] → T LFormula
 fnToFormula _      _  []   = __IMPOSSIBLE__
 fnToFormula qName  ty [cl] =
   clauseToFormula qName ty cl (length $ namedClausePats cl)
-fnToFormula qName  _  _    =
-  tError $ NoOneClauseDefinition qName
+fnToFormula qName _ _ = tErr $ NoOneClauseDefinition qName
 
 -- A Clause is defined by (Agda.Syntax.Internal, 2016-12-25):
 
@@ -152,14 +151,14 @@ clauseToFormula qName ty cl@(Clause r tel (_ : ncps) (Just cBody) cTy cc) totalB
 
     -- See Issue #81.
     ExtendTel (Dom _ (El (Type (Max [])) (Def _ _))) (Abs _ _) →
-      tError $ ProofTermInDefintion qName
+      tErr $ ProofTermInDefintion qName
 
     ExtendTel (Dom _ (El (Type (Max [])) (Pi _ _))) _ →
-      tError $ NoFOLDefinition qName
+      tErr $ NoFOLDefinition qName
 
     -- Issue #80.
     ExtendTel (Dom _ (El (Type (Max [_])) (Sort _))) _ →
-      tError $ NoFOLDefinition qName
+      tErr $ NoFOLDefinition qName
 
     _ → do
         reportSLn "def2f" 20 $ "tel: " ++ show tel  -- (ignoreSharing tel)

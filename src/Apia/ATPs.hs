@@ -32,22 +32,22 @@ import Apia.Common
 
 import Apia.Monad.Base
   ( askTOpt
-  , checkExecutable
   , getTATPs
   , modifyTATPs
   , T
-  , tError
-  , TError ( MissingTPTP4XCommandZ3
-           , NoATP
-           , NoATPsProof
-           , NoSupportedATPVersion
-           , TPTP4XErrorWarning
-           , UnknownATP
-           , WrongATPCommand
-           )
+  , tErr
+  , TErr ( MissingTPTP4XCommandZ3
+         , NoATP
+         , NoATPsProof
+         , NoSupportedATPVersion
+         , TPTP4XErrorWarning
+         , UnknownATP
+         , WrongATPCommand
+         )
   )
 
 import Apia.Monad.Reports ( reportS )
+import Apia.Monad.Utils   ( findExecutableErr )
 
 import Apia.Options
   ( extractATPs
@@ -140,7 +140,7 @@ atpExec atp = do
     Vampire       → askTOpt optWithVampire
     Z3            → askTOpt optWithZ3
 
-  checkExecutable cmd $ WrongATPCommand atp cmd
+  findExecutableErr cmd $ WrongATPCommand atp cmd
   return cmd
 
 optATP2ATP ∷ String → T ATP
@@ -155,7 +155,7 @@ optATP2ATP "z3"             = return Z3
 optATP2ATP other
   | "online-" `isPrefixOf` other = return $ OnlineATP other
   | otherwise =
-    tError $ UnknownATP other
+    tErr $ UnknownATP other
 
 -- | The message generad by the ATPs when a conjectured is proved,
 atpProvedMsg ∷ ATP → String
@@ -205,12 +205,12 @@ atpVersion atp = do
   exec ← atpExec atp
   liftIO $ initDef (__IMPOSSIBLE__) <$> readProcess exec ["--version"] ""
 
-checkOutputError ∷ ATP → String → String → Bool
+checkOutputErr ∷ ATP → String → String → Bool
 -- Since the ATPs should not generate errors, we are generating an
 -- error if the error message is not empty.
-checkOutputError _ _ (_:_) = __IMPOSSIBLE__
+checkOutputErr _ _ (_:_) = __IMPOSSIBLE__
 
-checkOutputError atp output _ =
+checkOutputErr atp output _ =
   case atp of
     -- Issue #64.
     Z3 → b1 && b2
@@ -262,7 +262,7 @@ atpArgs E timeout file = do
                     , file
                     ]
         -- TODO (2017-01-04): Missing error from the test-suite.
-        else tError $ NoSupportedATPVersion E eVersion
+        else tErr $ NoSupportedATPVersion E eVersion
 
 -- Equinox bug. Neither the option @--no-progress@ nor the option
 -- @--verbose 0@ reduce the output.
@@ -311,7 +311,7 @@ createSMT2file tptpFile = do
 
 
   -- TODO (2017-01-03): Missing error from the test-suite.
-  checkExecutable tptp4XExec $ MissingTPTP4XCommandZ3 tptp4XExec
+  findExecutableErr tptp4XExec $ MissingTPTP4XCommandZ3 tptp4XExec
 
   -- 2016-07-20: The `smt2` option is not documented on
   -- TPTP v6.4.0. Geoff Sutcliffe told us about this option via email.
@@ -322,7 +322,7 @@ createSMT2file tptpFile = do
 
   case exitCode of
     -- TODO (2017-01-03): Missing error in the test-suite.
-    ExitFailure _ → tError $ TPTP4XErrorWarning tptpFile tptp4XExec err
+    ExitFailure _ → tErr $ TPTP4XErrorWarning tptpFile tptp4XExec err
 
     ExitSuccess → do
       let smt2File ∷ FilePath
@@ -344,7 +344,7 @@ selectedATPs = do
       atps' = extractATPs atps
 
   if null atps'
-    then tError NoATP
+    then tErr NoATP
     else mapM optATP2ATP atps' >>= modifyTATPs
 
 runATP ∷ ATP → MVar (Bool, ATP) → Int → FilePath → T ProcessHandle
@@ -388,7 +388,7 @@ runATP atp outputMVar timeout tptpFile = do
   _      ← liftIO $ forkIO $
              evaluate (length output) >>
              evaluate (length err) >>
-             putMVar outputMVar (checkOutputError atp output err, atp)
+             putMVar outputMVar (checkOutputErr atp output err, atp)
 
   return processHandle
 
@@ -404,7 +404,7 @@ atpsAnswer atps outputMVar atpsPH file n =
 
       ifM (askTOpt optUnprovenNoError)
           (putStrLn $ T.pack $ prettyShow msg)
-          (tError $ NoATPsProof file)
+          (tErr $ NoATPsProof file)
     else do
       output ← liftIO $ takeMVar outputMVar
       atpWithVersion ← atpVersion (snd output)

@@ -77,6 +77,7 @@ executable apia
     Apia.Monad.Base
     Apia.Monad.Environment
     Apia.Monad.Reports
+    Apia.Monad.Utils
     Apia.Options
     Apia.Prelude
     Apia.Snapshot
@@ -93,8 +94,8 @@ executable apia
     Apia.Utils.AgdaAPI.Interface
     Apia.Utils.AgdaAPI.RemoveProofTerms
     Apia.Utils.AgdaAPI.Vars
-    Apia.Utils.Directory
     Apia.Utils.Except
+    Apia.Utils.IO
     Apia.Utils.List
     Apia.Utils.Monad
     Apia.Utils.Name

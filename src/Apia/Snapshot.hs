@@ -16,19 +16,19 @@ import Agda.Utils.Monad    ( ifM, unlessM, whenM )
 import Apia.Monad.Base (
   askTOpt
   , T
-  , tError
-  , TError ( MissingFile
-           , SnapshotDifferentFiles
-           , SnapshotSameDirectory
-           )
+  , tErr
+  , TErr ( MissingFile
+         , SnapshotDifferentFiles
+         , SnapshotSameDirectory
+         )
   )
 
 import Apia.Options
   ( Options(optOutputDir, optSnapshotDir, optSnapshotNoError)
   )
 
+import Apia.Utils.IO          ( notEqualFiles )
 import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), prettyShow )
-import Apia.Utils.Directory   ( notEqualFiles )
 
 import qualified Data.Text as T ( pack )
 
@@ -45,7 +45,7 @@ snapshotTest file = do
   snapshotDir ← askTOpt optSnapshotDir
 
   if outputDir == snapshotDir
-    then tError SnapshotSameDirectory
+    then tErr SnapshotSameDirectory
     else do
       -- The original file without the output directory.
       let auxFile ∷ FilePath
@@ -55,7 +55,7 @@ snapshotTest file = do
           snapshotFile = combine snapshotDir auxFile
 
       unlessM (liftIO $ doesFileExistCaseSensitive snapshotFile) $
-        tError $ MissingFile snapshotFile
+        tErr $ MissingFile snapshotFile
 
       whenM (liftIO $ notEqualFiles file snapshotFile) $ do
         -- TODO (2017-01-03): Add Warning.
@@ -65,4 +65,4 @@ snapshotTest file = do
 
         ifM (askTOpt optSnapshotNoError)
             (putStrLn $ T.pack $ prettyShow msg)
-            (tError $ SnapshotDifferentFiles file snapshotFile)
+            (tErr $ SnapshotDifferentFiles file snapshotFile)

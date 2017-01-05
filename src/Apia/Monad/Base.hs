@@ -134,11 +134,11 @@ data TErr = IncompatibleCLOptions String String
           | WrongATPCommand ATP String
           | WrongInterfaceFile FilePath
 
--- | Throw an error in the the translation monad
+-- | Throw an error in the the translation monad.
 tErr ∷ TErr → T a
 tErr = E.throwE
 
--- | Catch errors in the the translation monad
+-- | Catch errors in the translation monad.
 tCatch ∷ T () → (TErr → T ()) -> T ()
 tCatch = E.catchE
 

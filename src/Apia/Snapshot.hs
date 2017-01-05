@@ -10,8 +10,7 @@ module Apia.Snapshot ( snapshotTest ) where
 
 import Apia.Prelude
 
-import Agda.Utils.FileName ( doesFileExistCaseSensitive )
-import Agda.Utils.Monad    ( ifM, unlessM, whenM )
+import Agda.Utils.Monad ( ifM, whenM )
 
 import Apia.Monad.Base (
   askTOpt
@@ -22,6 +21,8 @@ import Apia.Monad.Base (
          , SnapshotSameDirectory
          )
   )
+
+import Apia.Monad.Utils ( doesFileExistErr )
 
 import Apia.Options
   ( Options(optOutputDir, optSnapshotDir, optSnapshotNoError)
@@ -54,8 +55,7 @@ snapshotTest file = do
           snapshotFile ∷ FilePath
           snapshotFile = combine snapshotDir auxFile
 
-      unlessM (liftIO $ doesFileExistCaseSensitive snapshotFile) $
-        tErr $ MissingFile snapshotFile
+      doesFileExistErr snapshotFile $ MissingFile snapshotFile
 
       whenM (liftIO $ notEqualFiles file snapshotFile) $ do
         -- TODO (2017-01-03): Add Warning.

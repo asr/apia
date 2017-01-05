@@ -88,12 +88,10 @@ import Agda.TypeChecking.Monad.Options ( setCommandLineOptions )
 
 import Agda.Utils.FileName
   ( absolute
-  , doesFileExistCaseSensitive
   , filePath
   )
 
 import Agda.Utils.Impossible ( Impossible(Impossible), throwImpossible )
-import Agda.Utils.Monad      ( unlessM )
 
 import qualified Agda.Utils.Trie as Trie ( singleton )
 
@@ -109,6 +107,7 @@ import Apia.Monad.Base
   )
 
 import Apia.Monad.Reports ( reportSLn )
+import Apia.Monad.Utils   ( doesFileExistErr )
 import Apia.Options       ( Options(optIncludePath) )
 
 -- import Apia.Utils.AgdaAPI.IgnoreSharing ( ignoreSharing )
@@ -182,14 +181,12 @@ readInterface file = do
   -- The physical Agda file (used only to test if the file exists).
   pFile ∷ FilePath ← liftIO $ fmap filePath (absolute file)
 
-  unlessM (liftIO $ doesFileExistCaseSensitive pFile)
-          (tErr $ MissingFile pFile)
+  doesFileExistErr pFile $ MissingFile pFile
 
   -- The physical Agda interface file.
   iFile ∷ FilePath ← liftIO $ fmap (filePath . toIFile) (absolute file)
 
-  unlessM (liftIO $ doesFileExistCaseSensitive iFile)
-          (tErr $ MissingInterfaceFile iFile)
+  doesFileExistErr iFile $ MissingInterfaceFile iFile
 
   r ∷ Either TCErr (Maybe Interface) ← liftIO $ runTCMTop $
     do setCommandLineOptions optsCommandLine

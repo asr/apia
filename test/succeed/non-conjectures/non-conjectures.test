@@ -163,3 +163,24 @@ Proving the conjecture in /tmp/TrivialTheorem/20-foo.fof
 E---2.0 proved the conjecture
 >>>2
 >>>= 0
+
+# Warning: NoATPsProofWarn
+agda -v0 NoTheorem.agda && ../../../dist/build/apia/apia --atp=e --unproven-conjecture-no-error NoTheorem.agda
+<<<
+>>>
+Proving the conjecture in /tmp/NoTheorem/17-foo.fof
+E 1.9.1-001 Sungma *did not* prove the conjecture
+the ATP(s) did not prove the conjecture in /tmp/NoTheorem/17-foo.fof
+>>>2
+>>>= 0
+
+# Warning: SnapshotDifferentFilesWarn
+agda -v0 TrivialTheorem.agda && ../../../dist/build/apia/apia --atp=e --only-files --output-dir=/tmp/snapshot TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && ../../../dist/build/apia/apia --atp=e --snapshot-test --snapshot-dir=/tmp/snapshot --snapshot-no-error TrivialTheorem.agda
+<<<
+>>>
+Created /tmp/snapshot/TrivialTheorem/20-foo.fof
+the files are different:
+/tmp/TrivialTheorem/20-foo.fof
+/tmp/snapshot/TrivialTheorem/20-foo.fof
+>>>2
+>>>= 0

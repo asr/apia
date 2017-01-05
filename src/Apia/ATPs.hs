@@ -44,6 +44,8 @@ import Apia.Monad.Base
          , UnknownATP
          , WrongATPCommand
          )
+  , tWarn
+  , TWarn (NoATPsProofWarn)
   )
 
 import Apia.Monad.Reports ( reportS )
@@ -67,18 +69,9 @@ import Apia.Options
            )
   )
 
-import Apia.Utils.PrettyPrint
-  ( (<>)
-  , Doc
-  , Pretty(pretty)
-  , prettyShow
-  )
-
 import Control.Exception.Base  ( evaluate )
 import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
-
-import qualified Data.Text as T ( pack )
 
 import Safe ( initDef )
 
@@ -396,14 +389,9 @@ atpsAnswer ∷ [ATP] → MVar (Bool, ATP) → [ProcessHandle] → FilePath → I
              T ()
 atpsAnswer atps outputMVar atpsPH file n =
   if n == length atps
-    then do
-      -- TODO (2017-01-03): Add warning
-      let msg ∷ Doc
-          msg = pretty "the ATP(s) did not prove the conjecture in "
-                <> pretty file
-
+    then
       ifM (askTOpt optUnprovenNoError)
-          (putStrLn $ T.pack $ prettyShow msg)
+          (tWarn $ NoATPsProofWarn file)
           (tErr $ NoATPsProof file)
     else do
       output ← liftIO $ takeMVar outputMVar

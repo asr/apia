@@ -20,6 +20,8 @@ import Apia.Monad.Base (
          , SnapshotDifferentFiles
          , SnapshotSameDirectory
          )
+  , tWarn
+  , TWarn(SnapshotDifferentFilesWarn)
   )
 
 import Apia.Monad.Utils ( doesFileExistErr )
@@ -28,10 +30,7 @@ import Apia.Options
   ( Options(optOutputDir, optSnapshotDir, optSnapshotNoError)
   )
 
-import Apia.Utils.IO          ( notEqualFiles )
-import Apia.Utils.PrettyPrint ( (<>), Doc, Pretty(pretty), prettyShow )
-
-import qualified Data.Text as T ( pack )
+import Apia.Utils.IO ( notEqualFiles )
 
 import Safe.Exact      ( dropExact )
 import System.FilePath ( combine, joinPath, splitPath )
@@ -57,12 +56,7 @@ snapshotTest file = do
 
       doesFileExistErr snapshotFile $ MissingFile snapshotFile
 
-      whenM (liftIO $ notEqualFiles file snapshotFile) $ do
-        -- TODO (2017-01-03): Add Warning.
-        let msg ∷ Doc
-            msg = pretty "the files are different:\n"
-                  <> pretty file <> pretty "\n" <> pretty snapshotFile
-
+      whenM (liftIO $ notEqualFiles file snapshotFile) $
         ifM (askTOpt optSnapshotNoError)
-            (putStrLn $ T.pack $ prettyShow msg)
+            (tWarn $ SnapshotDifferentFilesWarn file snapshotFile)
             (tErr $ SnapshotDifferentFiles file snapshotFile)

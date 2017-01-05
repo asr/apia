@@ -45,6 +45,10 @@ module Apia.Monad.Base
          , WrongInterfaceFile
          )
   , TState  -- Required by Haddock.
+  , tWarn
+  , TWarn ( NoATPsProofWarn
+          , SnapshotDifferentFilesWarn
+          )
   ) where
 
 ------------------------------------------------------------------------------
@@ -71,6 +75,7 @@ import Apia.Utils.PrettyPrint
   , cquotes
   , Doc
   , Pretty(pretty)
+  , prettyShow
   , scquotes
   , sspaces
   )
@@ -85,6 +90,8 @@ import Control.Monad.State
   , put
   , StateT
   )
+
+import qualified Data.Text as Text ( pack )
 
 import qualified Data.HashMap.Strict as HashMap ( empty )
 
@@ -108,9 +115,9 @@ initTState = TState { tDefs = HashMap.empty
                     }
 
 ------------------------------------------------------------------------------
--- Errors
+-- Errors and warnings
 
--- | The errors in the translation monad.
+-- | Errors in the translation monad.
 data TErr = IncompatibleCLOptions String String
           | MissingFile FilePath
           | MissingInputFile
@@ -134,13 +141,23 @@ data TErr = IncompatibleCLOptions String String
           | WrongATPCommand ATP String
           | WrongInterfaceFile FilePath
 
--- | Throw an error in the the translation monad.
+-- | Throw an error in the translation monad.
 tErr ∷ TErr → T a
 tErr = E.throwE
 
 -- | Catch errors in the translation monad.
 tCatch ∷ T () → (TErr → T ()) -> T ()
 tCatch = E.catchE
+
+-- Common errors and warning messages
+
+noATPsProofMsg ∷ FilePath → Doc
+noATPsProofMsg file =
+  "the ATP(s) did not prove the conjecture in " <> pretty file
+
+snapshotDifferentFilesMsg ∷ FilePath → FilePath → Doc
+snapshotDifferentFilesMsg f1 f2 =
+  "the files are different:\n" <> pretty f1 <> "\n" <> pretty f2
 
 instance Pretty TErr where
   pretty (IncompatibleCLOptions opt1 opt2) =
@@ -164,8 +181,7 @@ instance Pretty TErr where
 
   pretty NoATP = "at least you need to specify one ATP"
 
-  pretty (NoATPsProof file) =
-    "the ATP(s) did not prove the conjecture in " <> pretty file
+  pretty (NoATPsProof file) = noATPsProofMsg file
 
   pretty (NoFOLDefinition qName) =
     "the translation of " <> cquotes (AP.pretty qName)
@@ -190,8 +206,7 @@ instance Pretty TErr where
     "the translation failed because we do not know how erase "
     <> "the term\n" <> (pretty . show) term
 
-  pretty (SnapshotDifferentFiles f1 f2) =
-    "the files are different:\n" <> pretty f1 <> "\n" <> pretty f2
+  pretty (SnapshotDifferentFiles f1 f2) = snapshotDifferentFilesMsg f1 f2
 
   pretty SnapshotSameDirectory =
    "the " <> scquotes "--output-dir" <> " and " <> scquotes "--snapshot-dir"
@@ -228,6 +243,18 @@ instance Pretty TErr where
     "The reading of the interface file " <> pretty file <> " failed. "
     <> "It is possible that you used a different version "
     <> "of Agda to build the Apia program and to type-check your module"
+
+-- | Warnings in the translation monad.
+data TWarn = NoATPsProofWarn FilePath
+           | SnapshotDifferentFilesWarn FilePath FilePath
+
+-- | Print a warning in the translation monad.
+tWarn ∷ TWarn → T ()
+tWarn w = putStrLn $ Text.pack $ prettyShow w
+
+instance Pretty TWarn where
+  pretty (NoATPsProofWarn file)             = noATPsProofMsg file
+  pretty (SnapshotDifferentFilesWarn f1 f2) = snapshotDifferentFilesMsg f1 f2
 
 ------------------------------------------------------------------------------
 -- | The translation monad.

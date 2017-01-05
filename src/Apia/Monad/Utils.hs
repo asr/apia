@@ -8,7 +8,7 @@ module Apia.Monad.Utils
 
 import Apia.Prelude
 
-import Agda.Utils.Maybe ( caseMaybeM )
+import Agda.Utils.Maybe ( whenNothingM )
 
 import Apia.Monad.Base
   ( T
@@ -24,7 +24,5 @@ import System.Directory ( findExecutable )
 -- executable @file@ is missing.
 findExecutableErr ∷ FilePath → TErr → T ()
 findExecutableErr file err =
-  caseMaybeM (liftIO $ findExecutable file)
-             (tErr err)
-             (\_ → return ())
-
+  whenNothingM (liftIO $ findExecutable file)
+               (tErr err)

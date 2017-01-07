@@ -6,7 +6,7 @@ In Apia
 
 (See apia/notes/atps/run-atps.txt for running the ATPs)
 
-* Test apia/notes/atps/test/equality/mendelson.
+* Test apia/notes/atps/predefined-equality.
 
 * Test apia/notes/tptp.
 

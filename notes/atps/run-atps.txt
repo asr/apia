@@ -39,7 +39,7 @@ $ ileancop file_name
 Metis 2.3 (release 201601108)
 $ metis file_name
 
-SPASS V3.7
+SPASS V 3.9
 $ SPASS -TPTP=1 file_name
 
 Vampire 0.6 (revision 903)

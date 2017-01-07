@@ -1,10 +1,12 @@
-% Only Equinox and tptp4X (from TPTP 6.4.0) detect the parsing error.
+% Equinox, SPASS and tptp4X detect the parsing error.
 
 % Tested with:
 
 % E 1.9.1-001
 % Equinox 5.0alpha (2010-06-29)
 % Metis 2.3 (release 20161108)
+% SPASS V 3.9
+% TPTP4X v6.4.0.2
 % Vampire 0.6 (revision 903)
 
 fof(test, conjecture, ! [A] : A = B).

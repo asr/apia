@@ -164,7 +164,7 @@ atpProvedMsg IleanCoP = "Intuitionistic Theorem"
 atpProvedMsg Metis = "SZS status Theorem"
 -- OnlineATPs 1.0.0
 atpProvedMsg (OnlineATP _ ) = "Theorem"
--- SPASS 3.7.
+-- SPASS V 3.9.
 atpProvedMsg SPASS = "Proof found"
 -- Vampire 0.6 (revision 903).
 atpProvedMsg Vampire = "Termination reason: Refutation\n"

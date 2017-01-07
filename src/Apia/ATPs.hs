@@ -187,6 +187,9 @@ atpVersion Equinox = do
 -- No `--version` option in ileanCoP.
 atpVersion IleanCoP = return $ show IleanCoP
 -- No `--version` option in SPASS.
+
+-- By running `SPASS` we can read the version but the exit status
+-- reports a failure (i.e. the exit status isn't 0).
 atpVersion SPASS = return $ show SPASS
 -- OnlineATPs has the option --version-atp=NAME
 atpVersion atp@(OnlineATP name)  = do

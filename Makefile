@@ -455,7 +455,7 @@ tests :
 .PHONY : agda_changed
 agda_changed : clean
 	cabal clean
-	cabal install --only-dependencies
+	cabal install
 	cabal configure
 	cabal build
 	make tests

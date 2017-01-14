@@ -456,8 +456,6 @@ tests :
 agda_changed : clean
 	cabal clean
 	cabal install
-	cabal configure
-	cabal build
 	make tests
 	@echo "$@ succeeded!"
 

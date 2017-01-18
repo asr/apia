@@ -2,11 +2,12 @@
 -- | Setup.hs module
 
 {-# OPTIONS_GHC -Wall                           #-}
+{-# OPTIONS_GHC -Werror                         #-}
 {-# OPTIONS_GHC -fno-warn-warnings-deprecations #-}
-{-# LANGUAGE ScopedTypeVariables                #-}
+
+{-# LANGUAGE ScopedTypeVariables #-}
 
 import Control.Exception (IOException, try)
-import Data.Maybe (Maybe (Just, Nothing))
 import Data.Version (Version(versionTags))
 import Distribution.Simple
   ( confHook

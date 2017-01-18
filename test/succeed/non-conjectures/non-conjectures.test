@@ -65,11 +65,17 @@ Created /tmp/TrivialTheorem/20-foo.fof
 >>>2
 >>>= 0
 
-# --version
-../../../dist/build/apia/apia --version
+# output the version
+apia --version | awk '{print substr($0,20)}' > version.txt & git log --format=%h -n 1 > git.txt
 <<<
 >>>
-Apia version 1.0.1
+>>>2
+>>>= 0
+
+# version + hash
+diff version.txt git.txt
+<<<
+>>>
 >>>2
 >>>= 0
 

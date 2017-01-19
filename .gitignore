@@ -2,3 +2,5 @@
 model
 dist/
 TAGS
+test/succeed/non-conjectures/git.txt
+test/succeed/non-conjectures/version.txt

@@ -116,7 +116,8 @@ fnToFormula qName _ _ = tErr $ NoOneClauseDefinition qName
 -- variables to length @[NamedArg DeBruijnPattern]@.
 clauseToFormula ∷ QName → Type → Clause → Int → T LFormula
 -- There is at most one variable in the clause's pattern.
-clauseToFormula qName ty cl@(Clause r tel (_ : ncps) (Just cBody) cTy cc) totalBoundedVars = do
+clauseToFormula qName ty cl@(Clause lr fr tel (_ : ncps) (Just cBody) cTy cc)
+                totalBoundedVars = do
   reportSLn "def2f" 20 $ "cl: " ++ show cl
 
   case tel of
@@ -133,7 +134,8 @@ clauseToFormula qName ty cl@(Clause r tel (_ : ncps) (Just cBody) cTy cc) totalB
 
       freshVar ← pushTNewVar
       -- We process forward in the telescope and the pattern.
-      f ← clauseToFormula qName ty (Clause r tels ncps (Just cBody) cTy cc) totalBoundedVars
+      f ← clauseToFormula qName ty (Clause lr fr tels ncps (Just cBody) cTy cc)
+                          totalBoundedVars
       popTVar
 
       return $ ForAll freshVar $ const f
@@ -166,7 +168,7 @@ clauseToFormula qName ty cl@(Clause r tel (_ : ncps) (Just cBody) cTy cc) totalB
 
 -- The clause's patterns is empty, i.e. we have generated the required
 -- universal quantification, so we translate the LHS and the RHS.
-clauseToFormula qName ty (Clause _ _ [] (Just cBody) _ _) totalBoundedVars = do
+clauseToFormula qName ty (Clause _ _ _ [] (Just cBody) _ _) totalBoundedVars = do
   vars ← getTVars
   reportSLn "def2f" 20 $ "vars: " ++ show vars
   reportSLn "def2f" 20 $ "totalBoundedVars: " ++ show totalBoundedVars

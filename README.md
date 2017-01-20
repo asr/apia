@@ -17,6 +17,16 @@ interactive and automatic proofs (see
 Prerequisites
 --------------
 
+* Glasgow Haskell Compiler ([GHC](https://www.haskell.org/ghc/))
+
+  Apia supports the versions of GHC supported by Agda, i.e. 7.6.3, 7.8.4, 7.10.3 and 8.0.2.
+
+  Check your version with:
+
+  ````bash
+  $ ghc --version
+  ````
+
 * Extended version of Agda
 
   We have extended the development version of Agda in order to handle

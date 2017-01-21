@@ -1,6 +1,6 @@
 name:          apia
 version:       1.0.1
-build-type:    Custom
+build-type:    Simple
 cabal-version: >= 1.10
 author:        Andrés Sicard-Ramírez with contributions by Jonathan Prieto-Cubides
 license:       MIT
@@ -103,6 +103,7 @@ executable apia
     Apia.Utils.Show
     Apia.Utils.String
     Apia.Utils.Text
+    Apia.Utils.CommitVersion
     Apia.Utils.Version
     Paths_apia
 

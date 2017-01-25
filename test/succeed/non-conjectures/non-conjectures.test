@@ -6,7 +6,7 @@ Usage: apia [OPTIONS] FILE
 
            --atp=[online-]NAME                  Set the ATP
                                                 (offline ATPs: cvc4, e, equinox, ileancop, metis, spass, vampire or z3)
-                                                (online ATPs: run the ‘onlineatps --list-atps’ command)
+                                                (online ATPs: run the ‘online-atps --list-atps’ command)
            --check                              Check the syntax of the generated TPTP files using the
                                                 tptp4X program from the TPTP library
            --dump-types                         Dump Agda types information to stdout
@@ -40,7 +40,7 @@ Usage: apia [OPTIONS] FILE
            --with-equinox=PATH                  Give the path to Equinox
            --with-ileancop=PATH                 Give the path to IleanCoP
            --with-metis=PATH                    Give the path to Metis
-           --with-onlineatps=PATH               Give the path to OnlineATPs
+           --with-online-atps=PATH              Give the path to OnlineATPs
            --with-spass=PATH                    Give the path to SPASS
            --with-tptp4X=PATH                   Give the path to tptp4X
            --with-vampire=PATH                  Give the path to Vampire

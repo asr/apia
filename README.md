@@ -55,7 +55,7 @@ Prerequisites
 
     Apia can use any online ATP available in the
     [TPTP World](http://www.cs.miami.edu/~tptp/cgi-bin/SystemOnTPTP)
-    by using the [onlineatps](http://github.com/jonaprieto/onlineatps)
+    by using the [online-atps](http://github.com/jonaprieto/online-atps)
     program.
 
 * The tptp4X program
@@ -118,8 +118,8 @@ Installation
 Using online ATPs
 ------------------
 
-After installing the `onlineatps` tool from
-[this](http://github.com/jonaprieto/onlineatps) repository, it is
+After installing the `online-atps` tool from
+[this](http://github.com/jonaprieto/online-atps) repository, it is
 possible to use any ATP available on
 [SystemOnTPTP](http://www.cs.miami.edu/~tptp/cgi-bin/SystemOnTPTP).
 
@@ -135,7 +135,7 @@ E-2.0 proved the conjecture
 To see a list of all online ATPs available, run the following command:
 
 ```bash
-$ onlineatps --list-atps
+$ online-atps --list-atps
 ```
 
 YAML Configuration

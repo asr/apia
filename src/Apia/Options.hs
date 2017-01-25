@@ -289,7 +289,7 @@ withMetisOpt name opts = Right opts { optWithMetis = name }
 
 withOnlineATPsOpt ∷ String → OM
 withOnlineATPsOpt [] _ = Left $
-  pretty "option " <> scquotes "--with-onlineatps"
+  pretty "option " <> scquotes "--with-online-atps"
   <> pretty " requires an argument PATH"
 withOnlineATPsOpt name opts = Right opts { optWithOnlineATPs = name }
 
@@ -323,7 +323,7 @@ options =
   [ Option []  ["atp"] (ReqArg atpOpt "[online-]NAME") $
                "Set the ATP\n"
                ++ "(offline ATPs: cvc4, e, equinox, ileancop, metis, spass, vampire or z3)\n"
-               ++ "(online ATPs: run the ‘onlineatps --list-atps’ command)"
+               ++ "(online ATPs: run the ‘online-atps --list-atps’ command)"
   , Option []  ["check"] (NoArg checkOpt) $
                "Check the syntax of the generated TPTP files using the\n"
                ++ "tptp4X program from the TPTP library"
@@ -385,7 +385,7 @@ options =
                "Give the path to " ++ show IleanCoP
   , Option []  ["with-metis"] (ReqArg withMetisOpt "PATH") $
                "Give the path to " ++ show Metis
-  , Option []  ["with-onlineatps"] (ReqArg withOnlineATPsOpt "PATH")
+  , Option []  ["with-online-atps"] (ReqArg withOnlineATPsOpt "PATH")
                "Give the path to OnlineATPs"
   , Option []  ["with-spass"] (ReqArg withSPASSOpt "PATH") $
                "Give the path to " ++ show SPASS

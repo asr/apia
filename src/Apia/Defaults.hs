@@ -68,7 +68,7 @@ defaultOptions = Options
   , optWithEquinox                     = "equinox"
   , optWithIleanCoP                    = "ileancop.sh"
   , optWithMetis                       = "metis"
-  , optWithOnlineATPs                  = "onlineatps"
+  , optWithOnlineATPs                  = "online-atps"
   , optWithSPASS                       = "SPASS"
   , optWithtptp4X                      = "tptp4X"
   , optWithVampire                     = "vampire_lin64"
@@ -286,7 +286,7 @@ setWithOnlineATPs ∷ Config → Options → Options
 setWithOnlineATPs config opts = newOpts
   where
     newOpts ∷ Options
-    newOpts = case lookConfig "with-onlineatps" config of
+    newOpts = case lookConfig "with-online-atps" config of
       Just val → opts { optWithOnlineATPs = val }
       _        → opts
 

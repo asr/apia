@@ -131,8 +131,8 @@ install:
 ##############################################################################
 # Installing OnlineATPs
 
-  - git clone https://github.com/jonaprieto/onlineatps ${MY_HOME}/onlineatps
-  - cd ${MY_HOME}/onlineatps
+  - git clone https://github.com/jonaprieto/online-atps ${MY_HOME}/online-atps
+  - cd ${MY_HOME}/online-atps
   - cabal install --force-reinstalls
   - cd ${APIA_HOME}
 

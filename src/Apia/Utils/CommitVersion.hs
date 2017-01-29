@@ -20,7 +20,9 @@ import System.Exit       ( ExitCode(ExitSuccess) )
 import System.Process    ( readProcessWithExitCode )
 
 ------------------------------------------------------------------------------
-
+-- | If `Apia` was built inside `git` repository, then `getVersion` function
+-- will return the hash of the commit used. Otherwise, only the version
+-- number of the input is returned.
 getVersion ∷ Version → IO Version
 getVersion version = do
   commit ∷ Maybe String ← commitInfo

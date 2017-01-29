@@ -26,7 +26,7 @@ import Agda.Syntax.Common ( Arg(Arg), Dom(Dom), Nat )
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , Elim
-  , Elim'(Apply, Proj)
+  , Elim'(Apply, IApply, Proj)
   , Elims
   , Level(Max)
   , Sort(Type)
@@ -69,6 +69,7 @@ instance IncIndex Term where
 instance IncIndex Elim where
   incIndex (Apply (Arg color term)) = Apply (Arg color $ incIndex term)
   incIndex (Proj _ _)               = __IMPOSSIBLE__
+  incIndex IApply{}                 = __IMPOSSIBLE__
 
 instance IncIndex a ⇒ IncIndex [a] where
   incIndex = map incIndex
@@ -94,12 +95,13 @@ instance DecIndex Type where
 instance DecIndex Elim where
   decIndex (Apply (Arg color term)) = Apply (Arg color $ decIndex term)
   decIndex (Proj _ _)               = __IMPOSSIBLE__
+  decIndex IApply{}                 = __IMPOSSIBLE__
 
 instance DecIndex a ⇒ DecIndex [a] where
   decIndex = map decIndex
 
 instance DecIndex a ⇒ DecIndex (Dom a) where
-  decIndex (Dom ai e) = Dom ai $ decIndex e
+  decIndex (Dom ai b e) = Dom ai b $ decIndex e
 
 instance DecIndex a ⇒ DecIndex (Abs a) where
   decIndex (Abs name body) = Abs name $ decIndex body
@@ -139,6 +141,7 @@ instance VarNames Term where
 instance VarNames Elim where
   varNames (Apply (Arg _ term)) = varNames term
   varNames (Proj _ _)           = __IMPOSSIBLE__
+  varNames IApply{}             = __IMPOSSIBLE__
 
 instance VarNames a ⇒ VarNames [a] where
   varNames = concatMap varNames

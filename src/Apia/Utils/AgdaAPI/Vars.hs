@@ -25,7 +25,7 @@ import Agda.Syntax.Common
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , Elim
-  , Elim'(Apply, Proj)
+  , Elim'(Apply, IApply, Proj)
   , Sort(Type)
   , Term(Con, Def, Lam, Pi, Var)
   , Type
@@ -58,6 +58,7 @@ instance BoundedVars Term where
 instance BoundedVars Elim where
   boundedVars (Apply (Arg _ term)) = boundedVars term
   boundedVars (Proj _ _)           = __IMPOSSIBLE__
+  boundedVars IApply{}             = __IMPOSSIBLE__
 
 instance BoundedVars a ⇒ BoundedVars (Arg a) where
   boundedVars (Arg _ e) = boundedVars e
@@ -85,7 +86,8 @@ instance BoundedVarsType Type where
 
 instance BoundedVarsType Term where
   boundedVarsType (Pi _ (NoAbs _ absTy)) = boundedVarsType absTy
-  boundedVarsType (Pi (Dom _ ty) (Abs x absTy)) = (x, ty) : boundedVarsType absTy
+  boundedVarsType (Pi (Dom _ _ ty) (Abs x absTy)) =
+    (x, ty) : boundedVarsType absTy
 
   boundedVarsType (Def _ elims) = boundedVarsType elims
 
@@ -100,6 +102,7 @@ instance BoundedVarsType Term where
 instance BoundedVarsType Elim where
   boundedVarsType (Apply (Arg _ term)) = boundedVarsType term
   boundedVarsType (Proj _ _)           = __IMPOSSIBLE__
+  boundedVarsType IApply{}             = __IMPOSSIBLE__
 
 instance BoundedVarsType a ⇒ BoundedVarsType (Arg a) where
   boundedVarsType (Arg _ e) = boundedVarsType e

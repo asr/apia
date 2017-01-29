@@ -140,7 +140,7 @@ instance RemoveVar Term where
     __IMPOSSIBLE__
 
 instance RemoveVar a ⇒ RemoveVar (Dom a) where
-  removeVar (Dom ai e) x = Dom ai <$> removeVar e x
+  removeVar (Dom ai b e) x = Dom ai b <$> removeVar e x
 
 -- In the Agda source code (Agda.Syntax.Internal) we have
 -- type Elims = [Elim], however we cannot create the instance of Elims
@@ -203,7 +203,7 @@ removeProofTerm ty (x, typeVar) = do
 
     -- Because the variable is not a proof term we don't do anything.
     El (Type (Max []))
-       (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
+       (Pi (Dom _ _ (El (Type (Max [])) (Def _ [])))
            (NoAbs _ (El (Type (Max [])) (Def _ [])))) → return ty
 
     -- The next case is just a generalization to various arguments of
@@ -215,7 +215,7 @@ removeProofTerm ty (x, typeVar) = do
 
     -- Because the variable is not a proof term we don't do anything.
     El (Type (Max []))
-       (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
+       (Pi (Dom _ _ (El (Type (Max [])) (Def _ [])))
            (NoAbs _ (El (Type (Max [])) (Pi _ (NoAbs _ _))))) →
        __IMPOSSIBLE__ -- return ty
 

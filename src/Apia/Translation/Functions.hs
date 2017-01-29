@@ -129,7 +129,7 @@ clauseToFormula qName ty cl@(Clause lr fr tel (_ : ncps) (Just cBody) cTy cc)
     -- any problem.
     --
     -- N.B. the pattern matching on @(Def _ [])@.
-    ExtendTel (Dom _ (El (Type (Max [])) (Def _ []))) (Abs x tels) → do
+    ExtendTel (Dom _ _ (El (Type (Max [])) (Def _ []))) (Abs x tels) → do
       reportSLn "def2f" 20 $ "Processing variable " ++ show x
 
       freshVar ← pushTNewVar
@@ -152,14 +152,14 @@ clauseToFormula qName ty cl@(Clause lr fr tel (_ : ncps) (Just cBody) cTy cc)
     -- N.B. the pattern matching on @(Def _ _)@.
 
     -- See Issue #81.
-    ExtendTel (Dom _ (El (Type (Max [])) (Def _ _))) (Abs _ _) →
+    ExtendTel (Dom _ _ (El (Type (Max [])) (Def _ _))) (Abs _ _) →
       tErr $ ProofTermInDefintion qName
 
-    ExtendTel (Dom _ (El (Type (Max [])) (Pi _ _))) _ →
+    ExtendTel (Dom _ _ (El (Type (Max [])) (Pi _ _))) _ →
       tErr $ NoFOLDefinition qName
 
     -- Issue #80.
-    ExtendTel (Dom _ (El (Type (Max [_])) (Sort _))) _ →
+    ExtendTel (Dom _ _ (El (Type (Max [_])) (Sort _))) _ →
       tErr $ NoFOLDefinition qName
 
     _ → do

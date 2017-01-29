@@ -52,7 +52,7 @@ instance IgnoreSharing Term where
   ignoreSharing term = term
 
 instance IgnoreSharing a ⇒ IgnoreSharing (Dom a) where
-  ignoreSharing (Dom ai e) = Dom ai (ignoreSharing e)
+  ignoreSharing (Dom ai b e) = Dom ai b $ ignoreSharing e
 
 instance IgnoreSharing a ⇒ IgnoreSharing (Elim' a) where
   ignoreSharing (Apply a)      = Apply $ ignoreSharing a

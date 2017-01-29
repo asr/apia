@@ -34,7 +34,7 @@ import Agda.Syntax.Internal as I
   , Args
   , ConHead(ConHead)
   , Elim
-  , Elim'(Apply, Proj)
+  , Elim'(Apply, IApply, Proj)
   , Elims
   , Level(Max)
   , PlusLevel(ClosedLevel)
@@ -141,6 +141,7 @@ binConst op arg1 arg2 =
 elimToTerm ∷ Elim → T LTerm
 elimToTerm (Apply arg) = agdaArgTermToTerm arg
 elimToTerm (Proj _ _)  = __IMPOSSIBLE__
+elimToTerm IApply{}    = __IMPOSSIBLE__
 
 -- Translation of predicates.
 predicate ∷ QName → Elims → T LFormula
@@ -308,7 +309,7 @@ agdaTermToFormula (Pi domTy (Abs x absTy)) = do
     -- variable in @agdaTermToTerm (Var n args)@, which is processed
     -- first due to lazyness. We quantified on this variable.
     El (Type (Max []))
-       (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
+       (Pi (Dom _ _ (El (Type (Max [])) (Def _ [])))
            (NoAbs _ (El (Type (Max [])) (Def _ [])))) → do
       reportSLn "t2f" 20
         "Removing a quantification on a function of a Set to a Set"
@@ -330,7 +331,7 @@ agdaTermToFormula (Pi domTy (Abs x absTy)) = do
     -- variable in @agdaTermToTerm (Var n args)@, which is processed
     -- first due to lazyness. We quantified on this variable.
     El (Type (Max []))
-       (Pi (Dom _ (El (Type (Max [])) (Def _ [])))
+       (Pi (Dom _ _ (El (Type (Max [])) (Def _ [])))
            (NoAbs _ (El (Type (Max [])) (Pi _ (NoAbs _ _))))) → do
       reportSLn "t2f" 20
         "Removing a quantification on a function of a Set to a Set"

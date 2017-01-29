@@ -23,7 +23,7 @@ import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , arity
   , Elim
-  , Elim'(Apply, Proj)
+  , Elim'(Apply, IApply, Proj)
   , Elims
   , Level(Max)
   , PlusLevel(ClosedLevel)
@@ -85,10 +85,10 @@ instance EtaExpandible Term where
     if qNameArity == length elims
       then case defTy of
         El (Type (Max [ClosedLevel 1]))
-           (Pi (Dom _ (El (Type (Max [ClosedLevel 1]))
-                          (Pi (Dom _ (El (Type (Max [])) _))
-                              (NoAbs _ (El (Type (Max [ClosedLevel 1]))
-                                       (Sort (Type (Max [])))))))) _)  →
+           (Pi (Dom _ _ (El (Type (Max [ClosedLevel 1]))
+                            (Pi (Dom _ _ (El (Type (Max [])) _))
+                                (NoAbs _ (El (Type (Max [ClosedLevel 1]))
+                                         (Sort (Type (Max [])))))))) _)  →
            case elims of
              [Apply (Arg _ term')] →
                case term' of
@@ -166,9 +166,10 @@ instance EtaExpandible Term where
 instance EtaExpandible Elim where
   etaExpand (Apply (Arg color term)) = Apply . Arg color <$> etaExpand term
   etaExpand (Proj _ _)               = __IMPOSSIBLE__
+  etaExpand IApply{}                 = __IMPOSSIBLE__
 
 instance EtaExpandible a ⇒ EtaExpandible (Dom a) where
-  etaExpand (Dom ai e) = Dom ai <$> etaExpand e
+  etaExpand (Dom ai b e) = Dom ai b <$> etaExpand e
 
 instance EtaExpandible a ⇒ EtaExpandible [a] where
   etaExpand = mapM etaExpand

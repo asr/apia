@@ -352,7 +352,7 @@ importedInterfaces x = do
       i ← lift $ getInterface x
 
       let iModules ∷ [ModuleName]
-          iModules = (fst . unzip . iImportedModules) i
+          iModules = map fst $ iImportedModules i
 
       is ← concat <$> mapM importedInterfaces iModules
       return $ i : is
@@ -363,7 +363,7 @@ importedInterfaces x = do
 getImportedInterfaces ∷ Interface → T [Interface]
 getImportedInterfaces i = do
   iInterfaces ← concat <$>
-    evalStateT (mapM importedInterfaces $ (fst . unzip . iImportedModules) i) []
+    evalStateT (mapM (importedInterfaces . fst) (iImportedModules i)) []
   reportSLn "ii" 20 $
     "Imported module names: " ++ show (map iModuleName iInterfaces)
   return iInterfaces

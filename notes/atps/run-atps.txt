@@ -36,7 +36,7 @@ $ equinox file_name
 IleanCoP V1.3beta1
 $ ileancop file_name
 
-Metis 2.3 (release 201601108)
+Metis 2.3 (release 20170315)
 $ metis file_name
 
 SPASS V 3.9

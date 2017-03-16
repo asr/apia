@@ -46,7 +46,7 @@ Prerequisites
     [E](http://wwwlehre.dhbw-stuttgart.de/%7Esschulz/E/E.html) | E 1.9.1-001 Sungma
     [Equinox](https://github.com/asr/equinox/tree/5.0alpha-2010-06-29/) | Equinox 5.0alpha (2010-06-29)
     [ileanCoP](http://www.leancop.de/ileancop/index.html) | ileanCoP 1.3beta1
-    [Metis](http://www.gilith.com/software/metis/) | Metis 2.3 (release 20161108)
+    [Metis](http://www.gilith.com/software/metis/) | Metis 2.3 (release 20170315)
     [SPASS](http://www.mpi-inf.mpg.de/departments/automation-of-logic/software/spass-workbench/) | SPASS V 3.9
     [Vampire](http://www.vprover.org/) | Vampire 0.6 (revision 903)
     [Z3](https://github.com/Z3Prover/z3/wiki) | Z3 version 4.5.0 - 64 bit

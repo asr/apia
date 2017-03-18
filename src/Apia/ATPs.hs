@@ -73,6 +73,8 @@ import Control.Exception.Base  ( evaluate )
 import Control.Concurrent      ( forkIO )
 import Control.Concurrent.MVar ( MVar, newEmptyMVar, putMVar, takeMVar )
 
+import qualified Data.Text as Text ( pack )
+
 import Safe ( initDef )
 
 import System.FilePath ( replaceExtension )
@@ -201,16 +203,14 @@ atpVersion atp = do
   exec ← atpExec atp
   liftIO $ initDef (__IMPOSSIBLE__) <$> readProcess exec ["--version"] ""
 
-checkOutputErr ∷ ATP → String → String → Bool
--- Since the ATPs should not generate errors, we are generating an
--- error if the error message is not empty.
-checkOutputErr _ _ (_:_) = __IMPOSSIBLE__
-
+checkOutputErr ∷ ATP → String → String → IO Bool
+checkOutputErr _ _ err@(_:_) =
+  return False <* putStr (Text.pack err)
 checkOutputErr atp output _ =
   case atp of
     -- Issue #64.
-    Z3 → b1 && b2
-    _  → b1
+    Z3 → return $ b1 && b2
+    _  → return b1
 
   where
     b1, b2 ∷ Bool
@@ -382,9 +382,10 @@ runATP atp outputMVar timeout tptpFile = do
   output ← liftIO $ hGetContents $ fromMaybe (__IMPOSSIBLE__) processOutput
   err    ← liftIO $ hGetContents $ fromMaybe (__IMPOSSIBLE__) processError
   _      ← liftIO $ forkIO $
-             evaluate (length output) >>
-             evaluate (length err) >>
-             putMVar outputMVar (checkOutputErr atp output err, atp)
+             evaluate (length output)      >>
+             evaluate (length err)         >>
+             checkOutputErr atp output err >>=
+             (\ b → putMVar outputMVar (b, atp))
 
   return processHandle
 

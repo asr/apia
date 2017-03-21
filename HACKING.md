@@ -3,12 +3,12 @@ HACKING
 
 #### Git pre-commit hook
 
-The `Makefile` has the rule `git_pre_commit` which can be used in the
+The `Makefile` has the rule `git-pre-commit` which can be used in the
 pre-commit hook by adding something like
 
 ````Bash
 echo "Starting pre-commit"
-make git_pre_commit
+make git-pre-commit
 if [ $? -ne 0 ]; then
   exit 1
 fi

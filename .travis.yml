@@ -139,11 +139,11 @@ install:
 ##############################################################################
 script:
 
-  - make generated_all
-  - make non_conjectures
+  - make generated-all
+  - make non-conjectures
   - make errors
-  - make type_check_notes
-  - make ATPs="e" prove_notes
+  - make type-check-notes
+  - make ATPs="e" prove-notes
   - make check-whitespace
   - make hlint
 

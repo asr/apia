@@ -41,43 +41,43 @@ my_pathsubst = $(patsubst %.agda, %.$(1), \
 # Tests
 
 generated_fol_theorems_files = \
-  $(call my_pathsubst,generated_fol_theorems,$(fol_theorems_path))
+  $(call my_pathsubst,generated-fol-theorems,$(fol_theorems_path))
 
 generated_non_fol_theorems_files = \
-  $(call my_pathsubst,generated_non_fol_theorems,\
+  $(call my_pathsubst,generated-non-fol-theorems,\
          $(non_fol_theorems_path))
 
 generated_non_theorems_files = \
-  $(call my_pathsubst,generated_non_theorems,$(non_theorems_path))
+  $(call my_pathsubst,generated-non-theorems,$(non_theorems_path))
 
 non_conjectures_files = \
-  $(patsubst %.agda, %.non_conjectures,\
+  $(patsubst %.agda, %.non-conjectures,\
     $(shell find $(non_conjectures_path) -name '*.agda' | sort))
 
 only_fol_theorems_files = \
-  $(call my_pathsubst,only_fol_theorems,$(fol_theorems_path))
+  $(call my_pathsubst,only-fol-theorems,$(fol_theorems_path))
 
 only_non_fol_theorems_files = \
-  $(call my_pathsubst,only_non_fol_theorems,\
+  $(call my_pathsubst,only-non-fol-theorems,\
          $(non_fol_theorems_path))
 
 prove_fol_theorems_files = \
-  $(call my_pathsubst,prove_fol_theorems,$(fol_theorems_path))
+  $(call my_pathsubst,prove-fol-theorems,$(fol_theorems_path))
 
 prove_non_fol_theorems_files = \
-  $(call my_pathsubst,prove_non_fol_theorems,\
+  $(call my_pathsubst,prove-non-fol-theorems,\
          $(non_fol_theorems_path))
 
 refute_theorems_files = \
-  $(call my_pathsubst,refute_theorems,$(non_theorems_path))
+  $(call my_pathsubst,refute-theorems,$(non_theorems_path))
 
 # Notes
 
 type_check_notes_files = \
-  $(patsubst %.agda, %.type_check_notes, \
+  $(patsubst %.agda, %.type-check-notes, \
     $(shell find $(notes_path) -name '*.agda' | sort))
 
-prove_notes_files = $(call my_pathsubst,prove_notes,$(notes_path))
+prove_notes_files = $(call my_pathsubst,prove-notes,$(notes_path))
 
 ##############################################################################
 # Test suite: Generated FOL theorems
@@ -87,7 +87,7 @@ GENERATED_FOL_THEOREMS_FLAGS = \
   -i$(fol_theorems_path) --only-files \
   --output-dir=$(output_dir)
 
-%.generated_fol_theorems :
+%.generated-fol-theorems :
 	@echo "Comparing $*.agda"
 	@$(AGDA) -i$(fol_theorems_path) $*.agda
 	@case $*.agda in \
@@ -102,13 +102,13 @@ GENERATED_FOL_THEOREMS_FLAGS = \
         esac
 	@diff -r $* $(output_dir)/$*
 
-.PHONY : generated_fol_theorems_aux
-generated_fol_theorems_aux : $(generated_fol_theorems_files)
+.PHONY : generated-fol-theorems-aux
+generated-fol-theorems-aux : $(generated_fol_theorems_files)
 
-.PHONY : generated_fol_theorems
-generated_fol_theorems :
+.PHONY : generated-fol-theorems
+generated-fol-theorems :
 	rm -r -f $(output_dir)
-	make generated_fol_theorems_aux
+	make generated-fol-theorems-aux
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -120,7 +120,7 @@ GENERATED_NON_FOL_THEOREMS_FLAGS = \
   --only-files \
   --output-dir=$(output_dir)
 
-%.generated_non_fol_theorems :
+%.generated-non-fol-theorems :
 	@echo "Comparing $*.agda"
 	@$(AGDA) -i$(non_fol_theorems_path) $*.agda
 	@case $*.agda in \
@@ -146,14 +146,14 @@ GENERATED_NON_FOL_THEOREMS_FLAGS = \
         esac
 	@diff -r $* $(output_dir)/$*
 
-.PHONY : generated_non_fol_theorems_aux
-generated_non_fol_theorems_aux : \
+.PHONY : generated-non-fol-theorems-aux
+generated-non-fol-theorems-aux : \
   $(generated_non_fol_theorems_files)
 
-.PHONY : generated_non_fol_theorems
-generated_non_fol_theorems :
+.PHONY : generated-non-fol-theorems
+generated-non-fol-theorems :
 	rm -r -f $(output_dir)
-	make generated_non_fol_theorems_aux
+	make generated-non-fol-theorems-aux
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -165,29 +165,29 @@ GENERATED_NON_THEOREMS_FLAGS = \
   --only-files \
   --output-dir=$(output_dir)
 
-%.generated_non_theorems :
+%.generated-non-theorems :
 	@echo "Comparing $*.agda"
 	@$(AGDA) -i$(non_theorems_path) $*.agda
 	@$(APIA) $(GENERATED_NON_THEOREMS_FLAGS) $*.agda
 	@diff -r $* $(output_dir)/$*
 
-.PHONY : generated_non_theorems_aux
-generated_non_theorems_aux : $(generated_non_theorems_files)
+.PHONY : generated-non-theorems-aux
+generated-non-theorems-aux : $(generated_non_theorems_files)
 
-.PHONY : generated_non_theorems
-generated_non_theorems : $(generated_non_theorems_files)
+.PHONY : generated-non-theorems
+generated-non-theorems : $(generated_non_theorems_files)
 	rm -r -f $(output_dir)
-	make generated_non_theorems_aux
+	make generated-non-theorems-aux
 	@echo "$@ succeeded!"
 
 ##############################################################################
 # Test suite: Generated TPTP files
 
-.PHONY : generated_all
-generated_all :
-	make generated_fol_theorems
-	make generated_non_fol_theorems
-	make generated_non_theorems
+.PHONY : generated-all
+generated-all :
+	make generated-fol-theorems
+	make generated-non-fol-theorems
+	make generated-non-theorems
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -198,7 +198,7 @@ ONLY_FOL_THEOREMS_FLAGS = \
   --only-files \
   --output-dir=$(output_dir)
 
-%.only_fol_theorems :
+%.only-fol-theorems :
 	$(AGDA) -i$(fol_theorems_path) $*.agda
 	@case $*.agda in \
           "${fol_theorems_path}/NonInternalEquality.agda") \
@@ -211,8 +211,8 @@ ONLY_FOL_THEOREMS_FLAGS = \
              ;; \
          esac
 
-.PHONY : only_fol_theorems
-only_fol_theorems : $(only_fol_theorems_files)
+.PHONY : only-fol-theorems
+only-fol-theorems : $(only_fol_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -223,7 +223,7 @@ ONLY_NON_FOL_THEOREMS_FLAGS = \
   --only-files \
   --output-dir=$(output_dir)
 
-%.only_non_fol_theorems :
+%.only-non-fol-theorems :
 	$(AGDA) -i$(non_fol_theorems_path) $*.agda
 	@case $*.agda in \
           "${non_fol_theorems_path}/AgdaInternalTerms/VarEmptyArgumentsTerm.agda" | \
@@ -247,8 +247,8 @@ ONLY_NON_FOL_THEOREMS_FLAGS = \
              ;; \
         esac
 
-.PHONY : only_non_fol_theorems
-only_non_fol_theorems : \
+.PHONY : only-non-fol-theorems
+only-non-fol-theorems : \
   $(only_non_fol_theorems_files)
 	@echo "$@ succeeded!"
 
@@ -260,7 +260,7 @@ PROVE_FOL_THEOREMS_FLAGS = \
   --output-dir=$(output_dir) \
   --time=10 \
 
-%.prove_fol_theorems :
+%.prove-fol-theorems :
 	$(AGDA) -i$(fol_theorems_path) $*.agda
 	@for atp in ${ATPs} ; do \
 	  set -e ; \
@@ -292,8 +292,8 @@ PROVE_FOL_THEOREMS_FLAGS = \
           esac ; \
         done
 
-.PHONY : prove_fol_theorems
-prove_fol_theorems : $(prove_fol_theorems_files)
+.PHONY : prove-fol-theorems
+prove-fol-theorems : $(prove_fol_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -304,7 +304,7 @@ PROVE_NON_FOL_THEOREMS_FLAGS = \
   --output-dir=$(output_dir) \
   --time=10
 
-%.prove_non_fol_theorems :
+%.prove-non-fol-theorems :
 	$(AGDA) -i$(non_fol_theorems_path) $*.agda
 	@for atp in ${ATPs} ; do \
 	  set -e ; \
@@ -333,24 +333,24 @@ PROVE_NON_FOL_THEOREMS_FLAGS = \
           esac ; \
         done
 
-.PHONY : prove_non_fol_theorems
-prove_non_fol_theorems : \
+.PHONY : prove-non-fol-theorems
+prove-non-fol-theorems : \
   $(prove_non_fol_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
 # Test suite: Prove all theorems
 
-.PHONY : prove_all_theorems
-prove_all_theorems :
-	make prove_fol_theorems
-	make prove_non_fol_theorems
+.PHONY : prove-all-theorems
+prove-all-theorems :
+	make prove-fol-theorems
+	make prove-non-fol-theorems
 	@echo "$@ succeeded!"
 
 ##############################################################################
 # Test suite: Refute theorems
 
-%.refute_theorems :
+%.refute-theorems :
 	@echo "Processing $*.agda"
 	@$(AGDA) -i$(non_theorems_path) $*.agda
 	@if ( $(APIA) -i$(non_theorems_path) \
@@ -358,19 +358,19 @@ prove_all_theorems :
 	    exit 1; \
 	fi
 
-.PHONY : refute_theorems
-refute_theorems : $(refute_theorems_files)
+.PHONY : refute-theorems
+refute-theorems : $(refute_theorems_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
 # Test suite: Non-conjectures
 
-%.non_conjectures :
+%.non-conjectures :
 	@$(AGDA) -i$(non_conjectures_path) $*.agda
 
 # Tested with shelltestrunner 1.3.5.
-.PHONY : non_conjectures
-non_conjectures : $(non_conjectures_files)
+.PHONY : non-conjectures
+non-conjectures : $(non_conjectures_files)
 	shelltest --color \
                   --execdir \
                   --precise \
@@ -407,11 +407,11 @@ type_check_notes_path = -i$(notes_path) \
                         -i$(notes_path)/agda-interface \
                         -i$(notes_path)/README
 
-%.type_check_notes :
+%.type-check-notes :
 	$(AGDA) $(type_check_notes_path) $*.agda
 
-.PHONY : type_check_notes
-type_check_notes : $(type_check_notes_files)
+.PHONY : type-check-notes
+type-check-notes : $(type_check_notes_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -420,7 +420,7 @@ type_check_notes : $(type_check_notes_files)
 prove_notes_path = -i$(notes_path) \
                    -i$(notes_path)/README
 
-%.prove_notes :
+%.prove-notes :
 	echo $(prove_notes_files)
 	$(AGDA) $(prove_notes_path) $*.agda
 	@for atp in ${ATPs} ; do \
@@ -432,8 +432,8 @@ prove_notes_path = -i$(notes_path) \
 	          $*.agda ; \
         done
 
-.PHONY : prove_notes
-prove_notes : $(prove_notes_files)
+.PHONY : prove-notes
+prove-notes : $(prove_notes_files)
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -441,19 +441,19 @@ prove_notes : $(prove_notes_files)
 
 .PHONY : tests
 tests :
-	make generated_all
-	make non_conjectures
+	make generated-all
+	make non-conjectures
 	make errors
-	make type_check_notes
-	make prove_notes
+	make type-check-notes
+	make prove-notes
 	make haddock
 	@echo "$@ succeeded!"
 
 ##############################################################################
 # Test used when there is a modification to Agda
 
-.PHONY : agda_changed
-agda_changed : clean
+.PHONY : agda-changed
+agda-changed : clean
 	cabal clean
 	cabal install
 	make tests
@@ -476,8 +476,8 @@ hlint :
 ##############################################################################
 # Git : pre-commit test
 
-.PHONY : git_pre_commit
-git_pre_commit :
+.PHONY : git-pre-commit
+git-pre-commit :
 	fix-whitespace --check
 	make hlint
 	@echo "$@ succeeded!"
@@ -497,12 +497,12 @@ install-bin :
 hpc_html_dir = $(apia_path)/hpc
 
 .PHONY : hpc
-hpc : hpc_clean
+hpc : hpc-clean
 	cd $(apia_path) && cabal clean && cabal install --ghc-option=-fhpc
 	make prove_all_theorem
-	make refute_theorems
+	make refute-theorems
 	make errors
-	make non_conjectures
+	make non-conjectures
 	hpc markup --exclude=Paths_apia \
 	           --destdir=$(hpc_html_dir) \
 	           --srcdir=$(apia_path) \
@@ -513,8 +513,8 @@ hpc : hpc_clean
                    apia.tix
 	rm -f *.tix
 
-.PHONY : hpc_clean
-hpc_clean :
+.PHONY : hpc-clean
+hpc-clean :
 	rm -f *.tix
 	rm -f -r $(hpc_html_dir)
 

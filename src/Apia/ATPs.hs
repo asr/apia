@@ -105,6 +105,9 @@ import System.Process
     , child_group
     , child_user
 #endif
+#if MIN_VERSION_process(1,5,0)
+    , use_process_jobs
+#endif
     )
 #if defined(linux_HOST_OS)
   , interruptProcessGroupOf
@@ -377,6 +380,9 @@ runATP atp outputMVar timeout tptpFile = do
 #if MIN_VERSION_process(1,4,0)
                     , child_group        = Nothing
                     , child_user         = Nothing
+#endif
+#if MIN_VERSION_process(1,5,0)
+                    , use_process_jobs   = False
 #endif
                     }
   output ← liftIO $ hGetContents $ fromMaybe (__IMPOSSIBLE__) processOutput

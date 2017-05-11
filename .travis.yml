@@ -3,8 +3,11 @@
 # NB: don't set `language: haskell` here.
 language: c
 
+# Request Ubuntu Trusty (14.04 LTS).
+dist: trusty
+
 # Explicitly request sudo-enabled virtual environments
-sudo: true
+sudo: required
 
 ##############################################################################
 # Tests

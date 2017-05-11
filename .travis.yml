@@ -90,6 +90,10 @@ install:
   - ghc --version
   - cabal update
   - cat ${HOME}/.cabal/config
+  - if [[ $CABAL_VER = "1.18" ]]; then
+       cabal install cabal-install &&
+       cabal --version;
+    fi
   - cabal install cabal-install
   - export PATH=${HOME}/.cabal/bin:${PATH}
   - export JOBS=2

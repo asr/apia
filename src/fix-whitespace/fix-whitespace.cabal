@@ -9,7 +9,7 @@ executable fix-whitespace
   main-is:          FixWhitespace.hs
 
   build-depends:
-    base >= 4.6.0.1 && < 4.10
+    base >= 4.6.0.1 && < 4.11
     , directory >= 1.2 && < 1.4
     , filemanip >= 0.3 && < 0.4
     , text >= 0.11 && < 1.3

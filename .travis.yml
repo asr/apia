@@ -133,7 +133,8 @@ install:
 
   - cabal install hlint
 
-# See https://github.com/simonmichael/shelltestrunner/pull/8.
+# We used `--allow-newer=process` because
+# https://github.com/simonmichael/shelltestrunner/pull/8.
   - cabal install shelltestrunner --allow-newer=process
 
 ##############################################################################
@@ -153,7 +154,10 @@ install:
 
   - git clone https://github.com/jonaprieto/online-atps ${MY_HOME}/online-atps
   - cd ${MY_HOME}/online-atps
-  - cabal install --force-reinstalls
+
+# We used `--allow-newer=base` because
+# https://github.com/haskell/HTTP/pull/109.
+  - cabal install --force-reinstalls --allow-newer=base
   - cd ${APIA_HOME}
 
 ##############################################################################

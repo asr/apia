@@ -132,7 +132,9 @@ install:
 # Installing HLint and shelltestrunner
 
   - cabal install hlint
-  - cabal install shelltestrunner
+
+# See https://github.com/simonmichael/shelltestrunner/pull/8.
+  - cabal install shelltestrunner --allow-newer=process
 
 ##############################################################################
 # Installing the E theorem prover

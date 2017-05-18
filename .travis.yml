@@ -154,10 +154,7 @@ install:
 
   - git clone https://github.com/jonaprieto/online-atps ${MY_HOME}/online-atps
   - cd ${MY_HOME}/online-atps
-
-# We used `--allow-newer=base` because
-# https://github.com/haskell/HTTP/pull/109.
-  - cabal install --force-reinstalls --allow-newer=base
+  - cabal install --force-reinstalls
   - cd ${APIA_HOME}
 
 ##############################################################################

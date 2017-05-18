@@ -60,16 +60,16 @@ matrix:
           sources:
             - hvr-ghc
 
-    - env: TEST=main GHC_VER=7.6.3 CABAL_VER=1.18
-      addons:
-        apt:
-          packages:
-            - alex-3.1.7
-            - cabal-install-1.18
-            - ghc-7.6.3
-            - happy-1.19.5
-          sources:
-            - hvr-ghc
+    # - env: TEST=main GHC_VER=7.6.3 CABAL_VER=1.18
+    #   addons:
+    #     apt:
+    #       packages:
+    #         - alex-3.1.7
+    #         - cabal-install-1.18
+    #         - ghc-7.6.3
+    #         - happy-1.19.5
+    #       sources:
+    #         - hvr-ghc
 
 ##############################################################################
 before_install:

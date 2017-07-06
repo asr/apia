@@ -12,10 +12,11 @@ import Apia.Prelude
 import Apia.Utils.CommitVersion ( getVersion )
 import Apia.Utils.String        ( toUpperFirst )
 
-import Data.Version       ( showVersion )
-import System.Environment ( getProgName )
+import Data.Version ( showVersion )
 
 import Paths_apia ( version )
+
+import System.Environment ( getProgName )
 
 ------------------------------------------------------------------------------
 -- | Return program name and version information.

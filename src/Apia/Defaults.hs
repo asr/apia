@@ -37,7 +37,7 @@ import System.Directory
 
 import System.FilePath.Posix ((</>))
 
--- | Default options use by the program.
+-- | Default command-line options.
 defaultOptions ∷ Options
 defaultOptions = Options
   { optATP                             = DefaultATPs []

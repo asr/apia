@@ -102,7 +102,7 @@ install:
 
   # The version installed of cpphs should match the lower version
   # required in apia.cabal.
-  - cabal install cpphs-1.20.2
+  - cabal install cpphs-1.20.8
 
   - git clone https://github.com/asr/eagda.git ${MY_HOME}/eagda
   - cd ${MY_HOME}/eagda

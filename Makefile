@@ -71,6 +71,10 @@ prove_non_fol_theorems_files = \
 refute_theorems_files = \
   $(call my_pathsubst,refute-theorems,$(non_theorems_path))
 
+errors_files = \
+  $(patsubst %.agda, %.errors,\
+    $(shell find $(errors_path) -name '*.agda' | sort))
+
 # Notes
 
 type_check_notes_files = \
@@ -393,9 +397,12 @@ non-conjectures-shelltestrunner : $(non_conjectures_files)
 ##############################################################################
 # Test suite: Errors
 
+%.errors :
+	$(AGDA) -v 0 -i$(errors_path) $*.agda
+
 # Tested with shelltestrunner 1.3.5.
 .PHONY : errors
-errors :
+errors : $(errors_files)
 	shelltest --color --execdir --precise  $(errors_path)/errors.test
 	@echo "$@ succeeded!"
 

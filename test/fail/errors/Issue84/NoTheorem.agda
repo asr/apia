@@ -7,7 +7,7 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module NoTheorem where
+module Issue84.NoTheorem where
 
 postulate
   D   : Set

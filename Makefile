@@ -371,14 +371,14 @@ refute-theorems : $(refute_theorems_files)
 ##############################################################################
 # Test suite: Non-conjectures
 
+%.non-conjectures :
+	@$(AGDA) -i$(non_conjectures_path) $*.agda
+
 .PHONY : non-conjectures
-non-conjectures :
+non-conjectures : $(non_conjectures_files)
 	cd test && \
 	$(APIA_TEST_BIN) $(TESTS_OPTIONS) --regex-include succeed
 	@echo "$@ succeeded"
-
-%.non-conjectures :
-	@$(AGDA) -i$(non_conjectures_path) $*.agda
 
 # Tested with shelltestrunner 1.3.5.
 .PHONY : non-conjectures-shelltestrunner

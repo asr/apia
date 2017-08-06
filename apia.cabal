@@ -199,3 +199,25 @@ executable apia
   ghc-options: -rtsopts
 
   ghc-prof-options: -fprof-auto
+
+-- From Agda.cabal:
+--
+-- Cabal testsuite integration has some serious bugs, but we
+-- can still make it work. See also:
+-- https://github.com/haskell/cabal/issues/1938
+-- https://github.com/haskell/cabal/issues/2214
+-- https://github.com/haskell/cabal/issues/1953
+--
+-- This test suite should only be run using the Makefile.
+
+test-suite apia-tests
+  type:            exitcode-stdio-1.0
+  hs-source-dirs:  test
+  main-is:         Main.hs
+
+  build-depends:  base         >= 4.6.0.1  && < 4.11
+                , tasty        >= 0.10     && < 0.12
+                , tasty-silver >= 3.1.8    && < 3.2
+                , text         >= 0.11.3.1 && < 1.3
+
+  default-language: Haskell2010

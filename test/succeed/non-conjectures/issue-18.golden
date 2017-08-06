@@ -1,0 +1,20 @@
+ret > ExitSuccess
+out > Qname: Issue18._,_
+out > Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru{El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (NoAbs "_" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}} (Abs "A" El {_getSort = Type (Max []), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.∃ [Apply ru(Var 0 [])]}) (Abs "d" El {_getSort = Type (Max []), unEl = Def Issue18.D []})})}
+out >
+out > Qname: Issue18.D
+out > Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}
+out >
+out > Qname: Issue18.∃
+out > Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru(El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (NoAbs "_" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}) (NoAbs "A" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}
+out >
+out > Qname: Issue18.∃
+out > Type: El {_getSort = Inf, unEl = Pi ru{El {_getSort = Inf, unEl = Pi ru(El {_getSort = Inf, unEl = Def Agda.Primitive.CubicalPrimitives.I []}) (Abs "i" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (NoAbs "_" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})})}} (Abs "A" El {_getSort = Inf, unEl = Pi ru(El {_getSort = Inf, unEl = Def Agda.Primitive.CubicalPrimitives.I []}) (Abs "phi" El {_getSort = Inf, unEl = Pi ru(El {_getSort = Inf, unEl = Pi ru(El {_getSort = Inf, unEl = Def Agda.Primitive.CubicalPrimitives.I []}) (Abs "i" El {_getSort = Inf, unEl = Pi .u(El {_getSort = Inf, unEl = Def Agda.Primitive.CubicalPrimitives.IsOne [Apply ru(Var 1 [])]}) (Abs "o" El {_getSort = Type (Max []), unEl = Def Issue18.∃ [Apply ru(Var 3 [Apply ru(Var 1 [])])]})})}) (NoAbs "_" El {_getSort = Type (Max []), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.∃ [Apply ru(Var 1 [Apply ru(Con Agda.Primitive.CubicalPrimitives.i0(inductive)[] ConOSystem [])])]}) (NoAbs "_" El {_getSort = Type (Max []), unEl = Def Issue18.∃ [Apply ru(Var 1 [Apply ru(Con Agda.Primitive.CubicalPrimitives.i1(inductive)[] ConOSystem [])])]})})})})}
+out >
+out > Qname: Issue18._,_
+out > Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru{El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (NoAbs "_" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}} (Abs "A" El {_getSort = Type (Max []), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.∃ [Apply ru(Var 0 [])]}) (Abs "d" El {_getSort = Type (Max []), unEl = Var 1 [Apply ru(Def Issue18._,_ [Apply ru(Var 0 [])])]})})}
+out >
+out > Qname: Issue18.∃._,_
+out > Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru{El {_getSort = Type (Max [ClosedLevel 1]), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (NoAbs "_" El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))})}} (Abs "A" El {_getSort = Type (Max []), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Def Issue18.D []}) (Abs "witness" El {_getSort = Type (Max []), unEl = Pi ru(El {_getSort = Type (Max []), unEl = Var 1 [Apply ru(Var 0 [])]}) (NoAbs "_" El {_getSort = Type (Max []), unEl = Def Issue18.∃ [Apply ru(Var 1 [])]})})})}
+out >
+out >

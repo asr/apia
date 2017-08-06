@@ -1,0 +1,5 @@
+ret > ExitSuccess
+out > Qname: Foo.foo
+out > Type: El {_getSort = Type (Max [ClosedLevel 1]), unEl = Sort (Type (Max []))}
+out >
+out >

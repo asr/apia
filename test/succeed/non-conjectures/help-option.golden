@@ -1,0 +1,46 @@
+ret > ExitSuccess
+out > Usage: apia [OPTIONS] FILE
+out >
+out >            --atp=[online-]NAME                  Set the ATP
+out >                                                 (offline ATPs: cvc4, e, equinox, ileancop, metis, spass, vampire or z3)
+out >                                                 (online ATPs: run the ‘online-atps --list-atps’ command)
+out >            --check                              Check the syntax of the generated TPTP files using the
+out >                                                 tptp4X program from the TPTP library
+out >            --dump-types                         Dump Agda types information to stdout
+out >            --function-constant                  Use a hard-coded binary function symbol for the translation
+out >                                                 of functions (required for handling currying)
+out >            --help                               Show this help
+out >   -i DIR   --include-path=DIR                   Look for imports in DIR
+out >   -L LANG  --lang=LANG                          TPTP or SMT-LIB v2 output language (tptp or smt2)
+out >                                                 (default: tptp)
+out >            --no-check                           Do not check the syntax of the generated TPTP files using the
+out >                                                 tptp4X program from the TPTP library
+out >            --no-config-file                     Omit any configuration file (.apia)
+out >            --no-internal-equality               Do not translate _≡_ to the ATPs equality
+out >            --no-predicate-constants             Do not use hard-coded (n+1)-ary predicate symbols for the
+out >                                                 translation of n-ary predicates
+out >            --only-files                         Do not call the ATPs, only to create the TPTP files
+out >            --output-dir=DIR                     Directory in which the TPTP files are placed (default: /tmp)
+out >            --schematic-propositional-functions  Enable translation of universal quantified FOL propositional functions
+out >            --schematic-propositional-symbols    Enable translation of universal quantified FOL propositional symbols
+out >            --snapshot-dir=DIR                   Directory where is the snapshot of the TPTP files
+out >                                                 (default: snapshot)
+out >            --snapshot-no-error                  A difference in the snapshot-test does not generate an error
+out >                                                 (implies --snapshot-test)
+out >            --snapshot-test                      Compare the generated TPTP files against a snapshot of them
+out >            --time=NUM                           Set timeout for the ATPs in seconds (default: 240)
+out >            --unproven-conjecture-no-error       An unproven TPTP conjecture does not generate an error
+out >   -v N     --verbose=N                          Set verbosity level to N
+out >            --version                            Show version number
+out >            --with-cvc4=PATH                     Give the path to CVC4
+out >            --with-e=PATH                        Give the path to E
+out >            --with-equinox=PATH                  Give the path to Equinox
+out >            --with-ileancop=PATH                 Give the path to IleanCoP
+out >            --with-metis=PATH                    Give the path to Metis
+out >            --with-online-atps=PATH              Give the path to OnlineATPs
+out >            --with-spass=PATH                    Give the path to SPASS
+out >            --with-tptp4X=PATH                   Give the path to tptp4X
+out >            --with-vampire=PATH                  Give the path to Vampire
+out >            --with-z3=PATH                       Give the path to Z3
+out >
+out >

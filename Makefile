@@ -80,6 +80,12 @@ type_check_notes_files = \
 prove_notes_files = $(call my_pathsubst,prove-notes,$(notes_path))
 
 ##############################################################################
+# Test suite variables
+
+APIA_TEST_BIN = ../dist/build/apia-tests/apia-tests
+TESTS_OPTIONS =-i
+
+##############################################################################
 # Test suite: Generated FOL theorems
 
 GENERATED_FOL_THEOREMS_FLAGS = \
@@ -365,17 +371,24 @@ refute-theorems : $(refute_theorems_files)
 ##############################################################################
 # Test suite: Non-conjectures
 
+.PHONY : non-conjectures
+non-conjectures :
+	cd test && \
+	$(APIA_TEST_BIN) $(TESTS_OPTIONS) --regex-include succeed
+	@echo "$@ succeeded"
+
 %.non-conjectures :
 	@$(AGDA) -i$(non_conjectures_path) $*.agda
 
 # Tested with shelltestrunner 1.3.5.
-.PHONY : non-conjectures
-non-conjectures : $(non_conjectures_files)
+.PHONY : non-conjectures-shelltestrunner
+non-conjectures-shelltestrunner : $(non_conjectures_files)
 	shelltest --color \
                   --execdir \
                   --precise \
                   $(non_conjectures_path)/non-conjectures.test
 	@echo "$@ succeeded!"
+
 
 ##############################################################################
 # Test suite: Errors
@@ -443,6 +456,7 @@ prove-notes : $(prove_notes_files)
 tests :
 	make generated-all
 	make non-conjectures
+	make non-conjectures-shelltestrunner
 	make errors
 	make type-check-notes
 	make prove-notes
@@ -455,7 +469,7 @@ tests :
 .PHONY : agda-changed
 agda-changed : clean
 	cabal clean
-	cabal install
+	make install-bin
 	make tests
 	@echo "$@ succeeded!"
 
@@ -470,7 +484,7 @@ hlint :
 	hlint --color=never \
               --cpp-file=dist/build/autogen/cabal_macros.h \
               --cpp-include=src/Apia/ \
-              src/
+              src/ test/
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -487,7 +501,7 @@ git-pre-commit :
 
 .PHONY : install-bin
 install-bin :
-	cabal install --disable-documentation
+	cabal install --enable-tests --disable-documentation
 
 ##############################################################################
 # Haskell program coverage
@@ -503,6 +517,7 @@ hpc : hpc-clean
 	make refute-theorems
 	make errors
 	make non-conjectures
+	make non-conjectures-shelltestrunner
 	hpc markup --exclude=Paths_apia \
 	           --destdir=$(hpc_html_dir) \
 	           --srcdir=$(apia_path) \

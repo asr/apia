@@ -1,0 +1,5 @@
+ret > ExitSuccess
+out > Proving the conjecture in /tmp/succeed/non-conjectures/NoTheorem/17-foo.fof
+out > E 1.9.1-001 Sungma *did not* prove the conjecture
+out > the ATP(s) did not prove the conjecture in /tmp/succeed/non-conjectures/NoTheorem/17-foo.fof
+out >

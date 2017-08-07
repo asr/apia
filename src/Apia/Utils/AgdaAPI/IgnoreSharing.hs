@@ -17,7 +17,7 @@ import Agda.Syntax.Common
 
 import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
-  , Elim'(Apply, Proj)
+  , Elim'(Apply, IApply, Proj)
   , Tele(EmptyTel, ExtendTel)
   , Term(Def, Shared, Pi)
   , Type'(El)
@@ -55,8 +55,9 @@ instance IgnoreSharing a ⇒ IgnoreSharing (Dom a) where
   ignoreSharing (Dom ai b e) = Dom ai b $ ignoreSharing e
 
 instance IgnoreSharing a ⇒ IgnoreSharing (Elim' a) where
-  ignoreSharing (Apply a)      = Apply $ ignoreSharing a
-  ignoreSharing (Proj o qname) = Proj o qname
+  ignoreSharing (Apply a) = Apply $ ignoreSharing a
+  ignoreSharing p@Proj{}  = p
+  ignoreSharing IApply{}  = __IMPOSSIBLE__
 
 instance IgnoreSharing a ⇒ IgnoreSharing (Arg a) where
   ignoreSharing (Arg ai e) = Arg ai (ignoreSharing e)

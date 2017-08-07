@@ -1,0 +1,7 @@
+ret > ExitFailure 1
+err > apia: tptp4X found an error/warning in the file /tmp/test/fail/errors//DuplicateFormulaTPTP4XError/20-foo.fof
+err > Please report this as a bug
+err >
+err > ERROR: Duplicate annotated formula name "n12_8770576564447903158"
+err >
+err >

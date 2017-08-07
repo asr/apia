@@ -1,0 +1,3 @@
+ret > ExitFailure 1
+err > apia: the translation of ‘HigherOrderDefinition.twice’ failed because it is not a FOL-definition
+err >

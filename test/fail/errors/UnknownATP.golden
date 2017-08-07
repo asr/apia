@@ -1,0 +1,3 @@
+ret > ExitFailure 1
+err > apia: the ATP ‘foo’ is unknown
+err >

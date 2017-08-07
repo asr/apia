@@ -7,8 +7,6 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
-module HigherOrderDefinition where
-
 ------------------------------------------------------------------------------
 
 postulate

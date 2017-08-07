@@ -1,0 +1,4 @@
+ret > ExitFailure 1
+err > apia: the translation failed because we do not know how erase the term
+err > Pi ru(El {_getSort = Type (Max []), unEl = Def NotErasedProofTerm.D []}) (Abs "k" El {_getSort = Type (Max []), unEl = Def NotErasedProofTerm._≤_ [Apply ru(Var 0 []),Apply ru(Var 0 [])]})
+err >

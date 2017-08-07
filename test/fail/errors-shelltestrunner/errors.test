@@ -1,0 +1,36 @@
+# Error: MissingInterfaceFile
+echo -e "module A where" > /tmp/A.agda && ../../../dist/build/apia/apia /tmp/A.agda
+<<<
+>>>
+>>>2
+apia: the interface file /tmp/A.agdai does not exist (use Agda to generate it)
+>>>= 1
+
+# Error: SnapshotDifferentFiles
+../../../dist/build/apia/apia --atp=e --only-files --output-dir=/tmp/snapshot TrivialTheorem.agda && sed -i '$ d' /tmp/snapshot/TrivialTheorem/20-foo.fof && ../../../dist/build/apia/apia --atp=e --snapshot-test --snapshot-dir=/tmp/snapshot TrivialTheorem.agda
+<<<
+>>>
+Created /tmp/snapshot/TrivialTheorem/20-foo.fof
+>>>2
+apia: the files are different:
+/tmp/TrivialTheorem/20-foo.fof
+/tmp/snapshot/TrivialTheorem/20-foo.fof
+>>>= 1
+
+# Files.hs: exception when using `createDirectoryIfMissing`
+echo Foo > /tmp/foo && ../../../dist/build/apia/apia --atp=e --output-dir=/tmp/foo/ NoTheorem.agda
+<<<
+>>>
+>>>2
+apia: could not create the ‘/tmp/foo/NoTheorem’ directory
+>>>= 1
+
+# Issue #62
+../../../dist/build/apia/apia --atp=e Issue62/NoTheorem.agda
+<<<
+>>>
+Proving the conjecture in /tmp/Issue62/NoTheorem/17-foo.fof
+E 1.9.1-001 Sungma *did not* prove the conjecture
+>>>2
+apia: the ATP(s) did not prove the conjecture in /tmp/Issue62/NoTheorem/17-foo.fof
+>>>= 1

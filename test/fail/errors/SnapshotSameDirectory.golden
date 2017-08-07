@@ -1,0 +1,3 @@
+ret > ExitFailure 1
+err > apia: the ‘--output-dir’ and ‘--snapshot-dir’ options cannot be the same
+err >

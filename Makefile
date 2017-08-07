@@ -4,11 +4,12 @@ SHELL := /bin/bash
 # Paths
 
 # Tests paths.
-errors_path           = test/fail/errors
-fol_theorems_path     = test/succeed/fol-theorems
-non_conjectures_path  = test/succeed/non-conjectures
-non_fol_theorems_path = test/succeed/non-fol-theorems
-non_theorems_path     = test/fail/non-theorems
+errors_path                 = test/fail/errors
+errors_shelltestrunner_path = test/fail/errors-shelltestrunner
+fol_theorems_path           = test/succeed/fol-theorems
+non_conjectures_path        = test/succeed/non-conjectures
+non_fol_theorems_path       = test/succeed/non-fol-theorems
+non_theorems_path           = test/fail/non-theorems
 
 # Output directory for the TPTP files.
 output_dir = /tmp/apia
@@ -75,6 +76,10 @@ errors_files = \
   $(patsubst %.agda, %.errors,\
     $(shell find $(errors_path) -name '*.agda' | sort))
 
+errors_shelltestrunner_files = \
+  $(patsubst %.agda, %.errors-shelltestrunner,\
+    $(shell find $(errors_shelltestrunner_path) -name '*.agda' | sort))
+
 # Notes
 
 type_check_notes_files = \
@@ -86,7 +91,7 @@ prove_notes_files = $(call my_pathsubst,prove-notes,$(notes_path))
 ##############################################################################
 # Test suite variables
 
-APIA_TEST_BIN = ../dist/build/apia-tests/apia-tests
+APIA_TEST_BIN = dist/build/apia-tests/apia-tests
 TESTS_OPTIONS =-i
 
 ##############################################################################
@@ -380,8 +385,7 @@ refute-theorems : $(refute_theorems_files)
 
 .PHONY : non-conjectures
 non-conjectures : $(non_conjectures_files)
-	cd test && \
-	$(APIA_TEST_BIN) $(TESTS_OPTIONS) --regex-include succeed
+	$(APIA_TEST_BIN) $(TESTS_OPTIONS) --regex-include test/succeed/non-conjectures
 	@echo "$@ succeeded"
 
 # Tested with shelltestrunner 1.3.5.
@@ -398,12 +402,20 @@ non-conjectures-shelltestrunner : $(non_conjectures_files)
 # Test suite: Errors
 
 %.errors :
-	$(AGDA) -v 0 -i$(errors_path) $*.agda
+	@$(AGDA) -v 0 -i$(errors_path) $*.agda
 
-# Tested with shelltestrunner 1.3.5.
 .PHONY : errors
 errors : $(errors_files)
-	shelltest --color --execdir --precise  $(errors_path)/errors.test
+	$(APIA_TEST_BIN) $(TESTS_OPTIONS) --regex-include test/fail/errors
+	@echo "$@ succeeded"
+
+%.errors-shelltestrunner :
+	@$(AGDA) -v 0 -i$(errors_shelltestrunner_path) $*.agda
+
+# Tested with shelltestrunner 1.3.5.
+.PHONY : errors-shelltestrunner
+errors-shelltestrunner : $(errors_shelltestrunner_files)
+	shelltest --color --execdir --precise  $(errors_shelltestrunner_path)/errors.test
 	@echo "$@ succeeded!"
 
 ##############################################################################
@@ -465,6 +477,7 @@ tests :
 	make non-conjectures
 	make non-conjectures-shelltestrunner
 	make errors
+	make errors-shelltestrunner
 	make type-check-notes
 	make prove-notes
 	make haddock
@@ -523,6 +536,7 @@ hpc : hpc-clean
 	make prove_all_theorem
 	make refute-theorems
 	make errors
+	make errors-shelltestrunner
 	make non-conjectures
 	make non-conjectures-shelltestrunner
 	hpc markup --exclude=Paths_apia \

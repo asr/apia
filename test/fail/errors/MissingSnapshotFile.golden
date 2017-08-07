@@ -1,0 +1,3 @@
+ret > ExitFailure 1
+err > apia: the file no-dir/test/fail/errors//MissingSnapshotFile/16-foo.fof does not exist
+err >

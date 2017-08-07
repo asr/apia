@@ -1,0 +1,3 @@
+ret > ExitFailure 1
+err > apia: use the ‘--schematic-functions’ option for the translation of first-order logic universal quantified functions
+err >

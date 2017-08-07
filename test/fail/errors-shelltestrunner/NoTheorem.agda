@@ -1,5 +1,5 @@
 ------------------------------------------------------------------------------
--- tptp4X yields an error because a duplicate formula
+-- No theorem used by the shelltestrunner test
 ------------------------------------------------------------------------------
 
 {-# OPTIONS --exact-split              #-}
@@ -7,15 +7,12 @@
 {-# OPTIONS --no-universe-polymorphism #-}
 {-# OPTIONS --without-K                #-}
 
+module NoTheorem where
+
 postulate
-  D          : Set
-  true false : D
-  _≡_        : D → D → Set
+  D   : Set
+  _≡_ : D → D → Set
+  a b : D
 
-data Bool : D → Set where
-  btrue  : Bool true
-  bfalse : Bool false
-{-# ATP axioms btrue false #-}
-
-postulate foo : ∀ d → d ≡ d
-{-# ATP prove foo btrue #-}
+postulate foo : a ≡ b
+{-# ATP prove foo #-}

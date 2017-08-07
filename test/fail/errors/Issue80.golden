@@ -1,0 +1,3 @@
+ret > ExitFailure 1
+err > apia: the translation of ‘Issue80._⊕_’ failed because it is not a FOL-definition
+err >

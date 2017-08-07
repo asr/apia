@@ -1,0 +1,3 @@
+ret > ExitFailure 1
+err > apia: missing input file (try --help)
+err >

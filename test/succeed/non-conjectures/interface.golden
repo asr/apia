@@ -1,5 +1,4 @@
 ret > ExitSuccess
-out > Loading  Foo (/home/asr/src/apia/apia/test/succeed/non-conjectures/Foo.agdai).
 out > Interface
 out >   source hash: 16987302680121282013
 out >   imported modules: []

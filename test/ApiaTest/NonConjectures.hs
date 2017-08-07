@@ -67,7 +67,8 @@ allNonConjecturesTests = testGroup "non-conjectures"
 
   interface ∷ TestTree
   interface = helper agdaBIN "interface"
-    [ "-v"
+    [ "-v 0"
+    , "-v"
     , "main:50"
     ,  nonConjecturesPath ++ "Foo.agda"
     ]

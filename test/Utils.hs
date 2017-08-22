@@ -1,6 +1,6 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
-module ApiaTest.Utils
+module Utils
   ( agdaBIN
   , apiaBIN
   ) where

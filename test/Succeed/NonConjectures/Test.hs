@@ -1,8 +1,8 @@
 {-# LANGUAGE UnicodeSyntax #-}
 
-module ApiaTest.NonConjectures ( allNonConjecturesTests ) where
+module Succeed.NonConjectures.Test ( allNonConjecturesTests ) where
 
-import ApiaTest.Utils ( agdaBIN, apiaBIN )
+import Utils ( agdaBIN, apiaBIN )
 
 import qualified Data.Text as T
 
@@ -25,7 +25,7 @@ allNonConjecturesTests = testGroup "non-conjectures"
 
   where
   nonConjecturesPath ∷ String
-  nonConjecturesPath = "test/succeed/non-conjectures/"
+  nonConjecturesPath = "test/Succeed/NonConjectures/"
 
   helper ∷ String → String → [String] → TestTree
   helper exec name arg = goldenVsProg testName goldenFile exec args T.empty

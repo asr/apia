@@ -215,9 +215,9 @@ test-suite apia-tests
   hs-source-dirs:  test
   main-is:         Main.hs
 
-  other-modules:   ApiaTest.Errors
-                 , ApiaTest.NonConjectures
-                 , ApiaTest.Utils
+  other-modules:   Fail.Errors.Test
+                 , Succeed.NonConjectures.Test
+                 , Utils
 
   build-depends:  base         >= 4.6.0.1  && < 4.11
                 , directory    >= 1.2.0.1  && < 1.4

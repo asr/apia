@@ -2,8 +2,8 @@
 
 module Main ( main ) where
 
-import ApiaTest.NonConjectures ( allNonConjecturesTests )
-import ApiaTest.Errors         ( errorsTests )
+import Fail.Errors.Test            ( errorsTests )
+import Succeed.NonConjectures.Test ( allNonConjecturesTests )
 
 import Test.Tasty                    ( testGroup, TestTree )
 import Test.Tasty.Silver.Interactive ( defaultMain )

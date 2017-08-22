@@ -1,5 +1,0 @@
-ret > ExitFailure 1
-out > Proving the conjecture in /tmp/test/fail/errors//Issue82/17-foo.fof
-out >
-err > apia: the ‘xxx’ command associated with E does not exist
-err >

@@ -4,12 +4,12 @@ SHELL := /bin/bash
 # Paths
 
 # Tests paths.
-errors_path                 = test/fail/errors
-errors_shelltestrunner_path = test/fail/errors-shelltestrunner
-fol_theorems_path           = test/succeed/fol-theorems
-non_conjectures_path        = test/succeed/non-conjectures
-non_fol_theorems_path       = test/succeed/non-fol-theorems
-non_theorems_path           = test/fail/non-theorems
+errors_path                 = test/Fail/Errors
+errors_shelltestrunner_path = test/Fail/errors-shelltestrunner
+fol_theorems_path           = test/Succeed/fol-theorems
+non_conjectures_path        = test/Succeed/NonConjectures
+non_fol_theorems_path       = test/Succeed/non-fol-theorems
+non_theorems_path           = test/Fail/non-theorems
 
 # Output directory for the TPTP files.
 output_dir = /tmp/apia
@@ -386,7 +386,7 @@ refute-theorems : $(refute_theorems_files)
 
 .PHONY : non-conjectures
 non-conjectures : $(non_conjectures_files)
-	$(APIA_TEST_BIN) $(TESTS_OPTIONS) --regex-include test/succeed/non-conjectures
+	$(APIA_TEST_BIN) $(TESTS_OPTIONS) --regex-include test/Succeed/NonConjectures
 	@echo "$@ succeeded"
 
 # Tested with shelltestrunner 1.3.5.
@@ -407,7 +407,7 @@ non-conjectures-shelltestrunner : $(non_conjectures_files)
 
 .PHONY : errors
 errors : $(errors_files)
-	$(APIA_TEST_BIN) $(TESTS_OPTIONS) --regex-include test/fail/errors
+	$(APIA_TEST_BIN) $(TESTS_OPTIONS) --regex-include test/Fail/Errors
 	@echo "$@ succeeded"
 
 %.errors-shelltestrunner :

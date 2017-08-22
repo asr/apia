@@ -1,9 +1,9 @@
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module ApiaTest.Errors ( errorsTests ) where
+module Fail.Errors.Test ( errorsTests ) where
 
-import ApiaTest.Utils ( apiaBIN )
+import Utils ( apiaBIN )
 
 #if __GLASGOW_HASKELL__ <= 708
 import Control.Applicative ((<$>))
@@ -20,7 +20,7 @@ import Test.Tasty.Silver ( findByExtension, goldenVsProg )
 ------------------------------------------------------------------------------
 
 errorsPath ∷ String
-errorsPath = "test/fail/errors/"
+errorsPath = "test/Fail/Errors/"
 
 tastyTest ∷ FilePath → IO TestTree
 tastyTest testFile = do
@@ -34,7 +34,7 @@ tastyTest testFile = do
   flags ← if flagsExist then words <$> readFile flagsFile else return []
 
   let args ∷ [String]
-      args = [ "-itest/fail/errors"
+      args = [ "-i" ++ errorsPath
              , testFile
              ] ++ flags
 

@@ -14,8 +14,8 @@ In Apia
 
 * Test all the proved conjectures and notes.
 
-    make prove_all_theorems
-    make prove_notes
+    make prove-all-theorems
+    make prove-notes
 
 * Run test-suite
 

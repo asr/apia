@@ -157,7 +157,7 @@ optATP2ATP other
 
 -- | The message generad by the ATPs when a conjectured is proved,
 atpProvedMsg ∷ ATP → String
--- CVC4 1.4.
+-- CVC4 1.5.
 atpProvedMsg CVC4 = "SZS status Theorem"
 -- E 1.9.1-001
 atpProvedMsg E = "Proof found!"
@@ -222,7 +222,7 @@ checkOutputErr atp output _ =
 
 atpArgs ∷ ATP → Int → FilePath → T [String]
 
--- TODO (20 July 2015). The timeout is not working with precision.
+-- TODO (2017-08-21). Test the timeout with CVC 1.5.
 atpArgs CVC4 timeout file =
   return [ "--lang=tptp"
          , "--strict-parsing"

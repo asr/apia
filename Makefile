@@ -26,7 +26,7 @@ AGDA = agda -v 0
 APIA = dist/build/apia/apia --check
 
 # Supported ATPs.
-ATPs = e vampire
+ATPs = cvc4 e vampire
 # ATPs = cvc4 e equinox ileancop metis spass vampire z3
 
 ##############################################################################

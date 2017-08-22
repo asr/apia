@@ -165,7 +165,7 @@ atpProvedMsg E = "Proof found!"
 atpProvedMsg Equinox = "+++ RESULT: Theorem"
 -- ileanCoP 1.3 beta1.
 atpProvedMsg IleanCoP = "Intuitionistic Theorem"
--- Metis 2.3 (release 20170315).
+-- Metis 2.3 (release 20170810).
 atpProvedMsg Metis = "SZS status Theorem"
 -- OnlineATPs 0.1.1
 atpProvedMsg (OnlineATP _ ) = "Theorem"

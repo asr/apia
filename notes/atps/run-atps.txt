@@ -12,39 +12,45 @@ For E 1.6, E 1.7, E 1.8 and E 1.9:
 $ eprover --auto --cpu-limit=xxx --memory-limit=Auto --tstp-format \
   --output-level=0 file_name
 
+For Equinox 5.0alpha (2010-06-29):
 $ equinox --time xxx file_name
 
+For IleanCoP V1.3beta1:
 $ ileancop file_name time
 
+For Metis 2.3 (release 20170315):
 $ metis --time-limit xxx file_name
 
+For SPASS V 3.9:
 $ SPASS -PProblem=0 -PStatistic=0 -TPTP=1 -TimeLimit=xxx file_name
 
+For Vampire 0.6 (revision 903):
 $ vampire_lin64 -t xxx --mode casc --input_file file_name
 
+For Z3 version 4.5.0 - 64 bit:
 $ z3 -T:xxx file_name
 
 Options used from the shell
 ---------------------------
 
-E 1.9.1-001
+For E 1.9.1-001:
 $ eprover --tstp-format --output-level=0 file_name
 
-Equinox 5.0alpha (2010-06-29)
+For Equinox 5.0alpha (2010-06-29):
 $ equinox file_name
 
-IleanCoP V1.3beta1
+For IleanCoP V1.3beta1:
 $ ileancop file_name
 
-Metis 2.3 (release 20170315)
+For Metis 2.3 (release 20170315):
 $ metis file_name
 
-SPASS V 3.9
+For SPASS V 3.9:
 $ SPASS -TPTP=1 file_name
 
-Vampire 0.6 (revision 903)
+For Vampire 0.6 (revision 903):
 $ vampire_lin64 --input_file file_name
 
-Z3 version 4.5.0 - 64 bit
+For Z3 version 4.5.0 - 64 bit:
 $ tptp4X -fsmt2 file.fof > file.smt2
 $ z3 file.smt2

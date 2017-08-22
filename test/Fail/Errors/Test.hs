@@ -1,9 +1,10 @@
 {-# LANGUAGE CPP           #-}
 {-# LANGUAGE UnicodeSyntax #-}
 
-module Fail.Errors.Test ( errorsTests ) where
-
-import Utils ( apiaBIN )
+module Fail.Errors.Test
+  ( errorsTests
+  , couldBeDisabledTests
+  ) where
 
 #if __GLASGOW_HASKELL__ <= 708
 import Control.Applicative ((<$>))
@@ -14,10 +15,14 @@ import qualified Data.Text as T
 import System.Directory ( doesFileExist )
 import System.FilePath  ( replaceExtension )
 
-import Test.Tasty        ( testGroup, TestTree )
-import Test.Tasty.Silver ( findByExtension, goldenVsProg )
+import Test.Tasty               ( testGroup, TestTree )
+import Test.Tasty.Silver.Filter ( RegexFilter(RFInclude) )
+import Test.Tasty.Silver        ( findByExtension, goldenVsProg )
+
+import Utils ( apiaBIN )
 
 ------------------------------------------------------------------------------
+-- Auxiliary functions
 
 errorsPath ∷ String
 errorsPath = "test/Fail/Errors/"
@@ -39,6 +44,9 @@ tastyTest testFile = do
              ] ++ flags
 
   return $ goldenVsProg testFile goldenFile apiaBIN args T.empty
+
+------------------------------------------------------------------------------
+-- Tests cases
 
 errorsWithFiles ∷ IO TestTree
 errorsWithFiles = do
@@ -89,6 +97,13 @@ errorsWithoutFilesTests = testGroup "errors-without-files"
 
   incompleteVerbose ∷ TestTree
   incompleteVerbose = helper apiaBIN "incomplete-verbose" [ "--verbose=" ]
+
+------------------------------------------------------------------------------
+
+-- Sometimes we need to disable these tests (i.e. on Travis) because
+-- the golden files include full paths.
+couldBeDisabledTests :: [RegexFilter]
+couldBeDisabledTests = [ RFInclude "test/Fail/Errors//NotErasedProofTerm.agda" ]
 
 errorsTests ∷ IO TestTree
 errorsTests = do

@@ -32,7 +32,7 @@ helper exec name arg = goldenVsProg testName goldenFile exec args T.empty
     args = ("-i" ++ nonConjecturesPath) : arg
 
 ------------------------------------------------------------------------------
--- Tests
+-- Tests cases
 
 dumpTypesOptionTest ∷ TestTree
 dumpTypesOptionTest = helper apiaBIN "dump-types-option"

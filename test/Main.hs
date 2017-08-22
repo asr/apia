@@ -22,7 +22,8 @@ allTests = do
     ]
 
 couldBeDisabledTests :: [RegexFilter]
-couldBeDisabledTests = NonConjectures.couldBeDisabledTests
+couldBeDisabledTests =
+  NonConjectures.couldBeDisabledTests ++ Errors.couldBeDisabledTests
 
 main ∷ IO ()
 main = do

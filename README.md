@@ -42,7 +42,7 @@ Prerequisites
 
     ATP | Tested version
      --- | --------------------
-    [CVC4](http://cvc4.cs.stanford.edu/web/) | CVC 1.5
+    [CVC4](http://cvc4.cs.stanford.edu/web/) | CVC4 1.5
     [E](http://wwwlehre.dhbw-stuttgart.de/%7Esschulz/E/E.html) | E 1.9.1-001 Sungma
     [Equinox](https://github.com/asr/equinox/tree/5.0alpha-2010-06-29/) | Equinox 5.0alpha (2010-06-29)
     [ileanCoP](http://www.leancop.de/ileancop/index.html) | ileanCoP 1.3beta1

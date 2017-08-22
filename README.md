@@ -20,7 +20,7 @@ Prerequisites
 * Glasgow Haskell Compiler ([GHC](https://www.haskell.org/ghc/))
 
   Apia supports the versions of GHC supported by Agda, i.e. 7.8.4,
-  7.10.3 and 8.0.2.
+  7.10.3, 8.0.2 and 8.2.1.
 
   Check your version with:
 

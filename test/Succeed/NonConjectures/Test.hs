@@ -91,7 +91,10 @@ unprovenConjectureNoErrorOptionTest =
 -- Sometimes we need to disable these tests (i.e. on Travis) because
 -- the golden files include full paths.
 couldBeDisabledTests :: [RegexFilter]
-couldBeDisabledTests = [ RFInclude "test/Succeed/NonConjectures/interface" ]
+couldBeDisabledTests =
+  [ RFInclude "test/Succeed/NonConjectures/interface"
+  , RFInclude "test/Succeed/NonConjectures/issue-18"
+  ]
 
 allNonConjecturesTests ∷ TestTree
 allNonConjecturesTests = testGroup "non-conjectures"

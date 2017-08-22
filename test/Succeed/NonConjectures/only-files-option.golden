@@ -1,0 +1,3 @@
+ret > ExitSuccess
+out > Created /tmp/test/Succeed/NonConjectures/TrivialTheorem/20-foo.fof
+out >

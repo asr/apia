@@ -159,9 +159,10 @@ executable apia
      ghc-options: -fwarn-deriving-typeable
                   -fwarn-unticked-promoted-constructors
 
+  -- The `-fwarn-duplicate-constraints` option will be deprected in
+     GHC 8.0.1.
   if impl(ghc >= 7.8) && impl(ghc < 8.0)
-    ghc-options: -- This option will be deprected in GHC 8.0.1.
-                 -fwarn-duplicate-constraints
+    ghc-options: -fwarn-duplicate-constraints
                  -fwarn-missing-local-sigs
                  -- This option will be removed in GHC 8.0.1.
                  -fwarn-pointless-pragmas
@@ -275,9 +276,10 @@ test-suite apia-tests
      ghc-options: -fwarn-deriving-typeable
                   -fwarn-unticked-promoted-constructors
 
+  -- The `-fwarn-duplicate-constraints` option will be deprected in
+     GHC 8.0.1.
   if impl(ghc >= 7.8) && impl(ghc < 8.0)
-    ghc-options: -- This option will be deprected in GHC 8.0.1.
-                 -fwarn-duplicate-constraints
+    ghc-options: -fwarn-duplicate-constraints
                  -fwarn-missing-local-sigs
                  -- This option will be removed in GHC 8.0.1.
                  -fwarn-pointless-pragmas

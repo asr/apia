@@ -30,7 +30,7 @@ apia: could not create the ‘/tmp/foo/NoTheorem’ directory
 <<<
 >>>
 Proving the conjecture in /tmp/Issue62/NoTheorem/17-foo.fof
-E 1.9.1-001 Sungma *did not* prove the conjecture
+E 2.0 Turzum *did not* prove the conjecture
 >>>2
 apia: the ATP(s) did not prove the conjecture in /tmp/Issue62/NoTheorem/17-foo.fof
 >>>= 1

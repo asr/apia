@@ -1,6 +1,6 @@
 ret > ExitFailure 1
 out > Proving the conjecture in /tmp/test/Fail/Errors//NoTheorem/17-foo.fof
-out > E 1.9.1-001 Sungma *did not* prove the conjecture
+out > E 2.0 Turzum *did not* prove the conjecture
 out >
 err > apia: the ATP(s) did not prove the conjecture in /tmp/test/Fail/Errors//NoTheorem/17-foo.fof
 err >

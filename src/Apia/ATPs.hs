@@ -252,6 +252,7 @@ atpArgs E timeout file = do
                          , "E 1.9 Sourenee"
                          , "E 1.9.1 Sungma"
                          , "E 1.9.1-001 Sungma"
+                         , "E 2.0 Turzum"
                          ]
         then return [ "--auto"
                     , "--cpu-limit=" ++ show timeout

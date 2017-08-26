@@ -11,7 +11,7 @@ For E 1.2, E 1.3, E 1.4 and E 1.5:
 $ eprover --cpu-limit=xxx --expert-heuristic=Auto --memory-limit=Auto \
   --term-ordering=Auto --tstp-format file_name
 
-For E 1.6, E 1.7, E 1.8 and E 1.9:
+For E 1.6, E 1.7, E 1.8, E 1.9, E 1.9.1 and E 2.0:
 $ eprover --auto --cpu-limit=xxx --memory-limit=Auto --tstp-format \
   --output-level=0 file_name
 
@@ -39,8 +39,8 @@ Options used from the shell
 For CVC4 1.5:
 $ cvc4 --lang=tptp --strict-parsing file_name
 
-For E 1.9.1-001:
-$ eprover --tstp-format --output-level=0 file_name
+For E 2.0:
+$ eprover --auto --tstp-format --output-level=0 file_name
 
 For Equinox 5.0alpha (2010-06-29):
 $ equinox file_name

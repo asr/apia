@@ -21,7 +21,7 @@ $ equinox --time xxx file_name
 For IleanCoP V1.3beta1:
 $ ileancop file_name time
 
-For Metis 2.3 (release 20170810):
+For Metis 2.3 (release 20170822):
 $ metis --time-limit xxx file_name
 
 For SPASS V 3.9:
@@ -48,7 +48,7 @@ $ equinox file_name
 For IleanCoP V1.3beta1:
 $ ileancop file_name
 
-For Metis 2.3 (release 20170810):
+For Metis 2.3 (release 20170822):
 $ metis file_name
 
 For SPASS V 3.9:

@@ -93,7 +93,7 @@ import System.Process
     , std_err
     , std_in
     , std_out
-#if MIN_VERSION_process(1,2,0)
+#if MIN_VERSION_process(1,2,3)
     , delegate_ctlc
 #endif
 #if MIN_VERSION_process(1,3,0)

@@ -13,7 +13,7 @@ synopsis:      Program for proving first-order formulae written in Agda using AT
 tested-with:   GHC == 8.2.1
                GHC == 8.0.2
                GHC == 7.10.3
-               GHC == 7.8.4
+
 description:
   This package provides a program for proving first-order
   theorems written in the dependently typed language Agda
@@ -40,18 +40,18 @@ executable apia
   default-extensions: NoImplicitPrelude
 
   build-depends:   Agda                 == 2.6.0.1
-                 , base                 >= 4.7.0.2  && < 4.11
-                 , bytestring           >= 0.10.4.0 && < 0.11
-                 , containers           >= 0.5.5.1  && < 0.6
-                 , deepseq              >= 1.3.0.2  && < 1.5
-                 , directory            >= 1.2.0.1  && < 1.4
-                 , filepath             >= 1.3.0.1  && < 1.5
+                 , base                 >= 4.8.0.0  && < 4.11
+                 , bytestring           >= 0.10.6.0 && < 0.11
+                 , containers           >= 0.5.6.2  && < 0.6
+                 , deepseq              >= 1.4.1.1  && < 1.5
+                 , directory            >= 1.2.2.0  && < 1.4
+                 , filepath             >= 1.4.0.0  && < 1.5
                  , ghc-prim             >= 0.3.0.0  && < 0.6
                  , mtl                  >= 2.2.1    && < 2.3
                  -- pretty 1.1.1.2 and 1.1.1.3 do not follow the
                  -- package versioning policy.
-                 , pretty               >= 1.1.1.1  && < 1.1.1.2 || >= 1.1.2 && < 1.2
-                 , process              >= 1.2.0.0  && < 1.7
+                 , pretty               >= 1.1.2.0  && < 1.2
+                 , process              >= 1.2.3.0  && < 1.7
                  , regex-compat         >= 0.95.1   && < 0.96
                  , safe                 >= 0.3.5    && < 0.4
                  , text                 >= 0.11.3.1 && < 1.3
@@ -112,10 +112,11 @@ executable apia
                -- Using cpphs as the C preprocessor.
                -pgmP cpphs -optP --cpp
 
-  if impl(ghc >= 7.8)
+  if impl(ghc >= 7.10)
      ghc-options: -fwarn-alternative-layout-rule-transitional
                   -- The above option isn't documented in GHC 7.10.1.
                   -fwarn-deprecated-flags
+                  -fwarn-deriving-typeable
                   -fwarn-dodgy-exports
                   -fwarn-dodgy-foreign-imports
                   -fwarn-dodgy-imports
@@ -148,28 +149,19 @@ executable apia
                   -fwarn-unused-matches
                   -fwarn-unsupported-calling-conventions
                   -fwarn-unsupported-llvm-version
+                  -fwarn-unticked-promoted-constructors
                   -fwarn-warnings-deprecations
                   -fwarn-wrong-do-bind
 
-  -- The following option generates warnings with GHC 7.10.1.
-  if impl(ghc < 7.10)
-     ghc-options: -fwarn-auto-orphans
-
-  if impl(ghc >= 7.10)
-     ghc-options: -fwarn-deriving-typeable
-                  -fwarn-unticked-promoted-constructors
-
-  -- The `-fwarn-duplicate-constraints` option will be deprected in
-  -- GHC 8.0.1.
-  if impl(ghc >= 7.8) && impl(ghc < 8.0)
-    ghc-options: -fwarn-duplicate-constraints
+  -- The `-fwarn-context-quantification` and
+  -- `-fwarn-duplicate-constraints` options will be deprected in GHC
+  -- 8.0.1.
+  if impl(ghc >= 7.10) && impl(ghc < 8.0)
+    ghc-options: -fwarn-context-quantification
+                 -fwarn-duplicate-constraints
                  -fwarn-missing-local-sigs
                  -- This option will be removed in GHC 8.0.1.
                  -fwarn-pointless-pragmas
-
-  -- This option will be deprected in GHC 8.0.1.
-  if impl(ghc >= 7.10) && impl(ghc < 8.0)
-    ghc-options: -fwarn-context-quantification
 
   if impl(ghc >= 8.0)
     ghc-options: -Wmissing-local-signatures
@@ -215,9 +207,9 @@ test-suite apia-tests
                  , Succeed.NonConjectures.Test
                  , Utils
 
-  build-depends:  base         >= 4.7.0.2  && < 4.11
-                , directory    >= 1.2.0.1  && < 1.4
-                , filepath     >= 1.3.0.1  && < 1.5
+  build-depends:  base         >= 4.8.0.0  && < 4.11
+                , directory    >= 1.2.2.0  && < 1.4
+                , filepath     >= 1.4.0.0  && < 1.5
                 , tasty        >= 0.10     && < 0.12
                 , tasty-silver >= 3.1.8    && < 3.2
                 , text         >= 0.11.3.1 && < 1.3
@@ -229,10 +221,11 @@ test-suite apia-tests
                -- Using cpphs as the C preprocessor.
                -pgmP cpphs -optP --cpp
 
-  if impl(ghc >= 7.8)
+  if impl(ghc >= 7.10)
      ghc-options: -fwarn-alternative-layout-rule-transitional
                   -- The above option isn't documented in GHC 7.10.1.
                   -fwarn-deprecated-flags
+                  -fwarn-deriving-typeable
                   -fwarn-dodgy-exports
                   -fwarn-dodgy-foreign-imports
                   -fwarn-dodgy-imports
@@ -265,28 +258,19 @@ test-suite apia-tests
                   -fwarn-unused-matches
                   -fwarn-unsupported-calling-conventions
                   -fwarn-unsupported-llvm-version
+                  -fwarn-unticked-promoted-constructors
                   -fwarn-warnings-deprecations
                   -fwarn-wrong-do-bind
 
-  -- The following option generates warnings with GHC 7.10.1.
-  if impl(ghc < 7.10)
-     ghc-options: -fwarn-auto-orphans
-
-  if impl(ghc >= 7.10)
-     ghc-options: -fwarn-deriving-typeable
-                  -fwarn-unticked-promoted-constructors
-
-  -- The `-fwarn-duplicate-constraints` option will be deprected in
-  -- GHC 8.0.1.
-  if impl(ghc >= 7.8) && impl(ghc < 8.0)
-    ghc-options: -fwarn-duplicate-constraints
+  -- The `-fwarn-context-quantification` and
+  -- `-fwarn-duplicate-constraints` options will be deprected in GHC
+  -- 8.0.1.
+  if impl(ghc >= 7.10) && impl(ghc < 8.0)
+    ghc-options: -fwarn-context-quantification
+                 -fwarn-duplicate-constraints
                  -fwarn-missing-local-sigs
                  -- This option will be removed in GHC 8.0.1.
                  -fwarn-pointless-pragmas
-
-  -- This option will be deprected in GHC 8.0.1.
-  if impl(ghc >= 7.10) && impl(ghc < 8.0)
-    ghc-options: -fwarn-context-quantification
 
   if impl(ghc >= 8.0)
     ghc-options: -Wmissing-local-signatures

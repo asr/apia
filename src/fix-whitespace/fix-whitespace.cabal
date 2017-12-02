@@ -3,7 +3,7 @@ version:       0.1
 cabal-version: >= 1.8
 build-type:    Simple
 description:   Fixes whitespace issues.
-tested-with:   GHC == 8.2.1
+tested-with:   GHC == 8.2.2
 
 executable fix-whitespace
   main-is:          FixWhitespace.hs

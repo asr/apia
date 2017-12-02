@@ -26,8 +26,7 @@ import qualified Data.Text           as T
 import Data.Yaml ( FromJSON (parseJSON), Object, parseMaybe )
 import qualified Data.Yaml.Include as YamlInclude
 
-import Paths_apia     ( getDataFileName )
-import Prelude hiding ( lookup )
+import Paths_apia ( getDataFileName )
 
 import System.Directory
   ( doesFileExist

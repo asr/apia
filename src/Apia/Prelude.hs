@@ -29,6 +29,7 @@ import Data.Char as YAP
 import Data.Either    as YAP
 import Data.Eq        as YAP
 import Data.Function  as YAP
+import Data.Functor   as YAP
 import Data.Int       as YAP
 import Data.List      as YAP
 import Data.Maybe     as YAP
@@ -46,6 +47,7 @@ import Control.Monad.IO.Class as YAP ( MonadIO(liftIO) )
 #endif
 
 import GHC.Num   as YAP ( (+), (*), (-) )
+import GHC.Prim  as YAP ( seq )
 import GHC.Real  as YAP ( fromIntegral, round )
 import GHC.Types as YAP ( Float )
 

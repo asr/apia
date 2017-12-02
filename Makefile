@@ -503,7 +503,7 @@ agda-changed : clean
 hlint :
 	hlint --color=never Setup.hs
 	hlint --color=never \
-              --cpp-file=dist/build/autogen/cabal_macros.h \
+              --cpp-file=dist/build/apia/autogen/cabal_macros.h \
               --cpp-include=src/Apia/ \
               src/ test/
 	@echo "$@ succeeded!"

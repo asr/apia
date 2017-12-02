@@ -207,8 +207,7 @@ atpVersion atp = do
   liftIO $ initDef (__IMPOSSIBLE__) <$> readProcess exec ["--version"] ""
 
 checkOutputErr ∷ ATP → String → String → IO Bool
-checkOutputErr _ _ err@(_:_) =
-  return False <* putStr (Text.pack err)
+checkOutputErr _   _      err@(_:_) = False <$ putStr (Text.pack err)
 checkOutputErr atp output _ =
   case atp of
     -- Issue #64.

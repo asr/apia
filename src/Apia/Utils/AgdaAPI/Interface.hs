@@ -277,9 +277,8 @@ isATPHint def =
 
 -- | Return the Agda 'Definition' associated with a 'QName'.
 qNameDefinition ∷ QName → T Definition
-qNameDefinition qName = do
-  allDefs ← getTDefs
-  return $ fromMaybe (__IMPOSSIBLE__) $ HashMap.lookup qName allDefs
+qNameDefinition qName =
+  fromMaybe (__IMPOSSIBLE__) . HashMap.lookup qName <$> getTDefs
 
 -- | Return the 'Type' of a 'QName' ignoring sharing.
 qNameType ∷ QName → T Type

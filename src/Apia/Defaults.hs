@@ -375,9 +375,8 @@ finalConfig cfs = combineOptions $ Config $ HashMap.unions hs
     getHashMap (Config o) = o
 
 loadYAML ∷ FilePath → IO Config
-loadYAML dotApia = do
-  decoded ← YamlInclude.decodeFile dotApia
-  return $ Config $ fromMaybe HashMap.empty decoded
+loadYAML dotApia =
+  Config . fromMaybe HashMap.empty <$> YamlInclude.decodeFile dotApia
 
 apiaFileName ∷ FilePath
 apiaFileName = ".apia"

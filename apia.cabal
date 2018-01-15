@@ -40,7 +40,7 @@ executable apia
   default-extensions: NoImplicitPrelude
 
   build-depends:   Agda                 == 2.6.0.1
-                 , base                 >= 4.8.0.0  && < 4.11
+                 , base                 >= 4.8.0.0  && < 4.12
                  , bytestring           >= 0.10.6.0 && < 0.11
                  , containers           >= 0.5.6.2  && < 0.6
                  , deepseq              >= 1.4.1.1  && < 1.5
@@ -207,10 +207,10 @@ test-suite apia-tests
                  , Succeed.NonConjectures.Test
                  , Utils
 
-  build-depends:  base         >= 4.8.0.0  && < 4.11
+  build-depends:  base         >= 4.8.0.0  && < 4.12
                 , directory    >= 1.2.2.0  && < 1.4
                 , filepath     >= 1.4.0.0  && < 1.5
-                , tasty        >= 0.10     && < 0.12
+                , tasty        >= 0.10     && < 0.13
                 , tasty-silver >= 3.1.8    && < 3.2
                 , text         >= 0.11.3.1 && < 1.3
 

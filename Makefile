@@ -389,7 +389,7 @@ non-conjectures : $(non_conjectures_files)
 	$(APIA_TEST_BIN) $(TESTS_OPTIONS) --regex-include test/Succeed/NonConjectures
 	@echo "$@ succeeded"
 
-# Tested with shelltestrunner 1.3.5.
+# Tested with shelltestrunner 1.9.
 .PHONY : non-conjectures-shelltestrunner
 non-conjectures-shelltestrunner : $(non_conjectures_files)
 	shelltest --color \

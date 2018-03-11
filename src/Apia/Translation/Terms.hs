@@ -485,7 +485,7 @@ appArgsF fn args = do
 
 -- | Translate an Agda internal 'Term' to a target logic term.
 agdaTermToTerm ∷ Term → T LTerm
-agdaTermToTerm term'@(Con (ConHead (QName _ name) _ _) _ args) = do
+agdaTermToTerm term'@(Con (ConHead (QName _ name) _ _) _ elims) = do
   reportSLn "t2t" 10 $ "agdaTermToTerm Con:\n" ++ show term'
 
   let cName ∷ C.Name
@@ -499,9 +499,10 @@ agdaTermToTerm term'@(Con (ConHead (QName _ name) _ _) _ args) = do
     -- The term @Con@ doesn't have holes. It should be translated as
     -- a first-order logic function.
     C.Name _ [C.Id str] →
-     case args of
-       [] → return $ Fun str []
-       _  → appArgsF str args
+      case allApplyElims elims of
+        Nothing    → __IMPOSSIBLE__
+        Just []    → return $ Fun str []
+        Just args  → appArgsF str args
 
     -- The term @Con@ has holes. It is translated as a first-order
     -- logic function.

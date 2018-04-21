@@ -10,7 +10,8 @@ category:      Dependent types
 homepage:      https://github.com/asr/apia
 bug-reports:   https://github.com/asr/apia/issues/
 synopsis:      Program for proving first-order formulae written in Agda using ATPs
-tested-with:   GHC == 8.2.2
+tested-with:   GHC == 8.4.2
+               GHC == 8.2.2
                GHC == 8.0.2
                GHC == 7.10.3
 

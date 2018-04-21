@@ -14,6 +14,16 @@ sudo: required
 
 matrix:
   include:
+    - env: TEST=MAIN GHC_VER=8.4.2 BUILD=CABAL CABAL_VER=2.2
+      addons:
+        apt:
+          packages:
+            - cabal-install-2.2
+            - ghc-8.4.2
+            - texlive-binaries
+          sources:
+            - hvr-ghc
+
     - env: TEST=MAIN GHC_VER=8.2.2 BUILD=CABAL CABAL_VER=2.0
       addons:
         apt:

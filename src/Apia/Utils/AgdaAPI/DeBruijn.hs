@@ -31,7 +31,7 @@ import Agda.Syntax.Internal as I
   , Level(Max)
   , Sort(Type)
   , Tele(EmptyTel, ExtendTel)
-  , Term(Con, Def, DontCare, Lam, Level, Lit, MetaV, Pi, Shared, Sort, Var)
+  , Term(Con, Def, DontCare, Lam, Level, Lit, MetaV, Pi, Sort, Var)
   , Type
   , Type'(El)
   , var
@@ -62,7 +62,6 @@ instance IncIndex Term where
   incIndex (Lit _)      = __IMPOSSIBLE__
   incIndex (MetaV _ _)  = __IMPOSSIBLE__
   incIndex (Pi _ _)     = __IMPOSSIBLE__
-  incIndex (Shared _)   = __IMPOSSIBLE__
   incIndex (Sort _)     = __IMPOSSIBLE__
   incIndex (Var _ _)    = __IMPOSSIBLE__
 

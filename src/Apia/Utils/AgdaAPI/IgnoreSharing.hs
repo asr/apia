@@ -19,7 +19,7 @@ import Agda.Syntax.Internal as I
   ( Abs(Abs, NoAbs)
   , Elim'(Apply, IApply, Proj)
   , Tele(EmptyTel, ExtendTel)
-  , Term(Def, Shared, Pi)
+  , Term(Def, Pi)
   , Type'(El)
   )
 
@@ -47,7 +47,6 @@ instance IgnoreSharing Term where
     Pi (ignoreSharing domTy) (NoAbs x (ignoreSharing absTy))
 
   -- ignoreSharing (Shared ptr) = ignoreSharing $ derefPtr ptr
-  ignoreSharing (Shared _) = __IMPOSSIBLE__
 
   ignoreSharing term = term
 

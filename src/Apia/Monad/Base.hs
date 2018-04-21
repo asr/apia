@@ -80,12 +80,13 @@ import Apia.Utils.PrettyPrint
   , sspaces
   )
 
-import Control.Monad.Reader ( ask, ReaderT(runReaderT) )
+import Control.Monad.Reader ( asks, ReaderT(runReaderT) )
 
 import Control.Monad.State
   ( evalState
   , evalStateT
   , get
+  , gets
   , modify
   , put
   , StateT
@@ -267,11 +268,11 @@ runT ta = env >>= runReaderT (evalStateT (E.runExceptT ta) initTState)
 -- | Return 'True' if the list of variables in the translation monad
 -- state is empty.
 isTVarsEmpty ∷ T Bool
-isTVarsEmpty = fmap (null . tVars) get
+isTVarsEmpty = gets (null . tVars)
 
 -- | Fresh variable.
 newTVar ∷ T String
-newTVar = fmap (evalState freshName . tVars) get
+newTVar = gets (evalState freshName . tVars)
 
 -- | Pop a variable from the translation monad state.
 popTVar ∷ T ()
@@ -293,20 +294,20 @@ pushTNewVar = newTVar >>= \freshVar → pushTVar freshVar >> return freshVar
 
 -- | Get the ATPs from the translation monad state.
 getTATPs ∷ T [ATP]
-getTATPs = fmap tATPs get
+getTATPs = gets tATPs
 
 -- | Get the Agda 'Definitions' from the translation monad state.
 getTDefs ∷ T Definitions
-getTDefs = fmap tDefs get
+getTDefs = gets tDefs
 
 -- | Ask for a concrete 'Options' from the translation monad
 -- environment.
 askTOpt ∷ (Options → a) → T a
-askTOpt opt = fmap opt ask
+askTOpt = asks
 
 -- | Get the variables from the translation monad state.
 getTVars ∷ T [String]
-getTVars = fmap tVars get
+getTVars = gets tVars
 
 -- | Modify the ATPs in the translation monad state.
 modifyTATPs ∷ [ATP] → T ()

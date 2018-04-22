@@ -18,10 +18,8 @@ matrix:
       addons:
         apt:
           packages:
-            - alex-3.1.7
             - cabal-install-2.0
             - ghc-8.2.2
-            - happy-1.19.5
             - texlive-binaries
           sources:
             - hvr-ghc
@@ -30,10 +28,8 @@ matrix:
       addons:
         apt:
           packages:
-            - alex-3.1.7
             - cabal-install-1.24
             - ghc-8.0.2
-            - happy-1.19.5
             - texlive-binaries
           sources:
             - hvr-ghc
@@ -42,10 +38,8 @@ matrix:
       addons:
         apt:
           packages:
-            - alex-3.1.7
             - cabal-install-1.22
             - ghc-7.10.3
-            - happy-1.19.5
           sources:
             - hvr-ghc
 
@@ -75,9 +69,17 @@ install:
 ##############################################################################
 # Installing the extended version of Agda (adapted from Agda)
 
-  # The version installed of cpphs should match the lower version
-  # required in apia.cabal.
+  # Installing the tools required by Agda. The version installed of
+  # cpphs should match the lower version required in apia.cabal.
+  - travis_retry cabal fetch alex happy cpphs-1.20.8
   - cabal install cpphs-1.20.8
+  - cabal install -v0 alex happy cpphs-1.20.8
+  - echo "*** Alex version ***"
+  - alex --version
+  - echo "*** Happy version ***"
+  - happy --version
+  - echo "*** cpphs version ***"
+  - cpphs --version
 
   - git clone https://github.com/asr/eagda.git ${MY_HOME}/eagda
   - cd ${MY_HOME}/eagda

@@ -4,7 +4,7 @@ Running the ATPs
 Options used by Apia
 ---------------------
 
-For CVC4 1.5:
+For CVC4 1.6:
 $ cvc4 --lang=tptp --strict-parsing --tlimit=" ++ show (timeout * 1000)
 
 For E 1.2, E 1.3, E 1.4 and E 1.5:
@@ -36,7 +36,7 @@ $ z3 -T:xxx file_name
 Options used from the shell
 ---------------------------
 
-For CVC4 1.5:
+For CVC4 1.6:
 $ cvc4 --lang=tptp --strict-parsing file_name
 
 For E 2.0:

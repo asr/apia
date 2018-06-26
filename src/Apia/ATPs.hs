@@ -157,7 +157,7 @@ optATP2ATP other
 
 -- | The message generad by the ATPs when a conjectured is proved,
 atpProvedMsg ∷ ATP → String
--- CVC4 1.5.
+-- CVC4 1.6.
 atpProvedMsg CVC4 = "SZS status Theorem"
 -- E 1.9.1-001
 atpProvedMsg E = "Proof found!"

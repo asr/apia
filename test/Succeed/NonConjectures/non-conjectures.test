@@ -1,12 +1,12 @@
 # output the version
-apia --version | awk '{print substr($0,20)}' > version.txt & git log --format=%h -n 1 > git.txt
+apia --version | awk '{print substr($0,20)}' > /tmp/version.txt & git log --format=%h -n 1 > /tmp/git.txt
 <<<
 >>>
 >>>2
 >>>= 0
 
 # version + hash
-diff version.txt git.txt
+diff /tmp/version.txt /tmp/git.txt
 <<<
 >>>
 >>>2

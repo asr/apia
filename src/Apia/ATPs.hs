@@ -159,7 +159,7 @@ optATP2ATP other
 atpProvedMsg ∷ ATP → String
 -- CVC4 1.6.
 atpProvedMsg CVC4 = "SZS status Theorem"
--- E 1.9.1-001
+-- E 2.1
 atpProvedMsg E = "Proof found!"
 -- Equinox 5.0alpha (2010-06-29).
 atpProvedMsg Equinox = "+++ RESULT: Theorem"
@@ -252,6 +252,7 @@ atpArgs E timeout file = do
                          , "E 1.9.1 Sungma"
                          , "E 1.9.1-001 Sungma"
                          , "E 2.0 Turzum"
+                         , "E 2.1 Maharani Hills"
                          ]
         then return [ "--auto"
                     , "--cpu-limit=" ++ show timeout

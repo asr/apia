@@ -1,11 +1,11 @@
-% The conjecture is proved by E 1.2 and E 2.0 but it is not proved by
-% E 1.3, E 1.4, E 1.5, E 1.6, E 1.7, E 1.8, E 1.9 nor E 1.9.1 using
-% the command:
+% The conjecture is proved by E 1.2, E 2.0, and E 2.1 but it is not
+% proved by E 1.3, E 1.4, E 1.5, E 1.6, E 1.7, E 1.8, E 1.9 nor E
+% 1.9.1 using the command:
 
 % For E 1.2, E 1.3, E 1.4 and E 1.5:
 % $ eprover --cpu-limit=180 -mAuto -xAuto -tAuto --tstp-format regression.tptp
 
-% For E 1.6, E 1.7, E 1.8, E 1.9, E 1.9.1 and E 2.0:
+% For E 1.6, E 1.7, E 1.8, E 1.9, E 1.9.1, E 2.0 and E 2.1:
 % $ eprover --auto --cpu-limit=180 --memory-limit=Auto --tstp-format file_name
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

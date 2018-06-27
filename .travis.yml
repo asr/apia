@@ -128,7 +128,7 @@ install:
 # Installing the E theorem prover
 
   - cd ${MY_HOME}
-  - wget http://wwwlehre.dhbw-stuttgart.de/~sschulz/WORK/E_DOWNLOAD/V_2.0/E.tgz
+  - wget http://wwwlehre.dhbw-stuttgart.de/~sschulz/WORK/E_DOWNLOAD/V_2.1/E.tgz
   - tar -xzf E.tgz
   - cd E
   - ./configure --bindir=${MY_HOME}/bin
